@@ -1,11 +1,13 @@
 Class('Exhibitions.Form', {
 
     initialize: function() {
+        this.element = document.getElementById('exhibition-form');
         this.name = document.getElementById('name');
         this.location = document.getElementById('location');
         this.submit = document.getElementById('submit-form');
-
+        this.subscribe();
         this.addListeners();
+        this.hideForm();
     },
 
     addListeners: function() {
@@ -28,6 +30,18 @@ Class('Exhibitions.Form', {
 
     activateSubmit: function() {
         this.submit.disabled = false;
+    },
+
+    hideForm: function() {
+        this.element.style.display = 'none';
+    },
+
+    showForm: function() {
+        this.element.style.display = 'block';
+    },
+
+    subscribe: function() {
+        Bus.subscribe('exhibition.new', this.showForm.bind(this));
     }
 
 });

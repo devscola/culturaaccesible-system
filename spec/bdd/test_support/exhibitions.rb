@@ -16,11 +16,20 @@ module Page
       has_css?('#submit-form[disabled]')
     end
 
+    def show_exhibition_form
+      find('#new-exhibition').click
+    end
+
+    def exhibition_form_visible?
+      form = find('#exhibition-form', visible: false)
+      form.visible?
+    end
+
     private
 
     def validate!
-      page.assert_selector('#exhibition-form')
-      page.assert_selector('#submit-form[disabled]')
+      page.assert_selector('#exhibition-form', visible: false)
+      page.assert_selector('#new-exhibition')
     end
   end
 end
