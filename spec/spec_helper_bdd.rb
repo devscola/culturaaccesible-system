@@ -10,7 +10,7 @@ Capybara.app = Sinatra::Application
 Capybara.app_host = "http://localhost:#{SINATRA_PORT}"
 
 Capybara.register_driver :chrome do |app|
-  Capybara::Selenium::Driver.new(app, :browser => :chrome)
+  Capybara::Selenium::Driver.new(app, 'browser' => :chrome)
 end
 
 Capybara.default_driver = :chrome

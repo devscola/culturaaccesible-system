@@ -2,7 +2,7 @@ require 'spec_helper_bdd'
 require_relative 'test_support/exhibitions'
 require_relative '../../app'
 
-feature 'List exhibitions' do 
+feature 'List exhibitions' do
   scenario 'has items' do
     page = Page::Exhibitions.new
     expect(page.exhibition_list?).to be true
@@ -22,7 +22,7 @@ feature 'Form' do
 end
 
 feature 'Add exhibition button' do
-	scenario 'shows exhibition form' do
+  scenario 'shows exhibition form' do
     page = Page::Exhibitions.new
 
     page.show_exhibition_form
