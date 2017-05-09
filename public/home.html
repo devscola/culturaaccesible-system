@@ -1,0 +1,59 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Exhibition</title>
+    </head>
+    <body>
+        <form id="exhibition-form">
+            <div>
+                <label for="title">Title</label>
+                <input id="name" name="title">
+            </div>
+            <div>
+                <label for="location">Location</label>
+                <input id="location" name="location">
+            </div>
+            <div>
+                <label for="short-description">General description</label>
+                <input name="short-description">
+            </div>
+            <div>
+                <label for="type">Type</label>
+                <select name="type">
+                    <option value="paint">Paint</option>
+                    <option value="sculpture">Sculpture</option>
+                    <option value="mixed-art">Mixed Art</option>
+                    <option value="artist-exhibition">Artist Exhibition</option>
+                </select>
+            </div>
+            <div>
+                <span>Open</span>
+                <label for="start-date">From</label>
+                <input name="start-date" type="date">
+                <label for="finish-date">To</label>
+                <input name="finish-date" type="date">
+            </div>
+            <div>
+                <label for="beacon">Beacon number</label>
+                <input name="beacon">
+            </div>
+            <div>
+                <label for="description">Extended description</label>
+                <textarea name="description"></textarea>
+            </div>
+            <div>
+                <button id="submit-form" disabled>Save</button>
+            </div>
+        </form>
+
+        <script src="js/infrastructure/bus.js"></script>
+        <script src="js/infrastructure/class.min.js"></script>
+
+        <script src="js/components/exhibitions/form.js"></script>
+
+        <script src="js/pages/exhibitions.js"></script>
+
+        <script src="js/exhibitions.js"></script>
+    </body>
+</html>
