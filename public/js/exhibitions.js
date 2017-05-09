@@ -1,4 +1,4 @@
-main();
+main(); 
 
 function main() {
     document.addEventListener('DOMContentLoaded', function() {

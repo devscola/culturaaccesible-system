@@ -3,7 +3,7 @@ Class('Services.Exhibitions', {
     Extends: Service,
 
     initialize: function() {
-        Services.Exhibitions.Super.call(this, '/exhibitions');
+        Services.Exhibitions.Super.call(this, '/home');
     },
 
     retrieveList: function() {

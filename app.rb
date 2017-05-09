@@ -4,8 +4,7 @@ class App < Sinatra::Base
   set :public_folder, 'public/'
   enable :static
 
-  get '/exhibitions' do
-    File.read(File.join('public', 'exhibitions.html'))
+  get '/home' do
+    File.read(File.join('public', 'home.html'))
   end
-
 end
