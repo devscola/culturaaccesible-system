@@ -1,6 +1,6 @@
 require 'sinatra/base'
 
-class App < Sinatra::Base 
+class App < Sinatra::Base
   set :public_folder, 'public/'
   enable :static
 
