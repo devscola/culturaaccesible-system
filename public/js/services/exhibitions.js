@@ -32,7 +32,7 @@ Class('Services.Exhibitions', {
 
     subscribe: function() {
         Bus.subscribe('exhibitions.list.retrieve', this.retrieveList.bind(this));
-        Bus.subscribe('exhibition.saved', this.retrievePanel.bind(this));
+        Bus.subscribe('exhibition.save', this.retrievePanel.bind(this));
     }
 
 });

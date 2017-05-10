@@ -1,0 +1,107 @@
+<link rel="import" href="/vendor/polymer/polymer.html">
+
+<dom-module id="exhibition-form">
+    <template>
+        <style>
+            #exhibition-form.show {
+                display: block;
+            }
+
+            #exhibition-form.hide {
+                display: none;
+            }
+        </style>
+
+        <form id="exhibition-form" class$="{{formVisibility}}">
+            <div>
+                <label for="show">Show</label>
+                <input type="checkbox" name="show">
+            </div>
+            <div>
+                <label for="title">Title</label>
+                <input id="name" on-input="allowSubmit" name="title">
+            </div>
+            <div>
+                <label for="location">Location</label>
+                <input id="location" on-input="allowSubmit" name="location">
+            </div>
+            <div>
+                <label for="short-description">General description</label>
+                <input name="short-description">
+            </div>
+            <div>
+                <label for="type">Type</label>
+                <select name="type">
+                    <option value="paint">Paint</option>
+                    <option value="sculpture">Sculpture</option>
+                    <option value="mixed-art">Mixed Art</option>
+                    <option value="artist-exhibition">Artist Exhibition</option>
+                </select>
+            </div>
+            <div>
+                <span>Open</span>
+                <label for="start-date">From</label>
+                <input name="start-date" type="date">
+                <label for="finish-date">To</label>
+                <input name="finish-date" type="date">
+            </div>
+            <div>
+                <label for="beacon">Beacon number</label>
+                <input name="beacon">
+            </div>
+            <div>
+                <label for="description">Extended description</label>
+                <textarea name="description"></textarea>
+            </div>
+            <div>
+                <button id="submit-form" on-click="saveExhibition" disabled>Save</button>
+            </div>
+        </form>
+    </template>
+
+    <script>
+        Polymer({
+            is: 'exhibition-form',
+
+            ready: function() {
+                this.name = document.getElementById('name');
+                this.location = document.getElementById('location');
+                this.submit = document.getElementById('submit-form');
+            },
+
+            properties: {
+                visible: {
+                    type: Boolean,
+                    reflectToAttribute: false,
+                    observer: 'showForm'
+                },
+
+                formVisibility: {
+                    type: String,
+                    value: 'hide'
+                }
+            },
+
+            showForm: function() {
+                this.formVisibility = 'show';
+            },
+
+            allowSubmit: function() {
+                var nameLength = this.name.value.length;
+                var locationLength = this.location.value.length;
+                if (nameLength > 0 && locationLength > 0) {
+                    this.activateSubmit();
+                }
+            },
+
+            activateSubmit: function() {
+                this.submit.disabled = false;
+            },
+
+            saveExhibition: function(event) {
+                event.preventDefault();
+                this.fire('exhibitionSave');
+            }
+        });
+    </script>
+</dom-module>
