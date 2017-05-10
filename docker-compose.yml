@@ -11,7 +11,6 @@ services:
 
     links:
       - selenium
-      - mongocontainer
     command: bash -c "bundle install --jobs 3 && bundle exec rake"
 
   selenium:
@@ -21,12 +20,6 @@ services:
     container_name: chrome-browser
     logging:
       driver: none
-
-  mongocontainer:
-    image: mongo:latest
-    ports:
-        - "27017:27017"
-    command: --smallfiles
 
 volumes:
   bundle:
