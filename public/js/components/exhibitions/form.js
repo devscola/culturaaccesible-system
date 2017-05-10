@@ -5,6 +5,7 @@ Class('Exhibitions.Form', {
         this.name = document.getElementById('name');
         this.location = document.getElementById('location');
         this.submit = document.getElementById('submit-form');
+        this.submit.addEventListener('click', this.saveExhibition.bind(this));
         this.subscribe();
         this.addListeners();
         this.hideForm();
@@ -26,6 +27,11 @@ Class('Exhibitions.Form', {
         if (nameLength > 0 && locationLength > 0) {
             this.activateSubmit();
         }
+    },
+
+    saveExhibition: function(event) {
+        event.preventDefault();
+        Bus.publish('exhibition.saved');
     },
 
     activateSubmit: function() {

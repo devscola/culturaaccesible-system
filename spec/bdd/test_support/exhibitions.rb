@@ -24,6 +24,14 @@ module Page
       find('#button.exhibition-add').click
     end
 
+    def show_exhibition_panel
+      find('#submit-form').click
+    end
+
+    def has_title?
+      has_css?('.panel-title')
+    end
+
     def exhibition_form_visible?
       form = find('#exhibition-form', visible: false)
       form.visible?
@@ -35,6 +43,7 @@ module Page
       page.assert_selector('#exhibition-form', visible: false)
       page.assert_selector('#new-exhibition')
       page.assert_selector('#exhibitions-list', visible: false)
+      page.assert_selector('#exhibition-panel', visible: false)
     end
   end
 end

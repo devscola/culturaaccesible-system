@@ -30,3 +30,16 @@ feature 'Add exhibition button' do
     expect(page.exhibition_form_visible?). to be true
   end
 end
+
+feature 'Exhibition panel' do
+  scenario 'displays when form is submited' do
+    page = Page::Exhibitions.new
+    page.show_exhibition_form
+
+    page.fill('name', 'some name')
+    page.fill('location', 'some location')
+    page.show_exhibition_panel
+
+    expect(page.has_title?).to be true
+  end
+end
