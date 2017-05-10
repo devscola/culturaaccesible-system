@@ -3,19 +3,11 @@ require 'rspec/core/rake_task'
 require 'mongoid'
 
 SINATRA_PORT = retrieve_port
-TRAVIS = retrieve_travis
 
 task :default => :start
 
 task :start do
-  if (TRAVIS == false)
-    sh "rerun --background -- rackup --port #{SINATRA_PORT} -o 0.0.0.0"
-  end
-  if (TRAVIS == true)
-    File.delete('travis.ci')
-    sh "rerun --background -- rackup --port #{SINATRA_PORT} -o 0.0.0.0 &"
-    sh 'rspec spec/bdd'
-  end
+  sh "rerun --background -- rackup --port #{SINATRA_PORT} -o 0.0.0.0"
 end
 
 task :bdd do
