@@ -17,17 +17,18 @@ Class('Services.Exhibitions', {
 
     retrievePanel: function() {
         result = {
-                    title: 'El placer de soñar',
-                    location: 'C/ Cuenca Benimaclet',
-                    short_description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor',
-                    date_start: '02/01/2017',
-                    date_finish: '02/02/2017',
-                    type: 'Sculpture',
-                    beacon: '0001',
-                    description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
-                };
+            show: 'On',
+            name: 'El placer de soñar',
+            location: 'C/ Cuenca Benimaclet',
+            shortDescription: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit',
+            dateStart: '02/01/2017',
+            dateFinish: '02/02/2017',
+            type: 'Sculpture',
+            beacon: '0001',
+            description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. '
+        };
 
-        Bus.publish('exhibition.submitted.retrieved', result);
+        Bus.publish('exhibition.saved', result);
     },
 
     subscribe: function() {

@@ -1,0 +1,59 @@
+<link rel="import" href="/vendor/polymer/polymer.html">
+
+<dom-module id="exhibition-panel">
+    <template>
+        <style>
+            #exhibition-panel.show {
+                display: block;
+            }
+
+            #exhibition-panel.hide {
+                display: none;
+            }
+        </style>
+        <div id="exhibition-panel" class$="{{panelVisibility}}">
+            <template is="dom-repeat" items="{{exhibition}}">
+                <div>Show: {{item.show}}</div>
+                <div>Name: {{item.name}}</div>
+                <div>Location: {{item.location}}</div>
+                <div>General description: {{item.shortDescription}}</div>
+                <div>Type: {{item.type}}</div>
+                <div>
+                    <span>Open</span>
+                    <span>From: {{item.dateStart}}</span>
+                    <span>To: {{item.dateFinish}}</span>
+                <div>Beacon number: {{item.beacon}}</div>
+                <div>Extended description: {{item.description}}</div>
+            </template>
+        </div>
+    </template>
+
+    <script>
+        Polymer({
+            is: 'exhibition-panel',
+
+            properties: {
+
+                exhibition: {
+                    type: Array,
+                    reflectToAttribute: true
+                },
+
+                visible: {
+                    type: Boolean,
+                    observer: 'showPanel'
+                },
+
+                panelVisibility: {
+                    type: String,
+                    value: 'hide'
+                }
+            },
+
+            showPanel: function() {
+                this.panelVisibility = 'show';
+            }
+
+        });
+    </script>
+</dom-module>

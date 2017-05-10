@@ -24,12 +24,13 @@ module Page
       find('#button.exhibition-add').click
     end
 
-    def show_exhibition_panel
+    def save_exhibition
       find('#submit-form').click
     end
 
-    def has_title?
-      has_css?('.panel-title')
+    def exhibition_panel_visible?
+      form = find('#exhibition-panel', visible: false)
+      form.visible?
     end
 
     def exhibition_form_visible?

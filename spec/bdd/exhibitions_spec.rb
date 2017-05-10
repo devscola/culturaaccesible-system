@@ -38,8 +38,8 @@ feature 'Exhibition panel' do
 
     page.fill('name', 'some name')
     page.fill('location', 'some location')
-    page.show_exhibition_panel
+    page.save_exhibition
 
-    expect(page.has_title?).to be true
+    expect(page.exhibition_panel_visible?).to be true
   end
 end
