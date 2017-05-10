@@ -1,22 +1,17 @@
 Class('Exhibitions.List', {
 
     initialize: function() {
-        this.exhibitionsContainer = document.getElementById('exhibitions-list');
+        this.element = document.getElementById('exhibitions-container');
         this.subscribe();
     },
 
     render: function(exhibitions) {
         this.empty();
-        exhibitions.forEach(function(exhibition) {
-            var listItem = document.createElement('li');
-            listItem.className = 'exhibition';
-            listItem.textContent = exhibition.name;
-            this.exhibitionsContainer.appendChild(listItem);
-        }.bind(this));
+        this.element.exhibitionsList = exhibitions;
     },
 
     empty: function() {
-        this.exhibitionsContainer.html = '';
+        this.element.html = '';
     },
 
     subscribe: function() {

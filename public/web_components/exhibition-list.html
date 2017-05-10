@@ -1,0 +1,31 @@
+<link rel="import" href="/vendor/polymer/polymer.html">
+
+<dom-module id="exhibition-list">
+    <template>
+        <style>
+        </style>
+
+        <h2>EXHIBITIONS</h2>
+        <div id="list">
+            <template is="dom-repeat" items="{{exhibitionsList}}">
+                <div class="list-item">
+                    {{item.name}}
+                </div>
+            </template>
+        </div>
+    </template>
+
+    <script>
+        Polymer({
+            is: 'exhibition-list',
+
+            properties: {
+                exhibitionsList: {
+                    type: Array,
+                    reflectToAttribute: true
+                }
+            },
+
+        });
+    </script>
+</dom-module>

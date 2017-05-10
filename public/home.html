@@ -3,6 +3,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Exhibition</title>
+        <link rel="import" href="/web_components/exhibition-list.html">
         <link rel="import" href="/web_components/exhibition-add.html">
         <link rel="import" href="/web_components/exhibition-form.html">
     </head>
@@ -12,12 +13,7 @@
         </div>
 
         <div>
-            <div>
-                <div>
-                    <h2>EXHIBITIONS</h2>
-                    <ul id="exhibitions-list"></ul>
-                </div>
-            </div>
+            <exhibition-list id="exhibitions-container"></exhibition-list>
         </div>
 
         <div>

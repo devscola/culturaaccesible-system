@@ -9,7 +9,7 @@ module Page
     end
 
     def exhibition_list?
-      has_css?('.exhibition')
+      has_css?('.list-item')
     end
 
     def fill(field, content)
@@ -42,7 +42,7 @@ module Page
     def validate!
       page.assert_selector('#exhibition-form', visible: false)
       page.assert_selector('#new-exhibition')
-      page.assert_selector('#exhibitions-list', visible: false)
+      page.assert_selector('#exhibitions-container', visible: false)
       page.assert_selector('#exhibition-panel', visible: false)
     end
   end
