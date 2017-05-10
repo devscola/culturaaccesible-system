@@ -1,0 +1,26 @@
+version: '2'
+services:
+  admin:
+    container_name: admin
+    build: .
+    ports:
+      - ${SINATRA_DEFAULT_PORT}:${SINATRA_DEFAULT_PORT}
+    volumes:
+     - .:/opt/culturaaccesible
+     - bundle:/usr/local/bundle
+
+    links:
+      - selenium
+    command: bash -c "bundle install --jobs 3 && bundle exec rake"
+
+  selenium:
+    image: selenium/standalone-chrome
+    ports:
+        - "4444:4444"
+    container_name: chrome-browser
+    logging:
+      driver: none
+
+volumes:
+  bundle:
+    driver: local
