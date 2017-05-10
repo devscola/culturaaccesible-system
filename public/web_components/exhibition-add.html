@@ -1,0 +1,20 @@
+<link rel="import" href="/vendor/polymer/polymer.html">
+
+<dom-module id="exhibition-add">
+    <template>
+        <style>
+        </style>
+
+        <button id="button" on-click="publishClicked">Add exhibition</button>
+    </template>
+
+    <script>
+        Polymer({
+            is: 'exhibition-add',
+
+            publishClicked: function() {
+                this.fire('addExhibition');
+            }
+        });
+    </script>
+</dom-module>

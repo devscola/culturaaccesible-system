@@ -3,11 +3,13 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Exhibition</title>
+        <link rel="import" href="/web_components/exhibition-add.html">
     </head>
     <body>
         <div>
-            <button id="new-exhibition">Add exhibition</button>
+            <exhibition-add id="new-exhibition"></exhibition-add>
         </div>
+
         <div>
             <div>
                 <div>
@@ -62,6 +64,7 @@
             </div>
         </form>
 
+        <script src="/vendor/polymer/webcomponents-lite.min.js"></script>
         <script src="js/infrastructure/bus.js"></script>
         <script src="js/infrastructure/class.min.js"></script>
         <script src="js/infrastructure/service.js"></script>

@@ -21,7 +21,7 @@ module Page
     end
 
     def show_exhibition_form
-      find('#new-exhibition').click
+      find('#button.exhibition-add').click
     end
 
     def exhibition_form_visible?
