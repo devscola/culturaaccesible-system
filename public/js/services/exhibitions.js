@@ -3,21 +3,19 @@ Class('Services.Exhibitions', {
     Extends: Service,
 
     initialize: function() {
-        Services.Exhibitions.Super.call(this, '/home');
+        Services.Exhibitions.Super.call(this, '/api');
     },
 
-    retrieveList: function() {
-        result = [
-            {name: 'Some exhibition'},
-            {name: 'Some another exhibition'}
-        ];
-
-        Bus.publish('exhibitions.list.retrieved', result);
+    retrieveList: function(result) {
+        this.doRequest('/exhibition/list', '', function(result) {
+            Bus.publish('exhibitions.list.retrieved', result);
+        });
     },
 
     saveExhibition: function(exhibition) {
-        result = exhibition.detail;
-        Bus.publish('exhibition.saved', result);
+        this.doRequest('/exhibition/add', exhibition.detail, function(result) {
+            Bus.publish('exhibition.saved', result);
+        });
     },
 
     subscribe: function() {

@@ -3,9 +3,10 @@ require_relative '../../support/configuration'
 
 module Exhibitions
   class Repository
+    @content = []
+
     class << self
       def store(exhibition_data)
-        @content ||= []
         exhibition = Exhibitions::Exhibition.new(exhibition_data)
         @content << exhibition
         exhibition

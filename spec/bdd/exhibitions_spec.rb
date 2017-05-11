@@ -5,6 +5,7 @@ require_relative '../../app'
 feature 'List exhibitions' do
   scenario 'has items' do
     page = Page::Exhibitions.new
+    page.add_exhibition
     expect(page.exhibition_list?).to be true
   end
 end
