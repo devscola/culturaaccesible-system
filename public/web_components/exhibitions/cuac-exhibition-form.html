@@ -101,16 +101,16 @@
 
             collectData: function() {
                 data = {
-                    show: this.form.show.value,
+                    show: this.form.show.checked,
                     name: this.form.name.value,
                     location: this.form.location.value,
-                    shortDescription: this.form.shortDescription.value,
+                    short_description: this.form.shortDescription.value,
                     type: this.form.type.value,
-                    dateStart: this.formatDate(this.form.dateStart.value),
-                    dateFinish: this.formatDate(this.form.dateFinish.value),
+                    date_start: this.formatDate(this.form.dateStart.value),
+                    date_finish: this.formatDate(this.form.dateFinish.value),
                     beacon: this.form.beacon.value,
                     description: this.form.description.value
-                }
+                };
                 return data;
             },
 
@@ -122,10 +122,10 @@
             formatDate: function(dateString) {
                 date = new Date(dateString);
 
-                var day = date.getDate();
+                var day = date.getDate().toString();
                 day = day.length > 1 ? day : '0' + day;
 
-                var month = date.getMonth() + 1;
+                var month = (date.getMonth() + 1).toString();
                 month = month.length > 1 ? month : '0' + month;
 
                 var year = date.getFullYear().toString().substr(-2);
