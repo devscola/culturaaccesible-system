@@ -3,7 +3,7 @@ require_relative '../../system/exhibitions/service'
 
 describe Exhibitions::Service do
   before(:each) do
-    Exhibitions::Service.flush
+    flush
   end
 
   it 'retrieves exhibitions' do
@@ -11,10 +11,10 @@ describe Exhibitions::Service do
     type = 'some type'
     id = add_exhibition(name, type)
 
-    result = Exhibitions::Service.retrieve(id)
+    exhibition = retrieve_exhibition(id)
 
-    expect(result[:name]).to eq(name)
-    expect(result[:type]).to eq(type)
+    expect(exhibition[:name]).to eq(name)
+    expect(exhibition[:type]).to eq(type)
   end
 
   it 'retrieves all exhibitions' do
@@ -33,4 +33,13 @@ describe Exhibitions::Service do
     Exhibitions::Service.store(exhibition)
     exhibition['id']
   end
+
+  def retrieve_exhibition(id)
+    Exhibitions::Service.retrieve(id)
+  end
+
+  def flush
+    Exhibitions::Service.flush
+  end
+
 end
