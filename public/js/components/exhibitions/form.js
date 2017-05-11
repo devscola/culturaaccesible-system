@@ -15,7 +15,7 @@ Class('Exhibitions.Form', {
     },
 
     subscribe: function() {
-        Bus.subscribe('exhibition.new', this.showForm.bind(this));
+        Bus.subscribe('exhibition.create', this.showForm.bind(this));
     }
 
 });
