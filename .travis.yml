@@ -13,13 +13,12 @@ before_install:
   - sudo mv docker-compose /usr/local/bin
 
 install:
-  - docker pull devscola/consensus:latest
   - docker-compose build
   - docker-compose up -d
   - sleep 5
 
 script:
-  - docker-compose run web /bin/sh -c "cd /opt/culturaaccesible; touch travis.ci; bundle install; bundle exec rake"
+  - docker-compose run admin /bin/sh -c "cd /opt/culturaaccesible; touch travis.ci; bundle install; bundle exec rake"
   - sleep 1
 
 after_script:
