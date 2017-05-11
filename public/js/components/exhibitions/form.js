@@ -10,8 +10,8 @@ Class('Exhibitions.Form', {
         this.element.visible = true;
     },
 
-    saveExhibition: function() {
-        Bus.publish('exhibition.save');
+    saveExhibition: function(exhibition) {
+        Bus.publish('exhibition.save', exhibition);
     },
 
     subscribe: function() {

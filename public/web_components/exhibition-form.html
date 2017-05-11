@@ -26,8 +26,8 @@
                 <input id="location" on-input="allowSubmit" name="location">
             </div>
             <div>
-                <label for="short-description">General description</label>
-                <input name="short-description">
+                <label for="shortDescription">General description</label>
+                <input name="shortDescription">
             </div>
             <div>
                 <label for="type">Type</label>
@@ -40,10 +40,10 @@
             </div>
             <div>
                 <span>Open</span>
-                <label for="start-date">From</label>
-                <input name="start-date" type="date">
-                <label for="finish-date">To</label>
-                <input name="finish-date" type="date">
+                <label for="dateStart">From</label>
+                <input name="dateStart" type="date">
+                <label for="dateFinish">To</label>
+                <input name="dateFinish" type="date">
             </div>
             <div>
                 <label for="beacon">Beacon number</label>
@@ -64,6 +64,7 @@
             is: 'exhibition-form',
 
             ready: function() {
+                this.form = document.getElementById('exhibition-form');
                 this.name = document.getElementById('name');
                 this.location = document.getElementById('location');
                 this.submit = document.getElementById('submit-form');
@@ -97,9 +98,39 @@
                 this.submit.disabled = false;
             },
 
+            collectData: function() {
+                data = {
+                    show: this.form.show.value,
+                    name: this.form.name.value,
+                    location: this.form.location.value,
+                    shortDescription: this.form.shortDescription.value,
+                    type: this.form.type.value,
+                    dateStart: this.formatDate(this.form.dateStart.value),
+                    dateFinish: this.formatDate(this.form.dateFinish.value),
+                    beacon: this.form.beacon.value,
+                    description: this.form.description.value
+                }
+                return data;
+            },
+
             saveExhibition: function(event) {
                 event.preventDefault();
-                this.fire('exhibitionSave');
+                this.fire('exhibitionSave', this.collectData());
+            },
+
+            formatDate: function(dateString) {
+                date = new Date(dateString);
+
+                var day = date.getDate();
+                day = day.length > 1 ? day : '0' + day;
+
+                var month = date.getMonth() + 1;
+                month = month.length > 1 ? month : '0' + month;
+
+                var year = date.getFullYear().toString().substr(-2);
+
+                formattedDate = day + '/' + month + '/' + year;
+                return formattedDate;
             }
         });
     </script>
