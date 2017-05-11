@@ -10,6 +10,7 @@ task :default => :start
 
 task :prepare do
   sh 'mkdir -p public/vendor/polymer'
+  sh 'mkdir -p public/vendor/classjs'
   Support::Courier.act
 end
 
