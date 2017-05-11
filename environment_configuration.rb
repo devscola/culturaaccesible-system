@@ -15,3 +15,7 @@ def retrieve_port
   end
   return capybara_default_port
 end
+
+def retrieve_travis
+  File.exist?('travis.ci')
+end

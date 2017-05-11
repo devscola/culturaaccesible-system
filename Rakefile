@@ -6,7 +6,14 @@ SINATRA_PORT = retrieve_port
 task :default => :start
 
 task :start do
-  sh "rerun --background -- rackup --port #{SINATRA_PORT} -o 0.0.0.0"
+  if (TRAVIS == false)
+    sh "rerun --background -- rackup --port #{SINATRA_PORT} -o 0.0.0.0"
+  end
+  if (TRAVIS == true)
+    File.delete('travis.ci')
+    sh "rerun --background -- rackup --port #{SINATRA_PORT} -o 0.0.0.0 &"
+    sh 'rspec spec/bdd'
+  end
 end
 
 task :bdd do
