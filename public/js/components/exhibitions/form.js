@@ -1,8 +1,8 @@
 Class('Exhibitions.Form', {
 
     initialize: function() {
-        this.element = document.getElementById('form');
-        this.element.addEventListener('exhibitionSave', this.saveExhibition.bind(this));
+        this.element = document.getElementById('formulary');
+        this.element.addEventListener('submitClicked', this.saveExhibition.bind(this));
         this.subscribe();
     },
 

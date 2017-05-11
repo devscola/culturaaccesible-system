@@ -3,16 +3,16 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Exhibition</title>
-        <link rel="import" href="/web_components/exhibition-list.html">
-        <link rel="import" href="/web_components/exhibition-add.html">
-        <link rel="import" href="/web_components/exhibition-form.html">
-        <link rel="import" href="/web_components/exhibition-panel.html">
+        <link rel="import" href="/web_components/cuac-exhibition-button-create.html">
+        <link rel="import" href="/web_components/cuac-exhibition-list.html">
+        <link rel="import" href="/web_components/cuac-exhibition-form.html">
+        <link rel="import" href="/web_components/cuac-exhibition-panel.html">
     </head>
     <body>
-        <exhibition-add id="new-exhibition"></exhibition-add>
-        <exhibition-list id="exhibitions-container"></exhibition-list>
-        <exhibition-form id="form"></exhibition-form>
-        <exhibition-panel id="panel"></exhibition-panel>
+        <cuac-exhibition-button-create id="action"></cuac-exhibition-button-create>
+        <cuac-exhibition-list id="listing"></cuac-exhibition-list>
+        <cuac-exhibition-form id="formulary"></cuac-exhibition-form>
+        <cuac-exhibition-panel id="result"></cuac-exhibition-panel>
 
         <script src="/vendor/polymer/webcomponents-lite.min.js"></script>
         <script src="js/infrastructure/bus.js"></script>
@@ -21,7 +21,7 @@
 
         <script src="js/services/exhibitions.js"></script>
 
-        <script src="js/components/exhibitions/newExhibition.js"></script>
+        <script src="js/components/exhibitions/button.js"></script>
         <script src="js/components/exhibitions/form.js"></script>
         <script src="js/components/exhibitions/list.js"></script>
         <script src="js/components/exhibitions/panel.js"></script>

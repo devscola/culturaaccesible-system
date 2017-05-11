@@ -21,7 +21,7 @@ module Page
     end
 
     def show_exhibition_form
-      find('#button.exhibition-add').click
+      find('#action button').click
     end
 
     def save_exhibition
@@ -29,22 +29,22 @@ module Page
     end
 
     def exhibition_panel_visible?
-      form = find('#exhibition-panel', visible: false)
+      form = find('#result', visible: false)
       form.visible?
     end
 
     def exhibition_form_visible?
-      form = find('#exhibition-form', visible: false)
+      form = find('#formulary', visible: false)
       form.visible?
     end
 
     private
 
     def validate!
-      page.assert_selector('#exhibition-form', visible: false)
-      page.assert_selector('#new-exhibition')
-      page.assert_selector('#exhibitions-container', visible: false)
-      page.assert_selector('#exhibition-panel', visible: false)
+      page.assert_selector('#formulary', visible: false)
+      page.assert_selector('#action')
+      page.assert_selector('#listing', visible: false)
+      page.assert_selector('#result', visible: false)
     end
   end
 end

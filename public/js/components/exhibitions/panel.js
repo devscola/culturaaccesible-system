@@ -1,7 +1,7 @@
 Class('Exhibitions.Panel', {
 
     initialize: function() {
-        this.element = document.getElementById('panel');
+        this.element = document.getElementById('result');
         this.subscribe();
     },
 

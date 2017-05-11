@@ -1,19 +1,19 @@
 <link rel="import" href="/vendor/polymer/polymer.html">
 
-<dom-module id="exhibition-add">
+<dom-module id="cuac-exhibition-button-create">
     <template>
         <style>
         </style>
 
-        <button id="button" on-click="publishClicked">Add exhibition</button>
+        <button on-click="publishClicked">Add exhibition</button>
     </template>
 
     <script>
         Polymer({
-            is: 'exhibition-add',
+            is: 'cuac-exhibition-button-create',
 
             publishClicked: function() {
-                this.fire('exhibitionCreate');
+                this.fire('publishClicked');
             }
         });
     </script>

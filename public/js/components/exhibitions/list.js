@@ -1,7 +1,7 @@
 Class('Exhibitions.List', {
 
     initialize: function() {
-        this.element = document.getElementById('exhibitions-container');
+        this.element = document.getElementById('listing');
         this.subscribe();
     },
 

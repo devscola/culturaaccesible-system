@@ -1,6 +1,6 @@
 <link rel="import" href="/vendor/polymer/polymer.html">
 
-<dom-module id="exhibition-form">
+<dom-module id="cuac-exhibition-form">
     <template>
         <style>
             #exhibition-form.show {
@@ -54,14 +54,14 @@
                 <textarea name="description"></textarea>
             </div>
             <div>
-                <button id="submit-form" on-click="saveExhibition" disabled>Save</button>
+                <button id="submit-form" on-click="submitClicked" disabled>Save</button>
             </div>
         </form>
     </template>
 
     <script>
         Polymer({
-            is: 'exhibition-form',
+            is: 'cuac-exhibition-form',
 
             ready: function() {
                 this.form = document.getElementById('exhibition-form');
@@ -113,9 +113,9 @@
                 return data;
             },
 
-            saveExhibition: function(event) {
+            submitClicked: function(event) {
                 event.preventDefault();
-                this.fire('exhibitionSave', this.collectData());
+                this.fire('submitClicked', this.collectData());
             },
 
             formatDate: function(dateString) {
