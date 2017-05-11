@@ -19,4 +19,3 @@ end
 def retrieve_travis
   File.exist?('travis.ci')
 end
-
