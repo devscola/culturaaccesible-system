@@ -2,7 +2,7 @@ Class('Exhibitions.Form', {
 
     initialize: function() {
         this.element = document.getElementById('formulary');
-        this.element.addEventListener('submitClicked', this.saveExhibition.bind(this));
+        this.element.addEventListener('submitted', this.saveExhibition.bind(this));
         this.subscribe();
     },
 

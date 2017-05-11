@@ -115,7 +115,7 @@
 
             submitClicked: function(event) {
                 event.preventDefault();
-                this.fire('submitClicked', this.collectData());
+                this.fire('submitted', this.collectData());
             },
 
             formatDate: function(dateString) {
