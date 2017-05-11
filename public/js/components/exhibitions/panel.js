@@ -6,9 +6,7 @@ Class('Exhibitions.Panel', {
     },
 
     render: function(exhibition) {
-        var exhibitions = [];
-        exhibitions.push(exhibition);
-        this.element.exhibition = exhibitions;
+        this.element.exhibition = exhibition;
         this.showPanel();
     },
 
