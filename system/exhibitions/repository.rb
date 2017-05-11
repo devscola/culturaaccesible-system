@@ -1,3 +1,6 @@
+require 'mongo'
+require_relative '../../support/configuration'
+
 module Exhibitions
   class Repository
     class << self
@@ -20,6 +23,17 @@ module Exhibitions
 
       def flush
         @content = []
+      end
+
+      def connection
+        @connection ||= Mongo::Client.new(
+          ["#{host}:27017"],
+          :database => 'cuac_db'
+        )
+      end
+
+      def host
+        Support::Configuration.host
       end
     end
   end

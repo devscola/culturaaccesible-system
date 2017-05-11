@@ -4,22 +4,30 @@ services:
     container_name: system
     build: .
     ports:
-      - ${SINATRA_DEFAULT_PORT}:${SINATRA_DEFAULT_PORT}
+      - "4567:4567"
     volumes:
      - .:/opt/culturaaccesible
      - bundle:/usr/local/bundle
 
     links:
+      - mongocontainer
       - selenium
     command: bash -c "bundle install --jobs 3 && bundle exec rake"
 
   selenium:
+    container_name: selenium-cuac
     image: selenium/standalone-chrome
     ports:
         - "4444:4444"
-    container_name: chrome-browser
     logging:
       driver: none
+
+  mongocontainer:
+    container_name: mongo-cuac
+    image: mongo:latest
+    ports:
+        - "27017:27017"
+    command: --smallfiles
 
 volumes:
   bundle:

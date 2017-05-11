@@ -9,7 +9,7 @@ end
 
 def retrieve_port
   begin
-    capybara_default_port = eval File.open('.env').read
+    capybara_default_port = '4567'
   rescue
     capybara_default_port = '4567'
   end
@@ -19,3 +19,4 @@ end
 def retrieve_travis
   File.exist?('travis.ci')
 end
+
