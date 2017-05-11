@@ -2,6 +2,7 @@ require_relative 'environment_configuration'
 require 'rspec/core/rake_task'
 
 SINATRA_PORT = retrieve_port
+TRAVIS = retrieve_travis
 
 task :default => :start
 
