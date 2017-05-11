@@ -8,6 +8,13 @@ module Page
       validate!
     end
 
+    def add_exhibition
+      show_exhibition_form
+      fill('name', 'some name')
+      fill('location', 'some location')
+      save_exhibition
+    end
+
     def exhibition_list?
       has_css?('.list-item')
     end
