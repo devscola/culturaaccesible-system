@@ -16,7 +16,7 @@ module Page
     end
 
     def exhibition_list?
-      has_css?('.list-item')
+      has_css?('.list-item', wait: 2)
     end
 
     def fill(field, content)
