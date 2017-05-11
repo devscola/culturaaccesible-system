@@ -2,10 +2,10 @@ Class('Page.Exhibitions', {
 
     initialize: function() {
         new Services.Exhibitions();
-        new Exhibitions.Panel();
-        new NewExhibition.Form();
+        new Exhibitions.AddButton();
         new Exhibitions.List();
         new Exhibitions.Form();
+        new Exhibitions.Panel();
         this.publish();
     },
 

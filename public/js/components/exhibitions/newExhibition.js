@@ -1,4 +1,4 @@
-Class('NewExhibition.Form', {
+Class('Exhibitions.AddButton', {
 
     initialize: function() {
         this.element = document.getElementById('new-exhibition');
