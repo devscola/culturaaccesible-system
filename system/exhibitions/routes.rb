@@ -1,4 +1,5 @@
 require 'sinatra/base'
+require 'json'
 require_relative 'service'
 
 class App < Sinatra::Base
