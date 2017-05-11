@@ -3,27 +3,27 @@
 <dom-module id="cuac-exhibition-form">
     <template>
         <style>
-            #exhibition-form.show {
+            .form.show {
                 display: block;
             }
 
-            #exhibition-form.hide {
+            .form.hide {
                 display: none;
             }
         </style>
 
-        <form id="exhibition-form" class$="{{formVisibility}}">
+        <form class$="form {{formVisibility}}">
             <div>
                 <label for="show">Show</label>
                 <input type="checkbox" name="show">
             </div>
             <div>
                 <label for="title">Title</label>
-                <input id="name" on-input="allowSubmit" name="title">
+                <input on-input="allowSubmit" name="name">
             </div>
             <div>
                 <label for="location">Location</label>
-                <input id="location" on-input="allowSubmit" name="location">
+                <input on-input="allowSubmit" name="location">
             </div>
             <div>
                 <label for="shortDescription">General description</label>
@@ -54,7 +54,7 @@
                 <textarea name="description"></textarea>
             </div>
             <div>
-                <button id="submit-form" on-click="submitClicked" disabled>Save</button>
+                <button class="submit" on-click="submitClicked" disabled>Save</button>
             </div>
         </form>
     </template>
@@ -64,10 +64,11 @@
             is: 'cuac-exhibition-form',
 
             ready: function() {
-                this.form = document.getElementById('exhibition-form');
-                this.name = document.getElementById('name');
-                this.location = document.getElementById('location');
-                this.submit = document.getElementById('submit-form');
+                this.form = document.querySelector('.form');
+                this.name = document.getElementsByName('name')[0];
+                this.location = document.getElementsByName('location')[0];
+                this.submit = document.querySelector('.submit');
+                this.submit = document.querySelector('.submit');
             },
 
             properties: {

@@ -3,15 +3,15 @@
 <dom-module id="cuac-exhibition-panel">
     <template>
         <style>
-            #exhibition-panel.show {
+            .panel.show {
                 display: block;
             }
 
-            #exhibition-panel.hide {
+            .panel.hide {
                 display: none;
             }
         </style>
-        <div id="exhibition-panel" class$="{{panelVisibility}}">
+        <div class$="panel {{panelVisibility}}">
             <div>Show: {{exhibition.show}}</div>
             <div>Name: {{exhibition.name}}</div>
             <div>Location: {{exhibition.location}}</div>

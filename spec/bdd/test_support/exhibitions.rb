@@ -24,7 +24,7 @@ module Page
     end
 
     def form_submit_deactivated?
-      has_css?('#submit-form[disabled]')
+      has_css?('.submit[disabled]')
     end
 
     def show_exhibition_form
@@ -32,7 +32,7 @@ module Page
     end
 
     def save_exhibition
-      find('#submit-form').click
+      find('.submit').click
     end
 
     def exhibition_panel_visible?
