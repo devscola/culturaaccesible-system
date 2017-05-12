@@ -1,5 +1,4 @@
 require_relative 'repository'
-require_relative '../../domain/exhibition'
 require_relative 'exhibition'
 
 module Exhibitions
