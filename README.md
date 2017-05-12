@@ -24,7 +24,7 @@ Link: https://docs.docker.com/compose/install/
 1.- Download git:
 
 ~~~
-git clone https://github.com/devscola/consensus
+git clone https://github.com/devscola/culturaaccesible-system.git
 ~~~
 
 Start the docker-compose service to be able to run the test:
@@ -52,4 +52,3 @@ docker-compose run system rake test
 ~~~
 
 If you want view app, open navigator (firefox, chrome, ...) and visit localhost:4567
-
