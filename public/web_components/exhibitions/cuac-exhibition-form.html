@@ -92,11 +92,17 @@
                 var locationLength = this.location.value.length;
                 if (nameLength > 0 && locationLength > 0) {
                     this.activateSubmit();
+                } else {
+                    this.deactivateSubmit();    
                 }
             },
 
             activateSubmit: function() {
                 this.submit.disabled = false;
+            },
+
+            deactivateSubmit: function() {
+                this.submit.disabled = true;
             },
 
             collectData: function() {
