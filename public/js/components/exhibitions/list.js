@@ -1,8 +1,9 @@
 Class('Exhibitions.List', {
 
+    Extends: Component,
+
     initialize: function() {
-        this.element = document.getElementById('listing');
-        this.subscribe();
+        Exhibitions.List.Super.call(this, 'listing');
     },
 
     render: function(exhibitions) {

@@ -1,9 +1,10 @@
 Class('Exhibitions.Form', {
 
+    Extends: Component,
+
     initialize: function() {
-        this.element = document.getElementById('formulary');
+        Exhibitions.Form.Super.call(this, 'formulary');
         this.element.addEventListener('submitted', this.saveExhibition.bind(this));
-        this.subscribe();
     },
 
     showForm: function() {

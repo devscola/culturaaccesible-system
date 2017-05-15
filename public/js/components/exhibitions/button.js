@@ -1,7 +1,9 @@
 Class('Exhibitions.AddButton', {
 
+    Extends: Component,
+
     initialize: function() {
-        this.element = document.getElementById('action');
+        Exhibitions.AddButton.Super.call(this, 'action');
         this.element.addEventListener('started', this.createExhibition.bind(this));
     },
 

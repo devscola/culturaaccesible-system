@@ -1,8 +1,9 @@
 Class('Exhibitions.Panel', {
 
+    Extends: Component,
+
     initialize: function() {
-        this.element = document.getElementById('result');
-        this.subscribe();
+        Exhibitions.Panel.Super.call(this, 'result');
     },
 
     render: function(exhibition) {
