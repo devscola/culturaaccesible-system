@@ -16,6 +16,7 @@ class App < Sinatra::Base
   end
 
   post '/api/exhibition/list' do
+    response.headers['Access-Control-Allow-Origin'] = '*'
     result = Exhibitions::Service.list
     result.to_json
   end
