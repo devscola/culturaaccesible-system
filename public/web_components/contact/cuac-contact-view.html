@@ -1,0 +1,48 @@
+<link rel="import" href="/vendor/polymer/polymer.html">
+
+<dom-module id="cuac-contact-view">
+    <template>
+        <style>
+            .panel.show {
+                display: block;
+            }
+
+            .panel.hide {
+                display: none;
+            }
+        </style>
+        <div class$="panel {{panelVisibility}}">
+            <div>Phone Number: {{contact.phone}}</div>
+            <div>Email: {{contact.email}}</div>
+            <div>WebSite: {{contact.web}}</div>
+        </div>
+    </template>
+
+    <script>
+        Polymer({
+            is: 'cuac-contact-view',
+
+            properties: {
+
+                contact: {
+                    type: Object,
+                    reflectToAttribute: true
+                },
+
+                visible: {
+                    type: Boolean,
+                    observer: 'showPanel'
+                },
+
+                panelVisibility: {
+                    type: String,
+                    value: 'hide'
+                }
+            },
+
+            showPanel: function() {
+                this.panelVisibility = 'show';
+            }
+        });
+    </script>
+</dom-module>
