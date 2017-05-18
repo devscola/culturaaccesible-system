@@ -1,6 +1,0 @@
-development:
-  clients:
-    default:
-      database: cuac_db
-      hosts:
-        - localhost:27017

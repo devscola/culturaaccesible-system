@@ -10,7 +10,6 @@ services:
      - bundle:/usr/local/bundle
 
     links:
-      - mongocontainer
       - selenium
     command: bash -c "bundle install --jobs 3 && bundle exec rake prepare && bundle exec rake"
 
@@ -21,13 +20,6 @@ services:
         - "4444:4444"
     logging:
       driver: none
-
-  mongocontainer:
-    container_name: mongo-cuac
-    image: mongo:latest
-    ports:
-        - "27017:27017"
-    command: --smallfiles
 
 volumes:
   bundle:
