@@ -12,5 +12,9 @@ class App < Sinatra::Base
   get '/home' do
     File.read(File.join('public', 'home.html'))
   end
+
+  get '/contact' do
+    File.read(File.join('public', 'contact.html'))
+  end
   
 end
