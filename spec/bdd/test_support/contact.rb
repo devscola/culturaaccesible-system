@@ -3,7 +3,7 @@ module Page
     include Capybara::DSL
 
     def initialize
-      url = '/contact.html'
+      url = '/contact'
       visit(url)
       validate!
     end
@@ -14,6 +14,14 @@ module Page
 
     def has_info?(phone)
       has_content?(phone)
+    end
+
+    def has_save_button?
+      has_css?('#save')
+    end
+
+    def has_fields?
+      has_css?('.field')
     end
 
     private

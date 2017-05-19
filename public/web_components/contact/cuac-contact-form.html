@@ -1,0 +1,47 @@
+<link rel="import" href="/vendor/polymer/polymer.html">
+
+<dom-module id="cuac-contact-form">
+    <template>
+        <style>
+            .form.show {
+                display: block;
+            }
+
+            .form.hide {
+                display: none;
+            }
+        </style>
+
+        <form class$="form">
+            <template is="dom-repeat" items="{{inputs}}">
+                <div class="field">{{item.label}}</div>
+            </template>
+            <div>
+                <button id="save" class="submit" on-click="submitClicked" disabled>Save</button>
+            </div>
+        </form>
+    </template>
+
+    <script>
+        Polymer({
+            is: 'cuac-contact-form',
+
+            ready: function() {
+                this.form = document.querySelector('.form');
+                this.submit = document.querySelector('.submit');
+            },
+
+            properties: {
+                inputs: {
+                    type: Array,
+                    reflectToAttribute: true
+                }
+            },
+
+            submitClicked: function(event) {
+                event.preventDefault();
+                this.fire('submitted');
+            }
+        });
+    </script>
+</dom-module>
