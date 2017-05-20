@@ -1,7 +1,7 @@
 version: '2'
 services:
   system:
-    container_name: system
+    container_name: system-cuac-container
     build: .
     ports:
       - "4567:4567"
@@ -14,7 +14,7 @@ services:
     command: bash -c "bundle install --jobs 3 && bundle exec rake prepare && bundle exec rake"
 
   selenium:
-    container_name: selenium-cuac
+    container_name: chrome-cuac-container
     image: selenium/standalone-chrome
     ports:
         - "4444:4444"
