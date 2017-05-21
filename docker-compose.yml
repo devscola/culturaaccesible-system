@@ -11,6 +11,7 @@ services:
 
     links:
       - selenium
+      - mongo
     command: bash -c "sh bundler_and_download_vendor.sh"
 
   selenium:
@@ -20,6 +21,13 @@ services:
         - "4444:4444"
     logging:
       driver: none
+
+  mongo:
+    container_name: mongo-cuac-container
+    image: mongo:latest
+    ports:
+        - "27017:27017"
+    command: --smallfiles
 
 volumes:
   bundle:

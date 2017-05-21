@@ -1,6 +1,7 @@
 require_relative 'environment_configuration'
 require_relative 'support/courier'
 require 'rspec/core/rake_task'
+require 'mongoid'
 
 SINATRA_PORT = retrieve_port
 TRAVIS = retrieve_travis
