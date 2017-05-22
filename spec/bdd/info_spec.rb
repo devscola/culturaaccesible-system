@@ -8,4 +8,9 @@ feature 'Info form' do
 
     expect(page.has_save_button?).to be true
   end
+  scenario 'has textarea' do
+    page = Page::Info.new
+
+    expect(page.has_textbox?).to be true
+  end
 end

@@ -12,6 +12,10 @@ module Page
       has_css?('#save')
     end
 
+    def has_textbox?
+      has_css?('#description')
+    end
+
     private
 
     def validate!
