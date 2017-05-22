@@ -1,4 +1,5 @@
 <link rel="import" href="/vendor/polymer/polymer.html">
+<link rel="import" href="/web_components/exhibitions/cuac-exhibition-detail.html">
 
 <dom-module id="cuac-exhibition-list">
     <template>
@@ -8,9 +9,7 @@
         <h2>EXHIBITIONS</h2>
         <div>
             <template is="dom-repeat" items="{{exhibitionsList}}">
-                <div class="list-item">
-                    {{item.name}}
-                </div>
+                <cuac-exhibition-detail exhibition="[[item]]"></cuac-exhibition-detail>
             </template>
         </div>
     </template>
@@ -24,8 +23,7 @@
                     type: Array,
                     reflectToAttribute: true
                 }
-            },
-
+            }
         });
     </script>
 </dom-module>
