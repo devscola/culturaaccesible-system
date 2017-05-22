@@ -6,17 +6,6 @@ feature 'Info form' do
   let(:page) do
     Page::Info.new
   end
-  scenario 'has save button' do
-    expect(page.has_save_button?).to be true
-  end
-
-  scenario 'has description textarea' do
-    expect(page.has_textbox?).to be true
-  end
-
-  scenario 'has name field' do
-    expect(page.has_field?).to be true
-  end
 
   scenario 'form hide when submitted' do
     page.fill('name', 'muvim')

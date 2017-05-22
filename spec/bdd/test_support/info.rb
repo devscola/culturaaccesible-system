@@ -12,14 +12,6 @@ module Page
       has_css?('#save')
     end
 
-    def has_textbox?
-      has_css?('#description')
-    end
-
-    def has_field?
-      has_css?('#name')
-    end
-
     def fill(field, content)
       fill_in(field, with: content)
     end
