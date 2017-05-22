@@ -3,6 +3,7 @@ Class('Page.Info', {
         this.publish();
         new Info.Form();
         new Info.Textarea();
+        new Info.Field();
     },
 
     publish: function() {
