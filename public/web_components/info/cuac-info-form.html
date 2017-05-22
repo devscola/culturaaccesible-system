@@ -1,0 +1,63 @@
+<link rel="import" href="/vendor/polymer/polymer.html">
+
+<dom-module id="cuac-info-form">
+    <template>
+        <style>
+            .form.show {
+                display: block;
+            }
+
+            .form.hide {
+                display: none;
+            }
+        </style>
+        <form class$="form {{formVisibility}}">
+            <cuac-info-field id="info-field"></cuac-info-field>
+            <cuac-info-textarea id="info-texarea"></cuac-info-textarea>
+            <div>
+                <button class="submit" on-click="submitClicked">Save</button>
+            </div>
+        </form>
+    </template>
+
+    <script>
+        Polymer({
+            is: 'cuac-info-form',
+
+            properties: {
+                visible: {
+                    type: Boolean,
+                    observer: 'showForm'
+                },
+
+                formVisibility: {
+                    type: String,
+                    value: 'show'
+                },
+            },
+
+            showForm: function() {
+                this.formVisibility = 'hide';
+            },
+
+            ready: function() {
+                this.description = document.getElementsByName('description')[0];
+                this.name = document.getElementsByName('name')[0];
+                this.submit = document.querySelector('.submit');
+            },
+
+            collectData: function() {
+                data = {
+                    name: this.name.value,
+                    description: this.description.value
+                };
+                return data;
+            },
+
+            submitClicked: function(event) {
+                event.preventDefault();
+                this.fire('submitted', this.collectData());
+            }
+        });
+    </script>
+</dom-module>
