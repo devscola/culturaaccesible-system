@@ -2,17 +2,7 @@
 
 <dom-module id="cuac-contact-form">
     <template>
-        <style>
-            .form.show {
-                display: block;
-            }
-
-            .form.hide {
-                display: none;
-            }
-        </style>
-
-        <form class$="form">
+        <form>
             <template is="dom-repeat" items="{{inputs}}">
                 <div class="field">{{item.label}}</div>
             </template>
@@ -25,11 +15,6 @@
     <script>
         Polymer({
             is: 'cuac-contact-form',
-
-            ready: function() {
-                this.form = document.querySelector('.form');
-                this.submit = document.querySelector('.submit');
-            },
 
             properties: {
                 inputs: {
