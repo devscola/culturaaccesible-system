@@ -16,7 +16,7 @@ def use_selenium
   Capybara.register_driver :chrome do |app|
     Capybara::Selenium::Driver.new(app, {
       browser: :remote,
-      url: 'http://selenium-cuac:4444/wd/hub',
+      url: 'http://chrome-cuac-container:4444/wd/hub',
       desired_capabilities: Selenium::WebDriver::Remote::Capabilities.chrome
     })
   end

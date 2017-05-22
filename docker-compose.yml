@@ -1,7 +1,7 @@
 version: '2'
 services:
   system:
-    container_name: system
+    container_name: system-cuac-container
     build: .
     ports:
       - "4567:4567"
@@ -11,15 +11,23 @@ services:
 
     links:
       - selenium
-    command: bash -c "bundle install --jobs 3 && bundle exec rake prepare && bundle exec rake"
+      - mongo
+    command: bash -c "sh bundler_and_download_vendor.sh"
 
   selenium:
-    container_name: selenium-cuac
+    container_name: chrome-cuac-container
     image: selenium/standalone-chrome
     ports:
         - "4444:4444"
     logging:
       driver: none
+
+  mongo:
+    container_name: mongo-cuac-container
+    image: mongo:latest
+    ports:
+        - "27017:27017"
+    command: --smallfiles
 
 volumes:
   bundle:
