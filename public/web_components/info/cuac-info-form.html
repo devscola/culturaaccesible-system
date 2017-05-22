@@ -2,7 +2,16 @@
 
 <dom-module id="cuac-info-form">
     <template>
-        <form>
+        <style>
+            .form.show {
+                display: block;
+            }
+
+            .form.hide {
+                display: none;
+            }
+        </style>
+        <form class$="form {{formVisibility}}">
             <cuac-info-textarea id="info-texarea"></cuac-info-textarea>
             <cuac-info-field id="info-field"></cuac-info-field>
             <div>
@@ -16,6 +25,19 @@
             is: 'cuac-info-form',
 
             properties: {
+                visible: {
+                    type: Boolean,
+                    observer: 'showForm'
+                },
+
+                formVisibility: {
+                    type: String,
+                    value: 'show'
+                },
+            },
+
+            showForm: function() {
+                this.formVisibility = 'hide';
             },
 
             ready: function() {

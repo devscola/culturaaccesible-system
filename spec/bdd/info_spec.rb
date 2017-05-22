@@ -20,4 +20,13 @@ feature 'Info form' do
 
     expect(page.has_field?).to be true
   end
+
+  scenario 'form hide when submitted' do
+    page = Page::Info.new
+    page.fill('name', 'muvim')
+    page.fill('description', 'description test 1')
+    page.save
+
+    expect(page.has_save_button?).to be false
+  end
 end

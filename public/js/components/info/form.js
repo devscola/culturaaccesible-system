@@ -9,12 +9,16 @@ Class('Info.Form', {
         this.element.addEventListener('submitted', this.saveInfo.bind(this));
     },
 
+    hideForm: function() {
+        this.element.visible = false;
+    },
+
     saveInfo: function(info) {
         Bus.publish('info.retrieved', info);
+        this.hideForm();
     },
 
     subscribe: function() {
     }
 
 });
-

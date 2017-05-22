@@ -20,6 +20,14 @@ module Page
       has_css?('#name')
     end
 
+    def fill(field, content)
+      fill_in(field, with: content)
+    end
+
+    def save
+      find('.submit').click
+    end
+
     private
 
     def validate!
