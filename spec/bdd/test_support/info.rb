@@ -16,6 +16,10 @@ module Page
       has_css?('#description')
     end
 
+    def has_field?
+      has_css?('#name')
+    end
+
     private
 
     def validate!
