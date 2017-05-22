@@ -1,0 +1,37 @@
+<link rel="import" href="/vendor/polymer/polymer.html">
+
+<dom-module id="cuac-contact-field">
+    <template>
+        <style>
+        </style>
+            <input on-input="toggleSave" class$="{{label}}" name$="{{label}}">
+    </template>
+
+    <script>
+        Polymer({
+            is: 'cuac-contact-field',
+
+            ready: function() {
+            },
+
+            properties: {
+                label: {
+                    type: String,
+                }
+            },
+
+            renderContactFields: function() {
+                this.field = document.getElementsByName(this.label)[0];
+            },
+
+            toggleSave: function() {
+                this.renderContactFields();
+                var fieldLength = this.field.value.length;
+                data = fieldLength > 0;
+                this.fire('buttonToggled', data.detail);
+            }
+
+        });
+    </script>
+</dom-module>
+

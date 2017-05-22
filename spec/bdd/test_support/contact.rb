@@ -24,10 +24,25 @@ module Page
       has_css?('.field')
     end
 
+    def fill_fields(contact)
+      first(:css, 'input.Phone').native.send_keys(contact['phone'])
+
+      input_email = first(:css, 'input.Email').native
+      input_email.send_keys(contact['email'])
+
+      input_web = first(:css, 'input.Web').native
+      input_web.send_keys(contact['web'])
+    end 
+
+    def save_contact_info
+      find('#save').click
+    end 
+
     private
 
     def validate!
       page.assert_selector('#contact-view')
+      page.assert_selector('#contact-form')
     end
   end
 end

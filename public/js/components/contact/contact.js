@@ -4,16 +4,11 @@ Class('Contact.View', {
 
     initialize: function() {
       Contact.View.Super.call(this, 'contact-view');
-      var contact = {
-        'phone' : '963456456',
-        'email' : 'fake@mail.com',
-        'web' : 'webfake.com'
-      };
-      this.render(contact);
+      var contact = {};
     },
 
-    render: function(contact) {
-      this.element.contact = contact;
+    render: function(contactInfo) {
+      this.element.contact = contactInfo;
       this.showPanel();
     },
 
@@ -22,7 +17,7 @@ Class('Contact.View', {
     },
 
     subscribe: function() {
-
+      Bus.subscribe('render.contact', this.render.bind(this));
     }
 
 });

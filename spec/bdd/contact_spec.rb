@@ -6,11 +6,14 @@ feature 'Contact view' do
   scenario 'shows info' do
     page = Page::Contact.new
     contact = {
-      'phone' => '963456456',
-      'email' => 'fake@mail.com',
-      'web' => 'webfake.com'
+      'phone' => 'some phome',
+      'email' => 'some email',
+      'web' => 'some web'
     }
-
+    
+    page.fill_fields(contact)
+    page.save_contact_info
+    
     expect(page.has_info?(contact['phone'])).to be true
   end
 end
