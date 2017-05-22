@@ -12,14 +12,6 @@ module Page
       has_content?(phone)
     end
 
-    def has_save_button?
-      has_css?('#save')
-    end
-
-    def has_fields?
-      has_css?('.field')
-    end
-
     def fill_fields(contact)
       first(:css, 'input.Phone').native.send_keys(contact['phone'])
 

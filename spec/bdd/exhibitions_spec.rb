@@ -10,6 +10,16 @@ feature 'List exhibitions' do
   end
 end
 
+feature 'Add exhibition button' do
+  scenario 'shows exhibition form' do
+    page = Page::Exhibitions.new
+
+    page.show_exhibition_form
+
+    expect(page.exhibition_form_visible?). to be true
+  end
+end
+
 feature 'Form' do
   scenario 'allows submit when required fields filled' do
     page = Page::Exhibitions.new
@@ -22,15 +32,6 @@ feature 'Form' do
   end
 end
 
-feature 'Add exhibition button' do
-  scenario 'shows exhibition form' do
-    page = Page::Exhibitions.new
-
-    page.show_exhibition_form
-
-    expect(page.exhibition_form_visible?). to be true
-  end
-end
 
 feature 'Exhibition panel' do
   scenario 'displays when form is submited' do
