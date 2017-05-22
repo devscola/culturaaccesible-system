@@ -8,10 +8,6 @@ module Page
       validate!
     end
 
-    def save
-
-    end
-
     def has_info?(phone)
       has_content?(phone)
     end
@@ -32,17 +28,17 @@ module Page
 
       input_web = first(:css, 'input.Web').native
       input_web.send_keys(contact['web'])
-    end 
+    end
 
     def save_contact_info
       find('#save').click
-    end 
+    end
 
     private
 
     def validate!
-      page.assert_selector('#contact-view')
-      page.assert_selector('#contact-form')
+      assert_selector('#result')
+      assert_selector('#formulary')
     end
   end
 end

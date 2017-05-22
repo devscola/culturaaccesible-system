@@ -5,7 +5,7 @@ Class('Contact.Form', {
     fields: [{"label" : "Phone"}, {"label" : "Email"}, {"label" : "Web"}],
 
     initialize: function() {
-        Contact.Form.Super.call(this, 'contact-form');
+        Contact.Form.Super.call(this, 'formulary');
         this.element.fields = this.fields;
         this.element.addEventListener('buttonToggled', this.toggleButton.bind(this));
         this.element.addEventListener('submitted', this.renderContact.bind(this));

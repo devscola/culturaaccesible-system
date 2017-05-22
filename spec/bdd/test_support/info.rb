@@ -23,7 +23,7 @@ module Page
     private
 
     def validate!
-      page.assert_selector('#info-form')
+      page.assert_selector('#formulary')
     end
   end
 end
