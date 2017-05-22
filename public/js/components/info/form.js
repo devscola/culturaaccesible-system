@@ -14,7 +14,7 @@ Class('Info.Form', {
     },
 
     saveInfo: function(info) {
-        Bus.publish('info.retrieved', info);
+        Bus.publish('info.retrieved', info.detail);
         this.hideForm();
     },
 
