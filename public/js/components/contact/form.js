@@ -17,9 +17,6 @@ Class('Contact.Form', {
 
     renderContact: function(contactInfo) {
       Bus.publish('render.contact', contactInfo.detail);
-    },
-
-    subscribe: function() {
     }
 
 });
