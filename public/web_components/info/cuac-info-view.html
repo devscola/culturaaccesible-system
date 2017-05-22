@@ -1,0 +1,45 @@
+<link rel="import" href="/vendor/polymer/polymer.html">
+
+<dom-module id="cuac-info-view">
+    <template>
+        <style>
+            .info.show {
+                display: block;
+            }
+
+            .info.hide {
+                display: none;
+            }
+        </style>
+        <div class$="info {{visibility}}">
+            <div>Name: {{info.name}}</div>
+            <div>Extra text: {{info.extraText}}</div>
+        </div>
+    </template>
+
+    <script>
+        Polymer({
+            is: 'cuac-info-view',
+
+            properties: {
+                info: {
+                    type: Object,
+                },
+
+                visible: {
+                    type: Boolean,
+                    observer: 'show'
+                },
+
+                visibility: {
+                    type: String,
+                    value: 'hide'
+                }
+            },
+
+            show: function() {
+                this.visibility = 'show';
+            }
+        });
+    </script>
+</dom-module>
