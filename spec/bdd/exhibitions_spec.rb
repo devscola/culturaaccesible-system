@@ -30,7 +30,7 @@ feature 'Form' do
     expect(result).to be true
   end
 
-  scenario 'allows submit when required fields filled', :wip do
+  scenario 'allows submit when required fields filled' do
     exhibitions = Page::Exhibitions.new
     exhibitions.show_exhibition_form
 

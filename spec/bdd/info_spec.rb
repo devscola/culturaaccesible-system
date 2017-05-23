@@ -3,15 +3,14 @@ require_relative 'test_support/info'
 require_relative '../../app'
 
 feature 'Info form' do
-  let(:page) do
-    Page::Info.new
-  end
+  scenario 'form hide when submitted', :wip do
+    info = Page::Info.new
+    info.fill('name', 'some name')
+    info.fill('description', 'some description')
+    info.save
 
-  scenario 'form hide when submitted' do
-    page.fill('name', 'muvim')
-    page.fill('description', 'description test 1')
-    page.save
+    result = info.has_form?
 
-    expect(page.has_save_button?).to be false
+    expect(result).to be false
   end
 end
