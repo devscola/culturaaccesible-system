@@ -24,7 +24,8 @@ module Page
     end
 
     def form_submit_deactivated?
-      has_css?('.submit[disabled]')
+      button = find('.submit')
+      button.disabled?
     end
 
     def show_exhibition_form

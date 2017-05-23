@@ -18,12 +18,12 @@
                 <input type="checkbox" name="show">
             </div>
             <div>
-                <label for="title">Title</label>
-                <input on-input="allowSubmit" name="name">
+                <label for="name">Title</label>
+                <input on-input="isSubmittable" name="name">
             </div>
             <div>
                 <label for="location">Location</label>
-                <input on-input="allowSubmit" name="location">
+                <input on-input="isSubmittable" name="location">
             </div>
             <div>
                 <label for="shortDescription">General description</label>
@@ -54,7 +54,7 @@
                 <textarea name="description"></textarea>
             </div>
             <div>
-                <button class="submit" on-click="submitClicked" disabled>Save</button>
+                <button class="submit" on-click="submitClicked" disabled$="{{submitDisabled}}">Save</button>
             </div>
         </form>
     </template>
@@ -64,10 +64,9 @@
             is: 'cuac-exhibition-form',
 
             ready: function() {
-                this.form = document.querySelector('.form');
                 this.name = document.getElementsByName('name')[0];
                 this.location = document.getElementsByName('location')[0];
-                this.submit = document.querySelector('.submit');
+                this.form = document.querySelector('.form');
             },
 
             properties: {
@@ -79,6 +78,16 @@
                 formVisibility: {
                     type: String,
                     value: 'hide'
+                },
+
+                submitDisabled: {
+                    type: String,
+                    value: 'disabled'
+                },
+
+                exhibitionName: {
+                    type: String,
+                    reflectToAttribute: true,
                 }
             },
 
@@ -86,7 +95,7 @@
                 this.formVisibility = 'show';
             },
 
-            allowSubmit: function() {
+            isSubmittable: function() {
                 var nameLength = this.name.value.length;
                 var locationLength = this.location.value.length;
                 if (nameLength > 0 && locationLength > 0) {
@@ -97,11 +106,11 @@
             },
 
             activateSubmit: function() {
-                this.submit.disabled = false;
+                this.submitDisabled = null;
             },
 
             deactivateSubmit: function() {
-                this.submit.disabled = true;
+                this.submitDisabled = 'disabled';
             },
 
             collectData: function() {
