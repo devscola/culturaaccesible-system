@@ -2,32 +2,34 @@
 
 <dom-module id="cuac-contact-field">
     <template>
-        <input on-input="toggleSave" class$="{{label}}" name$="{{label}}">
+        <input class$="{{field.label}}" value={{fieldValue::input}}>
     </template>
 
     <script>
         Polymer({
             is: 'cuac-contact-field',
 
-            ready: function() {
-            },
-
             properties: {
-                label: {
+                field: {
+                    type: Object
+                },
+
+                fieldValue: {
                     type: String,
+                    observer: 'updateContent'
                 }
             },
 
-            renderContactFields: function() {
-                this.field = document.getElementsByName(this.label)[0];
+            updateContent: function() {
+                this.field.content = [];
+                this.field.content.push(this.fieldValue);
+                this.toggleSave();
             },
 
             toggleSave: function() {
-                this.renderContactFields();
-                var fieldLength = this.field.value.length;
-                this.fire('buttonToggled');
+                var buttonActive = this.fieldValue.length > 0;
+                this.fire('buttonToggled', buttonActive);
             }
-
         });
     </script>
 </dom-module>
