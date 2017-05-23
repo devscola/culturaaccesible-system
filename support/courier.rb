@@ -16,7 +16,7 @@ module Support
         polymer_mini = open('https://polygit.org/polymer+1.x/components/polymer/polymer-mini.html')
         polymer_micro = open('https://polygit.org/polymer+1.x/components/polymer/polymer-micro.html')
         webcomponents_js = open('https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/0.7.24/webcomponents-lite.min.js')
-        class_js = open('https://rawgit.com/DominikGuzei/Class.js/master/class.min.js')
+        class_js = open('https://raw.githubusercontent.com/DominikGuzei/Class.js/master/class.min.js')
 
         engine_main = File.open('public/vendor/polymer/polymer.html', 'w')
         engine_mini = File.open('public/vendor/polymer/polymer-mini.html', 'w')
