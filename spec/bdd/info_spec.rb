@@ -4,13 +4,11 @@ require_relative '../../app'
 
 feature 'Info form' do
   scenario 'form hide when submitted', :wip do
-    info = Page::Info.new
-    info.fill('name', 'some name')
-    info.fill('description', 'some description')
-    info.save
+    current = Page::Info.new
+    current.fill('name', 'some name')
+    current.fill('description', 'some description')
+    current.save
 
-    result = info.has_form?
-
-    expect(result).to be false
+    expect(current.has_form?).to be false
   end
 end

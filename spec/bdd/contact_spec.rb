@@ -4,16 +4,16 @@ require_relative '../../app'
 
 feature 'Contact view' do
   scenario 'shows info' do
-    page = Page::Contact.new
+    current = Page::Contact.new
     contact = {
       'phone' => 'some phome',
       'email' => 'some email',
       'web' => 'some web'
     }
 
-    page.fill_fields(contact)
-    page.save_contact_info
+    current.fill_fields(contact)
+    current.save_contact_info
 
-    expect(page.has_info?(contact['phone'])).to be true
+    expect(current.has_info?(contact['phone'])).to be true
   end
 end
