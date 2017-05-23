@@ -25,8 +25,7 @@
             toggleSave: function() {
                 this.renderContactFields();
                 var fieldLength = this.field.value.length;
-                data = fieldLength > 0;
-                this.fire('buttonToggled', data.detail);
+                this.fire('buttonToggled');
             }
 
         });
