@@ -6,7 +6,7 @@ require_relative '../../app'
 feature 'Exhibitions' do
   scenario 'has items', :wip do
     current = Fixture::save_exhibition
-    
+
     expect(current.exhibition_list?).to be true
   end
 

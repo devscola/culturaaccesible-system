@@ -8,8 +8,8 @@ module Page
       validate!
     end
 
-    def has_save_button?
-      has_css?('#save')
+    def has_form?
+      has_css?('.form', visible: true)
     end
 
     def fill(field, content)
@@ -23,7 +23,7 @@ module Page
     private
 
     def validate!
-      page.assert_selector('#formulary')
+      assert_selector('#formulary')
     end
   end
 end

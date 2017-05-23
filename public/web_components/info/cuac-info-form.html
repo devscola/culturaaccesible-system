@@ -25,25 +25,19 @@
             is: 'cuac-info-form',
 
             properties: {
-                visible: {
-                    type: Boolean,
-                    observer: 'showForm'
-                },
-
                 formVisibility: {
                     type: String,
                     value: 'show'
                 },
             },
 
-            showForm: function() {
+            hide: function() {
                 this.formVisibility = 'hide';
             },
 
             ready: function() {
                 this.description = document.getElementsByName('description')[0];
                 this.name = document.getElementsByName('name')[0];
-                this.submit = document.querySelector('.submit');
             },
 
             collectData: function() {
@@ -57,6 +51,7 @@
             submitClicked: function(event) {
                 event.preventDefault();
                 this.fire('submitted', this.collectData());
+                this.hide();
             }
         });
     </script>
