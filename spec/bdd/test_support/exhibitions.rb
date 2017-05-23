@@ -19,7 +19,7 @@ module Page
     end
 
     def show
-      find('#action button').click
+      find('#action').click
     end
 
     def save
