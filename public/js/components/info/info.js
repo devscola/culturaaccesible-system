@@ -3,7 +3,7 @@ Class('Info.View', {
     Extends: Component,
 
     initialize: function() {
-        Info.View.Super.call(this, 'view');
+        Info.View.Super.call(this, 'result');
     },
 
     render: function(info) {

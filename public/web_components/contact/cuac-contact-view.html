@@ -12,9 +12,14 @@
             }
         </style>
         <div class$="panel {{panelVisibility}}">
-            <div>Phone Number: {{contact.phone}}</div>
-            <div>Email: {{contact.email}}</div>
-            <div>WebSite: {{contact.web}}</div>
+        <template is="dom-repeat" items="{{contact}}">
+            <div>{{item.label}}:
+              <template is="dom-repeat" items="{{item.content}}">
+              {{item}}
+              </template>
+            </div>
+
+        </template>
         </div>
     </template>
 
@@ -25,7 +30,7 @@
             properties: {
 
                 contact: {
-                    type: Object,
+                    type: Array,
                     reflectToAttribute: true
                 },
 

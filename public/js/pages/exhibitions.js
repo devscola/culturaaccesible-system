@@ -2,14 +2,13 @@ Class('Page.Exhibitions', {
 
     initialize: function() {
         new Services.Exhibitions();
-        new Exhibitions.AddButton();
         new Exhibitions.List();
         new Exhibitions.Form();
         new Exhibitions.Panel();
-        this.publish();
+        this.retrieveExhibitions();
     },
 
-    publish: function() {
+    retrieveExhibitions: function() {
         Bus.publish('exhibitions.list.retrieve');
     }
 

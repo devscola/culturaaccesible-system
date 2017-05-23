@@ -10,18 +10,6 @@ feature 'List exhibitions' do
   end
 end
 
-feature 'Form' do
-  scenario 'allows submit when required fields filled' do
-    page = Page::Exhibitions.new
-    page.show_exhibition_form
-
-    page.fill('name', 'some name')
-    page.fill('location', 'some location')
-
-    expect(page.form_submit_deactivated?).to be false
-  end
-end
-
 feature 'Add exhibition button' do
   scenario 'shows exhibition form' do
     page = Page::Exhibitions.new
@@ -31,6 +19,28 @@ feature 'Add exhibition button' do
     expect(page.exhibition_form_visible?). to be true
   end
 end
+
+feature 'Form' do
+  scenario 'disallows submit without required conditions fulfilled' do
+    exhibitions = Page::Exhibitions.new
+    exhibitions.show_exhibition_form
+
+    result = exhibitions.form_submit_deactivated?
+
+    expect(result).to be true
+  end
+
+  scenario 'allows submit when required fields filled' do
+    exhibitions = Page::Exhibitions.new
+    exhibitions.show_exhibition_form
+
+    exhibitions.fill('name', 'some name')
+    exhibitions.fill('location', 'some location')
+
+    expect(exhibitions.form_submit_deactivated?).to be false
+  end
+end
+
 
 feature 'Exhibition panel' do
   scenario 'displays when form is submited' do

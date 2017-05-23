@@ -1,13 +1,27 @@
 <link rel="import" href="/vendor/polymer/polymer.html">
 
+
 <dom-module id="cuac-contact-form">
     <template>
-        <form>
-            <template is="dom-repeat" items="{{inputs}}">
-                <div class="field">{{item.label}}</div>
+        <style>
+            .form.show {
+                display: block;
+            }
+
+            .form.hide {
+                display: none;
+            }
+        </style>
+
+        <form class$="form">
+            <template is="dom-repeat" items="{{fields}}">
+                <div class="field">
+                    <div>{{item.label}}</div>
+                    <cuac-contact-field label="[[item.label]]"></cuac-contact-field>
+                <div>
             </template>
             <div>
-                <button id="save" class="submit" on-click="submitClicked" disabled>Save</button>
+                <button id="save" class="submit" on-click="submitClicked" disabled$="{{disableSave}}">Save</button>
             </div>
         </form>
     </template>
@@ -17,16 +31,33 @@
             is: 'cuac-contact-form',
 
             properties: {
-                inputs: {
+                fields: {
                     type: Array,
-                    reflectToAttribute: true
+                    reflectToAttribute: true,
+                    observer: 'createDataFrame'
+                },
+
+                disableSave: {
+                    type: Boolean,
+                    value: true
                 }
             },
 
             submitClicked: function(event) {
                 event.preventDefault();
-                this.fire('submitted');
-            }
+                this.fields.forEach(function(field){
+                   var contactItem = document.getElementsByName(field.label)[0].value;
+                   field.content.push(contactItem);
+                });
+                this.fire('submitted', this.fields);
+            },
+
+            createDataFrame: function() {
+                this.fields.forEach(function(field){ 
+                    field.content = new Array();  
+                });          
+            }            
+
         });
     </script>
 </dom-module>
