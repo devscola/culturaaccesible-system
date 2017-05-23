@@ -1,11 +1,12 @@
 FROM ruby:2.4.0
 
-RUN mkdir -p /opt/app/culturaaccesible-system
-ADD . /opt/app/culturaaccesible-system
-WORKDIR /opt/app/culturaaccesible-system
+RUN apt-get update
 
 ENV SYSTEM_MODE development
+ENV HOME=/opt/app/culturaaccesible-system
 
-RUN apt-get update
+RUN mkdir -p $HOME
+ADD . $HOME
+WORKDIR $HOME
 RUN gem install bundler
 RUN bundle install
