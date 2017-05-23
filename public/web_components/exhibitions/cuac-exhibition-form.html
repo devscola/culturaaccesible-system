@@ -15,23 +15,23 @@
         <form class$="form {{formVisibility}}">
             <div>
                 <label for="show">Show</label>
-                <input type="checkbox" name="show">
+                <input id="show" type="checkbox" name="show">
             </div>
             <div>
                 <label for="name">Title</label>
-                <input on-input="isSubmittable" name="name">
+                <input name="name" value="{{name::input}}">
             </div>
             <div>
                 <label for="location">Location</label>
-                <input on-input="isSubmittable" name="location">
+                <input name="location" value="{{location::input}}">
             </div>
             <div>
                 <label for="shortDescription">General description</label>
-                <input name="shortDescription">
+                <input name="shortDescription" value="{{shortDescription::input}}">
             </div>
             <div>
                 <label for="type">Type</label>
-                <select name="type">
+                <select id="type" name="type">
                     <option value="paint">Paint</option>
                     <option value="sculpture">Sculpture</option>
                     <option value="mixed-art">Mixed Art</option>
@@ -41,17 +41,17 @@
             <div>
                 <span>Open</span>
                 <label for="dateStart">From</label>
-                <input name="dateStart" type="date">
+                <input name="dateStart" type="date" value="{{dateStart::input}}">
                 <label for="dateFinish">To</label>
-                <input name="dateFinish" type="date">
+                <input name="dateFinish" type="date" value="{{dateFinish::input}}">
             </div>
             <div>
                 <label for="beacon">Beacon number</label>
-                <input name="beacon">
+                <input name="beacon" value="{{beacon::input}}">
             </div>
             <div>
                 <label for="description">Extended description</label>
-                <textarea name="description"></textarea>
+                <textarea name="description" value="{{description::input}}"></textarea>
             </div>
             <div>
                 <button class="submit" on-click="submitClicked" disabled$="{{submitDisabled}}">Save</button>
@@ -63,32 +63,34 @@
         Polymer({
             is: 'cuac-exhibition-form',
 
-            ready: function() {
-                this.name = document.getElementsByName('name')[0];
-                this.location = document.getElementsByName('location')[0];
-                this.form = document.querySelector('.form');
+            properties: {
+                visible: {type: Boolean, observer: 'showForm'},
+
+                formVisibility: {type: String, value: 'hide'},
+
+                submitDisabled: {type: String, value: 'disabled'},
+
+                name: {observer: 'isSubmittable'},
+
+                location: {observer: 'isSubmittable'},
+
+                shortDescription: {},
+
+                dateStart: {},
+
+                dateFinish: {},
+
+                beacon: {},
+
+                description: {}
             },
 
-            properties: {
-                visible: {
-                    type: Boolean,
-                    observer: 'showForm'
-                },
+            checkName: function() {
+                this.nameLength = this.name.length;
+            },
 
-                formVisibility: {
-                    type: String,
-                    value: 'hide'
-                },
-
-                submitDisabled: {
-                    type: String,
-                    value: 'disabled'
-                },
-
-                exhibitionName: {
-                    type: String,
-                    reflectToAttribute: true,
-                }
+            checkLocation: function() {
+                this.locationLength = this.location.length;
             },
 
             showForm: function() {
@@ -96,13 +98,21 @@
             },
 
             isSubmittable: function() {
-                var nameLength = this.name.value.length;
-                var locationLength = this.location.value.length;
+                var nameLength = this.nameHasValue() ? 0 : this.name.length;
+                var locationLength = this.locationHasValue() ? 0 : this.location.length;
                 if (nameLength > 0 && locationLength > 0) {
                     this.activateSubmit();
                 } else {
                     this.deactivateSubmit();
                 }
+            },
+
+            nameHasValue: function() {
+                return this.name === undefined;
+            },
+
+            locationHasValue() {
+                return this.location === undefined;
             },
 
             activateSubmit: function() {
@@ -115,15 +125,15 @@
 
             collectData: function() {
                 data = {
-                    show: this.form.show.checked,
-                    name: this.form.name.value,
-                    location: this.form.location.value,
-                    short_description: this.form.shortDescription.value,
-                    type: this.form.type.value,
-                    date_start: this.formatDate(this.form.dateStart.value),
-                    date_finish: this.formatDate(this.form.dateFinish.value),
-                    beacon: this.form.beacon.value,
-                    description: this.form.description.value
+                    show: this.$.show.checked,
+                    name: this.name,
+                    location: this.location,
+                    short_description: this.shortDescription,
+                    type: this.$.type.value,
+                    date_start: this.formatDate(this.dateStart),
+                    date_finish: this.formatDate(this.dateFinish),
+                    beacon: this.beacon,
+                    description: this.description
                 };
                 return data;
             },

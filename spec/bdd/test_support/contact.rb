@@ -23,7 +23,7 @@ module Page
     end
 
     def save_contact_info
-      find('#save').click
+      find('.submit').click
     end
 
     private

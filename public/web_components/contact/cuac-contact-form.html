@@ -21,7 +21,7 @@
                 <div>
             </template>
             <div>
-                <button id="save" class="submit" on-click="submitClicked" disabled$="{{disableSave}}">Save</button>
+                <button class="submit" on-click="submitClicked" disabled$="{{disableSave}}">Save</button>
             </div>
         </form>
     </template>
@@ -53,10 +53,10 @@
             },
 
             createDataFrame: function() {
-                this.fields.forEach(function(field){ 
-                    field.content = new Array();  
-                });          
-            }            
+                this.fields.forEach(function(field){
+                    field.content = new Array();
+                });
+            }
 
         });
     </script>
