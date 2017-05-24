@@ -15,7 +15,7 @@
         <form class$="form {{formVisibility}}">
             <div>
                 <label for="show">Show</label>
-                <input id="show" type="checkbox" name="show">
+                <input id="show" type="checkbox" name="show" checked="{{checkShow::change}}">
             </div>
             <div>
                 <label for="name">Title</label>
@@ -31,7 +31,8 @@
             </div>
             <div>
                 <label for="type">Type</label>
-                <select id="type" name="type">
+                <select id="type" name="type" value="{{typeValue::input}}">
+                    <option selected disabled>Select an option</option>
                     <option value="paint">Paint</option>
                     <option value="sculpture">Sculpture</option>
                     <option value="mixed-art">Mixed Art</option>
@@ -70,11 +71,15 @@
 
                 submitDisabled: {type: String, value: 'disabled'},
 
+                checkShow: {type: Boolean, value: false},
+
                 name: {observer: 'isSubmittable'},
 
                 location: {observer: 'isSubmittable'},
 
                 shortDescription: {},
+
+                typeValue: {},
 
                 dateStart: {},
 
@@ -111,7 +116,7 @@
                 return this.name === undefined;
             },
 
-            locationHasValue() {
+            locationHasValue: function () {
                 return this.location === undefined;
             },
 
@@ -125,11 +130,11 @@
 
             collectData: function() {
                 data = {
-                    show: this.$.show.checked,
+                    show: this.checkShow,
                     name: this.name,
                     location: this.location,
                     short_description: this.shortDescription,
-                    type: this.$.type.value,
+                    type: this.typeValue,
                     date_start: this.formatDate(this.dateStart),
                     date_finish: this.formatDate(this.dateFinish),
                     beacon: this.beacon,

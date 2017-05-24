@@ -1,6 +1,6 @@
 <link rel="import" href="/vendor/polymer/polymer.html">
 
-<dom-module id="cuac-contact-form">
+<dom-module id="cuac-price-form">
     <template>
         <style>
             .form.show {
@@ -17,7 +17,7 @@
                 <div class="field">
                     <div>{{item.label}}</div>
                     <cuac-contact-field name="{{item.name}}" field="{{item}}"></cuac-contact-field>
-                </div>
+                <div>
             </template>
             <div>
                 <button class="submit" on-click="submitClicked" disabled$="{{disableSave}}">Save</button>
@@ -27,7 +27,7 @@
 
     <script>
         Polymer({
-            is: 'cuac-contact-form',
+            is: 'cuac-price-form',
 
             properties: {
                 fields: {

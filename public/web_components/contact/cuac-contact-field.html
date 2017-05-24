@@ -3,7 +3,7 @@
 <dom-module id="cuac-contact-field">
     <template>
         <template is="dom-repeat" items="{{field.elements}}">
-            <input class$="{{label}}" value={{fieldValue::input}}>
+            <input class$="{{name}}" value={{fieldValue::input}}>
         </template>
         <div>
             <button class="add" on-click="addInputClicked">+</button>
@@ -19,7 +19,7 @@
                     type: Object
                 },
 
-                label: {
+                name: {
                     type: String
                 },
 

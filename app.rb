@@ -16,5 +16,12 @@ class App < Sinatra::Base
   get '/contact' do
     File.read(File.join('public', 'contact.html'))
   end
-  
+
+  get '/info' do
+    File.read(File.join('public', 'info.html'))
+  end
+
+  get '/price' do
+    File.read(File.join('public', 'price.html'))
+  end
 end

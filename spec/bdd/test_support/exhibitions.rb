@@ -3,7 +3,7 @@ module Page
     include Capybara::DSL
 
     def initialize
-      url = '/home.html'
+      url = '/home'
       visit(url)
       validate!
     end

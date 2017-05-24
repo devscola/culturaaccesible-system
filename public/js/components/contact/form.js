@@ -3,9 +3,9 @@ Class('Museum.Contact', {
     Extends: Component,
 
     fields: [
-        {label: "Phone", elements: ["PhoneNumber1"] },
-        {label: "Email", elements: ["Email1"]},
-        {label: "Web", elements: ["Web"]}
+        {name: "phone", label: "Phone number", elements: ["PhoneNumber1"] },
+        {name: "email", label: "Email", elements: ["Email1"]},
+        {name: "web", label: "Website", elements: ["Web1"]}
     ],
 
     view: document.getElementById('result'),
@@ -14,7 +14,7 @@ Class('Museum.Contact', {
         Museum.Contact.Super.call(this, 'formulary');
         this.element.fields = this.fields;
         this.element.addEventListener('buttonToggled', this.toggleButton.bind(this));
-        this.element.addEventListener('submitted', this.renderContact.bind(this));
+        this.element.addEventListener('submitted', this.render.bind(this));
     },
 
     toggleButton: function(hasContent) {
@@ -22,21 +22,12 @@ Class('Museum.Contact', {
     },
 
     render: function(contactInfo) {
-        this.view.contact = contactInfo;
+        this.view.contact = contactInfo.detail;
         this.show();
     },
 
     show: function() {
         this.view.visible = true;
-    },
-
-    renderContact: function(contactInfo) {
-        Bus.publish('render.contact', contactInfo.detail);
-    },
-
-    subscribe: function() {
-        Bus.subscribe('render.contact', this.render.bind(this));
     }
-
 
 });
