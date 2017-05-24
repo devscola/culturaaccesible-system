@@ -31,7 +31,8 @@
             </div>
             <div>
                 <label for="type">Type</label>
-                <select id="type" name="type">
+                <select id="type" name="type" value="{{typeValue::input}}">
+                    <option selected disabled>Select an option</option>
                     <option value="paint">Paint</option>
                     <option value="sculpture">Sculpture</option>
                     <option value="mixed-art">Mixed Art</option>
@@ -70,18 +71,15 @@
 
                 submitDisabled: {type: String, value: 'disabled'},
 
-                checkShow: {
-                    type: Boolean,
-                    value: false,
-                    reflectToAttribute: true
-
-                },
+                checkShow: {type: Boolean, value: false},
 
                 name: {observer: 'isSubmittable'},
 
                 location: {observer: 'isSubmittable'},
 
                 shortDescription: {},
+
+                typeValue: {},
 
                 dateStart: {},
 
@@ -136,7 +134,7 @@
                     name: this.name,
                     location: this.location,
                     short_description: this.shortDescription,
-                    type: this.$.type.value,
+                    type: this.typeValue,
                     date_start: this.formatDate(this.dateStart),
                     date_finish: this.formatDate(this.dateFinish),
                     beacon: this.beacon,
