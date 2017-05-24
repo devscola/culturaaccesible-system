@@ -14,7 +14,7 @@ Class('Museum.Contact', {
     },
 
     toggleButton: function(hasContent) {
-        this.element.disableSave = !hasContent;
+        this.element.disableSave = !hasContent.detail;
     },
 
     render: function(contactInfo) {

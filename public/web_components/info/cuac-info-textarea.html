@@ -4,13 +4,29 @@
     <template>
         <div>
             <label for="description">Description</label>
-            <textarea name="description"></textarea>
+            <textarea name="description" value="{{descriptionValue::input}}"></textarea>
         </div>
     </template>
 
     <script>
         Polymer({
-            is: 'cuac-info-textarea'
+            is: 'cuac-info-textarea',
+
+            properties: {
+                description: {
+                    type: String,
+                    notify: true
+                },
+
+                descriptionValue: {
+                    type: String,
+                    observer: 'updateContent'
+                }
+            },
+
+            updateContent: function() {
+                this.description = this.descriptionValue;
+            }
         });
     </script>
 </dom-module>

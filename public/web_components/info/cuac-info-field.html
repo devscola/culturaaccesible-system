@@ -4,13 +4,29 @@
     <template>
         <div>
             <label for="name">Name</label>
-            <input type="text" name="name"></input>
+            <input name="name" value={{nameValue::input}}></input>
         </div>
     </template>
 
     <script>
         Polymer({
-            is: 'cuac-info-field'
+            is: 'cuac-info-field',
+
+            properties: {
+                name: {
+                    type: String,
+                    notify: true
+                },
+
+                nameValue: {
+                    type: String,
+                    observer: 'updateContent'
+                }
+            },
+
+            updateContent: function() {
+                this.name = this.nameValue;
+            }
         });
     </script>
 </dom-module>

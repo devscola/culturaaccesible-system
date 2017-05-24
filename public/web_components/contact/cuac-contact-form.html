@@ -1,6 +1,5 @@
 <link rel="import" href="/vendor/polymer/polymer.html">
 
-
 <dom-module id="cuac-contact-form">
     <template>
         <style>
@@ -17,11 +16,11 @@
             <template is="dom-repeat" items="{{fields}}">
                 <div class="field">
                     <div>{{item.label}}</div>
-                    <cuac-contact-field label="[[item.label]]"></cuac-contact-field>
+                    <cuac-contact-field field="{{item}}"></cuac-contact-field>
                 <div>
             </template>
             <div>
-                <button id="save" class="submit" on-click="submitClicked" disabled$="{{disableSave}}">Save</button>
+                <button class="submit" on-click="submitClicked" disabled$="{{disableSave}}">Save</button>
             </div>
         </form>
     </template>
@@ -32,9 +31,7 @@
 
             properties: {
                 fields: {
-                    type: Array,
-                    reflectToAttribute: true,
-                    observer: 'createDataFrame'
+                    type: Array
                 },
 
                 disableSave: {
@@ -45,19 +42,8 @@
 
             submitClicked: function(event) {
                 event.preventDefault();
-                this.fields.forEach(function(field){
-                   var contactItem = document.getElementsByName(field.label)[0].value;
-                   field.content.push(contactItem);
-                });
                 this.fire('submitted', this.fields);
-            },
-
-            createDataFrame: function() {
-                this.fields.forEach(function(field){ 
-                    field.content = new Array();  
-                });          
-            }            
-
+            }
         });
     </script>
 </dom-module>

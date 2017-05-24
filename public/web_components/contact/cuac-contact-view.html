@@ -11,15 +11,15 @@
                 display: none;
             }
         </style>
-        <div class$="panel {{panelVisibility}}">
-        <template is="dom-repeat" items="{{contact}}">
-            <div>{{item.label}}:
-              <template is="dom-repeat" items="{{item.content}}">
-              {{item}}
-              </template>
-            </div>
 
-        </template>
+        <div class$="panel {{panelVisibility}}">
+            <template is="dom-repeat" items="{{contact}}">
+                <div>{{item.label}}:
+                    <template is="dom-repeat" items="{{item.content}}">
+                        {{item}}
+                    </template>
+                </div>
+            </template>
         </div>
     </template>
 
