@@ -2,7 +2,7 @@ Class('Museum.Contact', {
 
     Extends: Component,
 
-    fields: [{"label" : "Phone"}, {"label" : "Email"}, {"label" : "Web"}],
+    fields: [{"name": "phone", "label" : "Phone number"}, {"name": "email", "label" : "Email"}, {"name": "web", "label" : "Website"}],
 
     view: document.getElementById('result'),
 

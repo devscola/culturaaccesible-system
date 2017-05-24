@@ -13,26 +13,14 @@ module Page
     end
 
     def fill_fields(prices)
-      first(:css, 'input.free_entrance').native.send_keys(contact['free_entrance'])
+      first(:css, 'input.free-entrance').native.send_keys(prices['free_entrance'])
 
-      first(:css, 'input.general').native.send_keys(contact['general'])
+      first(:css, 'input.general').native.send_keys(prices['general'])
 
-      first(:css, 'input.reduced').native.send_keys(contact['reduced'])
+      first(:css, 'input.reduced').native.send_keys(prices['reduced'])
     end
 
     def save_price_info
-      find('.submit').click
-    end
-
-    def has_form?
-      has_css?('.form', visible: true)
-    end
-
-    def fill(field, content)
-      fill_in(field, with: content)
-    end
-
-    def save
       find('.submit').click
     end
 

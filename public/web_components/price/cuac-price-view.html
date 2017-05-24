@@ -15,7 +15,7 @@
         <div class$="panel {{panelVisibility}}">
             <template is="dom-repeat" items="{{priceInfo}}">
                 <div>{{item.label}}:
-                    <template is="dom-repeat" items="{{item.price}}">
+                    <template is="dom-repeat" items="{{item.content}}">
                         {{item}}
                     </template>
                 </div>
