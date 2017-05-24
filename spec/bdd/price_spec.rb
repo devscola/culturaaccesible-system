@@ -2,13 +2,18 @@ require 'spec_helper_bdd'
 require_relative 'test_support/price'
 require_relative '../../app'
 
-feature 'Price form' do
-  scenario 'form hide when submitted' do
-    current = Page::Info.new
-    current.fill('free_entrance', 'children')
-    current.fill('general', '5€')
-    current.save
+feature 'Price view' do
+  scenario 'shows prices' do
+    current = Page::Price.new
+    prices = {
+      'free_entrance' => 'children',
+      'general' => '3€ for adults',
+      'reduced' => ''
+    }
 
-    expect(current.has_form?).to be false
+    current.fill_fields(prices)
+    current.save_price_info
+
+    expect(current.has_info?(prices['free_entrance'])).to be true
   end
 end

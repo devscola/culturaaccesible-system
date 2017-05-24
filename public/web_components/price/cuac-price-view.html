@@ -1,0 +1,53 @@
+<link rel="import" href="/vendor/polymer/polymer.html">
+
+<dom-module id="cuac-price-view">
+    <template>
+        <style>
+            .panel.show {
+                display: block;
+            }
+
+            .panel.hide {
+                display: none;
+            }
+        </style>
+
+        <div class$="panel {{panelVisibility}}">
+            <template is="dom-repeat" items="{{priceInfo}}">
+                <div>{{item.label}}:
+                    <template is="dom-repeat" items="{{item.price}}">
+                        {{item}}
+                    </template>
+                </div>
+            </template>
+        </div>
+    </template>
+
+    <script>
+        Polymer({
+            is: 'cuac-price-view',
+
+            properties: {
+
+                priceInfo: {
+                    type: Array,
+                    reflectToAttribute: true
+                },
+
+                visible: {
+                    type: Boolean,
+                    observer: 'showPanel'
+                },
+
+                panelVisibility: {
+                    type: String,
+                    value: 'hide'
+                }
+            },
+
+            showPanel: function() {
+                this.panelVisibility = 'show';
+            }
+        });
+    </script>
+</dom-module>
