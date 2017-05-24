@@ -12,7 +12,7 @@ services:
     links:
       - selenium
       - mongo
-    command: bash -c "sh bundler_and_download_vendor.sh"
+    command: bash -c "sh ensure_vendorization.sh"
 
   selenium:
     container_name: chrome-cuac-container
