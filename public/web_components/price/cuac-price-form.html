@@ -1,0 +1,49 @@
+<link rel="import" href="/vendor/polymer/polymer.html">
+
+<dom-module id="cuac-price-form">
+    <template>
+        <style>
+            .form.show {
+                display: block;
+            }
+
+            .form.hide {
+                display: none;
+            }
+        </style>
+
+        <form class$="form">
+            <template is="dom-repeat" items="{{fields}}">
+                <div class="field">
+                    <div>{{item.label}}</div>
+                    <cuac-contact-field field="{{item}}"></cuac-contact-field>
+                <div>
+            </template>
+            <div>
+                <button class="submit" on-click="submitClicked" disabled$="{{disableSave}}">Save</button>
+            </div>
+        </form>
+    </template>
+
+    <script>
+        Polymer({
+            is: 'cuac-price-form',
+
+            properties: {
+                fields: {
+                    type: Array
+                },
+
+                disableSave: {
+                    type: Boolean,
+                    value: true
+                }
+            },
+
+            submitClicked: function(event) {
+                event.preventDefault();
+                this.fire('submitted', this.fields);
+            }
+        });
+    </script>
+</dom-module>
