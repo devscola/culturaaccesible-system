@@ -16,8 +16,8 @@
             <template is="dom-repeat" items="{{fields}}">
                 <div class="field">
                     <div>{{item.label}}</div>
-                    <cuac-contact-field field="{{item}}"></cuac-contact-field>
-                <div>
+                    <cuac-contact-field label="{{item.label}}" field="{{item}}"></cuac-contact-field>
+                </div>
             </template>
             <div>
                 <button class="submit" on-click="submitClicked" disabled$="{{disableSave}}">Save</button>

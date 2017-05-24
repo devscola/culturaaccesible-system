@@ -2,7 +2,12 @@
 
 <dom-module id="cuac-contact-field">
     <template>
-        <input class$="{{field.label}}" value={{fieldValue::input}}>
+        <template is="dom-repeat" items="{{field.elements}}">
+            <input class$="{{label}}" value={{fieldValue::input}}>
+        </template>
+        <div>
+            <button class="add" on-click="addInputClicked">+</button>
+        </div>
     </template>
 
     <script>
@@ -12,6 +17,10 @@
             properties: {
                 field: {
                     type: Object
+                },
+
+                label: {
+                    type: String
                 },
 
                 fieldValue: {
@@ -29,6 +38,11 @@
             toggleSave: function() {
                 var buttonActive = this.fieldValue.length > 0;
                 this.fire('buttonToggled', buttonActive);
+            },
+
+            addInputClicked: function(event) {
+                event.preventDefault();
+
             }
         });
     </script>
