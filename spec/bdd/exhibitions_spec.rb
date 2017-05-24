@@ -4,7 +4,7 @@ require_relative 'test_support/fixture'
 require_relative '../../app'
 
 feature 'Exhibitions' do
-  scenario 'has items', :wip do
+  scenario 'has items' do
     current = Fixture::save_exhibition
 
     expect(current.exhibition_list?).to be true
