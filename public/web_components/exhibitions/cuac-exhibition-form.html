@@ -32,6 +32,7 @@
             <div>
                 <label for="type">Type</label>
                 <select id="type" name="type" value="{{typeValue::input}}">
+                    <option selected disabled>Select an option</option>
                     <option value="paint">Paint</option>
                     <option value="sculpture">Sculpture</option>
                     <option value="mixed-art">Mixed Art</option>
@@ -78,7 +79,7 @@
 
                 shortDescription: {},
 
-                typeValue: {type: String,  value: ''},
+                typeValue: {},
 
                 dateStart: {},
 
