@@ -15,7 +15,7 @@
         <form class$="form {{formVisibility}}">
             <div>
                 <label for="show">Show</label>
-                <input id="show" type="checkbox" name="show">
+                <input id="show" type="checkbox" name="show" checked="{{checkShow::change}}">
             </div>
             <div>
                 <label for="name">Title</label>
@@ -70,6 +70,13 @@
 
                 submitDisabled: {type: String, value: 'disabled'},
 
+                checkShow: {
+                    type: Boolean,
+                    value: false,
+                    reflectToAttribute: true
+
+                },
+
                 name: {observer: 'isSubmittable'},
 
                 location: {observer: 'isSubmittable'},
@@ -111,7 +118,7 @@
                 return this.name === undefined;
             },
 
-            locationHasValue() {
+            locationHasValue: function () {
                 return this.location === undefined;
             },
 
@@ -125,7 +132,7 @@
 
             collectData: function() {
                 data = {
-                    show: this.$.show.checked,
+                    show: this.checkShow,
                     name: this.name,
                     location: this.location,
                     short_description: this.shortDescription,
