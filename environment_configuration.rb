@@ -1,19 +1,13 @@
 def retrieve_mode
   begin
-    system_environment = ENV.fetch('SYSTEM_MODE')
+    ENV.fetch('SYSTEM_MODE')
   rescue
-    system_environment = nil
+    nil
   end
-  return system_environment
 end
 
 def retrieve_port
-  begin
-    capybara_default_port = '4567'
-  rescue
-    capybara_default_port = '4567'
-  end
-  return capybara_default_port
+  '4567'
 end
 
 def retrieve_travis
