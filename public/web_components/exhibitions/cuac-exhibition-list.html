@@ -2,12 +2,12 @@
 
 <dom-module id="cuac-exhibition-list">
     <template>
-        <h2>EXHIBITIONS</h2>
-        <div>
+        <h3>EXHIBITIONS</h3>
+        <ul>
             <template is="dom-repeat" items="{{exhibitionsList}}">
                 <cuac-exhibition-detail exhibition="[[item]]"></cuac-exhibition-detail>
             </template>
-        </div>
+        </ul>
     </template>
 
     <script>

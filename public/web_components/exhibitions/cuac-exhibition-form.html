@@ -13,25 +13,27 @@
         </style>
 
         <form class$="form {{formVisibility}}">
-            <div>
-                <label for="show">Show</label>
-                <input id="show" type="checkbox" name="show" checked="{{checkShow::change}}">
+            <div class="checkbox">
+                <label for="show">
+                    <input type="checkbox" name="show" checked="{{checkShow::change}}">
+                    Show
+                </label>
             </div>
-            <div>
+            <div class="form-group">
                 <label for="name">Title</label>
-                <input name="name" value="{{name::input}}">
+                <input class="form-control" name="name" value="{{name::input}}">
             </div>
-            <div>
+            <div class="form-group">
                 <label for="location">Location</label>
-                <input name="location" value="{{location::input}}">
+                <input class="form-control" name="location" value="{{location::input}}">
             </div>
-            <div>
+            <div class="form-group">
                 <label for="shortDescription">General description</label>
-                <input name="shortDescription" value="{{shortDescription::input}}">
+                <input class="form-control" name="shortDescription" value="{{shortDescription::input}}">
             </div>
-            <div>
+            <div class="form-group">
                 <label for="type">Type</label>
-                <select id="type" name="type" value="{{typeValue::input}}">
+                <select class="form-control" id="type" name="type" value="{{typeValue::input}}">
                     <option selected disabled>Select an option</option>
                     <option value="paint">Paint</option>
                     <option value="sculpture">Sculpture</option>
@@ -40,22 +42,26 @@
                 </select>
             </div>
             <div>
-                <span>Open</span>
-                <label for="dateStart">From</label>
-                <input name="dateStart" type="date" value="{{dateStart::input}}">
-                <label for="dateFinish">To</label>
-                <input name="dateFinish" type="date" value="{{dateFinish::input}}">
+                <h4>Open</h4>
+                <div class="form-group col-md-6">
+                    <label for="dateStart">From</label>
+                    <input class="form-group" name="dateStart" type="date" value="{{dateStart::input}}">
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="dateFinish">To</label>
+                    <input class="form-group" name="dateFinish" type="date" value="{{dateFinish::input}}">
+                </div>
             </div>
-            <div>
+            <div class="form-group">
                 <label for="beacon">Beacon number</label>
-                <input name="beacon" value="{{beacon::input}}">
+                <input class="form-control" name="beacon" value="{{beacon::input}}">
             </div>
-            <div>
+            <div class="form-group">
                 <label for="description">Extended description</label>
-                <textarea name="description" value="{{description::input}}"></textarea>
+                <textarea class="form-control" name="description" value="{{description::input}}"></textarea>
             </div>
             <div>
-                <button class="submit" on-click="submitClicked" disabled$="{{submitDisabled}}">Save</button>
+                <button class="btn btn-primary submit" on-click="submitClicked" disabled$="{{submitDisabled}}">Save</button>
             </div>
         </form>
     </template>
