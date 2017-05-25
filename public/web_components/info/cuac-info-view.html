@@ -11,9 +11,18 @@
                 display: none;
             }
         </style>
-        <div class$="info {{visibility}}">
-            <div>Name: {{info.name}}</div>
-            <div>Extra text: {{info.description}}</div>
+        <div class$="info panel panel-primary {{visibility}}">
+        <div class="panel-heading">
+            <h3 class="panel-title">Info</h3>
+        </div>
+        <div class="panel-body">
+            <div>
+                <label>Name:</label>
+                <span>{{info.name}}</span>
+            <div>
+                <label>Extra text:</label>
+                <span>{{info.description}}</span>
+            </div>
         </div>
     </template>
 

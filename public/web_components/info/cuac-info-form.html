@@ -11,11 +11,12 @@
                 display: none;
             }
         </style>
-        <form class$="form {{formVisibility}}">
+        <form class="form-group" class$="form {{formVisibility}}">
             <cuac-info-field id="info-field" name={{infoData.name}}></cuac-info-field>
             <cuac-info-textarea id="info-texarea" description={{infoData.description}}></cuac-info-textarea>
+            <br/>
             <div>
-                <button class="submit" on-click="submitClicked">Save</button>
+                <button class="btn btn-primary submit" on-click="submitClicked">Save</button>
             </div>
         </form>
     </template>
