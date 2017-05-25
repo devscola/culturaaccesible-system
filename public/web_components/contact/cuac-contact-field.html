@@ -3,10 +3,10 @@
 <dom-module id="cuac-contact-field">
     <template>
         <template is="dom-repeat" items="{{field.elements}}">
-            <input class$="{{name}}" value={{fieldValue::input}}>
+            <input class$="form-control {{name}}" value={{fieldValue::input}}>
         </template>
         <div>
-            <button class="add" on-click="addInputClicked">+</button>
+            <button class="add btn btn-default" on-click="addInputClicked">+</button>
         </div>
     </template>
 
@@ -47,4 +47,3 @@
         });
     </script>
 </dom-module>
-
