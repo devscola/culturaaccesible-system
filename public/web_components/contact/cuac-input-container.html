@@ -4,7 +4,7 @@
     <template>
         <template is="dom-repeat" items="{{inputsAdded}}">
             <div>
-                <input class$="{{inputtype}}">
+                <input class$="{{inputtype}}" on-blur="focusBlured">
             </div>
         </template>
         <span>       
@@ -43,8 +43,16 @@
                 var temporary = this.inputsAdded;
                 this.inputsAdded = [];
                 this.inputsAdded = temporary;
-            }
+            },
 
+            focusBlured: function(e) {
+                var data = {
+                    type: this.inputtype,
+                    value: e.target.value
+                };
+
+                this.fire('blured', data); 
+            }
         });
     </script>
 </dom-module>

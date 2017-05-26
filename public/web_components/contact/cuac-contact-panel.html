@@ -16,15 +16,25 @@
         Polymer({
             is: 'cuac-contact-panel',
 
-            ready: function(){
-                this.storeInfo = [];
-            },
-
             properties: {
                 contactDetail: {
                     type: Array
-                }
+                },
 
+                storedValues: {
+                    type: Array
+                } 
+
+            },
+
+            ready: function() {
+                this.storedValues = [{}];
+                this.addEventListener('blured', this.updateContent.bind(this));
+            },
+
+            updateContent: function(data) {
+                console.log(data.detail);
+                //falta actualizar el Arrray de hash
             }
 
         });
