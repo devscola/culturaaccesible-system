@@ -1,0 +1,17 @@
+<link rel="import" href="/vendor/polymer/polymer.html">
+
+<dom-module id="cuac-add-button">
+    <template>
+        <button on-click="addClicked">+</button>
+    </template>
+
+    <script>
+        Polymer({
+            is: 'cuac-add-button',
+
+            addClicked: function() {
+                this.fire('clicked');
+            }
+        });
+    </script>
+</dom-module>

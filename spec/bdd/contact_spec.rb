@@ -2,7 +2,7 @@ require 'spec_helper_bdd'
 require_relative 'test_support/contact'
 require_relative '../../app'
 
-feature 'Contact view' do
+xfeature 'Contact view' do
   scenario 'shows info' do
     current = Page::Contact.new
     contact = {

@@ -1,0 +1,40 @@
+<link rel="import" href="/vendor/polymer/polymer.html">
+
+<dom-module id="cuac-input-container">
+    <template>
+        <template is="dom-repeat" items="{{inputsAdded}}">
+            <input>    
+        </template>       
+        
+        <cuac-add-button></cuac-add-button>
+    </template>
+
+    <script>
+        Polymer({
+            is: 'cuac-input-container',
+
+            properties: {
+                inputsAdded: {
+                    type: Array
+                }
+            },
+
+            ready: function() {
+                this.inputsAdded = ['label'];
+                this.addEventListener('clicked', this.renderInput.bind(this));
+            }, 
+
+            renderInput: function() {             
+                this.inputsAdded.push('label');
+                this.refresh();      
+            },
+
+            refresh: function() {
+                var temporary = this.inputsAdded;
+                this.inputsAdded = [];
+                this.inputsAdded = temporary;
+            }
+
+        });
+    </script>
+</dom-module>
