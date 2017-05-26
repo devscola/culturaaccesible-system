@@ -1,0 +1,32 @@
+<link rel="import" href="/vendor/polymer/polymer.html">
+
+<dom-module id="cuac-contact-panel">
+    <template>
+        <form>
+            <template is="dom-repeat" items="{{contactDetail}}">
+                <div>
+                    <label>{{item.label}}</label>
+                </div>
+                <cuac-input-container inputtype="{{item.type}}"></cuac-input-container>
+            </template>
+        </form>
+    </template>
+
+    <script>
+        Polymer({
+            is: 'cuac-contact-panel',
+
+            ready: function(){
+                this.storeInfo = [];
+            },
+
+            properties: {
+                contactDetail: {
+                    type: Array
+                }
+
+            }
+
+        });
+    </script>
+</dom-module>

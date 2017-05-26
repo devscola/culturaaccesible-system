@@ -3,10 +3,13 @@
 <dom-module id="cuac-input-container">
     <template>
         <template is="dom-repeat" items="{{inputsAdded}}">
-            <input>    
-        </template>       
-        
-        <cuac-add-button></cuac-add-button>
+            <div>
+                <input class$="{{inputtype}}">
+            </div>
+        </template>
+        <span>       
+            <cuac-add-button class$="{{inputtype}}" buttontype="{{inputtype}}"></cuac-add-button>
+        </span>
     </template>
 
     <script>
@@ -16,17 +19,24 @@
             properties: {
                 inputsAdded: {
                     type: Array
+                },
+
+                inputtype: {
+                    type: String
                 }
+
             },
 
             ready: function() {
-                this.inputsAdded = ['label'];
+                this.inputsAdded = [this.inputtype];
+                this.storeInfo = [];
                 this.addEventListener('clicked', this.renderInput.bind(this));
             }, 
 
-            renderInput: function() {             
-                this.inputsAdded.push('label');
-                this.refresh();      
+            renderInput: function(data) {             
+                this.inputsAdded.push(data.detail);
+                this.refresh();
+                console.log(this.inputsAdded);     
             },
 
             refresh: function() {
