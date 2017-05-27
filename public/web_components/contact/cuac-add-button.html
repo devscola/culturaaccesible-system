@@ -2,7 +2,7 @@
 
 <dom-module id="cuac-add-button">
     <template>
-        <button class$="{{buttontype}}" on-click="addClicked">+</button>
+        <button class$="{{buttontype}}" on-click="addClicked" disabled$="{{disableAdd}}">+</button>
     </template>
 
     <script>
@@ -12,6 +12,12 @@
             properties: {
                 buttontype: {
                     type: String
+                },
+
+                activate: {
+                    type: Boolean, 
+                    reflectToAttribute: true,
+                    observer:'activeAdd'
                 }
             },
 
@@ -19,7 +25,16 @@
                 event.preventDefault();
                 var data = this.buttontype; 
                 this.fire('clicked', data);
-            }
+            },
+
+            activeAdd: function() {
+                if (this.activate === true) {
+                    this.disableAdd = null;
+                } else {
+                    this.disableAdd = 'disabled';
+                }
+            },
+
         });
     </script>
 </dom-module>

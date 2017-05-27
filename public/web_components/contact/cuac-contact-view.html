@@ -16,13 +16,24 @@
                 <h3 class="panel-title">Contact detail</h3>
             </div>
             <div class="panel-body">
-                <template is="dom-repeat" items="{{contactdetail}}">
-                    <div>{{item.label}}:
-                    </div>
-                </template>
-                <template is="dom-repeat" items="{{storeinfo.phone}}">
-                            <div>{{item}}</div>
-                </template>
+                <div>
+                    <span>Phone number:</span>
+                    <template is="dom-repeat" items="{{storeinfo.phone}}">
+                        <div>{{item}}</div>
+                    </template>
+                </div>
+                <div>
+                    <span>Email:</span>
+                    <template is="dom-repeat" items="{{storeinfo.email}}">
+                        <div>{{item}}</div>
+                    </template>
+                </div>
+                <div>
+                    <span>Website:</span>
+                    <template is="dom-repeat" items="{{storeinfo.web}}">
+                        <div>{{item}}</div>
+                    </template>
+                </div>   
             </div>
         </div>
     </template>
@@ -51,10 +62,11 @@
 
                 storeinfo: {
                     type: Object,
+                    reflectToAttribute: true,
                 },
 
                 contactdetail: {
-                    type: Object,
+                    type: Array,
                 }
             },
 
@@ -63,9 +75,8 @@
                     this.viewVisibility = 'hide';
                 } else {
                     this.viewVisibility = 'show';
-                    console.log('view', this.storeinfo);
                 }
-            },
+            }
 
         });
     </script>

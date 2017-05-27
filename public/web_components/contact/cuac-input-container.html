@@ -3,12 +3,12 @@
 <dom-module id="cuac-input-container">
     <template>
         <template is="dom-repeat" items="{{inputsAdded}}">
-            <div value={{fieldValue::input}}>
-                <input class$="{{inputtype}}" on-blur="focusBlured">
-            </div>
+            <span value={{fieldValue::input}}>
+                <br/><input class$="{{inputtype}}" on-blur="focusBlured">
+            </span>
         </template>
         <span>       
-            <cuac-add-button class$="{{inputtype}}" buttontype="{{inputtype}}"></cuac-add-button>
+            <cuac-add-button class$="{{inputtype}}" activate="{{activeAddButton}}" buttontype="{{inputtype}}"></cuac-add-button>
         </span>
     </template>
 
@@ -19,26 +19,23 @@
             ready: function() {
                 this.inputsAdded = [this.inputtype];
                 this.storeinfo = {phone: [], email: [], web: []};
-                this.storeInfo = [];
                 this.addEventListener('clicked', this.renderInput.bind(this));
             },
 
             properties: {
-                inputsAdded: {
-                    type: Array
-                },
+                
+                inputsAdded: {type: Array},
 
-                inputtype: {
-                    type: String
-                },
+                inputtype: {type: String},
 
-                storeinfo: {
-                    type: Object
-                },
+                storeinfo: {type: Object},
 
-                fieldValue:{
-                    type: String,
-                    observer: 'toggleSave'
+                fieldValue:{type: String, observer: 'toggleSave'},
+
+                activeAddButton: {
+                    type: Boolean,
+                    value: false,
+                    reflectToAttribute: true,
                 }
 
             }, 
@@ -63,6 +60,7 @@
             toggleSave: function() {
                 var buttonActive = this.fieldValue.length > 0;
                 this.fire('saveToggled', buttonActive);
+                this.activeAddButton = buttonActive;
             }
             
         });

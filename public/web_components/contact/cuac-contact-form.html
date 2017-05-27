@@ -24,10 +24,10 @@
                 <cuac-input-container storeinfo="{{storeInfo}}" inputtype="{{item.type}}"></cuac-input-container>
             </template>
             <div>
-                <button on-click="submitClicked" disabled$="{{disableSave}}">Save</button>
+                <button class="submit" on-click="submitClicked" disabled$="{{disableSave}}">Save</button>
             </div>
         </form>
-        <cuac-contact-view visible="{{visible}}" storeinfo="{{storeInfo2}}" contactdetail="{{contactDetail}}"></cuac-contact-view>
+        <cuac-contact-view visible="{{visible}}" storeinfo="{{storeInfoUpdated}}" contactdetail="{{contactDetail}}"></cuac-contact-view>
     </template>
 
     <script>
@@ -35,7 +35,6 @@
             is: 'cuac-contact-form',
 
             ready: function() {
-                this.storedValues = [{}];
                 this.storeInfo = {phone: [], email: [], web: []};
                 this.addEventListener('saveToggled', this.activeSave.bind(this));
                 this.addEventListener('blured', this.updateContent.bind(this));
@@ -46,23 +45,11 @@
 
                 formVisibility: {type: String, value: 'show'},
 
-                contactDetail: {
-                    type: Array
-                },
+                contactDetail: {type: Array},
 
-                storedValues: {
-                    type: Array
-                },
+                storeInfo: {type: Object, reflectToAttribute: true},
 
-                storeInfo: {
-                    type: Object,
-                    reflectToAttribute: true
-                },
-
-                storeInfo2: {
-                    type: Object,
-                    // reflectToAttribute: true
-                },
+                storeInfoUpdated: {type: Object, reflectToAttribute: true},
 
                 disableSave: {type: String, value: 'disabled'},
 
@@ -77,7 +64,6 @@
             submitClicked: function(event) {
                 event.preventDefault();
                 this.visible = false;
-                console.log('AAA', this.storeInfo.phone);
             },
 
             activeSave: function(toggle) {
@@ -93,12 +79,12 @@
                     this.formVisibility = 'show';
                 } else {
                     this.formVisibility = 'hide';
+                    this.storeInfoUpdated = this.storeInfo;
                 }
             },
 
             updateContent: function(data) {
-                console.log(data.detail);
-                this.storeInfo2 = data.detail;
+                this.storeInfo = data.detail;
             },
 
         });

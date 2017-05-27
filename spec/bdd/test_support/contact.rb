@@ -29,7 +29,6 @@ module Page
     private
 
     def validate!
-      assert_selector('#result')
       assert_selector('#formulary')
     end
   end
