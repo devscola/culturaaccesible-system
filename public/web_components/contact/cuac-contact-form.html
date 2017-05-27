@@ -27,20 +27,7 @@
                 <button on-click="submitClicked" disabled$="{{disableSave}}">Save</button>
             </div>
         </form>
-        <div class$="view {{viewVisibility}}">
-            <div class="panel-heading">
-                <h3 class="panel-title">Contact detail</h3>
-            </div>
-            <div class="panel-body">
-                <template is="dom-repeat" items="{{contactDetail}}">
-                    <div>{{item.label}}:
-                    </div>
-                </template>
-                <template is="dom-repeat" items="{{storeInfo.phone}}">
-                            <div>{{item.phone}}</div>
-                </template>
-            </div>
-        </div>
+        <cuac-contact-view visible="{{visible}}" storeinfo="{{storeInfo2}}" contactdetail="{{contactDetail}}"></cuac-contact-view>
     </template>
 
     <script>
@@ -50,8 +37,9 @@
             ready: function() {
                 this.storedValues = [{}];
                 this.storeInfo = {phone: [], email: [], web: []};
-                this.addEventListener('blured', this.updateContent.bind(this));
                 this.addEventListener('saveToggled', this.activeSave.bind(this));
+                this.addEventListener('blured', this.updateContent.bind(this));
+
             },
 
             properties: {
@@ -67,34 +55,29 @@
                 },
 
                 storeInfo: {
-                    type: Object
+                    type: Object,
+                    reflectToAttribute: true
+                },
+
+                storeInfo2: {
+                    type: Object,
+                    // reflectToAttribute: true
                 },
 
                 disableSave: {type: String, value: 'disabled'},
 
-                viewVisibility: {
-                    type: String,
-                    value: 'hide'
+                visible: {
+                    type: Boolean,
+                    value: true,
+                    reflectToAttribute: true,
+                    observer: 'toggleVisibility'
                 }
-            },
-
-            updateContent: function(data) {
-                console.log(data.detail);
-            },
-
-            hideForm: function() {
-                this.formVisibility = 'hide';
-            },
-
-            showView: function() {
-                this.viewVisibility = 'show';
             },
 
             submitClicked: function(event) {
                 event.preventDefault();
-                this.hideForm();
-                this.showView();
-                console.log(this.storeInfo.phone);
+                this.visible = false;
+                console.log('AAA', this.storeInfo.phone);
             },
 
             activeSave: function(toggle) {
@@ -103,7 +86,20 @@
                 } else {
                     this.disableSave = 'disabled';
                 }
-            }
+            },
+
+            toggleVisibility: function() {
+                if (this.visible) {
+                    this.formVisibility = 'show';
+                } else {
+                    this.formVisibility = 'hide';
+                }
+            },
+
+            updateContent: function(data) {
+                console.log(data.detail);
+                this.storeInfo2 = data.detail;
+            },
 
         });
     </script>
