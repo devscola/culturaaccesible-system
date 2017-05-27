@@ -3,7 +3,7 @@
 <dom-module id="cuac-input-container">
     <template>
         <template is="dom-repeat" items="{{inputsAdded}}">
-            <div>
+            <div value={{fieldValue::input}}>
                 <input class$="{{inputtype}}" on-blur="focusBlured">
             </div>
         </template>
@@ -16,6 +16,13 @@
         Polymer({
             is: 'cuac-input-container',
 
+            ready: function() {
+                this.inputsAdded = [this.inputtype];
+                this.storeinfo = {phone: [], email: [], web: []};
+                this.storeInfo = [];
+                this.addEventListener('clicked', this.renderInput.bind(this));
+            },
+
             properties: {
                 inputsAdded: {
                     type: Array
@@ -23,20 +30,22 @@
 
                 inputtype: {
                     type: String
+                },
+
+                storeinfo: {
+                    type: Object
+                },
+
+                fieldValue:{
+                    type: String,
+                    observer: 'toggleSave'
                 }
 
-            },
-
-            ready: function() {
-                this.inputsAdded = [this.inputtype];
-                this.storeInfo = [];
-                this.addEventListener('clicked', this.renderInput.bind(this));
             }, 
 
             renderInput: function(data) {             
                 this.inputsAdded.push(data.detail);
                 this.refresh();
-                console.log(this.inputsAdded);     
             },
 
             refresh: function() {
@@ -45,14 +54,17 @@
                 this.inputsAdded = temporary;
             },
 
-            focusBlured: function(e) {
-                var data = {
-                    type: this.inputtype,
-                    value: e.target.value
-                };
-
+            focusBlured: function(inputContent) {
+                this.storeinfo[this.inputtype].push(inputContent.target.value);
+                var data = this.storeinfo;
                 this.fire('blured', data); 
+            },
+
+            toggleSave: function() {
+                var buttonActive = this.fieldValue.length > 0;
+                this.fire('saveToggled', buttonActive);
             }
+            
         });
     </script>
 </dom-module>

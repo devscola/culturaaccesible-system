@@ -3,9 +3,9 @@ Class('Museum.Contact', {
     Extends: Component,
 
     contactDetail: [
-        {type: "phone", label: "Phone number"},
-        {type: "email", label: "Email"},
-        {type: "web", label: "Website"}
+        {type: "phone", label: "Phone number", storeInfo: []},
+        {type: "email", label: "Email", storeInfo: []},
+        {type: "web", label: "Website", storeInfo: []}
     ],
 
     initialize: function() {

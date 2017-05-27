@@ -1,0 +1,110 @@
+<link rel="import" href="/vendor/polymer/polymer.html">
+
+<dom-module id="cuac-contact-form">
+    <template>
+        <style>
+            .form.show {
+                display: block;
+            }
+            .form.hide {
+                display: none;
+            }
+            .view.show {
+                display: block;
+            }
+            .view.hide {
+                display: none;
+            }
+        </style>
+        <form class$="form {{formVisibility}}">
+            <template is="dom-repeat" items="{{contactDetail}}">
+                <div>
+                    <label>{{item.label}}</label>
+                </div>
+                <cuac-input-container storeinfo="{{storeInfo}}" inputtype="{{item.type}}"></cuac-input-container>
+            </template>
+            <div>
+                <button on-click="submitClicked" disabled$="{{disableSave}}">Save</button>
+            </div>
+        </form>
+        <div class$="view {{viewVisibility}}">
+            <div class="panel-heading">
+                <h3 class="panel-title">Contact detail</h3>
+            </div>
+            <div class="panel-body">
+                <template is="dom-repeat" items="{{contactDetail}}">
+                    <div>{{item.label}}:
+                    </div>
+                </template>
+                <template is="dom-repeat" items="{{storeInfo.phone}}">
+                            <div>{{item.phone}}</div>
+                </template>
+            </div>
+        </div>
+    </template>
+
+    <script>
+        Polymer({
+            is: 'cuac-contact-form',
+
+            ready: function() {
+                this.storedValues = [{}];
+                this.storeInfo = {phone: [], email: [], web: []};
+                this.addEventListener('blured', this.updateContent.bind(this));
+                this.addEventListener('saveToggled', this.activeSave.bind(this));
+            },
+
+            properties: {
+
+                formVisibility: {type: String, value: 'show'},
+
+                contactDetail: {
+                    type: Array
+                },
+
+                storedValues: {
+                    type: Array
+                },
+
+                storeInfo: {
+                    type: Object
+                },
+
+                disableSave: {type: String, value: 'disabled'},
+
+                viewVisibility: {
+                    type: String,
+                    value: 'hide'
+                }
+            },
+
+            updateContent: function(data) {
+                console.log(data.detail);
+            },
+
+            hideForm: function() {
+                this.formVisibility = 'hide';
+            },
+
+            showView: function() {
+                this.viewVisibility = 'show';
+            },
+
+            submitClicked: function(event) {
+                event.preventDefault();
+                this.hideForm();
+                this.showView();
+                console.log(this.storeInfo.phone);
+            },
+
+            activeSave: function(toggle) {
+                if (toggle.detail === true) {
+                    this.disableSave = null;
+                } else {
+                    this.disableSave = 'disabled';
+                }
+            }
+
+        });
+    </script>
+</dom-module>
