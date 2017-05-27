@@ -1,0 +1,32 @@
+<link rel="import" href="/vendor/polymer/polymer.html">
+
+<dom-module id="cuac-save-button">
+    <template>
+        <button class="btn btn-success" on-click="publishClicked">Save</button>
+    </template>
+
+    <script>
+        Polymer({
+            is: 'cuac-save-button',
+
+            publishClicked: function(event) {
+                event.preventDefault();
+                this.getInputs('phone');
+                this.getInputs('email');
+                this.getInputs('web');
+                console.log('click in button save');
+            },
+
+            getInputs: function(type) {
+                var allInputs = document.getElementsByName(type);
+                for (var increment=0, maxim=allInputs.length; increment < maxim; increment++) {
+                    contentInput = allInputs[increment].value;
+                    if ( contentInput > '') {
+                        console.log(contentInput);
+                    }
+                }
+            }
+
+        });
+    </script>
+</dom-module>
