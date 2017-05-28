@@ -2,7 +2,7 @@ require 'spec_helper_bdd'
 require_relative 'test_support/price'
 require_relative '../../app'
 
-xfeature 'Price view' do
+feature 'Price view' do
   scenario 'shows prices' do
     current = Page::Price.new
     prices = {

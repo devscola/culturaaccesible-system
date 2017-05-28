@@ -6,44 +6,87 @@
             .form.show {
                 display: block;
             }
-
             .form.hide {
                 display: none;
             }
+            .view.show {
+                display: block;
+            }
+            .view.hide {
+                display: none;
+            }
         </style>
-
-        <form class$="form">
-            <template is="dom-repeat" items="{{fields}}">
-                <div class="field">
-                    <div>{{item.label}}</div>
-                    <cuac-contact-field name="{{item.name}}" field="{{item}}"></cuac-contact-field>
+        <form class$="form {{formVisibility}}">
+            <template is="dom-repeat" items="{{priceDetail}}">
                 <div>
+                    <label>{{item.label}}</label>
+                </div>
+                <cuac-input-container storeinfo="{{storeInfo}}" inputtype="{{item.type}}"></cuac-input-container>
             </template>
             <div>
                 <button class="submit" on-click="submitClicked" disabled$="{{disableSave}}">Save</button>
             </div>
         </form>
+        <cuac-price-view visible="{{visible}}" storeinfo="{{storeInfoUpdated}}"></cuac-price-view>
     </template>
 
     <script>
         Polymer({
             is: 'cuac-price-form',
 
-            properties: {
-                fields: {
-                    type: Array
-                },
+            ready: function() {
+                this.storeInfo = {freeEntrance: [], general: [], reduced: []};
+                this.addEventListener('saveToggled', this.activeSave.bind(this));
+                this.addEventListener('blured', this.updateContent.bind(this));
 
-                disableSave: {
+            },
+
+            properties: {
+
+                formVisibility: {type: String, value: 'show'},
+
+                priceDetail: {type: Array},
+
+                storeInfo: {type: Object, reflectToAttribute: true},
+
+                storeInfoUpdated: {type: Object, reflectToAttribute: true},
+
+                disableSave: {type: String, value: 'disabled'},
+
+                visible: {
                     type: Boolean,
-                    value: true
+                    value: true,
+                    reflectToAttribute: true,
+                    observer: 'toggleVisibility'
                 }
             },
 
             submitClicked: function(event) {
                 event.preventDefault();
-                this.fire('submitted', this.fields);
-            }
+                this.visible = false;
+            },
+
+            activeSave: function(toggle) {
+                if (toggle.detail === true) {
+                    this.disableSave = null;
+                } else {
+                    this.disableSave = 'disabled';
+                }
+            },
+
+            toggleVisibility: function() {
+                if (this.visible) {
+                    this.formVisibility = 'show';
+                } else {
+                    this.formVisibility = 'hide';
+                    this.storeInfoUpdated = this.storeInfo;
+                }
+            },
+
+            updateContent: function(data) {
+                this.storeInfo = data.detail;
+            },
+
         });
     </script>
 </dom-module>

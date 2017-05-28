@@ -1,0 +1,72 @@
+<link rel="import" href="/vendor/polymer/polymer.html">
+
+<dom-module id="cuac-input-container">
+    <template>
+        <template is="dom-repeat" items="{{inputsAdded}}">
+            <span value={{fieldValue::input}}>
+                <br/><input name$="{{inputtype}}" on-blur="focusBlured">
+            </span>
+        </template>
+        <span>
+            <cuac-add-button class$="{{inputtype}}" activate="{{activeAddButton}}" buttontype="{{inputtype}}"></cuac-add-button>
+        </span>
+    </template>
+
+    <script>
+        Polymer({
+            is: 'cuac-input-container',
+
+            ready: function() {
+                this.inputsAdded = [this.inputtype];
+                this.storeinfo = {freeEntrance: [], general: [], reduced: []};
+                this.addEventListener('clicked', this.renderInput.bind(this));
+            },
+
+            properties: {
+
+                inputsAdded: {type: Array},
+
+                inputtype: {type: String},
+
+                storeinfo: {type: Object},
+
+                fieldValue:{type: String, observer: 'toggleSave'},
+
+                activeAddButton: {
+                    type: Boolean,
+                    value: false,
+                    reflectToAttribute: true,
+                }
+
+            },
+
+            renderInput: function(data) {
+                var inputsQuantity = this.inputsAdded.length - 1;
+                var isFilled = this.children[inputsQuantity].children[1].value.length > 0;
+                if(isFilled){
+                    this.inputsAdded.push(data.detail);
+                    this.refresh();
+                }
+            },
+
+            refresh: function() {
+                var temporary = this.inputsAdded;
+                this.inputsAdded = [];
+                this.inputsAdded = temporary;
+            },
+
+            focusBlured: function(inputContent) {
+                this.storeinfo[this.inputtype].push(inputContent.target.value);
+                var data = this.storeinfo;
+                this.fire('blured', data);
+            },
+
+            toggleSave: function() {
+                var buttonActive = this.fieldValue.length > 0;
+                this.fire('saveToggled', buttonActive);
+                this.activeAddButton = buttonActive;
+            }
+
+        });
+    </script>
+</dom-module>
