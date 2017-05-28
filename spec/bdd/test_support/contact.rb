@@ -13,13 +13,9 @@ module Page
     end
 
     def fill_fields(contact)
-      first(:css, 'input.Phone').native.send_keys(contact['phone'])
-
-      input_email = first(:css, 'input.Email').native
-      input_email.send_keys(contact['email'])
-
-      input_web = first(:css, 'input.Web').native
-      input_web.send_keys(contact['web'])
+      fill_in('phone', with: contact['phone'])
+      fill_in('email', with: contact['email'])
+      fill_in('web', with: contact['web'])
     end
 
     def save_contact_info

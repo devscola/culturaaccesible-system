@@ -4,7 +4,7 @@
     <template>
         <template is="dom-repeat" items="{{inputsAdded}}">
             <span value={{fieldValue::input}}>
-                <br/><input class$="{{inputtype}}" on-blur="focusBlured">
+                <br/><input name$="{{inputtype}}" on-blur="focusBlured">
             </span>
         </template>
         <span>

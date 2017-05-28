@@ -13,11 +13,9 @@ module Page
     end
 
     def fill_fields(prices)
-      first(:css, 'input.free-entrance').native.send_keys(prices['free_entrance'])
-
-      first(:css, 'input.general').native.send_keys(prices['general'])
-
-      first(:css, 'input.reduced').native.send_keys(prices['reduced'])
+      fill_in('free_entrance', with: contact['free_entrance'])
+      fill_in('general', with: contact['general'])
+      fill_in('reduced', with: contact['reduced'])
     end
 
     def save_price_info
