@@ -15,7 +15,7 @@
                 },
 
                 activate: {
-                    type: Boolean, 
+                    type: Boolean,
                     reflectToAttribute: true,
                     observer:'activeAdd'
                 }
@@ -23,7 +23,7 @@
 
             addClicked: function(event) {
                 event.preventDefault();
-                var data = this.buttontype; 
+                var data = this.buttontype;
                 this.fire('clicked', data);
             },
 

@@ -7,7 +7,7 @@
                 <br/><input class$="{{inputtype}}" on-blur="focusBlured">
             </span>
         </template>
-        <span>       
+        <span>
             <cuac-add-button class$="{{inputtype}}" activate="{{activeAddButton}}" buttontype="{{inputtype}}"></cuac-add-button>
         </span>
     </template>
@@ -23,7 +23,7 @@
             },
 
             properties: {
-                
+
                 inputsAdded: {type: Array},
 
                 inputtype: {type: String},
@@ -38,11 +38,15 @@
                     reflectToAttribute: true,
                 }
 
-            }, 
+            },
 
-            renderInput: function(data) {             
-                this.inputsAdded.push(data.detail);
-                this.refresh();
+            renderInput: function(data) {
+                var inputsQuantity = this.inputsAdded.length - 1;
+                var isFilled = this.children[inputsQuantity].children[1].value.length > 0;
+                if(isFilled){
+                    this.inputsAdded.push(data.detail);
+                    this.refresh();
+                }
             },
 
             refresh: function() {
@@ -54,7 +58,7 @@
             focusBlured: function(inputContent) {
                 this.storeinfo[this.inputtype].push(inputContent.target.value);
                 var data = this.storeinfo;
-                this.fire('blured', data); 
+                this.fire('blured', data);
             },
 
             toggleSave: function() {
@@ -62,7 +66,7 @@
                 this.fire('saveToggled', buttonActive);
                 this.activeAddButton = buttonActive;
             }
-            
+
         });
     </script>
 </dom-module>
