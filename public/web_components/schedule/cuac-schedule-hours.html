@@ -1,0 +1,46 @@
+<link rel="import" href="/vendor/polymer/polymer.html">
+
+<dom-module id="cuac-schedule-hours">
+    <template>
+        <div class="form-group">
+            <input class="form-control"  name="openingHours" value={{openingHours::input}}></input>
+            <button class="add-button" disabled$="{{disabledAdd}}">+</button>
+        </div>
+    </template>
+
+    <script>
+        Polymer({
+            is: 'cuac-schedule-hours',
+
+            properties: {
+                openingHours: {
+                    type: String,
+                    observer: 'updateValue'
+                },
+
+                disabledAdd: { type: Boolean, value: true }
+            },
+
+            updateValue: function() {
+                this.validateFormat(this.openingHours);
+            },
+
+            validateFormat: function(input) {
+                var validLength = (input.length === 11);
+
+                var timeFormat = /^([01]?[0-9]|2[0-3]):[0-5][0-9]/;
+                var from = input.split('/')[0];
+                var to = input.split('/')[1];
+                var valid = timeFormat.test(from) && timeFormat.test(to);
+
+                if(valid){
+                    from = Number(from.replace(':', ''));
+                    to = Number(to.replace(':', ''));
+                    var bigger = from < to;
+                };
+
+                this.disabledAdd = !validLength || !valid || !bigger;
+            }
+        });
+    </script>
+</dom-module>
