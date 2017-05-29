@@ -3,7 +3,7 @@ Class('Commons.Save', {
     Extends: Component,
 
     initialize: function() {
-        Museum.Contact.Super.call(this, 'save');
+        Commons.Save.Super.call(this, 'save');
     }
 
 });
