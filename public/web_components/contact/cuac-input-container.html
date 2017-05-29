@@ -4,11 +4,11 @@
     <template>
         <template is="dom-repeat" items="{{inputsAdded}}">
             <span value={{fieldValue::input}}>
-                <br/><input name$="{{inputtype}}" on-blur="focusBlured">
+                <br/><input name$="{{inputtype}}{{inputIndex(index)}}" on-blur="focusBlured">
             </span>
         </template>
         <span>
-            <cuac-add-button class$="{{inputtype}}" activate="{{activeAddButton}}" buttontype="{{inputtype}}"></cuac-add-button>
+            <cuac-add-button activate="{{activeAddButton}}" buttontype="{{inputtype}}"></cuac-add-button>
         </span>
     </template>
 
@@ -65,7 +65,12 @@
                 var buttonActive = this.fieldValue.length > 0;
                 this.fire('saveToggled', buttonActive);
                 this.activeAddButton = buttonActive;
+            },
+
+            inputIndex: function(index) {
+                return index + 1;
             }
+
 
         });
     </script>
