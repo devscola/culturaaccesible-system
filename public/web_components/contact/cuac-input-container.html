@@ -18,7 +18,6 @@
 
             ready: function() {
                 this.inputsAdded = [this.inputtype];
-                this.storeinfo = {phone: [], email: [], web: []};
                 this.addEventListener('clicked', this.renderInput.bind(this));
             },
 
@@ -27,8 +26,6 @@
                 inputsAdded: {type: Array},
 
                 inputtype: {type: String},
-
-                storeinfo: {type: Object},
 
                 fieldValue:{type: String, observer: 'toggleSave'},
 
@@ -56,8 +53,10 @@
             },
 
             focusBlured: function(inputContent) {
-                this.storeinfo[this.inputtype].push(inputContent.target.value);
-                var data = this.storeinfo;
+                var data = {
+                    type: this.inputtype,
+                    content: inputContent.target.value
+                }
                 this.fire('blured', data);
             },
 

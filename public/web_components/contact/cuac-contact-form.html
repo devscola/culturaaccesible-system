@@ -84,7 +84,7 @@
             },
 
             updateContent: function(data) {
-                this.storeInfo = data.detail;
+                this.storeInfo[data.detail.type].push(data.detail.content);
             },
 
         });
