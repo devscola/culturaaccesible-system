@@ -4,11 +4,11 @@
     <template>
         <template is="dom-repeat" items="{{inputsAdded}}">
             <span value={{fieldValue::input}}>
-                <br/><input name$="{{inputtype}}" on-blur="focusBlured">
+                <br/><input data-index="{{index}}" name$="{{inputtype}}" on-blur="focusBlured">
             </span>
         </template>
         <span>
-            <cuac-add-button class$="{{inputtype}}" activate="{{activeAddButton}}" buttontype="{{inputtype}}"></cuac-add-button>
+            <cuac-add-button class$="{{inputtype}}" buttontype="{{inputtype}}"></cuac-add-button>
         </span>
     </template>
 
@@ -18,7 +18,6 @@
 
             ready: function() {
                 this.inputsAdded = [this.inputtype];
-                this.storeinfo = {freeEntrance: [], general: [], reduced: []};
                 this.addEventListener('clicked', this.renderInput.bind(this));
             },
 
@@ -28,15 +27,7 @@
 
                 inputtype: {type: String},
 
-                storeinfo: {type: Object},
-
-                fieldValue:{type: String, observer: 'toggleSave'},
-
-                activeAddButton: {
-                    type: Boolean,
-                    value: false,
-                    reflectToAttribute: true,
-                }
+                fieldValue:{type: String}
 
             },
 
@@ -56,15 +47,12 @@
             },
 
             focusBlured: function(inputContent) {
-                this.storeinfo[this.inputtype].push(inputContent.target.value);
-                var data = this.storeinfo;
+                var data = {
+                    type: this.inputtype,
+                    content: inputContent.target.value,
+                    index: inputContent.target.dataIndex
+                }
                 this.fire('blured', data);
-            },
-
-            toggleSave: function() {
-                var buttonActive = this.fieldValue.length > 0;
-                this.fire('saveToggled', buttonActive);
-                this.activeAddButton = buttonActive;
             }
 
         });
