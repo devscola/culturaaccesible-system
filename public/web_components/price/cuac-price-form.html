@@ -17,7 +17,7 @@
             }
         </style>
         <form class$="form {{formVisibility}}">
-            <template is="dom-repeat" items="{{priceDetail}}">
+            <template is="dom-repeat" items="{{detail}}">
                 <div>
                     <label>{{item.label}}</label>
                 </div>
@@ -35,7 +35,6 @@
             is: 'cuac-price-form',
 
             ready: function() {
-                this.storeInfo = {freeEntrance: [], general: [], reduced: []};
                 this.addEventListener('saveToggled', this.activeSave.bind(this));
                 this.addEventListener('blured', this.updateContent.bind(this));
 
@@ -45,7 +44,7 @@
 
                 formVisibility: {type: String, value: 'show'},
 
-                priceDetail: {type: Array},
+                detail: {type: Array},
 
                 storeInfo: {type: Object, reflectToAttribute: true},
 
@@ -67,7 +66,7 @@
             },
 
             activeSave: function(toggle) {
-                if (toggle.detail === true) {
+                if (toggle === true) {
                     this.disableSave = null;
                 } else {
                     this.disableSave = 'disabled';
@@ -89,10 +88,16 @@
                 }else{
                     this.storeInfo[data.detail.type].push(data.detail.content)
                 }
+                this.toggleSave(data.detail.type);
             },
 
             diferentContent: function(data) {
                 return (this.storeInfo[data.type][data.index] != data.content && typeof(this.storeInfo[data.type][data.index]) !== 'undefined')
+            },
+
+            toggleSave: function(type) {
+                var buttonActive = this.storeInfo[type].length > 0;
+                this.activeSave(buttonActive);
             }
 
         });

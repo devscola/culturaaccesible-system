@@ -8,7 +8,7 @@
             </span>
         </template>
         <span>
-            <cuac-add-button class$="{{inputtype}}" activate="{{activeAddButton}}" buttontype="{{inputtype}}"></cuac-add-button>
+            <cuac-add-button class$="{{inputtype}}" buttontype="{{inputtype}}"></cuac-add-button>
         </span>
     </template>
 
@@ -27,13 +27,7 @@
 
                 inputtype: {type: String},
 
-                fieldValue:{type: String, observer: 'toggleSave'},
-
-                activeAddButton: {
-                    type: Boolean,
-                    value: false,
-                    reflectToAttribute: true,
-                }
+                fieldValue:{type: String}
 
             },
 
@@ -59,12 +53,6 @@
                     index: inputContent.target.dataIndex
                 }
                 this.fire('blured', data);
-            },
-
-            toggleSave: function() {
-                var buttonActive = this.fieldValue.length > 0;
-                this.fire('saveToggled', buttonActive);
-                this.activeAddButton = buttonActive;
             }
 
         });

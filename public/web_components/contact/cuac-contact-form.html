@@ -67,7 +67,7 @@
             },
 
             activeSave: function(toggle) {
-                if (toggle.detail === true) {
+                if (toggle === true) {
                     this.disableSave = null;
                 } else {
                     this.disableSave = 'disabled';
@@ -89,10 +89,16 @@
                 }else{
                     this.storeInfo[data.detail.type].push(data.detail.content)
                 }
+                this.toggleSave(data.detail.type);
             },
 
             diferentContent: function(data) {
                 return (this.storeInfo[data.type][data.index] != data.content && typeof(this.storeInfo[data.type][data.index]) !== 'undefined')
+            },
+
+            toggleSave: function(type) {
+                var buttonActive = this.storeInfo[type].length > 0;
+                this.activeSave(buttonActive);
             }
 
         });
