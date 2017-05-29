@@ -11,25 +11,25 @@
             }
         </style>
 
-        <div class$="view {{viewVisibility}}">
+        <div class$="panel panel-primary {{viewVisibility}}">
             <div class="panel-heading">
                 <h3 class="panel-title">Contact detail</h3>
             </div>
             <div class="panel-body">
                 <div>
-                    <span>Phone number:</span>
+                    <h4>Phone number:</h4>
                     <template is="dom-repeat" items="{{storeinfo.phone}}">
                         <div>{{item}}</div>
                     </template>
                 </div>
                 <div>
-                    <span>Email:</span>
+                    <h4>Email:</h4>
                     <template is="dom-repeat" items="{{storeinfo.email}}">
                         <div>{{item}}</div>
                     </template>
                 </div>
                 <div>
-                    <span>Website:</span>
+                    <h4>Website:</h4>
                     <template is="dom-repeat" items="{{storeinfo.web}}">
                         <div>{{item}}</div>
                     </template>
@@ -59,7 +59,7 @@
                     type: Object,
                     reflectToAttribute: true,
                 },
-                
+
             },
 
             toggleVisibility: function(){
