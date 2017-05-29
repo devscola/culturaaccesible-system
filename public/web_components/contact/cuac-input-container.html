@@ -4,7 +4,7 @@
     <template>
         <template is="dom-repeat" items="{{inputsAdded}}">
             <span value={{fieldValue::input}}>
-                <br/><input name$="{{inputtype}}" on-blur="focusBlured">
+                <br/><input data-index="{{index}}" name$="{{inputtype}}" on-blur="focusBlured">
             </span>
         </template>
         <span>
@@ -55,7 +55,8 @@
             focusBlured: function(inputContent) {
                 var data = {
                     type: this.inputtype,
-                    content: inputContent.target.value
+                    content: inputContent.target.value,
+                    index: inputContent.target.dataIndex
                 }
                 this.fire('blured', data);
             },
