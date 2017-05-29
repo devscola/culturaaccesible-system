@@ -36,7 +36,7 @@
 
             ready: function() {
                 this.storeInfo = {phone: [], email: [], web: []};
-                this.addEventListener('saveToggled', this.activeSave.bind(this));
+                this.addEventListener('saveToggled', this.toggleSave.bind(this));
                 this.addEventListener('blured', this.updateContent.bind(this));
 
             },
@@ -66,8 +66,8 @@
                 this.visible = false;
             },
 
-            activeSave: function(toggle) {
-                if (toggle.detail === true) {
+            toggleSave: function(event) {
+                if (event.detail) {
                     this.disableSave = null;
                 } else {
                     this.disableSave = 'disabled';
@@ -84,8 +84,16 @@
             },
 
             updateContent: function(data) {
-                this.storeInfo = data.detail;
+                if(this.diferentContent(data.detail)){
+                    this.storeInfo[data.detail.type][data.detail.index] = data.detail.content;
+                }else{
+                    this.storeInfo[data.detail.type].push(data.detail.content);
+                }
             },
+
+            diferentContent: function(data) {
+                return (this.storeInfo[data.type][data.index] != data.content && typeof(this.storeInfo[data.type][data.index]) !== 'undefined');
+            }
 
         });
     </script>

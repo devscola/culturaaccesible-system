@@ -3,6 +3,7 @@ require_relative 'test_support/contact'
 require_relative '../../app'
 require_relative 'test_support/fixture_contact'
 
+
 feature 'Contact' do
   let(:current) { Fixture.contact_form_shown }   
 
@@ -11,7 +12,7 @@ feature 'Contact' do
     expect(result).to be false
   end
 
-  scenario 'enables submit with enough content' do
+  scenario 'enables submit with enough content'  do
     current.fill_with_enough_content
 
     result = current.button_enabled?('.submit')
@@ -30,7 +31,7 @@ feature 'Contact' do
     expect(result).to be true
   end
 
-  scenario 'adds another input of the same type', :wip do
+  scenario 'adds another input of the same type' do
     current.fill_with_enough_content
 
     current.add_input
@@ -43,6 +44,16 @@ feature 'Contact' do
 
     expect(current.has_info?(Fixture::CONTACT['phone'])).to be true
     expect(current.has_info?(Fixture::EXTRA_PHONE)).to be true
+  end
+
+  scenario 'shows edited input value' do
+    current.fill_form(Fixture::CONTACT)
+
+    another_phone = 'another phone'
+    current.fill('phone1', another_phone)
+    current.save_contact_info
+
+    expect(current.has_info?(another_phone)).to be true
   end
 
 end

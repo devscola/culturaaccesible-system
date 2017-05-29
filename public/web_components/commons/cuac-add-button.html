@@ -18,6 +18,11 @@
                     type: Boolean,
                     reflectToAttribute: true,
                     observer:'activeAdd'
+                },
+
+                disableAdd: {
+                    type: String,
+                    value: 'disabled'
                 }
             },
 
@@ -28,7 +33,7 @@
             },
 
             activeAdd: function() {
-                if (this.activate === true) {
+                if (this.activate) {
                     this.disableAdd = null;
                 } else {
                     this.disableAdd = 'disabled';

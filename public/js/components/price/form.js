@@ -8,9 +8,16 @@ Class('Museum.Price', {
         {type: "reduced", label: "Reduced"}
     ],
 
+    fields: {
+        freeEntrance: [],
+        general: [],
+        reduced: []
+    },
+
     initialize: function() {
         Museum.Price.Super.call(this, 'formulary');
-        this.element.priceDetail = this.priceDetail;
+        this.element.detail = this.priceDetail;
+        this.element.storeInfo = this.fields;
     }
 
 });

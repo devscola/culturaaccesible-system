@@ -22,6 +22,10 @@ module Page
       end
     end
 
+    def fill(field, content)
+      fill_in(field, with: content)
+    end
+
     def save_contact_info
       find('.submit').click
     end
