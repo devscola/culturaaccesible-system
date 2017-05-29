@@ -27,17 +27,22 @@
 
                 inputtype: {type: String},
 
-                fieldValue:{type: String, observer: 'toggleSave'}
+                fieldValue:{type: String, observer: 'toggleSave'},
 
             },
 
-            renderInput: function(data) {
-                var inputsQuantity = this.inputsAdded.length - 1;
-                var isFilled = this.children[inputsQuantity].children[1].value.length > 0;
+            renderInput: function(event) {
+                var name = event.detail;
+
+                var element = document.getElementsByName(name)[0];
+                var isFilled = element.value.length > 0;
+
                 if(isFilled){
-                    this.inputsAdded.push(data.detail);
+                    this.inputsAdded.push(name);
                     this.refresh();
                 }
+
+                this.activeAddButton = false;
             },
 
             refresh: function() {
@@ -64,8 +69,6 @@
             inputIndex: function(index) {
                 return index + 1;
             }
-
-
         });
     </script>
 </dom-module>

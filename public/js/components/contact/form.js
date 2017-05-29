@@ -16,7 +16,7 @@ Class('Museum.Contact', {
 
     initialize: function() {
         Museum.Contact.Super.call(this, 'formulary');
-        this.element.detail = this.contactDetail;
+        this.element.contactDetail = this.contactDetail;
         this.element.storeInfo = this.fields;
     }
 

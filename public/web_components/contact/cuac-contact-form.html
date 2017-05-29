@@ -17,7 +17,7 @@
             }
         </style>
         <form class$="{{formVisibility}}">
-            <template is="dom-repeat" items="{{detail}}">
+            <template is="dom-repeat" items="{{contactDetail}}">
                 <div class="form-group">
                     <label>{{item.label}}</label>
                     <cuac-input-container storeinfo="{{storeInfo}}" inputtype="{{item.type}}"></cuac-input-container>
@@ -35,17 +35,15 @@
             is: 'cuac-contact-form',
 
             ready: function() {
-                this.storeInfo = {phone: [], email: [], web: []};
                 this.addEventListener('saveToggled', this.toggleSave.bind(this));
                 this.addEventListener('blured', this.updateContent.bind(this));
-
             },
 
             properties: {
 
                 formVisibility: {type: String, value: 'show'},
 
-                detail: {type: Array},
+                contactDetail: {type: Array},
 
                 storeInfo: {type: Object, reflectToAttribute: true},
 

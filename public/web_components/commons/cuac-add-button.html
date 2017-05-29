@@ -14,10 +14,15 @@
                     type: String
                 },
 
+                inputsAmount: {
+                    type: Number,
+                    value: 1
+                },
+
                 activate: {
                     type: Boolean,
                     reflectToAttribute: true,
-                    observer:'activeAdd'
+                    observer:'toggleActivation'
                 },
 
                 disableAdd: {
@@ -28,11 +33,12 @@
 
             addClicked: function(event) {
                 event.preventDefault();
-                var data = this.buttontype;
+                var data = this.buttontype + this.inputsAmount;
                 this.fire('clicked', data);
+                this.inputsAmount += 1;
             },
 
-            activeAdd: function() {
+            toggleActivation: function() {
                 if (this.activate) {
                     this.disableAdd = null;
                 } else {
