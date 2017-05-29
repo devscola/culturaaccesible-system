@@ -12,6 +12,14 @@ module Page
       has_css?('#formulary', visible: false)
     end
 
+    def fill_input(hours)
+      fill_in('openingHours', with: hours)
+    end
+
+    def is_valid?
+      !find('.add-button').disabled?
+    end
+
     private
 
     def validate!
