@@ -18,13 +18,13 @@
         </style>
         <form class$="form {{formVisibility}}">
             <template is="dom-repeat" items="{{detail}}">
-                <div>
+                <div class="form-group">
                     <label>{{item.label}}</label>
+                    <cuac-input-container storeinfo="{{storeInfo}}" inputtype="{{item.type}}"></cuac-input-container>
                 </div>
-                <cuac-input-container storeinfo="{{storeInfo}}" inputtype="{{item.type}}"></cuac-input-container>
             </template>
             <div>
-                <button class="submit" on-click="submitClicked" disabled$="{{disableSave}}">Save</button>
+                <button class="submit btn btn-primary" on-click="submitClicked" disabled$="{{disableSave}}">Save</button>
             </div>
         </form>
         <cuac-price-view visible="{{visible}}" storeinfo="{{storeInfoUpdated}}"></cuac-price-view>
