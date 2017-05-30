@@ -8,6 +8,20 @@ module Page
       validate!
     end
 
+    def fill_form(location)
+      location.each do |field, content|
+        fill_in(field, with: content)
+      end
+    end
+
+    def save
+      find('.submit').click
+    end
+
+    def has_form?
+      has_css?('.form')
+    end
+
     private
 
     def validate!
