@@ -28,4 +28,9 @@ class App < Sinatra::Base
   get '/schedule' do
     File.read(File.join('public', 'schedule.html'))
   end
+
+  get '/location' do
+    File.read(File.join('public', 'location.html'))
+  end
+
 end
