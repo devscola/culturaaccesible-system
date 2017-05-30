@@ -18,8 +18,8 @@ module Page
       find('.submit').click
     end
 
-    def has_form?
-      has_css?('.form')
+    def has_info?(content)
+      has_content?(content)
     end
 
     private
