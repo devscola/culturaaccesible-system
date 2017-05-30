@@ -8,9 +8,16 @@ Class('Museum.Contact', {
         {type: "web", label: "Website"}
     ],
 
+    fields: {
+        phone: [],
+        email: [],
+        web: []
+    },
+
     initialize: function() {
         Museum.Contact.Super.call(this, 'formulary');
         this.element.contactDetail = this.contactDetail;
+        this.element.storage = this.fields;
     }
 
 });

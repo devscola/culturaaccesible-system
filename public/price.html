@@ -3,13 +3,19 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Price</title>
+        <link rel="stylesheet" href="vendor/bootstrap/bootstrap.min.css">
+        <link rel="stylesheet" href="vendor/bootstrap/bootstrap-theme.min.css">
         <link rel="import" href="/web_components/price/cuac-price-form.html">
         <link rel="import" href="/web_components/price/cuac-price-view.html">
         <link rel="import" href="/web_components/commons/cuac-input-container.html">
         <link rel="import" href="/web_components/commons/cuac-add-button.html">
     </head>
     <body>
-        <cuac-price-form id="formulary"></cuac-price-form>
+        <div class="container">
+            <div class="col-md-5">
+                <cuac-price-form id="formulary"></cuac-price-form>
+            </div>
+        </div>
 
         <script src="vendor/classjs/class.min.js"></script>
 

@@ -11,23 +11,19 @@
             }
             .view.show {
                 display: block;
-            }
-            .view.hide {
-                display: none;
-            }
         </style>
         <form class$="form {{formVisibility}}">
-            <template is="dom-repeat" items="{{detail}}">
-                <div>
+            <template is="dom-repeat" items="{{priceDetail}}">
+                <div class="form-group">
                     <label>{{item.label}}</label>
+                    <cuac-input-container storeinfo="{{storeInfo}}" inputtype="{{item.type}}"></cuac-input-container>
                 </div>
-                <cuac-input-container storeinfo="{{storeInfo}}" inputtype="{{item.type}}"></cuac-input-container>
             </template>
             <div>
-                <button class="submit" on-click="submitClicked" disabled$="{{disableSave}}">Save</button>
+                <button class="submit btn btn-primary" on-click="submitClicked" disabled$="{{disableSave}}">Save</button>
             </div>
         </form>
-        <cuac-price-view visible="{{visible}}" storeinfo="{{storeInfoUpdated}}"></cuac-price-view>
+        <cuac-price-view hidden="{{viewHidden}}" storage="{{renderedStorage}}"></cuac-price-view>
     </template>
 
     <script>
@@ -35,8 +31,8 @@
             is: 'cuac-price-form',
 
             ready: function() {
-                this.addEventListener('saveToggled', this.activeSave.bind(this));
-                this.addEventListener('blured', this.updateContent.bind(this));
+                this.addEventListener('saveToggled', this.toggleSave.bind(this));
+                this.addEventListener('blured', this.updateStorage.bind(this));
 
             },
 
@@ -44,60 +40,53 @@
 
                 formVisibility: {type: String, value: 'show'},
 
-                detail: {type: Array},
+                priceDetail: {type: Array},
 
-                storeInfo: {type: Object, reflectToAttribute: true},
+                storage: {type: Object, reflectToAttribute: true},
 
-                storeInfoUpdated: {type: Object, reflectToAttribute: true},
+                renderedStorage: {type: Object, reflectToAttribute: true},
 
                 disableSave: {type: String, value: 'disabled'},
 
-                visible: {
-                    type: Boolean,
-                    value: true,
-                    reflectToAttribute: true,
-                    observer: 'toggleVisibility'
-                }
+                viewHidden: {type: Boolean, value: true}
             },
 
             submitClicked: function(event) {
                 event.preventDefault();
-                this.visible = false;
+                this.renderedStorage = this.storage;
+                this.hide();
+                this.viewHidden = false;
             },
 
-            activeSave: function(toggle) {
-                if (toggle === true) {
+            hide: function() {
+                this.formVisibility = 'hide';
+            },
+
+            toggleSave: function(event) {
+                if (event.detail) {
                     this.disableSave = null;
                 } else {
                     this.disableSave = 'disabled';
                 }
             },
 
-            toggleVisibility: function() {
-                if (this.visible) {
-                    this.formVisibility = 'show';
+            updateStorage: function(event) {
+                var input = event.detail;
+
+                if (this.newEntry(input)) {
+                    this.storage[input.type].push(input.content);
                 } else {
-                    this.formVisibility = 'hide';
-                    this.storeInfoUpdated = this.storeInfo;
+                    this.updateEntry(input);
                 }
             },
 
-            updateContent: function(data) {
-                if(this.diferentContent(data.detail)){
-                    this.storeInfo[data.detail.type][data.detail.index] = data.detail.content;
-                }else{
-                    this.storeInfo[data.detail.type].push(data.detail.content)
-                }
-                this.toggleSave(data.detail.type);
+            newEntry: function(input) {
+                var storedValue = this.storage[input.type][input.index];
+                return storedValue === undefined;
             },
 
-            diferentContent: function(data) {
-                return (this.storeInfo[data.type][data.index] != data.content && typeof(this.storeInfo[data.type][data.index]) !== 'undefined')
-            },
-
-            toggleSave: function(type) {
-                var buttonActive = this.storeInfo[type].length > 0;
-                this.activeSave(buttonActive);
+            updateEntry: function(input) {
+                this.storage[input.type][input.index] = input.content;
             }
 
         });

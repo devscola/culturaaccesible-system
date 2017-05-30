@@ -1,0 +1,62 @@
+<link rel="import" href="/vendor/polymer/polymer.html">
+
+<dom-module id="cuac-schedule-view">
+    <template>
+        <style>
+            .view.show {
+                display: block;
+            }
+            .view.hide {
+                display: none;
+            }
+        </style>
+
+        <div class$="panel panel-primary {{viewVisibility}}">
+            <div class="panel-heading">
+                <h3 class="panel-title">Saved opening hours</h3>
+            </div>
+            <div class="panel-body">
+                <template is="dom-repeat" items={{days}}>
+                    <div>
+                        <span>{{item.day}} </span>
+                        <template is="dom-repeat" items="{{item.hours}}">
+                            <span> {{item}} </span>
+                        </template>
+                    </div>
+                </template>
+            </div>
+        </div>
+    </template>
+    <script>
+        Polymer({
+            is: 'cuac-schedule-view',
+
+            properties: {
+
+                visible: {
+                    type: Boolean,
+                    reflectToAttribute: true,
+                    observer: 'toggleVisibility'
+                },
+
+                viewVisibility: {
+                    type: String,
+                    value: 'show'
+                },
+
+                days: {
+                    type: Array
+                },
+            },
+
+            toggleVisibility: function(){
+                if (this.visible) {
+                    this.viewVisibility = 'hide';
+                } else {
+                    this.viewVisibility = 'show';
+                }
+            }
+
+        });
+    </script>
+</dom-module>

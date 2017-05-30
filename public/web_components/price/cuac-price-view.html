@@ -11,26 +11,26 @@
             }
         </style>
 
-        <div class$="view {{viewVisibility}}">
+        <div class$="panel panel-primary {{viewVisibility}}">
             <div class="panel-heading">
                 <h3 class="panel-title">Price detail</h3>
             </div>
             <div class="panel-body">
                 <div>
-                    <span>Free entrance:</span>
-                    <template is="dom-repeat" items="{{storeinfo.freeEntrance}}">
+                    <h4>Free entrance:</h4>
+                    <template is="dom-repeat" items="{{storage.freeEntrance}}">
                         <div>{{item}}</div>
                     </template>
                 </div>
                 <div>
-                    <span>General:</span>
-                    <template is="dom-repeat" items="{{storeinfo.general}}">
+                    <h4>General:</h4>
+                    <template is="dom-repeat" items="{{storage.general}}">
                         <div>{{item}}</div>
                     </template>
                 </div>
                 <div>
-                    <span>Reduced:</span>
-                    <template is="dom-repeat" items="{{storeinfo.reduced}}">
+                    <h4>Reduced:</h4>
+                    <template is="dom-repeat" items="{{storage.reduced}}">
                         <div>{{item}}</div>
                     </template>
                 </div>
@@ -44,27 +44,15 @@
 
             properties: {
 
-                visible: {
-                    type: Boolean,
-                    reflectToAttribute: true,
-                    observer: 'toggleVisibility'
-                },
+                hidden: {type: Boolean, observer: 'show'},
 
-                viewVisibility: {
-                    type: String,
-                    value: 'hide'
-                },
+                viewVisibility: {type: String, value: 'hide'},
 
-                storeinfo: {
-                    type: Object,
-                    reflectToAttribute: true,
-                },
+                storage: {type: Object}
             },
 
-            toggleVisibility: function(){
-                if (this.visible) {
-                    this.viewVisibility = 'hide';
-                } else {
+            show: function(){
+                if (!this.hidden) {
                     this.viewVisibility = 'show';
                 }
             }

@@ -16,8 +16,8 @@ Class('Museum.Price', {
 
     initialize: function() {
         Museum.Price.Super.call(this, 'formulary');
-        this.element.detail = this.priceDetail;
-        this.element.storeInfo = this.fields;
+        this.element.priceDetail = this.priceDetail;
+        this.element.storage = this.fields;
     }
 
 });

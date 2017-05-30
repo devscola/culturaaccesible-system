@@ -1,0 +1,49 @@
+<link rel="import" href="/vendor/polymer/polymer.html">
+
+<dom-module id="cuac-location-view">
+    <template>
+        <style>
+            .panel.show {
+                display: block;
+            }
+
+            .panel.hide {
+                display: none;
+            }
+        </style>
+
+        <div class$="panel panel-primary {{visibility}}">
+            <div class="panel-heading">
+                <h3 class="panel-title">Location</h3>
+            </div>
+            <div class="panel-body">
+                <template is="dom-repeat" items="{{location}}">
+                    <div>
+                        <label>{{item.label}}:</label>
+                        <span>{{item.value}}</span>
+                    </div>
+                </template>
+            </div>
+        </div>
+    </template>
+
+    <script>
+        Polymer({
+            is: 'cuac-location-view',
+
+            properties: {
+                visible: {type: Boolean, observer: 'show'},
+
+                visibility: {type: String, value: 'hide'},
+
+                location: {type: Array}
+            },
+
+            show: function() {
+                if (this.visible) {
+                    this.visibility = 'show';
+                }
+            }
+        });
+    </script>
+</dom-module>

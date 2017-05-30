@@ -4,11 +4,11 @@
     <template>
         <template is="dom-repeat" items="{{inputsAdded}}">
             <span value={{fieldValue::input}}>
-                <br/><input data-index="{{index}}" name$="{{inputtype}}" on-blur="focusBlured">
+                <br/><input data-index="{{index}}" name$="{{inputtype}}{{inputIndex(index)}}" on-blur="focusBlured">
             </span>
         </template>
         <span>
-            <cuac-add-button class$="{{inputtype}}" buttontype="{{inputtype}}"></cuac-add-button>
+            <cuac-add-button activate="{{activeAddButton}}" buttontype="{{inputtype}}"></cuac-add-button>
         </span>
     </template>
 
@@ -27,17 +27,22 @@
 
                 inputtype: {type: String},
 
-                fieldValue:{type: String}
+                fieldValue:{type: String, observer: 'toggleSave'},
 
             },
 
-            renderInput: function(data) {
-                var inputsQuantity = this.inputsAdded.length - 1;
-                var isFilled = this.children[inputsQuantity].children[1].value.length > 0;
+            renderInput: function(event) {
+                var name = event.detail;
+
+                var element = document.getElementsByName(name)[0];
+                var isFilled = element.value.length > 0;
+
                 if(isFilled){
-                    this.inputsAdded.push(data.detail);
+                    this.inputsAdded.push(name);
                     this.refresh();
                 }
+
+                this.activeAddButton = false;
             },
 
             refresh: function() {
@@ -51,10 +56,19 @@
                     type: this.inputtype,
                     content: inputContent.target.value,
                     index: inputContent.target.dataIndex
-                }
+                };
                 this.fire('blured', data);
-            }
+            },
 
+            toggleSave: function() {
+                var buttonActive = this.fieldValue.length > 0;
+                this.fire('saveToggled', buttonActive);
+                this.activeAddButton = buttonActive;
+            },
+
+            inputIndex: function(index) {
+                return index + 1;
+            }
         });
     </script>
 </dom-module>

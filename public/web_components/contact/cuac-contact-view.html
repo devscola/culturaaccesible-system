@@ -11,26 +11,26 @@
             }
         </style>
 
-        <div class$="view {{viewVisibility}}">
+        <div class$="panel panel-primary {{viewVisibility}}">
             <div class="panel-heading">
                 <h3 class="panel-title">Contact detail</h3>
             </div>
             <div class="panel-body">
                 <div>
-                    <span>Phone number:</span>
-                    <template is="dom-repeat" items="{{storeinfo.phone}}">
+                    <h4>Phone number:</h4>
+                    <template is="dom-repeat" items="{{storage.phone}}">
                         <div>{{item}}</div>
                     </template>
                 </div>
                 <div>
-                    <span>Email:</span>
-                    <template is="dom-repeat" items="{{storeinfo.email}}">
+                    <h4>Email:</h4>
+                    <template is="dom-repeat" items="{{storage.email}}">
                         <div>{{item}}</div>
                     </template>
                 </div>
                 <div>
-                    <span>Website:</span>
-                    <template is="dom-repeat" items="{{storeinfo.web}}">
+                    <h4>Website:</h4>
+                    <template is="dom-repeat" items="{{storage.web}}">
                         <div>{{item}}</div>
                     </template>
                 </div>
@@ -43,33 +43,18 @@
             is: 'cuac-contact-view',
 
             properties: {
+                hidden: {type: Boolean, observer: 'show'},
 
-                visible: {
-                    type: Boolean,
-                    reflectToAttribute: true,
-                    observer: 'toggleVisibility'
-                },
+                viewVisibility: {type: String, value: 'hide'},
 
-                viewVisibility: {
-                    type: String,
-                    value: 'hide'
-                },
-
-                storeinfo: {
-                    type: Object,
-                    reflectToAttribute: true,
-                },
-                
+                storage: {type: Object}
             },
 
-            toggleVisibility: function(){
-                if (this.visible) {
-                    this.viewVisibility = 'hide';
-                } else {
+            show: function(){
+                if (!this.hidden) {
                     this.viewVisibility = 'show';
                 }
             }
-
         });
     </script>
 </dom-module>
