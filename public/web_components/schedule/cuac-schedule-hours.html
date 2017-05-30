@@ -24,11 +24,11 @@
             },
 
             hasDays: function() {
-                return (this.days.length > 0)
+                return (this.days.length > 0);
             },
 
             updateValue: function() {
-                this.validate()
+                this.validate();
             },
 
             validate: function() {
@@ -47,9 +47,9 @@
                     from = Number(from.replace(':', ''));
                     to = Number(to.replace(':', ''));
                     var bigger = from < to;
-                };
+                }
 
-                return !validLength || !valid || !bigger;
+                return !validLength || !valid || !this.bigger;
             }
         });
     </script>

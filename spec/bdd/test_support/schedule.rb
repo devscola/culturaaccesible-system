@@ -17,7 +17,7 @@ module Page
     end
 
     def is_valid?
-      !find('.add-button').disabled?
+      !find('.add-button', visible: false).disabled?
     end
 
     def select_day

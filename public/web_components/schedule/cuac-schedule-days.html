@@ -5,6 +5,8 @@
         <div class="form-group">
             <template is="dom-repeat" items={{days}} as="day">
                 <input type="checkbox" class="day-checkbox" on-change="updateSelectedDays" on-click="toggleChecked" data-day$="{{day}}">
+                {{day}}<br>
+                </input>
             </template>
         </div>
     </template>
@@ -43,9 +45,9 @@
             toggleChecked: function(e) {
                 var day = e.target.dataset.day;
                 if(this.week[day].checked === false){
-                    this.week[day].checked = true
+                    this.week[day].checked = true;
                 }else{
-                    this.week[day].checked = false
+                    this.week[day].checked = false;
                 }
             }
         });
