@@ -17,7 +17,7 @@ Class('Museum.Contact', {
     initialize: function() {
         Museum.Contact.Super.call(this, 'formulary');
         this.element.contactDetail = this.contactDetail;
-        this.element.storeInfo = this.fields;
+        this.element.storage = this.fields;
     }
 
 });

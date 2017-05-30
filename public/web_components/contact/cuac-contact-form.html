@@ -9,25 +9,20 @@
             .form.hide {
                 display: none;
             }
-            .view.show {
-                display: block;
-            }
-            .view.hide {
-                display: none;
-            }
         </style>
+
         <form class$="{{formVisibility}}">
             <template is="dom-repeat" items="{{contactDetail}}">
                 <div class="form-group">
                     <label>{{item.label}}</label>
-                    <cuac-input-container storeinfo="{{storeInfo}}" inputtype="{{item.type}}"></cuac-input-container>
+                    <cuac-input-container inputtype="{{item.type}}"></cuac-input-container>
                 </div>
             </template>
             <div>
                 <button class="submit btn btn-primary" on-click="submitClicked" disabled$="{{disableSave}}">Save</button>
             </div>
         </form>
-        <cuac-contact-view visible="{{visible}}" storeinfo="{{storeInfoUpdated}}"></cuac-contact-view>
+        <cuac-contact-view hidden="{{viewHidden}}" storage="{{renderedStorage}}"></cuac-contact-view>
     </template>
 
     <script>
@@ -36,7 +31,7 @@
 
             ready: function() {
                 this.addEventListener('saveToggled', this.toggleSave.bind(this));
-                this.addEventListener('blured', this.updateContent.bind(this));
+                this.addEventListener('blured', this.updateStorage.bind(this));
             },
 
             properties: {
@@ -45,23 +40,24 @@
 
                 contactDetail: {type: Array},
 
-                storeInfo: {type: Object, reflectToAttribute: true},
+                storage: {type: Object, reflectToAttribute: true},
 
-                storeInfoUpdated: {type: Object, reflectToAttribute: true},
+                renderedStorage: {type: Object, reflectToAttribute: true},
 
                 disableSave: {type: String, value: 'disabled'},
 
-                visible: {
-                    type: Boolean,
-                    value: true,
-                    reflectToAttribute: true,
-                    observer: 'toggleVisibility'
-                }
+                viewHidden: {type: Boolean, value: true}
             },
 
             submitClicked: function(event) {
                 event.preventDefault();
-                this.visible = false;
+                this.renderedStorage = this.storage;
+                this.hide();
+                this.viewHidden = false;
+            },
+
+            hide: function() {
+                this.formVisibility = 'hide';
             },
 
             toggleSave: function(event) {
@@ -72,27 +68,24 @@
                 }
             },
 
-            toggleVisibility: function() {
-                if (this.visible) {
-                    this.formVisibility = 'show';
+            updateStorage: function(event) {
+                var input = event.detail;
+
+                if (this.newEntry(input)) {
+                    this.storage[input.type].push(input.content);
                 } else {
-                    this.formVisibility = 'hide';
-                    this.storeInfoUpdated = this.storeInfo;
+                    this.updateEntry(input);
                 }
             },
 
-            updateContent: function(data) {
-                if(this.diferentContent(data.detail)){
-                    this.storeInfo[data.detail.type][data.detail.index] = data.detail.content;
-                }else{
-                    this.storeInfo[data.detail.type].push(data.detail.content);
-                }
+            newEntry: function(input) {
+                var storedValue = this.storage[input.type][input.index];
+                return storedValue === undefined;
             },
 
-            diferentContent: function(data) {
-                return (this.storeInfo[data.type][data.index] != data.content && typeof(this.storeInfo[data.type][data.index]) !== 'undefined');
+            updateEntry: function(input) {
+                this.storage[input.type][input.index] = input.content;
             }
-
         });
     </script>
 </dom-module>
