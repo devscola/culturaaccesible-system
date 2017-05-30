@@ -18,19 +18,19 @@
             <div class="panel-body">
                 <div>
                     <h4>Free entrance:</h4>
-                    <template is="dom-repeat" items="{{storeinfo.freeEntrance}}">
+                    <template is="dom-repeat" items="{{storage.freeEntrance}}">
                         <div>{{item}}</div>
                     </template>
                 </div>
                 <div>
                     <h4>General:</h4>
-                    <template is="dom-repeat" items="{{storeinfo.general}}">
+                    <template is="dom-repeat" items="{{storage.general}}">
                         <div>{{item}}</div>
                     </template>
                 </div>
                 <div>
                     <h4>Reduced:</h4>
-                    <template is="dom-repeat" items="{{storeinfo.reduced}}">
+                    <template is="dom-repeat" items="{{storage.reduced}}">
                         <div>{{item}}</div>
                     </template>
                 </div>
@@ -44,27 +44,15 @@
 
             properties: {
 
-                visible: {
-                    type: Boolean,
-                    reflectToAttribute: true,
-                    observer: 'toggleVisibility'
-                },
+                hidden: {type: Boolean, observer: 'show'},
 
-                viewVisibility: {
-                    type: String,
-                    value: 'hide'
-                },
+                viewVisibility: {type: String, value: 'hide'},
 
-                storeinfo: {
-                    type: Object,
-                    reflectToAttribute: true,
-                },
+                storage: {type: Object}
             },
 
-            toggleVisibility: function(){
-                if (this.visible) {
-                    this.viewVisibility = 'hide';
-                } else {
+            show: function(){
+                if (!this.hidden) {
                     this.viewVisibility = 'show';
                 }
             }
