@@ -4,12 +4,15 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Schedule</title>
         <link rel="import" href="/web_components/schedule/cuac-schedule-hours.html">
+        <link rel="import" href="/web_components/schedule/cuac-schedule-view.html">
     </head>
     <body>
         <div id="formulary">
             <cuac-schedule-hours></cuac-schedule-hours>
+            <cuac-schedule-view id="result"></cuac-schedule-view>
         </div>
 
+        <script src="vendor/polymer/webcomponents-lite.min.js"></script>
         <script src="vendor/classjs/class.min.js"></script>
 
         <script src="js/infrastructure/component.js"></script>
