@@ -20,6 +20,20 @@ module Page
       !find('.add-button').disabled?
     end
 
+    def select_day
+      all('.day-checkbox', visible: false).first.set(true)
+    end
+
+    def select_all_days
+      find('.all-day-checkbox', visible: false).set(true)
+    end
+
+    def all_days_selected?
+      all = all('.day-checkbox', visible: false)
+      checked = all.select {|checkbox| checkbox.value == true }
+      return all.length == checked.length
+    end
+
     private
 
     def validate!

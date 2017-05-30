@@ -1,0 +1,53 @@
+<link rel="import" href="/vendor/polymer/polymer.html">
+
+<dom-module id="cuac-schedule-days">
+    <template>
+        <div class="form-group">
+            <template is="dom-repeat" items={{days}} as="day">
+                <input type="checkbox" class="day-checkbox" on-change="updateSelectedDays" on-click="toggleChecked" data-day$="{{day}}">
+            </template>
+        </div>
+    </template>
+
+    <script>
+        Polymer({
+            is: 'cuac-schedule-days',
+
+            ready: function() {
+                this.week = {
+                    monday: { checked: false },
+                    tuesday: { checked: false },
+                    wednesday: { checked: false },
+                    thursday: { checked: false },
+                    friday: { checked: false },
+                    saturday: { checked: false },
+                    sunday: { checked: false },
+                };
+                this.days = Object.keys(this.week);
+                this.updateSelectedDays();
+            },
+
+            properties: {
+                selectedDays: {
+                    type: Array
+                }
+            },
+
+            updateSelectedDays: function() {
+                this.selectedDays = this.days.filter(function(day) {
+                    return this.week[day].checked === true;
+                }.bind(this));
+                this.fire('daySelected', this.selectedDays);
+            },
+
+            toggleChecked: function(e) {
+                var day = e.target.dataset.day;
+                if(this.week[day].checked === false){
+                    this.week[day].checked = true
+                }else{
+                    this.week[day].checked = false
+                }
+            }
+        });
+    </script>
+</dom-module>

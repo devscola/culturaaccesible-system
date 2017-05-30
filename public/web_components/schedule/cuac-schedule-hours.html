@@ -18,11 +18,21 @@
                     observer: 'updateValue'
                 },
 
-                disabledAdd: { type: Boolean, value: true }
+                disabledAdd: { type: Boolean, value: true },
+
+                days: { type: Array }
+            },
+
+            hasDays: function() {
+                return (this.days.length > 0)
             },
 
             updateValue: function() {
-                this.validateFormat(this.openingHours);
+                this.validate()
+            },
+
+            validate: function() {
+                this.disabledAdd = (this.hasDays() && this.validateFormat(this.openingHours));
             },
 
             validateFormat: function(input) {
@@ -39,7 +49,7 @@
                     var bigger = from < to;
                 };
 
-                this.disabledAdd = !validLength || !valid || !bigger;
+                return !validLength || !valid || !bigger;
             }
         });
     </script>
