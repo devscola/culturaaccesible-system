@@ -3,11 +3,11 @@ Class('Museum.Schedule', {
     Extends: Component,
 
     schedule: [
-        {day: 'Monday', hours: ['09:00 - 13:00', '14:00 - 21:00']},
-        {day: 'Tuesday', hours: ['14:00 - 21:00']},
+        {day: 'Monday', hours: []},
+        {day: 'Tuesday', hours: []},
         {day: 'Wednesday', hours: []},
         {day: 'Thursday', hours: []},
-        {day: 'Friday', hours: ['14:00 - 21:00']},
+        {day: 'Friday', hours: []},
         {day: 'Saturday', hours: []},
         {day: 'Sunday', hours: []}
     ],

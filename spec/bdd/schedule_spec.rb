@@ -7,6 +7,14 @@ feature 'Schedule form' do
     current = Page::Schedule.new
     expect(current.is_instanciated?).to be true
   end
+
+  scenario 'shows schedule view after add some hours on some days' do
+    current = Page::Schedule.new
+    current.select_day
+    current.fill_input('08:00/14:00')
+    current.click_add_hour
+    expect(current.view_visible?('08:00/14:00')).to eq true
+  end
 end
 
 feature 'Schedule form hours input' do
@@ -27,9 +35,10 @@ feature 'Schedule form hours input' do
     current.fill_input('09:00/08:00')
     expect(current.is_valid?).to eq false
   end
+
 end
 
-feature 'Schedule days', :wip do
+feature 'Schedule days' do
   scenario 'must have almost one day clicked before type an hour' do
     current = Page::Schedule.new
     current.select_day

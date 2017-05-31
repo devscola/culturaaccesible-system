@@ -3,10 +3,10 @@
 <dom-module id="cuac-schedule-view">
     <template>
         <style>
-            .view.show {
+            .panel.show {
                 display: block;
             }
-            .view.hide {
+            .panel.hide {
                 display: none;
             }
         </style>
@@ -33,26 +33,20 @@
 
             properties: {
 
-                visible: {
-                    type: Boolean,
-                    reflectToAttribute: true,
-                    observer: 'toggleVisibility'
-                },
-
                 viewVisibility: {
                     type: String,
-                    value: 'show'
+                    value: 'hide'
                 },
 
                 schedule: {
                     type: Array
                 },
+
+                hidden: {type: Boolean, observer: 'show'}
             },
 
-            toggleVisibility: function(){
-                if (this.visible) {
-                    this.viewVisibility = 'hide';
-                } else {
+            show: function() {
+                if (!this.hidden) {
                     this.viewVisibility = 'show';
                 }
             }

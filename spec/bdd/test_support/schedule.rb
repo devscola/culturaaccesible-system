@@ -34,6 +34,14 @@ module Page
       return all.length == checked.length
     end
 
+    def click_add_hour
+      find('.add-button').click
+    end
+
+    def view_visible?(content)
+      has_content?(content)
+    end
+    
     private
 
     def validate!

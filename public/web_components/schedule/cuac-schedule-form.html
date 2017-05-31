@@ -3,15 +3,9 @@
 <dom-module id="cuac-schedule-form">
     <template>
         <style>
-            .form.show {
-                display: block;
-            }
-            .form.hide {
-                display: none;
-            }
         </style>
 
-        <form class$="{{formVisibility}}">
+        <form>
             <cuac-schedule-days id="days"></cuac-schedule-days>
             <cuac-schedule-hours id="hours"></cuac-schedule-hours>
             <div>
@@ -27,15 +21,17 @@
 
             ready: function() {
                 this.addEventListener('daySelected', this.setDays.bind(this));
+                this.addEventListener('addClicked', this.storeSchedule.bind(this));
+
             },
 
             properties: {
 
-                formVisibility: {type: String, value: 'show'},
-
                 disableSave: {type: String, value: 'disabled'},
 
-                viewHidden: {type: Boolean, value: true},
+                hidden: {type: Boolean, reflectToAttribute: true},
+
+                viewHidden: {type: Boolean, value: true, reflectToAttribute: true},
 
                 days: {
                     type: Array
@@ -49,7 +45,6 @@
             submitClicked: function(event) {
                 event.preventDefault();
                 this.hide();
-                this.viewHidden = true;
             },
 
             hide: function() {
@@ -66,6 +61,12 @@
 
             setDays: function(days) {
               this.days = days.detail;
+            },
+
+            storeSchedule: function(event) {
+                this.actualSchedule = event.detail;
+                this.schedule = [{day: this.actualSchedule.days, hours: [this.actualSchedule.hours]}];
+                this.viewHidden = false;
             }
         });
     </script>
