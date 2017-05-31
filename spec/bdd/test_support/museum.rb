@@ -12,6 +12,9 @@ module Page
       fill_in(field, with: content)
     end
 
+    def save_activated?
+    end
+
     private
 
     def validate!

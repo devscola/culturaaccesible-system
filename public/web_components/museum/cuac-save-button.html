@@ -1,0 +1,35 @@
+<link rel="import" href="/vendor/polymer/polymer.html">
+
+<dom-module id="cuac-save-button">
+    <template>
+        <button class="btn btn-primary" on-click="submitted" disabled$="{{disableSave}}">Save</button>
+    </template>
+
+    <script>
+        Polymer({
+            is: 'cuac-save-button',
+
+            properties: {
+                disableSave: {type: String, value: 'disabled'}
+            },
+
+            ready: function() {
+                this.addEventListener('saveToggled', this.activeSave.bind(this));
+            },
+
+            submitted: function(event) {
+                event.preventDefault();
+                this.fire('submitted');
+            },
+
+            activeSave: function(toggle) {
+                if(toggle.detail === true){
+                    this.disableSave = null;
+                }else{
+                    this.disableSave = 'disabled';
+                }
+            }
+
+        });
+    </script>
+</dom-module>

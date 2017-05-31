@@ -1,0 +1,61 @@
+<link rel="import" href="/vendor/polymer/polymer.html">
+
+<dom-module id="cuac-info-form">
+    <template>
+        <style>
+            .form.show {
+                display: block;
+            }
+
+            .form.hide {
+                display: none;
+            }
+        </style>
+        <div class="form-group">
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input class="form-control"  name="name" value={{nameValue::blur}}></input>
+            </div>
+
+            <div>
+                <label for="description">Description</label>
+                <textarea class="form-control" name="description" value="{{descriptionValue::blur}}"></textarea>
+            </div>
+        </div>
+    </template>
+
+    <script>
+        Polymer({
+            is: 'cuac-info-form',
+
+            properties: {
+                nameValue: {
+                    type: String,
+                    value: '',
+                    observer: 'validateInfo'
+                },
+
+                descriptionValue: {
+                    type: String,
+                    value: '',
+                    observer: 'validateInfo'
+                },
+
+            },
+
+            validateInfo: function() {
+                if (this.nameValue.length > 0 && this.descriptionValue.length > 0) {
+                    this.sendData();
+                }
+            },
+
+            sendData: function() {
+                var infoData = {
+                    name: this.nameValue,
+                    description: this.descriptionValue
+                };
+                this.fire('validInfo', infoData);
+            }
+        });
+    </script>
+</dom-module>

@@ -1,0 +1,85 @@
+<link rel="import" href="/vendor/polymer/polymer.html">
+
+<dom-module id="cuac-location-form">
+    <template>
+        <style>
+            .form.show {
+                display: block;
+            }
+
+            .form.hide {
+                display: none;
+            }
+        </style>
+        <div class$="form {{visibility}}" value={{formValue::input}}>
+            <div class="form-group">
+                <label for="street">Street</label>
+                <input class="form-control" name="street" value="{{street::input}}">
+            </div>
+            <div class="form-group">
+                <label for="postal">Postal Code</label>
+                <input class="form-control" name="postal" value="{{postal::input}}">
+            </div>
+            <div class="form-group">
+                <label for="city">City</label>
+                <input class="form-control" name="city" value="{{city::input}}">
+            </div>
+            <div class="form-group">
+                <label for="region">Region</label>
+                <input class="form-control" name="region" value="{{region::input}}">
+            </div>
+            <div class="form-group">
+                <label for="link">Link to Google Maps</label>
+                <input class="form-control" name="link" value="{{link::input}}">
+            </div>
+        </div>
+    </template>
+
+    <script>
+        Polymer({
+            is: 'cuac-location-form',
+
+            properties: {
+
+                saveDisabled: {type: String, value: 'disabled'},
+
+                formValue: {type: String, observer: 'activeSave'},
+
+                visibility: {type: String, value: 'show'},
+
+                location: {type: Array},
+
+                street: {},
+
+                postal: {},
+
+                city: {},
+
+                region: {},
+
+                link: {}
+            },
+
+            submitClicked: function(event) {
+                event.preventDefault();
+                this.retrieveLocation();
+                this.fire('submitClicked', this.location);
+                this.visibility = 'hide';
+            },
+
+            retrieveLocation: function() {
+                this.location = [
+                    {label: 'Street', value: this.street},
+                    {label: 'Postal Code', value: this.postal},
+                    {label: 'City', value: this.city},
+                    {label: 'Region', value: this.region},
+                    {label: 'Link to Google Maps', value: this.link}
+                ];
+            },
+
+            activeSave: function() {
+                 this.saveDisabled = null;
+            }
+        });
+    </script>
+</dom-module>
