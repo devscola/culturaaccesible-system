@@ -6,12 +6,13 @@
         <link rel="import" href="/web_components/schedule/cuac-schedule-hours.html">
         <link rel="import" href="/web_components/schedule/cuac-schedule-days.html">
         <link rel="import" href="/web_components/schedule/cuac-schedule-view.html">
+        <link rel="import" href="/web_components/schedule/cuac-schedule-form.html">
     </head>
     <body>
-        <div id="formulary">
-            <cuac-schedule-days id="days"></cuac-schedule-days>
-            <cuac-schedule-hours id="hours"></cuac-schedule-hours>
-            <cuac-schedule-view id="result"></cuac-schedule-view>
+        <div class="container">
+            <div class="col-md-5">
+                <cuac-schedule-form id="formulary"></cuac-schedule-form>
+            </div>
         </div>
 
         <script src="vendor/polymer/webcomponents-lite.min.js"></script>

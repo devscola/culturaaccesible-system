@@ -16,7 +16,7 @@
                 <h3 class="panel-title">Saved opening hours</h3>
             </div>
             <div class="panel-body">
-                <template is="dom-repeat" items={{days}}>
+                <template is="dom-repeat" items={{schedule}}>
                     <div>
                         <span>{{item.day}} </span>
                         <template is="dom-repeat" items="{{item.hours}}">
@@ -44,7 +44,7 @@
                     value: 'show'
                 },
 
-                days: {
+                schedule: {
                     type: Array
                 },
             },

@@ -1,0 +1,76 @@
+<link rel="import" href="/vendor/polymer/polymer.html">
+
+<dom-module id="cuac-schedule-form">
+    <template>
+        <style>
+            .form.show {
+                display: block;
+            }
+            .form.hide {
+                display: none;
+            }
+        </style>
+
+        <form class$="{{formVisibility}}">
+            <cuac-schedule-days id="days"></cuac-schedule-days>
+            <cuac-schedule-hours id="hours"></cuac-schedule-hours>
+            <div>
+                <button class="submit btn btn-primary" on-click="submitClicked" disabled$="{{disableSave}}">Save</button>
+            </div>
+        </form>
+        <cuac-schedule-view id="result" schedule="{{schedule}}" hidden="{{viewHidden}}"></cuac-schedule-view>
+    </template>
+
+    <script>
+        Polymer({
+            is: 'cuac-schedule-form',
+
+            ready: function() {
+                this.days.addEventListener('daySelected', this.setDays.bind(this));
+            },
+
+            properties: {
+
+                formVisibility: {type: String, value: 'show'},
+
+                disableSave: {type: String, value: 'disabled'},
+
+                viewHidden: {type: Boolean, value: true},
+
+                days: {
+                    type: Object
+                },
+
+                hours: {
+                    type: Object
+                },
+
+                schedule: {
+                    type: Array
+                }
+            },
+
+            submitClicked: function(event) {
+                event.preventDefault();
+                this.hide();
+                this.viewHidden = true;
+            },
+
+            hide: function() {
+                this.formVisibility = 'hide';
+            },
+
+            toggleSave: function(event) {
+                if (event.detail) {
+                    this.disableSave = null;
+                } else {
+                    this.disableSave = 'disabled';
+                }
+            },
+
+            setDays: function(days) {
+              this.hours.days = days.detail;
+            }
+        });
+    </script>
+</dom-module>
