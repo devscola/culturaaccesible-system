@@ -29,7 +29,7 @@ feature 'Schedule form hours input' do
   end
 end
 
-feature 'Schedule days', :wip do
+feature 'Schedule days' do
   scenario 'must have almost one day clicked before type an hour' do
     current = Page::Schedule.new
     current.select_day
