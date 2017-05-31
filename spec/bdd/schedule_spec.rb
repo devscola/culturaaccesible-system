@@ -29,12 +29,31 @@ feature 'Schedule form hours input' do
   end
 end
 
-feature 'Schedule days' do
-  scenario 'must have almost one day clicked' do
+feature 'Schedule days', :wip do
+  scenario 'must have almost one day clicked before type an hour' do
     current = Page::Schedule.new
-    expect(current.is_valid?).to eq false
     current.select_day
     current.fill_input('08:00/14:00')
+    expect(current.is_valid?).to eq true
+  end
+
+  scenario 'needs some day clicked' do
+    current = Page::Schedule.new
+    current.fill_input('08:00/14:00')
+    expect(current.is_valid?).to eq false
+  end
+
+  scenario 'needs some hours formatted' do
+    current = Page::Schedule.new
+    current.select_day
+    expect(current.is_valid?).to eq false
+  end
+
+  scenario 'allows add with a select day after type an hour' do
+    current = Page::Schedule.new
+    current.fill_input('08:00/14:00')
+    expect(current.is_valid?).to eq false
+    current.select_day
     expect(current.is_valid?).to eq true
   end
 

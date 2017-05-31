@@ -18,21 +18,18 @@
                     observer: 'updateValue'
                 },
 
-                disabledAdd: { type: Boolean, value: true },
+                disabledAdd: { type: Boolean, value: true, reflectToAttribute: true },
 
-                days: { type: Array }
+                days: { type: Array, reflectToAttribute: true }
             },
 
             hasDays: function() {
+                this.days = this.days || [];
                 return (this.days.length > 0)
             },
 
             updateValue: function() {
-                this.validate()
-            },
-
-            validate: function() {
-                this.disabledAdd = (this.hasDays() && this.validateFormat(this.openingHours));
+                this.validateFormat(this.openingHours);
             },
 
             validateFormat: function(input) {
@@ -48,8 +45,9 @@
                     to = Number(to.replace(':', ''));
                     var bigger = from < to;
                 };
-
-                return !validLength || !valid || !bigger;
+                console.log('days', this.days.length);
+                this.disabledAdd =  !this.hasDays() || !validLength || !valid || !bigger;
+                console.log('disable',this.disabledAdd)
             }
         });
     </script>
