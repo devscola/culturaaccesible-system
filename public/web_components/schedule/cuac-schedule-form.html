@@ -26,7 +26,7 @@
             is: 'cuac-schedule-form',
 
             ready: function() {
-                this.days.addEventListener('daySelected', this.setDays.bind(this));
+                this.addEventListener('daySelected', this.setDays.bind(this));
             },
 
             properties: {
@@ -38,11 +38,7 @@
                 viewHidden: {type: Boolean, value: true},
 
                 days: {
-                    type: Object
-                },
-
-                hours: {
-                    type: Object
+                    type: Array
                 },
 
                 schedule: {
@@ -69,7 +65,7 @@
             },
 
             setDays: function(days) {
-              this.hours.days = days.detail;
+              this.days = days.detail;
             }
         });
     </script>
