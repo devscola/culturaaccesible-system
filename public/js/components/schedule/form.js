@@ -15,5 +15,13 @@ Class('Museum.Schedule', {
     initialize: function() {
         Museum.Schedule.Super.call(this, 'formulary');
         this.element.schedule = this.schedule;
+        this.hours = document.getElementById('hours');
+        this.element.addEventListener('daySelected', this.setDays.bind(this));
+        this.result = document.getElementById('result');
+        this.result.days = this.schedule;
+    },
+
+    setDays: function(days) {
+      this.hours.days = days.detail;
     }
 });

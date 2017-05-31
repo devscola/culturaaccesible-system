@@ -9,7 +9,7 @@ module Page
     end
 
     def is_instanciated?
-      has_css?('#formulary', visible: false)
+      has_css?('#formulary')
     end
 
     def fill_input(hours)
@@ -21,15 +21,15 @@ module Page
     end
 
     def select_day
-      all('.day-checkbox', visible: false).first.set(true)
+      all('.day-checkbox').first.set(true)
     end
 
     def select_all_days
-      find('.all-day-checkbox', visible: false).set(true)
+      find('.all-day-checkbox').set(true)
     end
 
     def all_days_selected?
-      all = all('.day-checkbox', visible: false)
+      all = all('.day-checkbox')
       checked = all.select {|checkbox| checkbox.value == true }
       return all.length == checked.length
     end
@@ -37,7 +37,7 @@ module Page
     private
 
     def validate!
-      assert_selector('#formulary', visible: false)
+      assert_selector('#formulary')
     end
   end
 end

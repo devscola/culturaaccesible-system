@@ -3,7 +3,7 @@ require_relative 'test_support/location'
 require_relative '../../app'
 
 feature 'Location' do
-  scenario 'view shows info', :wip do
+  scenario 'view shows info' do
     current = Page::Location.new
     location = {
         'street' => 'some street',

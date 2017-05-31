@@ -13,43 +13,70 @@
             is: 'cuac-schedule-hours',
 
             properties: {
-                openingHours: {
-                    type: String,
-                    observer: 'updateValue'
-                },
+                openingHours: {type: String, observer: 'hoursChanged'},
 
-                disabledAdd: { type: Boolean, value: true },
+                disabledAdd: {type: Boolean, value: true, reflectToAttribute: true},
 
-                days: { type: Array }
+                days: {type: Array, reflectToAttribute: true, observer: 'daysChanged'}
             },
 
             hasDays: function() {
+                this.days = this.days || [];
                 return (this.days.length > 0);
             },
 
-            updateValue: function() {
-                this.validate();
+            isProperInput: function() {
+                return this.isValid(this.openingHours);
             },
 
-            validate: function() {
-                this.disabledAdd = (this.hasDays() && this.validateFormat(this.openingHours));
+            updateButtonStatus: function() {
+                if (this.hasDays() && this.isProperInput()) {
+                    this.activateAdd();
+                } else {
+                    this.deactivateAdd();
+                };
             },
 
-            validateFormat: function(input) {
-                var validLength = (input.length === 11);
+            hoursChanged: function() {
+                this.updateButtonStatus();
+            },
 
-                var timeFormat = /^([01]?[0-9]|2[0-3]):[0-5][0-9]/;
-                var from = input.split('/')[0];
-                var to = input.split('/')[1];
-                var valid = timeFormat.test(from) && timeFormat.test(to);
+            daysChanged: function() {
+                this.updateButtonStatus();
+            },
 
-                if(valid){
-                    from = Number(from.replace(':', ''));
-                    to = Number(to.replace(':', ''));
-                    var bigger = from < to;
-                }
+            activateAdd: function() {
+                this.disabledAdd = false;
+            },
 
-                return !validLength || !valid || !this.bigger;
+            deactivateAdd: function() {
+                this.disabledAdd = true;
+            },
+
+            isValidTimeLength: function() {
+                var acceptedLength = 11;
+                return (this.openingHours.length === acceptedLength);
+            },
+
+            isValidTimeFormat: function() {
+                var timeRegexp = /^([01]?[0-9]|2[0-3]):[0-5][0-9]/;
+                this.openingTime = this.openingHours.split('/')[0];
+                this.closingTime = this.openingHours.split('/')[1];
+                return (timeRegexp.test(this.openingTime) && timeRegexp.test(this.closingTime));
+            },
+
+            isValidHourRange: function() {
+                var openingTime = Number(this.openingTime.replace(':', ''));
+                var closingTime = Number(this.closingTime.replace(':', ''));
+                return (openingTime < closingTime);
+            },
+
+            isValid: function() {
+                var validLength = this.isValidTimeLength();
+                var validFormat = this.isValidTimeFormat();
+                var validRange = this.isValidHourRange();
+
+                return (validLength && validFormat && validRange);
             }
         });
     </script>
