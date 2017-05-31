@@ -6,8 +6,6 @@ Class('Museum.Info', {
 
     initialize: function() {
         Museum.Info.Super.call(this, 'formulary');
-        this.field = document.getElementById('info-field');
-        this.textarea = document.getElementById('info-textarea');
         this.element.addEventListener('submitted', this.submitInfo.bind(this));
     },
 

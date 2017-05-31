@@ -1,10 +1,10 @@
 require 'spec_helper_bdd'
+require_relative 'test_support/fixture_museum'
 require_relative 'test_support/museum'
 
 feature 'Museum' do
-  scenario 'page renders' do
-    result = Page::Museum.new
-
-    expect(result).to be_a Page::Museum
+  scenario 'allows submit when enough content', :wip do
+    current = Fixture::Museum.enough_content
+    expect(current.save_activated?).to be true
   end
 end

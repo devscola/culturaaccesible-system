@@ -8,6 +8,10 @@ module Page
       validate!
     end
 
+    def fill_input(field, content)
+      fill_in(field, with: content)
+    end
+
     private
 
     def validate!
