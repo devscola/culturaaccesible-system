@@ -33,4 +33,8 @@ class App < Sinatra::Base
     File.read(File.join('public', 'location.html'))
   end
 
+  get '/museum' do
+    File.read(File.join('public', 'museum.html'))
+  end
+
 end

@@ -12,8 +12,16 @@
             }
         </style>
         <form class="form-group" class$="form {{formVisibility}}">
-            <cuac-info-field id="info-field" name={{infoData.name}}></cuac-info-field>
-            <cuac-info-textarea id="info-texarea" description={{infoData.description}}></cuac-info-textarea>
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input class="form-control"  name="name" value={{nameValue::input}}></input>
+            </div>
+
+            <div>
+                <label for="description">Description</label>
+                <textarea class="form-control" name="description" value="{{descriptionValue::input}}"></textarea>
+            </div>
+
             <br/>
             <div>
                 <button class="btn btn-primary submit" on-click="submitClicked">Save</button>
@@ -31,9 +39,12 @@
                     value: 'show'
                 },
 
-                infoData: {
-                    type: Object,
-                    value: {name: '', description: ''}
+                nameValue: {
+                    type: String
+                },
+
+                descriptionValue: {
+                    type: String
                 }
             },
 
@@ -43,7 +54,11 @@
 
             submitClicked: function(event) {
                 event.preventDefault();
-                this.fire('submitted', this.infoData);
+                var infoData = {
+                    name: this.nameValue,
+                    description: this.descriptionValue
+                };
+                this.fire('submitted', infoData);
                 this.hide();
             }
         });
