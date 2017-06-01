@@ -7,6 +7,13 @@ feature 'Museum' do
     current = Fixture::Museum.enough_content
     expect(current.save_enabled?).to be true
   end
+
+  xscenario 'disallows submit after enough content removed', :wip do
+    current = Fixture::Museum.enough_content
+    current.remove_field_content
+
+    expect(current.save_enabled?).to be false
+  end
 end
 
 feature 'Museum contact' do

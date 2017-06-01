@@ -49,6 +49,8 @@
             validateInfo: function() {
                 if (this.areAllFilled()) {
                     this.sendData();
+                } else {
+                    this.fire('notEnoughInfo');
                 }
             },
 
@@ -57,7 +59,7 @@
                     name: this.nameValue,
                     description: this.descriptionValue
                 };
-                this.fire('validInfo', infoData);
+                this.fire('enoughInfo', infoData);
             }
         });
     </script>

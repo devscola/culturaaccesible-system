@@ -67,6 +67,8 @@
             validateInfo: function() {
                 if (this.areAllFilled()) {
                     this.sendData();
+                } else {
+                    this.fire('notEnoughLocation');
                 }
             },
 
@@ -78,7 +80,7 @@
                     region: this.region,
                     link: this.link
                 };
-                this.fire('validLocation', locationData);
+                this.fire('enoughLocation', locationData);
             }
         });
     </script>

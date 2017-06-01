@@ -55,10 +55,10 @@ module Page
       add_input
       fill_input('phone1', '')
       fill_input('phone1', '666')
+    end
 
-      # add_input
-      # fill_input('phone2', '666')
-      # add_input
+    def remove_field_content
+      fill_in('link', with: '')
     end
 
     private

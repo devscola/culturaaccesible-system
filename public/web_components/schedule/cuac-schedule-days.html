@@ -6,7 +6,7 @@
             <input type="checkbox" class="all-day-checkbox" on-change="checkAllDays" on-click="toggleChecked" data-day="allDays">
                 Select All<br>
             <template is="dom-repeat" items={{days}} as="day">
-                <input type="checkbox" class="day-checkbox " on-change="updateSelectedDays" on-click="toggleChecked" data-day$="{{day}}" checked$="{{checkDays}}">
+                <input id="checkboxId" type="checkbox" class="day-checkbox " on-change="updateSelectedDays" on-click="toggleChecked"  data-day$="{{day}}" checked$="{{checkDays}}">
                 {{day}}<br>
                 </input>
             </template>
@@ -29,16 +29,33 @@
                 };
                 this.days = Object.keys(this.week);
                 this.updateSelectedDays();
+                console.log(this.selectedDays);
             },
 
             properties: {
                 selectedDays: {type: Array},
 
-                checkDays: {type: Boolean, value: false, reflectToatribute: true},
+                checkDays: {type: Boolean, value: false, reflectToAttribute: true},
+
+                unCheckDays: {type: Boolean, value: true, reflectToAttribute: true},
+
+                clear: {type: Boolean, value: false, reflectToAttribute: true, 
+                    observer: 'clearCheckedDays'}
             },
 
             checkAllDays: function() {
                 this.checkDays = true;
+
+                this.week = {
+                    monday: { checked: true },
+                    tuesday: { checked: true },
+                    wednesday: { checked: true },
+                    thursday: { checked: true },
+                    friday: { checked: true },
+                    saturday: { checked: true },
+                    sunday: { checked: true },
+                };
+
                 this.days.forEach(function(day){
                     this.week[day].checked = true;
                 });
@@ -59,6 +76,23 @@
                     this.week[day].checked = true;
                 }else{
                     this.week[day].checked = false;
+                }
+            },
+
+            clearCheckedDays: function() {
+                if  (this.clear) {
+                    this.checkDays.value = false;
+                    
+                     this.week = {
+                    monday: { checked: false },
+                    tuesday: { checked: false },
+                    wednesday: { checked: false },
+                    thursday: { checked: false },
+                    friday: { checked: false },
+                    saturday: { checked: false },
+                    sunday: { checked: false },
+                };
+                    
                 }
             }
         });

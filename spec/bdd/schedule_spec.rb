@@ -15,6 +15,16 @@ feature 'Schedule form' do
     current.click_add_hour
     expect(current.view_visible?('08:00/14:00')).to eq true
   end
+
+  xscenario 'reset checked days and hour field after add an hour' do
+    current = Page::Schedule.new
+    current.select_day
+    current.fill_input('08:00/14:00')
+    current.click_add_hour
+    expect(current.days_unchecked?).to eq true
+    expect(current.hour_field_empty?).to eq true
+  end
+
 end
 
 feature 'Schedule form hours input' do
