@@ -56,6 +56,10 @@
                     sunday: { checked: true },
                 };
 
+                this.days.forEach(function(day){
+                    this.week[day].checked = true;
+                });
+                this.updateSelectedDays();
             },
 
             updateSelectedDays: function() {
@@ -67,6 +71,7 @@
 
             toggleChecked: function(e) {
                 var day = e.target.dataset.day;
+                if(day == 'allDays') return;
                 if(this.week[day].checked === false){
                     this.week[day].checked = true;
                 }else{

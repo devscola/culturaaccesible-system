@@ -1,0 +1,26 @@
+<link rel="import" href="/vendor/polymer/polymer.html">
+
+<dom-module id="cuac-save-button">
+    <template>
+        <button class="btn btn-primary" disabled$="{{disableSave}}">Save</button>
+    </template>
+
+    <script>
+        Polymer({
+            is: 'cuac-save-button',
+
+            properties: {
+                active: {type: Boolean, value: false, observer: 'activeSave'},
+                disableSave: {type: String, value: 'disabled'}
+            },
+
+            activeSave: function() {
+                if (this.active) {
+                    this.disableSave = null;
+                } else {
+                    this.disableSave = 'disabled';
+                }
+            }
+        });
+    </script>
+</dom-module>

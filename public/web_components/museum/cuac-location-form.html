@@ -1,0 +1,87 @@
+<link rel="import" href="/vendor/polymer/polymer.html">
+
+<dom-module id="cuac-location-form">
+    <template>
+        <style>
+            .form.show {
+                display: block;
+            }
+
+            .form.hide {
+                display: none;
+            }
+        </style>
+
+        <div class="form-group">
+            <label for="street">Street</label>
+            <input class="form-control" name="street" value="{{street::input}}">
+        </div>
+        <div class="form-group">
+            <label for="postal">Postal Code</label>
+            <input class="form-control" name="postal" value="{{postal::input}}">
+        </div>
+        <div class="form-group">
+            <label for="city">City</label>
+            <input class="form-control" name="city" value="{{city::input}}">
+        </div>
+        <div class="form-group">
+            <label for="region">Region</label>
+            <input class="form-control" name="region" value="{{region::input}}">
+        </div>
+        <div class="form-group">
+            <label for="link">Link to Google Maps</label>
+            <input class="form-control" name="link" value="{{link::input}}">
+        </div>
+    </template>
+
+    <script>
+        Polymer({
+            is: 'cuac-location-form',
+
+            properties: {
+                street: {type: String, value: '', observer: 'validateInfo'},
+                postal: {type: String, value: '', observer: 'validateInfo'},
+                city: {type: String, value: '', observer: 'validateInfo'},
+                region: {type: String, value: '', observer: 'validateInfo'},
+                link: {type: String, value: '', observer: 'validateInfo'},
+                entireLocationContent: {type: Array, value: []}
+            },
+
+            areAllFilled: function() {
+                this.entireLocationContent = [
+                    this.street,
+                    this.postal,
+                    this.city,
+                    this.region,
+                    this.link
+                ];
+                var filled = true;
+                this.entireLocationContent.forEach(function(inputValue) {
+                    if (inputValue === '') {
+                        filled = false;
+                    }
+                });
+                return filled;
+            },
+
+            validateInfo: function() {
+                if (this.areAllFilled()) {
+                    this.sendData();
+                } else {
+                    this.fire('notEnoughLocation');
+                }
+            },
+
+            sendData: function() {
+                var locationData = {
+                    street: this.street,
+                    postal: this.postal,
+                    city: this.city,
+                    region: this.region,
+                    link: this.link
+                };
+                this.fire('enoughLocation', locationData);
+            }
+        });
+    </script>
+</dom-module>

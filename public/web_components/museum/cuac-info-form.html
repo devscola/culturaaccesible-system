@@ -1,0 +1,66 @@
+<link rel="import" href="/vendor/polymer/polymer.html">
+
+<dom-module id="cuac-info-form">
+    <template>
+        <style>
+            .form.show {
+                display: block;
+            }
+
+            .form.hide {
+                display: none;
+            }
+        </style>
+
+        <div class="form-group">
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input class="form-control"  name="name" value={{nameValue::input}}></input>
+            </div>
+
+            <div>
+                <label for="description">Description</label>
+                <textarea class="form-control" name="description" value="{{descriptionValue::input}}"></textarea>
+            </div>
+        </div>
+    </template>
+
+    <script>
+        Polymer({
+            is: 'cuac-info-form',
+
+            properties: {
+                nameValue: {type: String, value: '', observer: 'validateInfo'},
+                descriptionValue: {type: String, value: '', observer: 'validateInfo'},
+                entireInfoContent: {type: Array, value: []}
+            },
+
+            areAllFilled: function() {
+                this.entireInfoContent = [this.nameValue, this.descriptionValue];
+                var filled = true;
+                this.entireInfoContent.forEach(function(inputValue) {
+                    if (inputValue === '') {
+                        filled = false;
+                    }
+                });
+                return filled;
+            },
+
+            validateInfo: function() {
+                if (this.areAllFilled()) {
+                    this.sendData();
+                } else {
+                    this.fire('notEnoughInfo');
+                }
+            },
+
+            sendData: function() {
+                var infoData = {
+                    name: this.nameValue,
+                    description: this.descriptionValue
+                };
+                this.fire('enoughInfo', infoData);
+            }
+        });
+    </script>
+</dom-module>

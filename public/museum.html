@@ -6,10 +6,33 @@
         <link rel="stylesheet" href="vendor/bootstrap/bootstrap.min.css">
         <link rel="stylesheet" href="vendor/bootstrap/bootstrap-theme.min.css">
         <link rel="import" href="/web_components/museum/cuac-info-form.html">
+        <link rel="import" href="/web_components/museum/cuac-location-form.html">
+        <link rel="import" href="/web_components/museum/cuac-save-button.html">
     </head>
     <body>
-        <form id="formulary">Formulary</form>
+        <div id="formulary" class="container">
+            <div class="col-md-6">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">Info</div>
+                    <div class="panel-body">
+                        <cuac-info-form></cuac-info-form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">Location</div>
+                    <div class="panel-body">
+                        <cuac-location-form></cuac-location-form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <cuac-save-button id="action"></cuac-save-button>
+            </div>
+        </div>
 
+        <script src="/vendor/polymer/webcomponents-lite.min.js"></script>
         <script src="/vendor/classjs/class.min.js"></script>
         <script src="/js/infrastructure/component.js"></script>
         <script src="/js/components/museum/form.js"></script>
