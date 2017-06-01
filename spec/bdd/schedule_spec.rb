@@ -66,7 +66,7 @@ feature 'Schedule days' do
     expect(current.is_valid?).to eq true
   end
 
-  xscenario 'when select all day is clicked all days are selected' do
+  scenario 'when select all day is clicked all days are selected' do
     current = Page::Schedule.new
     current.select_all_days
     expect(current.all_days_selected?).to eq true

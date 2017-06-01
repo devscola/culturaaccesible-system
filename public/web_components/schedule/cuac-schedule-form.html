@@ -7,7 +7,7 @@
 
         <form>
             <cuac-schedule-days id="days"></cuac-schedule-days>
-            <cuac-schedule-hours id="hours"></cuac-schedule-hours>
+            <cuac-schedule-hours id="hours" ></cuac-schedule-hours>
             <div>
                 <button class="submit btn btn-primary" on-click="submitClicked" disabled$="{{disableSave}}">Save</button>
             </div>
@@ -65,9 +65,16 @@
 
             storeSchedule: function(event) {
                 this.actualSchedule = event.detail;
-                this.schedule = [{day: this.actualSchedule.days, hours: [this.actualSchedule.hours]}];
+                var daySelected = this.actualSchedule.days;
+                var hoursFilled = [this.actualSchedule.hours];
+                var schedule = [];
+                daySelected.forEach(function(selectedDay) {
+                    schedule.push({day: selectedDay, hours: hoursFilled});
+                });
+                this.schedule = schedule;
                 this.viewHidden = false;
             }
         });
     </script>
 </dom-module>
+

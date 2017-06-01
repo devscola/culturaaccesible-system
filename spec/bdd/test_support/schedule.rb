@@ -29,9 +29,9 @@ module Page
     end
 
     def all_days_selected?
-      all = all('.day-checkbox')
-      checked = all.select {|checkbox| checkbox.value == true }
-      return all.length == checked.length
+      all_days = all('.day-checkbox')
+      checked = all("input[checked]").count
+      return all_days.length == checked
     end
 
     def click_add_hour
