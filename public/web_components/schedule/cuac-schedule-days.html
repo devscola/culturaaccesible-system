@@ -3,8 +3,10 @@
 <dom-module id="cuac-schedule-days">
     <template>
         <div class="form-group">
+            <input type="checkbox" class="all-day-checkbox" on-change="checkAllDays" on-click="toggleChecked" data-day="allDays">
+                Select All<br>
             <template is="dom-repeat" items={{days}} as="day">
-                <input type="checkbox" class="day-checkbox" on-change="updateSelectedDays" on-click="toggleChecked" data-day$="{{day}}">
+                <input type="checkbox" class="day-checkbox " on-change="updateSelectedDays" on-click="toggleChecked" data-day$="{{day}}" checked$="{{checkDays}}">
                 {{day}}<br>
                 </input>
             </template>
@@ -30,9 +32,25 @@
             },
 
             properties: {
-                selectedDays: {
-                    type: Array
-                }
+                selectedDays: {type: Array},
+
+                checkDays: {type: Boolean, value: false, reflectToatribute: true},
+            },
+
+            checkAllDays: function() {
+                this.checkDays = true;
+
+                this.week = {
+                    monday: { checked: true },
+                    tuesday: { checked: true },
+                    wednesday: { checked: true },
+                    thursday: { checked: true },
+                    friday: { checked: true },
+                    saturday: { checked: true },
+                    sunday: { checked: true },
+                };
+
+                this.updateSelectedDays();
             },
 
             updateSelectedDays: function() {
