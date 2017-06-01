@@ -12,7 +12,13 @@ module Page
       fill_in(field, with: content)
     end
 
-    def save_activated?
+    def save_enabled?
+      button = find('#action')
+      result = button[:disabled]
+
+      return true if result.nil?
+
+      false
     end
 
     private

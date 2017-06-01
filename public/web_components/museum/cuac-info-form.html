@@ -11,6 +11,7 @@
                 display: none;
             }
         </style>
+
         <div class="form-group">
             <div class="form-group">
                 <label for="name">Name</label>
@@ -29,22 +30,24 @@
             is: 'cuac-info-form',
 
             properties: {
-                nameValue: {
-                    type: String,
-                    value: '',
-                    observer: 'validateInfo'
-                },
+                nameValue: {type: String, value: '', observer: 'validateInfo'},
+                descriptionValue: {type: String, value: '', observer: 'validateInfo'},
+                entireInfoContent: {type: Array, value: []}
+            },
 
-                descriptionValue: {
-                    type: String,
-                    value: '',
-                    observer: 'validateInfo'
-                },
-
+            areAllFilled: function() {
+                this.entireInfoContent = [this.nameValue, this.descriptionValue];
+                var filled = true;
+                this.entireInfoContent.forEach(function(inputValue) {
+                    if (inputValue === '') {
+                        filled = false;
+                    }
+                });
+                return filled;
             },
 
             validateInfo: function() {
-                if (this.nameValue.length > 0 && this.descriptionValue.length > 0) {
+                if (this.areAllFilled()) {
                     this.sendData();
                 }
             },
