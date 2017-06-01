@@ -66,16 +66,12 @@
             toggleChecked: function(e) {
                 var day = e.target.dataset.day;
                 if(day == 'allDays') return;
-                if(this.week[day].checked === false){
-                    this.week[day].checked = true;
-                }else{
-                    this.week[day].checked = false;
-                }
+                this.week[day].checked = (this.week[day].checked === false);
             },
 
             clearCheckedDays: function() {
                 if  (this.clear) {
-                    this.checkDays = undefined;                   
+                    this.checkDays = undefined;                  
                 }
             }
         });
