@@ -21,6 +21,10 @@ module Page
       false
     end
 
+    def remove_field_content
+      fill_in('link', with: '')
+    end
+
     private
 
     def validate!
