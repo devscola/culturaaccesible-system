@@ -2,12 +2,28 @@ Class('Museum.Form', {
 
     Extends: Component,
 
+    contactDetail: [
+        {type: "phone", label: "Phone number"},
+        {type: "email", label: "Email"},
+        {type: "web", label: "Website"}
+    ],
+
+    fields: {
+        phone: [],
+        email: [],
+        web: []
+    },
+
     initialize: function() {
         Museum.Form.Super.call(this, 'formulary');
 
         this.saveButton = document.getElementById('action');
         this.infoValues = {};
         this.locationValues = {};
+
+        this.contactForm = document.getElementById('contact-form');
+        this.contactForm.contactDetail = this.contactDetail;
+        this.contactForm.storage = this.fields;
 
         this.addListeners();
     },

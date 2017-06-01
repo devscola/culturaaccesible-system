@@ -1,0 +1,52 @@
+<link rel="import" href="/vendor/polymer/polymer.html">
+
+<dom-module id="cuac-contact-form">
+    <template>
+        <template is="dom-repeat" items="{{contactDetail}}">
+            <div class="form-group">
+                <label>{{item.label}}</label>
+                <cuac-input-container inputtype="{{item.type}}"></cuac-input-container>
+            </div>
+        </template>
+    </template>
+
+    <script>
+        Polymer({
+            is: 'cuac-contact-form',
+
+            ready: function() {
+                console.log(this.contactDetail);
+                this.addEventListener('blured', this.updateStorage.bind(this));
+            },
+
+            properties: {
+
+                contactDetail: {type: Array},
+
+                storage: {type: Object, reflectToAttribute: true},
+
+                renderedStorage: {type: Object, reflectToAttribute: true},
+
+            },
+
+            updateStorage: function(event) {
+                var input = event.detail;
+
+                if (this.newEntry(input)) {
+                    this.storage[input.type].push(input.content);
+                } else {
+                    this.updateEntry(input);
+                }
+            },
+
+            newEntry: function(input) {
+                var storedValue = this.storage[input.type][input.index];
+                return storedValue === undefined;
+            },
+
+            updateEntry: function(input) {
+                this.storage[input.type][input.index] = input.content;
+            }
+        });
+    </script>
+</dom-module>
