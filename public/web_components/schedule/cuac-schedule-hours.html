@@ -18,7 +18,10 @@
 
                 disabledAdd: {type: Boolean, value: true, reflectToAttribute: true},
 
-                days: {type: Array, reflectToAttribute: true, observer: 'daysChanged'}
+                days: {type: Array, reflectToAttribute: true, observer: 'daysChanged'},
+
+                clear: {type: Boolean, value: false, reflectToAttribute: true, 
+                    observer: 'clearHours'}
 
             },
 
@@ -87,6 +90,15 @@
                 event.preventDefault();
                 var actualSchedule = {days: this.days, hours: this.openingHours};
                 this.fire('addClicked', actualSchedule);
+
+            },
+
+            clearHours: function(){
+                if  (this.clear) {
+                    this.openingHours = '';
+                    this.clear = false;
+                }
+
             }
 
         });

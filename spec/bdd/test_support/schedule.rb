@@ -34,6 +34,16 @@ module Page
       return all_days.length == checked
     end
 
+    def days_unchecked?
+      checked = all("input[checked]").count
+      return checked == 0
+    end
+
+    def hour_field_empty?
+      hour_field = find('.form-control').value
+      return hour_field.length == 0
+    end
+
     def click_add_hour
       find('.add-button').click
     end
