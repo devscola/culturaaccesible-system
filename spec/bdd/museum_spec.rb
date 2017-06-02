@@ -7,13 +7,6 @@ feature 'Museum' do
     current = Fixture::Museum.enough_content
     expect(current.save_enabled?).to be true
   end
-
-  xscenario 'disallows submit after enough content removed' do
-    current = Fixture::Museum.enough_content
-    current.remove_field_content
-
-    expect(current.save_enabled?).to be false
-  end
 end
 
 feature 'Museum contact' do
@@ -37,5 +30,10 @@ feature 'Museum contact' do
     current.add_input
 
     expect(current.has_extra_input?).to be true
+  end
+
+  scenario 'add button is listening only last input' do
+    current.fill_any_input_except_last_one
+    expect(current.button_enabled?('.phone')).to be false
   end
 end

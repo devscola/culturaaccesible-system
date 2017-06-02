@@ -50,7 +50,7 @@ module Page
       inputs.size > actual_inputs
     end
 
-    def fill_with_bad_flow
+    def fill_any_input_except_last_one
       fill_input('phone1', '666')
       add_input
       fill_input('phone1', '')

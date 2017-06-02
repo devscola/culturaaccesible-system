@@ -68,10 +68,13 @@
                 this.fire('blured', data);
             },
 
-            toggleSave: function() {
-                var buttonActive = this.fieldValue.length > 0;
-                this.fire('saveToggled', buttonActive);
-                this.activeAddButton = buttonActive;
+            toggleSave: function(event) {
+                var name = this.inputtype + this.inputsAdded.length
+                var element = document.getElementsByName(name)[0];
+                if(element.value.length > 0){
+                    this.activeAddButton = true
+                    this.fire('saveToggled', true);
+                }
             },
 
             inputIndex: function(index) {
