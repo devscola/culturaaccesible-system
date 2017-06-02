@@ -14,8 +14,12 @@
         <form class$="{{formVisibility}}">
             <template is="dom-repeat" items="{{contactDetail}}">
                 <div class="form-group">
-                    <label>{{item.label}}</label>
-                    <cuac-input-container inputtype="{{item.type}}"></cuac-input-container>
+                    <div class="col-md-4">
+                        <label>{{item.label}}</label>
+                    </div>
+                    <div class="col-md-8">
+                        <cuac-input-container inputtype="{{item.type}}"></cuac-input-container>
+                    </div>
                 </div>
             </template>
             <div>
