@@ -14,23 +14,23 @@
         <form class$="form {{visibility}}" value={{formValue::input}}>
             <div class="form-group">
                 <label for="street">Street</label>
-                <input class="form-control" name="street" value="{{street::input}}">
+                <input class="form-control" name="street" value="{{street::input}}" placeholder="Street">
             </div>
             <div class="form-group">
                 <label for="postal">Postal Code</label>
-                <input class="form-control" name="postal" value="{{postal::input}}">
+                <input class="form-control" name="postal" value="{{postal::input}}" placeholder="Postal Code">
             </div>
             <div class="form-group">
                 <label for="city">City</label>
-                <input class="form-control" name="city" value="{{city::input}}">
+                <input class="form-control" name="city" value="{{city::input}}" placeholder="City">
             </div>
             <div class="form-group">
                 <label for="region">Region</label>
-                <input class="form-control" name="region" value="{{region::input}}">
+                <input class="form-control" name="region" value="{{region::input}}" placeholder="Region">
             </div>
             <div class="form-group">
                 <label for="link">Link to Google Maps</label>
-                <input class="form-control" name="link" value="{{link::input}}">
+                <input class="form-control" name="link" value="{{link::input}}" placeholder="Google Maps link">
             </div>
             <div>
                 <button class="btn btn-primary submit" on-click="submitClicked" disabled$="{{saveDisabled}}">Save</button>
