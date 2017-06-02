@@ -6,8 +6,8 @@
         </style>
 
         <form>
-            <cuac-schedule-days id="days"></cuac-schedule-days>
-            <cuac-schedule-hours id="hours" ></cuac-schedule-hours>
+            <cuac-schedule-days id="days" clear="{{resetSchedule}}"></cuac-schedule-days>
+            <cuac-schedule-hours id="hours" clear="{{resetSchedule}}"></cuac-schedule-hours>
             <div>
                 <button class="submit btn btn-primary" on-click="submitClicked" disabled$="{{disableSave}}">Save</button>
             </div>
@@ -22,7 +22,6 @@
             ready: function() {
                 this.addEventListener('daySelected', this.setDays.bind(this));
                 this.addEventListener('addClicked', this.storeSchedule.bind(this));
-
             },
 
             properties: {
@@ -33,13 +32,11 @@
 
                 viewHidden: {type: Boolean, value: true, reflectToAttribute: true},
 
-                days: {
-                    type: Array
-                },
+                days: {type: Array},
 
-                schedule: {
-                    type: Array
-                }
+                schedule: {type: Array},
+
+                resetSchedule: {type: Boolean, value: false, reflectToAttribute: true}
             },
 
             submitClicked: function(event) {
@@ -73,7 +70,12 @@
                 });
                 this.schedule = schedule;
                 this.viewHidden = false;
-            }
+                this.resetScheduleFilled();
+            },
+
+            resetScheduleFilled: function() {
+                this.resetSchedule = true;
+            },
         });
     </script>
 </dom-module>

@@ -28,10 +28,9 @@ module Page
       find('.all-day-checkbox').set(true)
     end
 
-    def all_days_selected?
-      all_days = all('.day-checkbox')
-      checked = all("input[checked]").count
-      return all_days.length == checked
+    def hour_field_empty?
+      hour_field = find('.form-control').value
+      return hour_field.length == 0
     end
 
     def click_add_hour

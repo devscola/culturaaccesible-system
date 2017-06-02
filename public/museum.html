@@ -7,6 +7,9 @@
         <link rel="stylesheet" href="vendor/bootstrap/bootstrap-theme.min.css">
         <link rel="import" href="/web_components/museum/cuac-info-form.html">
         <link rel="import" href="/web_components/museum/cuac-location-form.html">
+        <link rel="import" href="/web_components/museum/cuac-contact-form.html">
+        <link rel="import" href="/web_components/commons/cuac-input-container.html">
+        <link rel="import" href="/web_components/commons/cuac-add-button.html">
         <link rel="import" href="/web_components/museum/cuac-save-button.html">
     </head>
     <body>
@@ -24,6 +27,14 @@
                     <div class="panel-heading">Location</div>
                     <div class="panel-body">
                         <cuac-location-form></cuac-location-form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">Contact</div>
+                    <div class="panel-body">
+                        <cuac-contact-form id="contact-form"></cuac-contact-form>
                     </div>
                 </div>
             </div>

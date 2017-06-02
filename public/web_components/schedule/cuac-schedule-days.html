@@ -4,9 +4,9 @@
     <template>
         <div class="form-group">
             <input type="checkbox" class="all-day-checkbox" on-change="checkAllDays" on-click="toggleChecked" data-day="allDays">
-                Select All<br>
+                Select all<br>
             <template is="dom-repeat" items={{days}} as="day">
-                <input type="checkbox" class="day-checkbox " on-change="updateSelectedDays" on-click="toggleChecked" data-day$="{{day}}" checked$="{{checkDays}}">
+                <input name="days" type="checkbox" class="day-checkbox" on-change="updateSelectedDays" on-click="toggleChecked"  data-day$="{{day}}" checked="{{checkDays}}">
                 {{day}}<br>
                 </input>
             </template>
@@ -19,13 +19,13 @@
 
             ready: function() {
                 this.week = {
-                    monday: { checked: false },
-                    tuesday: { checked: false },
-                    wednesday: { checked: false },
-                    thursday: { checked: false },
-                    friday: { checked: false },
-                    saturday: { checked: false },
-                    sunday: { checked: false },
+                    MON: { checked: false },
+                    TUE: { checked: false },
+                    WED: { checked: false },
+                    THU: { checked: false },
+                    FRI: { checked: false },
+                    SAT: { checked: false },
+                    SUN: { checked: false },
                 };
                 this.days = Object.keys(this.week);
                 this.updateSelectedDays();
@@ -34,14 +34,25 @@
             properties: {
                 selectedDays: {type: Array},
 
-                checkDays: {type: Boolean, value: false, reflectToatribute: true},
+                checkDays: {type: Boolean, value: false, reflectToAttribute: true},
+
+                clear: {type: Boolean, value: false, reflectToAttribute: true, 
+                    observer: 'clearCheckedDays'}
             },
 
             checkAllDays: function() {
                 this.checkDays = true;
-                this.days.forEach(function(day){
-                    this.week[day].checked = true;
-                });
+
+                this.week = {
+                    MON: { checked: true },
+                    TUE: { checked: true },
+                    WED: { checked: true },
+                    THU: { checked: true },
+                    FRI: { checked: true },
+                    SAT: { checked: true },
+                    SUN: { checked: true },
+                };
+
                 this.updateSelectedDays();
             },
 
@@ -55,10 +66,12 @@
             toggleChecked: function(e) {
                 var day = e.target.dataset.day;
                 if(day == 'allDays') return;
-                if(this.week[day].checked === false){
-                    this.week[day].checked = true;
-                }else{
-                    this.week[day].checked = false;
+                this.week[day].checked = (this.week[day].checked === false);
+            },
+
+            clearCheckedDays: function() {
+                if  (this.clear) {
+                    this.checkDays = undefined;                  
                 }
             }
         });
