@@ -1,15 +1,22 @@
 <link rel="import" href="/vendor/polymer/polymer.html">
 
 <dom-module id="cuac-input-container">
+    <style>
+        .special-margin {
+            margin-bottom: 10px;
+        }
+    </style>
     <template>
         <template is="dom-repeat" items="{{inputsAdded}}">
-            <span value={{fieldValue::input}}>
-                <br/><input data-index="{{index}}" name$="{{inputtype}}{{inputIndex(index)}}" on-blur="focusBlured">
-            </span>
+            <div class="col-md-10 ">
+                <span value={{fieldValue::input}}>
+                    <input class="form-control special-margin" data-index="{{index}}" name$="{{inputtype}}{{inputIndex(index)}}" on-blur="focusBlured">
+                </span>
+            </div>
         </template>
-        <span>
+        <div class="col-md-2">
             <cuac-add-button activate="{{activeAddButton}}" buttontype="{{inputtype}}"></cuac-add-button>
-        </span>
+        </div>
     </template>
 
     <script>
