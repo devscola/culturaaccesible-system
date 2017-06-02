@@ -3,8 +3,12 @@
 <dom-module id="cuac-schedule-hours">
     <template>
         <div class="form-group">
-            <input class="form-control"  name="openingHours" value={{openingHours::input}}></input>
-            <button class="add-button" on-click="addClicked" disabled$="{{disabledAdd}}">+</button>
+            <div class="col-md-10">
+                <input class="form-control" name="openingHours" value={{openingHours::input}}></input>
+            </div>
+            <div class="col-md-2">
+                <button class="btn btn-primary add-button" on-click="addClicked" disabled$="{{disabledAdd}}">+</button>
+            </div>
         </div>
     </template>
 

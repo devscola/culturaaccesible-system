@@ -1,12 +1,13 @@
 <link rel="import" href="/vendor/polymer/polymer.html">
 
 <dom-module id="cuac-input-container">
-    <style>
-        .special-margin {
-            margin-bottom: 10px;
-        }
-    </style>
     <template>
+        <style>
+            .special-margin {
+                margin-bottom: 10px;
+            }
+        </style>
+
         <template is="dom-repeat" items="{{inputsAdded}}">
             <div class="col-md-10 ">
                 <span value={{fieldValue::input}}>

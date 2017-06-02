@@ -2,17 +2,16 @@
 
 <dom-module id="cuac-schedule-form">
     <template>
-        <style>
-        </style>
-
-        <form>
+        <form class="col-md-12">
             <cuac-schedule-days id="days" clear="{{resetSchedule}}"></cuac-schedule-days>
             <cuac-schedule-hours id="hours" clear="{{resetSchedule}}"></cuac-schedule-hours>
-            <div>
+            <div class="col-md-12">
                 <button class="submit btn btn-primary" on-click="submitClicked" disabled$="{{disableSave}}">Save</button>
             </div>
         </form>
-        <cuac-schedule-view id="result" schedule="{{schedule}}" hidden="{{viewHidden}}"></cuac-schedule-view>
+        <div class="col-md-12">
+            <cuac-schedule-view id="result" schedule="{{schedule}}" hidden="{{viewHidden}}"></cuac-schedule-view>
+        </div>
     </template>
 
     <script>
