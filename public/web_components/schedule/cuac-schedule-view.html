@@ -38,9 +38,7 @@
                     value: 'hide'
                 },
 
-                schedule: {
-                    type: Array
-                },
+                schedule: {type: Array, observer: 'console'},
 
                 hidden: {type: Boolean, observer: 'show'}
             },
@@ -49,6 +47,10 @@
                 if (!this.hidden) {
                     this.viewVisibility = 'show';
                 }
+            },
+
+            console: function() {
+                console.log('hola');
             }
 
         });

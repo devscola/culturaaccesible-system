@@ -10,7 +10,7 @@
             </div>
         </form>
         <div class="col-md-12">
-            <cuac-schedule-view id="result" schedule="{{schedule}}" hidden="{{viewHidden}}"></cuac-schedule-view>
+            <cuac-schedule-view id="result" hidden="{{viewHidden}}"></cuac-schedule-view>
         </div>
     </template>
 
@@ -21,6 +21,7 @@
             ready: function() {
                 this.addEventListener('daySelected', this.setDays.bind(this));
                 this.addEventListener('addClicked', this.storeSchedule.bind(this));
+                this.schedule = [];
             },
 
             properties: {
@@ -33,7 +34,7 @@
 
                 days: {type: Array},
 
-                schedule: {type: Array},
+                schedule: {type: Array, reflectToAttribute: true},
 
                 resetSchedule: {type: Boolean, value: false, reflectToAttribute: true}
             },
@@ -60,14 +61,26 @@
             },
 
             storeSchedule: function(event) {
-                this.actualSchedule = event.detail;
-                var daySelected = this.actualSchedule.days;
-                var hoursFilled = [this.actualSchedule.hours];
-                var schedule = [];
-                daySelected.forEach(function(selectedDay) {
-                    schedule.push({day: selectedDay, hours: hoursFilled});
+                var actualSchedule = event.detail;
+                var selectedDay = actualSchedule.days;
+                var hoursFilled = actualSchedule.hours;
+                var storage = {MON: [], TUE: [], WED: [], THU: [], FRI: [], SAT: [], SUN: []};
+                var schedule = this.schedule;
+      
+                selectedDay.forEach(function(day) {
+                    storage[day].push(hoursFilled);
                 });
+
+                for (var day in storage) {
+                    var object = {};
+                    object.day = day;
+                    object.hours = storage[day];
+                    schedule.push(object);
+                }
+
                 this.schedule = schedule;
+                this.fire('scheduleGenerated', this.schedule);
+
                 this.viewHidden = false;
                 this.resetScheduleFilled();
             },
@@ -78,4 +91,3 @@
         });
     </script>
 </dom-module>
-
