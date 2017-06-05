@@ -3,9 +3,10 @@
 <dom-module id="cuac-input-container">
     <template>
         <style>
-            .special-margin {
-                margin-bottom: 10px;
-            }
+            .special-margin { margin-bottom: 10px; }
+            .col-md-12 { padding-left: 0px; padding-right: 0px; width: 100%; }
+            .col-md-10 { padding-left: 0px; padding-right: 0px; width: 90%; }
+            .col-md-2 { padding-left: 15px; width: 10%; margin-left:auto; margin-right: 0px; }
         </style>
         <div class="col-md-12">
             <template is="dom-repeat" items="{{inputsAdded}}">
