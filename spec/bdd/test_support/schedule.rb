@@ -2,38 +2,37 @@ module Page
   class Schedule
     include Capybara::DSL
 
+    WEEK = ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN']
+
     def initialize
       url = '/schedule'
       visit(url)
       validate!
     end
 
-    def is_instanciated?
-      has_css?('#formulary')
+    def introduce_hours(range)
+      fill_in('openingHours', with: range)
     end
 
-    def fill_input(hours)
-      fill_in('openingHours', with: hours)
+    def check(day)
+      find_field(name: day).click
     end
 
-    def is_valid?
-      !find('.add-button', visible: false).disabled?
-    end
-
-    def select_first_day
-      all('.day-checkbox').first.set(true)
-    end
-
-    def select_last_day
-      all('.day-checkbox').last.set(true)
-    end
-
-    def days_checked?
+    def any_day_checked?
       has_checked_field?('days') 
     end
 
-    def select_all_days
-      find('.all-day-checkbox').set(true)
+    def day_unchecked?(day)
+      !has_checked_field?(day)
+    end
+
+    def all_fields_checked?
+      WEEK.each do |day| 
+        if day_unchecked?(day)
+          return false
+        end
+      end
+      true
     end
 
     def hour_field_empty?
@@ -45,10 +44,15 @@ module Page
       find('.add-button').click
     end
 
-    def view_visible?(content)
-      has_content?(content)
+    def button_enabled?(css_class)
+      button = find(css_class)
+      result = button[:disabled]
+
+      return true if result.nil?
+
+      false
     end
-    
+
     private
 
     def validate!

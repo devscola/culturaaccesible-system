@@ -11,17 +11,15 @@
             }
         </style>
 
-        <div class$="panel panel-primary {{viewVisibility}}">
+        <div class$="panel panel-primary {{visibility}}">
             <div class="panel-heading">
                 <h3 class="panel-title">Saved opening hours</h3>
             </div>
             <div class="panel-body">
-                <template id="scheduleId" is="dom-repeat" items="{{schedule}}" as="schedules">
+                <template is="dom-repeat" items="{{schedule}}">
                     <div>
-                        <span>{{schedules.day}}</span>
-                        <template is="dom-repeat" items="{{schedules.hours}}" as="hour">
-                            <span>{{hour}}</span>
-                        </template>
+                        <span>{{item.day}}</span>
+                        <span>{{item.hours}}</span>
                     </div>
                 </template>
             </div>
@@ -33,21 +31,17 @@
 
             properties: {
 
-                viewVisibility: {type: String, value: 'hide'},
+                visibility: {type: String, value: 'hide'},
 
-                schedule: {type: Array, reflectToAttribute: true, observer: 'refreshSchedule'},
+                schedule: {type: Array},
 
-                hidden: {type: Boolean, reflectToAttribute: true, observer: 'show'}
+                visible: {type: Boolean, observer: 'show'}
             },
 
             show: function() {
-                if (!this.hidden) {
-                    this.viewVisibility = 'show';
+                if (this.visible) {
+                    this.visibility = 'show';
                 }
-            },
-
-            refreshSchedule: function() {
-                this.$.scheduleId.render();
             }
 
         });

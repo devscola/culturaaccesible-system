@@ -20,14 +20,11 @@
 
                 openingHours: {type: String, observer: 'hoursChanged'},
 
-                disabledAdd: {type: Boolean, value: true, reflectToAttribute: true},
+                disabledAdd: {type: Boolean, value: true},
 
-                days: {type: Array, reflectToAttribute: true, observer: 'daysChanged'},
-
-                clearhours: {type: Boolean, value: false, reflectToAttribute: true, notify: true, observer: 'clearHours'}
+                days: {type: Array, observer: 'daysChanged'}
 
             },
-
 
             hasDays: function() {
                 this.days = this.days || [];
@@ -91,21 +88,8 @@
 
             addClicked: function(event) {
                 event.preventDefault();
-                var actualSchedule = {};
-                actualSchedule = {days: this.days, hours: this.openingHours};
-                this.fire('addClicked', actualSchedule);
-
-            },
-
-            clearHours: function(){
-                if  (this.clearhours) {
-                    this.openingHours = '';
-                }
-                this.toggleClear();
-            },
-
-            toggleClear: function () {
-                this.clearhours = false;
+                this.fire('addClicked', this.openingHours);
+                this.openingHours = '';
             }
 
         });

@@ -3,12 +3,13 @@
 <dom-module id="cuac-schedule-days">
     <template>
         <div class="form-group">
-            <input type="checkbox" class="all-day-checkbox" on-change="checkAllDays" on-click="toggleChecked" data-day="allDays" checked="{{checkDays}}">
-                Select all<br>
-            <template is="dom-repeat" items={{days}} as="day">
-                <input name="days" type="checkbox" class="day-checkbox" on-change="updateSelectedDays" on-click="toggleChecked"  data-day$="{{day}}" checked="{{checkDays}}">
-                {{day}}<br>
-                </input>
+            <span class="input-group">
+                <input type="checkbox" name="select-all" on-change="checkAllDays" data-day="allDays" checked="{{checked}}"> Select all
+            </span>
+            <template is="dom-repeat" items={{week}}>
+                <span class="input-group">
+                    <input name$="{{item}}" type="checkbox" on-change="updateSelectedDays" checked="{{checked}}"> {{item}}
+                </span>
             </template>
         </div>
     </template>
@@ -17,77 +18,32 @@
         Polymer({
             is: 'cuac-schedule-days',
 
-            ready: function() {
-                this.week = {
-                    MON: { checked: false },
-                    TUE: { checked: false },
-                    WED: { checked: false },
-                    THU: { checked: false },
-                    FRI: { checked: false },
-                    SAT: { checked: false },
-                    SUN: { checked: false },
-                };
-                this.days = Object.keys(this.week);
-                this.updateSelectedDays();
-            },
-
             properties: {
 
-                checkDays: {type: Boolean, value: false, reflectToAttribute: true},
+                selectedDays: {type: Array, value: []},
 
-                cleardays: {type: Boolean, reflectToAttribute: true, notify: true, observer: 'clearCheckedDays'}
+                week: {type: Array, value: ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN']},
+
+                checked: {type: Boolean, value: false}
+
             },
 
             checkAllDays: function() {
-                this.checkDays = true;
-
-                this.week = {
-                    MON: { checked: true },
-                    TUE: { checked: true },
-                    WED: { checked: true },
-                    THU: { checked: true },
-                    FRI: { checked: true },
-                    SAT: { checked: true },
-                    SUN: { checked: true },
-                };
-
-                this.updateSelectedDays();
-            },
-
-            updateSelectedDays: function() {
-                this.selectedDays = this.days.filter(function(day) {
-                    return this.week[day].checked === true;
-                }.bind(this));
+                this.selectedDays = this.week;
+                this.checked = true;
                 this.fire('daySelected', this.selectedDays);
             },
 
-            toggleChecked: function(e) {
-                var day = e.target.dataset.day;
-                if(day == 'allDays') return;
-                this.week[day].checked = (this.week[day].checked === false);
-            },
-
-            clearCheckedDays: function() {
-                if  (this.cleardays) {
-                    this.week = {
-                    MON: { checked: false },
-                    TUE: { checked: false },
-                    WED: { checked: false },
-                    THU: { checked: false },
-                    FRI: { checked: false },
-                    SAT: { checked: false },
-                    SUN: { checked: false },
-                    };
-                    this.days = Object.keys(this.week);
-                    this.checkDays = undefined;
-              
-                }
-                this.toggleClear();
-            },
-
-            toggleClear: function () {
-                this.cleardays = false;
+            updateSelectedDays: function(event) {
+                if (event.target.checked) {
+                    this.selectedDays.push(event.target.name); 
+                } else {
+                    var index = this.selectedDays.indexOf(event.target.name);
+                    this.selectedDays.splice(index, 1);
+                };
+                this.fire('daySelected', this.selectedDays);
             }
+
         });
     </script>
 </dom-module>
