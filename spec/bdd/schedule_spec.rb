@@ -10,18 +10,30 @@ feature 'Schedule form' do
 
   scenario 'shows schedule view after add some hours on some days' do
     current = Page::Schedule.new
-    current.select_day
+    current.select_first_day
     current.fill_input('08:00/14:00')
     current.click_add_hour
     expect(current.view_visible?('08:00/14:00')).to eq true
   end
 
-  scenario 'reset checked days and hour field after add an hour' do
+  scenario 'resets checked days and hour field after add an hour' do
     current = Page::Schedule.new
-    current.select_day
+    current.select_first_day
     current.fill_input('08:00/14:00')
     current.click_add_hour
     expect(current).to have_field('days', checked: false)
+    expect(current.hour_field_empty?).to eq true
+  end
+
+  scenario 'resets checked fields when adding another hour', :wip do
+    current = Page::Schedule.new
+    current.select_first_day
+    current.fill_input('08:00/14:00')
+    current.click_add_hour
+    current.select_last_day
+    current.fill_input('16:00/20:00')
+    current.click_add_hour
+    expect(current.days_checked?).to eq false
     expect(current.hour_field_empty?).to eq true
   end
 
@@ -30,7 +42,7 @@ end
 feature 'Schedule form hours input' do
   scenario 'validates hours and minutes format' do
     current = Page::Schedule.new
-    current.select_day
+    current.select_first_day
     current.fill_input('23:00/24:00')
     expect(current.is_valid?).to eq false
     current.fill_input('08:60/14:00')
@@ -41,7 +53,7 @@ feature 'Schedule form hours input' do
 
   scenario 'validates from hours is bigger than to hours' do
     current = Page::Schedule.new
-    current.select_day
+    current.select_first_day
     current.fill_input('09:00/08:00')
     expect(current.is_valid?).to eq false
   end
@@ -51,7 +63,7 @@ end
 feature 'Schedule days' do
   scenario 'must have almost one day clicked before type an hour' do
     current = Page::Schedule.new
-    current.select_day
+    current.select_first_day
     current.fill_input('08:00/14:00')
     expect(current.is_valid?).to eq true
   end
@@ -64,7 +76,7 @@ feature 'Schedule days' do
 
   scenario 'needs some hours formatted' do
     current = Page::Schedule.new
-    current.select_day
+    current.select_first_day
     expect(current.is_valid?).to eq false
   end
 
@@ -72,7 +84,7 @@ feature 'Schedule days' do
     current = Page::Schedule.new
     current.fill_input('08:00/14:00')
     expect(current.is_valid?).to eq false
-    current.select_day
+    current.select_first_day
     expect(current.is_valid?).to eq true
   end
 

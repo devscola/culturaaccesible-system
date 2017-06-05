@@ -32,12 +32,10 @@
             },
 
             properties: {
-                selectedDays: {type: Array},
 
                 checkDays: {type: Boolean, value: false, reflectToAttribute: true},
 
-                clear: {type: Boolean, value: false, reflectToAttribute: true,
-                    observer: 'clearCheckedDays'}
+                cleardays: {type: Boolean, reflectToAttribute: true, notify: true, observer: 'clearCheckedDays'}
             },
 
             checkAllDays: function() {
@@ -70,9 +68,25 @@
             },
 
             clearCheckedDays: function() {
-                if  (this.clear) {
+                if  (this.cleardays) {
+                    this.week = {
+                    MON: { checked: false },
+                    TUE: { checked: false },
+                    WED: { checked: false },
+                    THU: { checked: false },
+                    FRI: { checked: false },
+                    SAT: { checked: false },
+                    SUN: { checked: false },
+                    };
+                    this.days = Object.keys(this.week);
                     this.checkDays = undefined;
+              
                 }
+                this.toggleClear();
+            },
+
+            toggleClear: function () {
+                this.cleardays = false;
             }
         });
     </script>

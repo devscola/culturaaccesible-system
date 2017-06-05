@@ -24,7 +24,7 @@
 
                 days: {type: Array, reflectToAttribute: true, observer: 'daysChanged'},
 
-                clear: {type: Boolean, value: false, reflectToAttribute: true, observer: 'clearHours'}
+                clearhours: {type: Boolean, value: false, reflectToAttribute: true, notify: true, observer: 'clearHours'}
 
             },
 
@@ -91,16 +91,21 @@
 
             addClicked: function(event) {
                 event.preventDefault();
-                var actualSchedule = {days: this.days, hours: this.openingHours};
+                var actualSchedule = {};
+                actualSchedule = {days: this.days, hours: this.openingHours};
                 this.fire('addClicked', actualSchedule);
 
             },
 
             clearHours: function(){
-                if  (this.clear) {
+                if  (this.clearhours) {
                     this.openingHours = '';
                 }
+                this.toggleClear();
+            },
 
+            toggleClear: function () {
+                this.clearhours = false;
             }
 
         });

@@ -16,11 +16,11 @@
                 <h3 class="panel-title">Saved opening hours</h3>
             </div>
             <div class="panel-body">
-                <template is="dom-repeat" items={{schedule}}>
+                <template id="scheduleId" is="dom-repeat" items="{{schedule}}" as="schedules">
                     <div>
-                        <span>{{item.day}} </span>
-                        <template is="dom-repeat" items="{{item.hours}}">
-                            <span> {{item}} </span>
+                        <span>{{schedules.day}}</span>
+                        <template is="dom-repeat" items="{{schedules.hours}}" as="hour">
+                            <span>{{hour}}</span>
                         </template>
                     </div>
                 </template>
@@ -33,14 +33,11 @@
 
             properties: {
 
-                viewVisibility: {
-                    type: String,
-                    value: 'hide'
-                },
+                viewVisibility: {type: String, value: 'hide'},
 
-                schedule: {type: Array, observer: 'console'},
+                schedule: {type: Array, reflectToAttribute: true, observer: 'refreshSchedule'},
 
-                hidden: {type: Boolean, observer: 'show'}
+                hidden: {type: Boolean, reflectToAttribute: true, observer: 'show'}
             },
 
             show: function() {
@@ -49,8 +46,8 @@
                 }
             },
 
-            console: function() {
-                console.log('hola');
+            refreshSchedule: function() {
+                this.$.scheduleId.render();
             }
 
         });

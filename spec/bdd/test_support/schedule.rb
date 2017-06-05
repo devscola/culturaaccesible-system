@@ -20,8 +20,16 @@ module Page
       !find('.add-button', visible: false).disabled?
     end
 
-    def select_day
+    def select_first_day
       all('.day-checkbox').first.set(true)
+    end
+
+    def select_last_day
+      all('.day-checkbox').last.set(true)
+    end
+
+    def days_checked?
+      has_checked_field?('days') 
     end
 
     def select_all_days
