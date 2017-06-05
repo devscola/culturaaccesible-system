@@ -1,0 +1,50 @@
+<link rel="import" href="/vendor/polymer/polymer.html">
+
+<dom-module id="cuac-price-form">
+    <template>
+        <template is="dom-repeat" items="{{priceDetail}}">
+            <div class="form-group">
+                <label >{{item.label}}</label>
+                <cuac-input-container inputtype="{{item.type}}"></cuac-input-container>
+            </div>
+        </template>
+    </template>
+
+    <script>
+        Polymer({
+            is: 'cuac-price-form',
+
+            ready: function() {
+                this.addEventListener('blured', this.updateStorage.bind(this));
+            },
+
+            properties: {
+                priceDetail: {type: Array},
+
+                storage: {type: Object, reflectToAttribute: true},
+
+                renderedStorage: {type: Object, reflectToAttribute: true}
+            },
+
+            updateStorage: function(event) {
+                var input = event.detail;
+
+                if (this.newEntry(input)) {
+                    this.storage[input.type].push(input.content);
+                } else {
+                    this.updateEntry(input);
+                }
+            },
+
+            newEntry: function(input) {
+                var storedValue = this.storage[input.type][input.index];
+                return storedValue === undefined;
+            },
+
+            updateEntry: function(input) {
+                this.storage[input.type][input.index] = input.content;
+            }
+
+        });
+    </script>
+</dom-module>

@@ -8,7 +8,19 @@ Class('Museum.Form', {
         {type: "web", label: "Website"}
     ],
 
-    fields: {
+    priceDetail: [
+        {type: "freeEntrance", label: "Free entrance"},
+        {type: "general", label: "General"},
+        {type: "reduced", label: "Reduced"}
+    ],
+
+    priceFields: {
+        freeEntrance: [],
+        general: [],
+        reduced: []
+    },
+
+    contactFields: {
         phone: [],
         email: [],
         web: []
@@ -22,7 +34,11 @@ Class('Museum.Form', {
 
         this.contactForm = document.getElementById('contact-form');
         this.contactForm.contactDetail = this.contactDetail;
-        this.contactForm.storage = this.fields;
+        this.contactForm.storage = this.contactFields;
+
+        this.priceForm = document.getElementById('price-form');
+        this.priceForm.priceDetail = this.priceDetail;
+        this.priceForm.storage = this.priceFields;
 
         this.addListeners();
     },

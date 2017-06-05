@@ -7,16 +7,17 @@
                 margin-bottom: 10px;
             }
         </style>
-
-        <template is="dom-repeat" items="{{inputsAdded}}">
-            <div class="col-md-10 ">
-                <span value={{fieldValue::input}}>
-                    <input class="form-control special-margin" data-index="{{index}}" name$="{{inputtype}}{{inputIndex(index)}}" on-blur="focusBlured">
-                </span>
+        <div class="col-md-12">
+            <template is="dom-repeat" items="{{inputsAdded}}">
+                <div class="col-md-10">
+                    <span value={{fieldValue::input}}>
+                        <input class="form-control special-margin" data-index="{{index}}" name$="{{inputtype}}{{inputIndex(index)}}" on-blur="focusBlured">
+                    </span>
+                </div>
+            </template>
+            <div class="col-md-2">
+                <cuac-add-button activate="{{activeAddButton}}" buttontype="{{inputtype}}"></cuac-add-button>
             </div>
-        </template>
-        <div class="col-md-2">
-            <cuac-add-button activate="{{activeAddButton}}" buttontype="{{inputtype}}"></cuac-add-button>
         </div>
     </template>
 
