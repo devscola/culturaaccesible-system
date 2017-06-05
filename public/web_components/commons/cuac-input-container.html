@@ -3,20 +3,22 @@
 <dom-module id="cuac-input-container">
     <template>
         <style>
-            .special-margin {
-                margin-bottom: 10px;
-            }
+            .special-margin { margin-bottom: 10px; }
+            .col-md-12 { padding-left: 0px; padding-right: 0px; width: 100%; }
+            .col-md-10 { padding-left: 0px; padding-right: 0px; width: 90%; }
+            .col-md-2 { padding-left: 15px; width: 10%; margin-left:auto; margin-right: 0px; }
         </style>
-
-        <template is="dom-repeat" items="{{inputsAdded}}">
-            <div class="col-md-10 ">
-                <span value={{fieldValue::input}}>
-                    <input class="form-control special-margin" data-index="{{index}}" name$="{{inputtype}}{{inputIndex(index)}}" on-blur="focusBlured">
-                </span>
+        <div class="col-md-12">
+            <template is="dom-repeat" items="{{inputsAdded}}">
+                <div class="col-md-10">
+                    <span value={{fieldValue::input}}>
+                        <input class="form-control special-margin" data-index="{{index}}" name$="{{inputtype}}{{inputIndex(index)}}" on-blur="focusBlured">
+                    </span>
+                </div>
+            </template>
+            <div class="col-md-2">
+                <cuac-add-button activate="{{activeAddButton}}" buttontype="{{inputtype}}"></cuac-add-button>
             </div>
-        </template>
-        <div class="col-md-2">
-            <cuac-add-button activate="{{activeAddButton}}" buttontype="{{inputtype}}"></cuac-add-button>
         </div>
     </template>
 
