@@ -16,10 +16,12 @@
                 <h3 class="panel-title">Saved opening hours</h3>
             </div>
             <div class="panel-body">
-                <template is="dom-repeat" items="{{schedule}}">
+                <template is="dom-repeat" items="{{schedule}}" as="schedule">
                     <div>
-                        <span>{{item.day}}</span>
-                        <span>{{item.hours}}</span>
+                        <span>{{schedule.day}}</span>
+                        <template is="dom-repeat" items="{{schedule.hours}}" as="hours">
+                        <span> {{hours}} </span>
+                        </template>
                     </div>
                 </template>
             </div>

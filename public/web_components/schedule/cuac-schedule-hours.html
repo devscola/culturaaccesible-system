@@ -3,6 +3,7 @@
 <dom-module id="cuac-schedule-hours">
     <template>
         <div class="form-group">
+            <div class="col-md-10">Field format: hh:mm-hh:mm</div>
             <div class="col-md-10">
                 <input class="form-control" name="openingHours" value={{openingHours::input}}></input>
             </div>
@@ -67,8 +68,8 @@
 
             isValidTimeFormat: function() {
                 var timeRegexp = /^([01]?[0-9]|2[0-3]):[0-5][0-9]/;
-                this.openingTime = this.openingHours.split('/')[0];
-                this.closingTime = this.openingHours.split('/')[1] || '';
+                this.openingTime = this.openingHours.split('-')[0];
+                this.closingTime = this.openingHours.split('-')[1] || '';
                 return (timeRegexp.test(this.openingTime) && timeRegexp.test(this.closingTime));
             },
 

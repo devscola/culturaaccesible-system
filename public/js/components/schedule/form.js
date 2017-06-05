@@ -15,47 +15,58 @@ Class('Museum.Schedule', {
 
     addListeners: function() {
         this.element.addEventListener('daySelected', this.setDays.bind(this));
-        this.element.addEventListener('addClicked', this.storeSchedule.bind(this));
-        this.element.addEventListener('scheduleGenerated', this.renderSchedule.bind(this));
+        this.element.addEventListener('addClicked', this.arrangeSchedule.bind(this));
     },
 
     setDays: function(days) {
         this.selectedDays = days.detail;
         this.hours.days = this.selectedDays;
+        var daysHours = this.hours.days;
+        this.hours.days = [];
+        this.hours.days = daysHours;
     },
 
-    renderSchedule: function(event){
-        var schedule = event.detail;
-        this.result.schedule = schedule;
-    },
-
-    storeSchedule: function(event) {
+    arrangeSchedule: function(event) {
         this.result.days = this.selectedDays;
-        var openingHours = event.detail;
+        this.openingHours = event.detail;
+        this.storeSchedule();
+        this.generateRenderSchedule(this.storage);
+        this.showSchedule();
+    },
+
+    storeSchedule: function() {
+        var openingHours = this.openingHours;
         var selectedDays = this.selectedDays;
-        var schedule = [];
         var storage = this.storage;
 
         selectedDays.forEach(function(day) {
             storage[day].push(openingHours);
+            var duplicateHoursRemoved = storage[day].filter(function(hours, index, self) {
+                return index == self.indexOf(hours);
+            });
+            storage[day] = duplicateHoursRemoved.sort();   
         });
+        this.storage = storage;
+    },
 
+    generateRenderSchedule: function(storage) {
+        var schedule = [];
         for (var day in storage) {
-            if (storage[day].length != 0) {
+            if (storage[day].length !== 0) {
                 var object = {};
                 object.day = day;
                 object.hours = storage[day];
                 schedule.push(object);            
             }
-        };
-
-        this.storage = storage;
+        }
         this.result.schedule = schedule;
+    },
 
+    showSchedule: function() {
         this.result.visible = true;
         this.resetDays();
     },
-    
+
     resetDays: function() {
         this.days.selectedDays = [];
         this.days.checked = true;
