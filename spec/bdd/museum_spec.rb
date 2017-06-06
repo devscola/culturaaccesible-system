@@ -3,6 +3,13 @@ require_relative 'test_support/fixture_museum'
 require_relative 'test_support/museum'
 
 feature 'Museum' do
+  scenario 'enables create new museum when triggered', :wip do
+    current = Fixture::Museum.initial_state
+    current.click_new_museum
+
+    expect(current.has_form?).to be true
+  end
+
   scenario 'allows submit when enough content' do
     current = Fixture::Museum.enough_content
     expect(current.save_enabled?).to be true
@@ -10,7 +17,7 @@ feature 'Museum' do
 end
 
 feature 'Museum contact' do
-  let(:current) { Fixture::Museum.contact_form_shown }
+  let(:current) { Fixture::Museum.showing_form }
 
   scenario 'disallows add input without enough content' do
     result = current.button_enabled?('.phone')
