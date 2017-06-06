@@ -14,17 +14,11 @@ Class('Museum.Form', {
         {type: "reduced", label: "Reduced"}
     ],
 
-    priceFields: {
-        freeEntrance: [],
-        general: [],
-        reduced: []
-    },
+    priceFields: {freeEntrance: [], general: [], reduced: []},
 
-    contactFields: {
-        phone: [],
-        email: [],
-        web: []
-    },
+    contactFields: {phone: [], email: [], web: []},
+
+    storage: {MON: [], TUE: [], WED: [], THU: [], FRI: [], SAT: [], SUN: []},
 
     initialize: function() {
         Museum.Form.Super.call(this, 'formulary');
@@ -40,6 +34,9 @@ Class('Museum.Form', {
         this.priceForm.priceDetail = this.priceDetail;
         this.priceForm.storage = this.priceFields;
 
+        this.daysForm = document.getElementById('days');
+        this.hoursForm = document.getElementById('hours');
+
         this.addListeners();
     },
 
@@ -49,6 +46,9 @@ Class('Museum.Form', {
 
         this.element.addEventListener('enoughInfo', this.storeInfo.bind(this));
         this.element.addEventListener('enoughLocation', this.storeLocation.bind(this));
+
+        this.element.addEventListener('daySelected', this.deliverDays.bind(this));
+        this.element.addEventListener('addClicked', this.arrangeSchedule.bind(this));
     },
 
     revokeInfo: function() {
@@ -87,6 +87,40 @@ Class('Museum.Form', {
 
     disallowSubmit: function() {
         this.saveButton.active = false;
+    },
+
+    deliverDays: function(days) {
+        this.selectedDays = days.detail;
+        this.hoursForm.days = this.selectedDays;
+        this.polymerWorkaround();
+    },
+
+    polymerWorkaround: function() {
+        var daysHours = this.hoursForm.days;
+        this.hoursForm.days = [];
+        this.hoursForm.days = daysHours;
+    },
+
+    arrangeSchedule: function(event) {
+        this.openingHours = event.detail;
+        this.storeSchedule();
+        this.resetDays();
+    },
+
+    storeSchedule: function() {
+        this.selectedDays.forEach(function(day) {
+            this.storage[day].push(this.openingHours);
+            var duplicateHoursRemoved = this.storage[day].filter(function(hours, index, self) {
+                return index == self.indexOf(hours);
+            });
+            this.storage[day] = duplicateHoursRemoved.sort();
+        }.bind(this));
+    },
+
+    resetDays: function() {
+        this.daysForm.selectedDays = [];
+        this.daysForm.checked = true;
+        this.daysForm.checked = false;
     }
 
 });

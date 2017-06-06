@@ -1,0 +1,110 @@
+<link rel="import" href="/vendor/polymer/polymer.html">
+
+<dom-module id="cuac-schedule-hours">
+    <template>
+        <style>
+            .hours.show {
+                display: block;
+            }
+
+            .hours.hide {
+                display: none;
+            }
+        </style>
+
+        <div class$="hours form-group {{visibility}}">
+            <div class="col-md-10">Field format: hh:mm-hh:mm</div>
+            <div class="col-md-10">
+                <input class="form-control" name="openingHours" value={{openingHours::input}}></input>
+            </div>
+            <div class="col-md-2">
+                <button class="btn btn-primary add-button" on-click="addClicked" disabled$="{{disabledAdd}}">+</button>
+            </div>
+        </div>
+    </template>
+
+    <script>
+        Polymer({
+            is: 'cuac-schedule-hours',
+
+            properties: {
+
+                openingHours: {type: String, observer: 'hoursChanged'},
+
+                disabledAdd: {type: Boolean, value: true},
+
+                days: {type: Array, observer: 'daysChanged'},
+
+                visibility: {type: String, value: 'show'}
+
+            },
+
+            hasDays: function() {
+                this.days = this.days || [];
+                return (this.days.length > 0);
+            },
+
+            isProperInput: function() {
+                return this.isValid(this.openingHours);
+            },
+
+            updateButtonStatus: function() {
+                if (this.hasDays() && this.isProperInput()) {
+                    this.activateAdd();
+                } else {
+                    this.deactivateAdd();
+                }
+            },
+
+            hoursChanged: function() {
+                this.updateButtonStatus();
+            },
+
+            daysChanged: function() {
+                if(typeof(this.openingHours)=='undefined') return;
+                this.updateButtonStatus();
+            },
+
+            activateAdd: function() {
+                this.disabledAdd = false;
+            },
+
+            deactivateAdd: function() {
+                this.disabledAdd = true;
+            },
+
+            isValidTimeLength: function() {
+                var acceptedLength = 11;
+                return (this.openingHours.length === acceptedLength);
+            },
+
+            isValidTimeFormat: function() {
+                var timeRegexp = /^([01]?[0-9]|2[0-3]):[0-5][0-9]/;
+                this.openingTime = this.openingHours.split('-')[0];
+                this.closingTime = this.openingHours.split('-')[1] || '';
+                return (timeRegexp.test(this.openingTime) && timeRegexp.test(this.closingTime));
+            },
+
+            isValidHourRange: function() {
+                var openingTime = Number(this.openingTime.replace(':', ''));
+                var closingTime = Number(this.closingTime.replace(':', ''));
+                return (openingTime < closingTime);
+            },
+
+            isValid: function() {
+                var validLength = this.isValidTimeLength();
+                var validFormat = this.isValidTimeFormat();
+                var validRange = this.isValidHourRange();
+
+                return (validLength && validFormat && validRange);
+            },
+
+            addClicked: function(event) {
+                event.preventDefault();
+                this.fire('addClicked', this.openingHours);
+                this.openingHours = '';
+            }
+
+        });
+    </script>
+</dom-module>
