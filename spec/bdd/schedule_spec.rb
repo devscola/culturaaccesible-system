@@ -19,7 +19,7 @@ feature 'Schedule form' do
     hours_with_one_digit = '8:00-14:00'
     current.introduce_hours(hours_with_one_digit)
     expect(current.button_enabled?('.add-button')).to be false
-    
+
     invalid_hours_range = '09:00-08:00'
     current.introduce_hours(invalid_hours_range)
     expect(current.button_enabled?('.add-button')).to be false
@@ -34,14 +34,14 @@ feature 'Schedule form' do
     expect(current.button_enabled?('.add-button')).to be true
   end
 
-  scenario 'disallows adding hours after uncheck days' do 
+  scenario 'disallows adding hours after uncheck days' do
     current.check('MON')
     current.introduce_hours('08:00-14:00')
     current.check('MON')
 
     expect(current.button_enabled?('.add-button')).to be false
   end
-  
+
   scenario 'selects all days at once' do
     current.check('select-all')
     expect(current.all_fields_checked?).to be true
@@ -70,7 +70,7 @@ feature 'Schedule form' do
 
     expect(current.has_content?('08:00-14:00')).to be true
     expect(current.has_content?('16:00-20:00')).to be true
-    
+
   end
 
 end
