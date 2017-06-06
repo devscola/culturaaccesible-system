@@ -2,7 +2,17 @@
 
 <dom-module id="cuac-schedule-days">
     <template>
-        <div class="form-group">
+        <style>
+            .days.show {
+                display: block;
+            }
+
+            .days.hide {
+                display: none;
+            }
+        </style>
+
+        <div class$="days form-group {{visibility}}">
             <span class="input-group">
                 <input type="checkbox" name="select-all" on-change="checkAllDays" data-day="allDays" checked="{{checked}}"> Select all
             </span>
@@ -24,7 +34,9 @@
 
                 week: {type: Array, value: ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN']},
 
-                checked: {type: Boolean, value: false}
+                checked: {type: Boolean, value: false},
+
+                visibility: {type: String, value: 'show'}
 
             },
 

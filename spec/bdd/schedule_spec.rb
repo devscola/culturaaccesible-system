@@ -70,7 +70,14 @@ feature 'Schedule form' do
 
     expect(current.has_content?('08:00-14:00')).to be true
     expect(current.has_content?('16:00-20:00')).to be true
-
   end
 
+  scenario 'allows submit when enough content' do
+    expect(current.button_enabled?('.submit')).to be false
+    current.check('MON')
+    current.introduce_hours('08:00-14:00')
+    current.click_add_hour
+
+    expect(current.button_enabled?('.submit')).to be true
+  end
 end
