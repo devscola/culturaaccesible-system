@@ -3,7 +3,7 @@ require_relative 'test_support/fixture_museum'
 require_relative 'test_support/museum'
 
 feature 'Museum' do
-  scenario 'enables create new museum when triggered', :wip do
+  scenario 'enables create new museum when triggered' do
     current = Fixture::Museum.initial_state
     current.click_new_museum
 
@@ -13,6 +13,13 @@ feature 'Museum' do
   scenario 'allows submit when enough content' do
     current = Fixture::Museum.enough_content
     expect(current.save_enabled?).to be true
+  end
+
+  scenario 'shows info when submitted' do
+    current = Fixture::Museum.enough_content
+    current.submit
+    expect(current.shows_info?).to be true
+
   end
 end
 

@@ -29,6 +29,14 @@ module Page
       false
     end
 
+    def submit
+      find('#action').click
+    end
+
+    def shows_info?
+      has_css?('.view')
+    end
+
     def fill_form(contact)
       contact.each do |identifier, content|
         fill_input(identifier, content)

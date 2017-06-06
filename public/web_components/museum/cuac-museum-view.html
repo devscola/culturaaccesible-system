@@ -1,0 +1,27 @@
+<link rel="import" href="/vendor/polymer/polymer.html">
+
+<dom-module id="cuac-museum-view">
+    <template>
+        <style>
+            .panel.show {
+                display: 'block';
+            }
+            .panel.hide {
+                display: 'none';
+            }
+        </style>
+        <div class$="view panel {{visibility}}">Shows Info</div>
+    </template>
+
+    <script>
+        Polymer({
+            is: 'cuac-museum-view',
+
+            properties: {
+
+            visibility: {type: String, value: 'hide'}
+
+            }
+        });
+    </script>
+</dom-module>

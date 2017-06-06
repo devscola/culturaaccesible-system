@@ -2,7 +2,7 @@
 
 <dom-module id="cuac-save-button">
     <template>
-        <button class="btn btn-primary" disabled$="{{disableSave}}">Save</button>
+        <button class="btn btn-primary" on-click="submitted" disabled$="{{disableSave}}">Save</button>
     </template>
 
     <script>
@@ -20,6 +20,10 @@
                 } else {
                     this.disableSave = 'disabled';
                 }
+            },
+
+            submitted: function() {
+                this.fire('submit');
             }
         });
     </script>

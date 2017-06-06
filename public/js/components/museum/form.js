@@ -24,6 +24,7 @@ Class('Museum.Form', {
         Museum.Form.Super.call(this, 'formulary');
         this.newButton = document.getElementById('newMuseum');
         this.saveButton = document.getElementById('action');
+        this.result = document.getElementById('result');
         this.infoValues = {};
         this.locationValues = {};
 
@@ -52,6 +53,7 @@ Class('Museum.Form', {
 
     addListeners: function() {
         this.newButton.addEventListener('click', this.show.bind(this));
+        this.element.addEventListener('submit', this.showsInfo.bind(this));
         this.element.addEventListener('notEnoughInfo', this.revokeInfo.bind(this));
         this.element.addEventListener('notEnoughLocation', this.revokeLocation.bind(this));
 
@@ -60,6 +62,11 @@ Class('Museum.Form', {
 
         this.element.addEventListener('daySelected', this.deliverDays.bind(this));
         this.element.addEventListener('addClicked', this.arrangeSchedule.bind(this));
+    },
+
+    showsInfo: function() {
+        this.hide();
+        this.result.visibility = 'show';
     },
 
     revokeInfo: function() {
