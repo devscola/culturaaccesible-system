@@ -1,0 +1,15 @@
+<link rel="import" href="/vendor/polymer/polymer.html">
+<link rel="import" href="/web_components/museum/cuac-schedule-days.html">
+<link rel="import" href="/web_components/museum/cuac-schedule-hours.html">
+
+<dom-module id="cuac-schedule-form">
+    <template>
+        <cuac-schedule-days id="days"></cuac-schedule-days>
+        <cuac-schedule-hours id="hours"></cuac-schedule-hours>
+    </template>
+    <script>
+        Polymer({
+            is: 'cuac-schedule-form',
+      });
+    </script>
+</dom-module>

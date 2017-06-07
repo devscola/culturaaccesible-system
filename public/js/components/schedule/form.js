@@ -4,61 +4,78 @@ Class('Museum.Schedule', {
 
     initialize: function() {
         Museum.Schedule.Super.call(this, 'formulary');
-        this.days = document.getElementById('days');
-        this.hours = document.getElementById('hours');
+        this.daysForm = document.getElementById('days');
+        this.hoursForm = document.getElementById('hours');
         this.result = document.getElementById('result');
-        this.selectedDays = [];
-        this.openingHours = [];
+        this.action = document.getElementById('action');
+
         this.storage = {MON: [], TUE: [], WED: [], THU: [], FRI: [], SAT: [], SUN: []};
         this.addListeners();
     },
 
     addListeners: function() {
-        this.element.addEventListener('daySelected', this.setDays.bind(this));
-        this.element.addEventListener('addClicked', this.storeSchedule.bind(this));
-        this.element.addEventListener('scheduleGenerated', this.renderSchedule.bind(this));
+        this.element.addEventListener('daySelected', this.deliverDays.bind(this));
+        this.element.addEventListener('addClicked', this.arrangeSchedule.bind(this));
+        this.element.addEventListener('submitted', this.hide.bind(this));
     },
 
-    setDays: function(days) {
+    deliverDays: function(days) {
         this.selectedDays = days.detail;
-        this.hours.days = this.selectedDays;
+        this.hoursForm.days = this.selectedDays;
+        this.polymerWorkaround();
     },
 
-    renderSchedule: function(event){
-        var schedule = event.detail;
-        this.result.schedule = schedule;
+    polymerWorkaround: function() {
+        var daysHours = this.hoursForm.days;
+        this.hoursForm.days = [];
+        this.hoursForm.days = daysHours;
     },
 
-    storeSchedule: function(event) {
+    arrangeSchedule: function(event) {
+        this.openingHours = event.detail;
         this.result.days = this.selectedDays;
-        var openingHours = event.detail;
-        var selectedDays = this.selectedDays;
+        this.action.saveDisabled = null;
+        this.storeSchedule();
+        this.generateRenderSchedule();
+        this.showSchedule();
+    },
+
+    storeSchedule: function() {
+        this.selectedDays.forEach(function(day) {
+            this.storage[day].push(this.openingHours);
+            var duplicateHoursRemoved = this.storage[day].filter(function(hours, index, self) {
+                return index == self.indexOf(hours);
+            });
+            this.storage[day] = duplicateHoursRemoved.sort();
+        }.bind(this));
+    },
+
+    generateRenderSchedule: function() {
         var schedule = [];
-        var storage = this.storage;
-
-        selectedDays.forEach(function(day) {
-            storage[day].push(openingHours);
-        });
-
-        for (var day in storage) {
-            if (storage[day].length != 0) {
+        for (var day in this.storage) {
+            if (this.storage[day].length > 0) {
                 var object = {};
                 object.day = day;
-                object.hours = storage[day];
-                schedule.push(object);            
+                object.hours = this.storage[day];
+                schedule.push(object);
             }
-        };
-
-        this.storage = storage;
+        }
         this.result.schedule = schedule;
+    },
 
+    showSchedule: function() {
         this.result.visible = true;
         this.resetDays();
     },
-    
+
     resetDays: function() {
-        this.days.selectedDays = [];
-        this.days.checked = true;
-        this.days.checked = false;
+        this.daysForm.selectedDays = [];
+        this.daysForm.checked = true;
+        this.daysForm.checked = false;
+    },
+
+    hide: function() {
+        this.daysForm.visibility = 'hide';
+        this.hoursForm.visibility = 'hide';
     }
 });

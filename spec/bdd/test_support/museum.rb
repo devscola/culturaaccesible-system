@@ -8,6 +8,14 @@ module Page
       validate!
     end
 
+    def click_new_museum
+      find('#newMuseum').click
+    end
+
+    def has_form?
+      has_css?('#formulary')
+    end
+
     def fill_input(field, content)
       fill_in(field, with: content)
     end
@@ -19,6 +27,14 @@ module Page
       return true if result.nil?
 
       false
+    end
+
+    def submit
+      find('#action').click
+    end
+
+    def shows_info?
+      has_css?('.view')
     end
 
     def fill_form(contact)
@@ -64,7 +80,8 @@ module Page
     private
 
     def validate!
-      assert_selector('#formulary')
+      assert_selector('#newMuseum')
+      assert_selector('#formulary', visible: false)
     end
   end
 end

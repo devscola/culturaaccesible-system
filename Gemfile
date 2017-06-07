@@ -12,6 +12,7 @@ group :development do
 end
 
 group :test do
+  gem 'nokogiri', '~> 1.6.0'
   gem 'rack-test', '~> 0.6.3'
   gem 'capybara', '~> 2.12.0'
   gem 'rspec', '~> 3.5.0'

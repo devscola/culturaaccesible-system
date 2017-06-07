@@ -8,6 +8,7 @@
         <link rel="import" href="/web_components/schedule/cuac-schedule-hours.html">
         <link rel="import" href="/web_components/schedule/cuac-schedule-days.html">
         <link rel="import" href="/web_components/schedule/cuac-schedule-view.html">
+        <link rel="import" href="/web_components/schedule/cuac-save-button.html">
     </head>
     <body>
         <div class="container">
@@ -15,12 +16,12 @@
                 <form class="col-md-12">
                     <cuac-schedule-days id="days"></cuac-schedule-days>
                     <cuac-schedule-hours id="hours"></cuac-schedule-hours>
-                    <div class="col-md-12">
-                        <button class="submit btn btn-primary" on-click="submitClicked" disabled$="{{disableSave}}">Save</button>
-                    </div>
                 </form>
                 <div class="col-md-12">
                     <cuac-schedule-view id="result"></cuac-schedule-view>
+                </div>
+                <div class="col-md-12">
+                    <cuac-save-button id="action"></cuac-save-button>
                 </div>
             </div>
         </div>
