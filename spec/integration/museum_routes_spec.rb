@@ -13,15 +13,7 @@ describe 'Museum controller', :wip do
     Museums::Service.flush
   end
 
-  it 'stores museums' do
-    museum = { id: 'museum_id', name: 'some name' }.to_json
-
-    post '/api/museum/add', museum
-
-    expect(parse_response['name']).to eq('some name')
-  end
-
-  it 'retrieves required museum' do
+  it 'retrieve required museum' do
     museum = { id: 'museum_id', name: 'some name' }.to_json
     post '/api/museum/add', museum
 
