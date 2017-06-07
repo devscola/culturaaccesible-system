@@ -2,16 +2,14 @@
 
 <dom-module id="cuac-info-form">
     <template>
-        <div infoData="{{infoData}}">
-            <div class="form-group">
-                <label for="name">Name</label>
-                <input class="form-control"  name="name" on-blur="updateData" value="{{nameValue::input}}"></input>
-            </div>
+        <div class="form-group">
+            <label for="name">Name</label>
+            <input class="form-control"  name="name" on-blur="updateData" value="{{nameValue::input}}"></input>
+        </div>
 
-            <div>
-                <label for="description">Description</label>
-                <textarea class="form-control" name="description" on-blur="updateData" value="{{descriptionValue::input}}"></textarea>
-            </div>
+        <div>
+            <label for="description">Description</label>
+            <textarea class="form-control" name="description" on-blur="updateData" value="{{descriptionValue::input}}"></textarea>
         </div>
     </template>
 

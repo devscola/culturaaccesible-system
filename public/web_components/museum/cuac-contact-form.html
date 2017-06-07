@@ -15,36 +15,34 @@
             is: 'cuac-contact-form',
 
             ready: function() {
-                this.addEventListener('blured', this.updateStorage.bind(this));
+                this.addEventListener('blured', this.updateContactData.bind(this));
             },
 
             properties: {
 
                 contactDetail: {type: Array},
 
-                storage: {type: Object, reflectToAttribute: true},
-
-                renderedStorage: {type: Object, reflectToAttribute: true},
+                contactData: {type: Object},
 
             },
 
-            updateStorage: function(event) {
+            updateContactData: function(event) {
                 var input = event.detail;
 
                 if (this.newEntry(input)) {
-                    this.storage[input.type].push(input.content);
+                    this.contactData[input.type].push(input.content);
                 } else {
                     this.updateEntry(input);
                 }
             },
 
             newEntry: function(input) {
-                var storedValue = this.storage[input.type][input.index];
+                var storedValue = this.contactData[input.type][input.index];
                 return storedValue === undefined;
             },
 
             updateEntry: function(input) {
-                this.storage[input.type][input.index] = input.content;
+                this.contactData[input.type][input.index] = input.content;
             }
         });
     </script>

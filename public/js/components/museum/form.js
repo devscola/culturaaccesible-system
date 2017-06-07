@@ -38,9 +38,9 @@ Class('Museum.Form', {
         this.hoursForm = document.getElementById('hours');
 
         this.contactForm.contactDetail = this.contactDetail;
-        this.contactForm.storage = this.contactFields;
+        this.contactForm.contactData = this.contactFields;
         this.priceForm.priceDetail = this.priceDetail;
-        this.priceForm.storage = this.priceFields;
+        this.priceForm.priceData = this.priceFields;
 
 
         this.addListeners();
@@ -57,7 +57,7 @@ Class('Museum.Form', {
 
     addListeners: function() {
         this.newButton.addEventListener('click', this.show.bind(this));
-        this.element.addEventListener('submit', this.showsInfo.bind(this));
+        this.element.addEventListener('submit', this.collectData.bind(this));
         this.element.addEventListener('notEnoughInfo', this.revokeInfo.bind(this));
         this.element.addEventListener('notEnoughLocation', this.revokeLocation.bind(this));
 
@@ -66,6 +66,20 @@ Class('Museum.Form', {
 
         this.element.addEventListener('daySelected', this.deliverDays.bind(this));
         this.element.addEventListener('addClicked', this.arrangeSchedule.bind(this));
+    },
+
+    collectData: function() {
+        this.museumData = {};
+        Object.assign(
+            this.museumData,
+            this.infoForm.infoData,
+            this.locationForm.locationData,
+            this.contactForm.contactData,
+            this.priceForm.priceData
+            )
+
+        console.log(this.museumData);
+        this.showsInfo();
     },
 
     showsInfo: function() {
