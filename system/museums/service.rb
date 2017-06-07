@@ -14,6 +14,11 @@ module Museums
         Museums::Repository.store(museum_data)
       end
 
+      def list
+        list = Museums::Repository.all
+        list.map { |museum| museum.serialize }
+      end
+
       def flush
         Museums::Repository.flush
       end

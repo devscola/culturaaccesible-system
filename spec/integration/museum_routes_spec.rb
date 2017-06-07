@@ -2,7 +2,7 @@ require 'rack/test'
 require 'json'
 require_relative '../../system/museums/routes'
 
-describe 'Museum controller', :wip do
+describe 'Museum controller' do
   include Rack::Test::Methods
 
   def app
@@ -22,6 +22,14 @@ describe 'Museum controller', :wip do
     result = parse_response['name']
 
     expect(result).to eq('some name')
+  end
+
+  it 'retrieves all museums', :museum do
+    post '/api/museum/list'
+
+    result = parse_response
+    
+    expect(result).to be_an Array
   end
 
   def parse_response
