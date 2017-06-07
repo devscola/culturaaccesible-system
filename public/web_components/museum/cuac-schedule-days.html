@@ -2,23 +2,13 @@
 
 <dom-module id="cuac-schedule-days">
     <template>
-        <style>
-            .days.show {
-                display: block;
-            }
-
-            .days.hide {
-                display: none;
-            }
-        </style>
-
         <div class$="days form-group {{visibility}}">
             <span class="input-group">
                 <input type="checkbox" name="select-all" on-change="checkAllDays" data-day="allDays" checked="{{checked}}"> Select all
             </span>
             <template is="dom-repeat" items={{week}}>
                 <span class="input-group">
-                    <input name$="{{item}}" type="checkbox" on-change="updateSelectedDays" checked="{{checked}}"> {{item}}
+                    <input name$="{{item}}" type="checkbox" on-change="updateSelection" checked="{{checked}}"> {{item}}
                 </span>
             </template>
         </div>
@@ -30,30 +20,33 @@
 
             properties: {
 
-                selectedDays: {type: Array, value: []},
+                selection: {type: Array, value: [], notify: true},
 
                 week: {type: Array, value: ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN']},
 
-                checked: {type: Boolean, value: false},
-
-                visibility: {type: String, value: 'show'}
+                checked: {type: Boolean, value: false}
 
             },
 
             checkAllDays: function() {
-                this.selectedDays = this.week;
+                this.selection = this.week;
                 this.checked = true;
-                this.fire('daySelected', this.selectedDays);
             },
 
-            updateSelectedDays: function(event) {
+            updateSelection: function(event) {
                 if (event.target.checked) {
-                    this.selectedDays.push(event.target.name);
+                    this.selection.push(event.target.name);
                 } else {
-                    var index = this.selectedDays.indexOf(event.target.name);
-                    this.selectedDays.splice(index, 1);
+                    var index = this.selection.indexOf(event.target.name);
+                    this.selection.splice(index, 1);
                 }
-                this.fire('daySelected', this.selectedDays);
+                this.polymerWorkaround();
+            },
+
+            polymerWorkaround: function() {
+                var temp = this.selection;
+                this.selection = [];
+                this.selection = temp;
             }
 
         });

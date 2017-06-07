@@ -4,12 +4,42 @@
 
 <dom-module id="cuac-schedule-form">
     <template>
-        <cuac-schedule-days id="days"></cuac-schedule-days>
-        <cuac-schedule-hours id="hours"></cuac-schedule-hours>
+        <cuac-schedule-days id="days" checked="{{marked}}" selection="{{selectedDays}}"></cuac-schedule-days>
+        <cuac-schedule-hours id="hours" days="{{selectedDays}}" selection="{{selectedHours}}"></cuac-schedule-hours>
     </template>
     <script>
         Polymer({
             is: 'cuac-schedule-form',
-      });
+
+            properties: {
+
+                selectedDays: {type: Array, value: []},
+
+                marked: {type: Boolean, value: false},
+
+                selectedHours: {type: String, observer: 'arrangeSchedule'}
+            },
+
+            arrangeSchedule: function() {
+                this.storeSchedule();
+                this.resetDays();
+            },
+
+            storeSchedule: function() {
+                this.selectedDays.forEach(function(day) {
+                    this.scheduleData[day].push(this.selectedHours);
+                    var duplicateHoursRemoved = this.scheduleData[day].filter(function(hours, index, self) {
+                        return index == self.indexOf(hours);
+                    });
+                    this.scheduleData[day] = duplicateHoursRemoved.sort();
+                }.bind(this));
+            },
+
+            resetDays: function() {
+                this.selectedDays = [];
+                this.marked = true;
+                this.marked = false;
+            }
+        });
     </script>
 </dom-module>

@@ -29,6 +29,8 @@
 
             properties: {
 
+                selection: {type: String, notify: true},
+
                 openingHours: {type: String, observer: 'hoursChanged'},
 
                 disabledAdd: {type: Boolean, value: true},
@@ -37,6 +39,27 @@
 
                 visibility: {type: String, value: 'show'}
 
+            },
+
+            daysChanged: function() {
+                if (typeof(this.openingHours) == 'undefined') return;
+                this.updateButtonStatus();
+            },
+
+            updateButtonStatus: function() {
+                if (this.hasDays() && this.isProperInput()) {
+                    this.activateAdd();
+                } else {
+                    this.deactivateAdd();
+                }
+            },
+
+            activateAdd: function() {
+                this.disabledAdd = false;
+            },
+
+            deactivateAdd: function() {
+                this.disabledAdd = true;
             },
 
             hasDays: function() {
@@ -48,29 +71,8 @@
                 return this.isValid(this.openingHours);
             },
 
-            updateButtonStatus: function() {
-                if (this.hasDays() && this.isProperInput()) {
-                    this.activateAdd();
-                } else {
-                    this.deactivateAdd();
-                }
-            },
-
             hoursChanged: function() {
                 this.updateButtonStatus();
-            },
-
-            daysChanged: function() {
-                if(typeof(this.openingHours)=='undefined') return;
-                this.updateButtonStatus();
-            },
-
-            activateAdd: function() {
-                this.disabledAdd = false;
-            },
-
-            deactivateAdd: function() {
-                this.disabledAdd = true;
             },
 
             isValidTimeLength: function() {
@@ -101,7 +103,7 @@
 
             addClicked: function(event) {
                 event.preventDefault();
-                this.fire('addClicked', this.openingHours);
+                this.selection = this.openingHours;
                 this.openingHours = '';
             }
 
