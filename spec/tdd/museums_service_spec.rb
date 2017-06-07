@@ -1,0 +1,25 @@
+require 'spec_helper_tdd'
+require_relative '../../system/museums/service'
+
+describe Museums::Service do
+
+  it 'retrieve a museum' do
+    name = 'some name'
+    description = 'some description'
+
+    museum = add_museum(name, description)
+
+    expect(museum[:name]).to eq(name)
+    expect(museum[:description]).to eq(description)
+  end
+
+  def add_museum(name, description)
+    museum_data = { 'id' => 'some id', 'name' => name, 'description' => description }
+    Museums::Service.store(museum_data)
+    retrieve_museum(museum_data['id'])
+  end
+
+  def retrieve_museum(id)
+    Museums::Service.retrieve(id)
+  end
+end
