@@ -40,7 +40,7 @@ Class('Museum.Form', {
         this.contactForm.contactDetail = this.contactDetail;
         this.contactForm.contactData = this.contactFields;
         this.priceForm.priceDetail = this.priceDetail;
-        this.priceForm.storage = this.priceFields;
+        this.priceForm.priceData = this.priceFields;
 
 
         this.addListeners();
@@ -74,7 +74,8 @@ Class('Museum.Form', {
             this.museumData,
             this.infoForm.infoData,
             this.locationForm.locationData,
-            this.contactForm.contactData
+            this.contactForm.contactData,
+            this.priceForm.priceData
             )
 
         console.log(this.museumData);
