@@ -13,6 +13,17 @@ describe Museums::Service do
     expect(museum[:description]).to eq(description)
   end
 
+  it 'retrieves all museums' do
+    add_museum('some name', 'some description')
+    result = retrieve_all_museums
+
+    expect(result.any?).to be true
+  end
+
+  def retrieve_all_museums
+    Museums::Service.list
+  end
+
   def add_museum(name, description)
     museum_data = { 'id' => 'some id', 'name' => name, 'description' => description }
     Museums::Service.store(museum_data)

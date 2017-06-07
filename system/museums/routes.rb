@@ -14,4 +14,11 @@ class App < Sinatra::Base
     result = Museums::Service.retrieve(museum['id'])
     result.to_json
   end
+
+  post '/api/museum/list' do
+    response.headers['Access-Control-Allow-Origin'] = '*'
+    result = Museums::Service.list
+    result.to_json
+  end
+
 end
