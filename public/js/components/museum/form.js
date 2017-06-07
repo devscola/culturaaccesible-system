@@ -69,7 +69,7 @@ Class('Museum.Form', {
             {contact: this.contactForm.contactData},
             {price: this.priceForm.priceData},
             {schedule: this.scheduleForm.scheduleData}
-        )
+        );
         this.showsInfo();
     },
 

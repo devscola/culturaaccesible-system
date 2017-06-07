@@ -4,7 +4,7 @@
     <template>
         <template is="dom-repeat" items="{{toArray(schedule)}}">
             <div>
-                <span>{{item.day}}</span>
+                <label>{{item.day}}</label>
                 <template is="dom-repeat" items="{{item.hours}}" as="hours">
                 <span> {{hours}} </span>
                 </template>

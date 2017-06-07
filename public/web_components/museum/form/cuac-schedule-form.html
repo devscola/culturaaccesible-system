@@ -4,8 +4,18 @@
 
 <dom-module id="cuac-schedule-form">
     <template>
-        <cuac-schedule-days id="days" checked="{{marked}}" selection="{{selectedDays}}"></cuac-schedule-days>
-        <cuac-schedule-hours id="hours" days="{{selectedDays}}" selection="{{selectedHours}}"></cuac-schedule-hours>
+        <cuac-schedule-days class="col-md-12" checked="{{marked}}" selection="{{selectedDays}}"></cuac-schedule-days>
+        <cuac-schedule-hours class="col-md-12" days="{{selectedDays}}" selection="{{selectedHours}}"></cuac-schedule-hours>
+        <div class="panel col-md-12">
+            <template is="dom-repeat" items="{{renderedSchedule}}">
+                <div>
+                    <label>{{item.day}}</label>
+                    <template is="dom-repeat" items="{{item.hours}}" as="hours">
+                        <span> {{hours}} </span>
+                    </template>
+                </div>
+            </template>
+        </div>
     </template>
     <script>
         Polymer({
@@ -17,12 +27,18 @@
 
                 marked: {type: Boolean, value: false},
 
-                selectedHours: {type: String, observer: 'arrangeSchedule'}
+                selectedHours: {type: String, observer: 'arrangeSchedule'},
+
+                scheduleData: {type: Object},
+
+                renderedSchedule: {type: Array}
+
             },
 
             arrangeSchedule: function() {
                 this.storeSchedule();
                 this.resetDays();
+                this.generateRenderedSchedule();
             },
 
             storeSchedule: function() {
@@ -33,6 +49,26 @@
                     });
                     this.scheduleData[day] = duplicateHoursRemoved.sort();
                 }.bind(this));
+            },
+
+            generateRenderedSchedule: function() {
+                var schedule = [];
+                for (var day in this.scheduleData) {
+                    if (this.scheduleData[day].length > 0) {
+                        var object = {};
+                        object.day = day;
+                        object.hours = this.scheduleData[day];
+                        schedule.push(object);
+                    }
+                }
+                this.renderedSchedule = schedule;
+                this.polymerWorkaround();
+            },
+
+            polymerWorkaround: function() {
+                var temp = this.renderedSchedule;
+                this.renderedSchedule = [];
+                this.renderedSchedule = temp;
             },
 
             resetDays: function() {
