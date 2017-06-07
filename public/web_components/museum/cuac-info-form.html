@@ -2,17 +2,7 @@
 
 <dom-module id="cuac-info-form">
     <template>
-        <style>
-            .form.show {
-                display: block;
-            }
-
-            .form.hide {
-                display: none;
-            }
-        </style>
-
-        <div class="form-group" infoData="{{infoData}}">
+        <div infoData="{{infoData}}">
             <div class="form-group">
                 <label for="name">Name</label>
                 <input class="form-control"  name="name" on-blur="updateData" value="{{nameValue::input}}"></input>

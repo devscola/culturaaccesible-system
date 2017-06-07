@@ -69,7 +69,6 @@ Class('Museum.Form', {
     },
 
     showsInfo: function() {
-        console.log(this.infoForm.infoData);
         this.hide();
         this.result.visibility = 'show';
     },
