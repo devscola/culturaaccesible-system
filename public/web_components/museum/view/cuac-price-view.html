@@ -1,0 +1,34 @@
+<link rel="import" href="/vendor/polymer/polymer.html">
+
+<dom-module id="cuac-price-view">
+    <template>
+        <div>
+            <label>Free entrance:</label>
+            <template is="dom-repeat" items="{{price.freeEntrance}}">
+                <div>{{item}}</div>
+            </template>
+        </div>
+        <div>
+            <label>General:</label>
+            <template is="dom-repeat" items="{{price.general}}">
+                <div>{{item}}</div>
+            </template>
+        </div>
+        <div>
+            <label>Reduced:</label>
+            <template is="dom-repeat" items="{{price.reduced}}">
+                <div>{{item}}</div>
+            </template>
+        </div>
+    </template>
+
+    <script>
+        Polymer({
+            is: 'cuac-price-view',
+
+            properties: {
+                price: {type: Object}
+            }
+        });
+    </script>
+</dom-module>

@@ -1,0 +1,30 @@
+<link rel="import" href="/vendor/polymer/polymer.html">
+
+<dom-module id="cuac-schedule-view">
+    <template>
+        <template is="dom-repeat" items="{{toArray(schedule)}}">
+            <div>
+                <span>{{item.day}}</span>
+                <template is="dom-repeat" items="{{item.hours}}" as="hours">
+                <span> {{hours}} </span>
+                </template>
+            </div>
+        </template>
+    </template>
+    <script>
+        Polymer({
+            is: 'cuac-schedule-view',
+
+            properties: {
+                schedule: {type: Object}
+            },
+
+            toArray: function(object) {
+                var array = Object.keys(object).map(function(key) {
+                    return {day: key, hours: object[key]};
+                });
+                return array;
+            }
+        });
+    </script>
+</dom-module>

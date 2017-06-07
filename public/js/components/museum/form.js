@@ -64,10 +64,10 @@ Class('Museum.Form', {
         this.museumData = {};
         Object.assign(
             this.museumData,
-            this.infoForm.infoData,
-            this.locationForm.locationData,
-            this.contactForm.contactData,
-            this.priceForm.priceData,
+            {info: this.infoForm.infoData},
+            {location: this.locationForm.locationData},
+            {contact: this.contactForm.contactData},
+            {price: this.priceForm.priceData},
             {schedule: this.scheduleForm.scheduleData}
         )
         this.showsInfo();

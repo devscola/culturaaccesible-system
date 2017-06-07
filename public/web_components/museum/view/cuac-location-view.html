@@ -1,0 +1,36 @@
+<link rel="import" href="/vendor/polymer/polymer.html">
+
+<dom-module id="cuac-location-view">
+    <template>
+        <div>
+            <label>Street:</label>
+            <span>{{location.street}}</span>
+        </div>
+        <div>
+            <label>Postal Code:</label>
+            <span>{{location.postal}}</span>
+        </div>
+        <div>
+            <label>City:</label>
+            <span>{{location.city}}</span>
+        </div>
+        <div>
+            <label>Region:</label>
+            <span>{{location.region}}</span>
+        </div>
+        <div>
+            <label>Link to Google Maps:</label>
+            <span>{{location.link}}</span>
+        </div>
+    </template>
+
+    <script>
+        Polymer({
+            is: 'cuac-location-view',
+
+            properties: {
+                location: {type: Object}
+            }
+        });
+    </script>
+</dom-module>

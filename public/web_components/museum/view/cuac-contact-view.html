@@ -1,0 +1,35 @@
+<link rel="import" href="/vendor/polymer/polymer.html">
+
+<dom-module id="cuac-contact-view">
+    <template>
+        <div>
+            <label>Phone number:</label>
+            <template is="dom-repeat" items="{{contact.phone}}">
+                <div>{{item}}</div>
+            </template>
+        </div>
+        <div>
+            <label>Email:</label>
+            <template is="dom-repeat" items="{{contact.email}}">
+                <div>{{item}}</div>
+            </template>
+        </div>
+        <div>
+            <label>Website:</label>
+            <template is="dom-repeat" items="{{contact.web}}">
+                <div>{{item}}</div>
+            </template>
+        </div>
+    </template>
+
+    <script>
+        Polymer({
+            is: 'cuac-contact-view',
+
+            properties: {
+                contact: {type: Object}
+            }
+
+        });
+    </script>
+</dom-module>
