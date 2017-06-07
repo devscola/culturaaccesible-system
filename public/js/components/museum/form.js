@@ -28,16 +28,20 @@ Class('Museum.Form', {
         this.infoValues = {};
         this.locationValues = {};
 
-        this.contactForm = document.getElementById('contact-form');
-        this.contactForm.contactDetail = this.contactDetail;
-        this.contactForm.storage = this.contactFields;
-
-        this.priceForm = document.getElementById('price-form');
-        this.priceForm.priceDetail = this.priceDetail;
-        this.priceForm.storage = this.priceFields;
+        this.infoForm = document.getElementById('info');
+        this.locationForm = document.getElementById('location');
+        this.contactForm = document.getElementById('contact');
+        this.priceForm = document.getElementById('price');
+        this.scheduleForm = document.getElementById('schedule');
 
         this.daysForm = document.getElementById('days');
         this.hoursForm = document.getElementById('hours');
+
+        this.contactForm.contactDetail = this.contactDetail;
+        this.contactForm.storage = this.contactFields;
+        this.priceForm.priceDetail = this.priceDetail;
+        this.priceForm.storage = this.priceFields;
+
 
         this.addListeners();
         this.hide();
@@ -65,6 +69,7 @@ Class('Museum.Form', {
     },
 
     showsInfo: function() {
+        console.log(this.infoForm.infoData);
         this.hide();
         this.result.visibility = 'show';
     },
