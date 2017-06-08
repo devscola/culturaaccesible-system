@@ -9,8 +9,8 @@ module Exhibitions
         exhibition.serialize
       end
 
-      def retrieve(id)
-        exhibition = Exhibitions::Repository.retrieve(id)
+      def retrieve(name)
+        exhibition = Exhibitions::Repository.retrieve(name)
         exhibition.serialize
       end
 

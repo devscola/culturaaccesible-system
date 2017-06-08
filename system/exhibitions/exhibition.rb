@@ -1,9 +1,8 @@
 module Exhibitions
   class Exhibition
-    attr_reader :id
+    attr_reader :name
 
     def initialize(data)
-      @id = data['id']
       @show = data['show']
       @name = data['name']
       @location = data['location']
@@ -17,7 +16,6 @@ module Exhibitions
 
     def serialize
       {
-        id: @id,
         show: @show,
         name: @name,
         location: @location,

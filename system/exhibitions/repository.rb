@@ -12,9 +12,9 @@ module Exhibitions
         exhibition
       end
 
-      def retrieve(id)
+      def retrieve(name)
         @content ||= []
-        result = @content.find { |exhibition| exhibition.id == id }
+        result = @content.find { |exhibition| exhibition.name == name }
         result
       end
 
@@ -24,17 +24,6 @@ module Exhibitions
 
       def flush
         @content = []
-      end
-
-      def connection
-        @connection ||= Mongo::Client.new(
-          ["#{host}:27017"],
-          :database => 'cuac_db'
-        )
-      end
-
-      def host
-        Support::Configuration.host
       end
     end
   end

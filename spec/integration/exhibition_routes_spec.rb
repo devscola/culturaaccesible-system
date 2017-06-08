@@ -14,7 +14,7 @@ describe 'Exhibition controller' do
   end
 
   it 'stores exhibitions' do
-    exhibition = { id: 'exhibition_id', name: 'some name' }.to_json
+    exhibition = { name: 'some name', location: 'some location' }.to_json
 
     post '/api/exhibition/add', exhibition
 
@@ -22,13 +22,13 @@ describe 'Exhibition controller' do
   end
 
   it 'retrieves required exhibition' do
-    exhibition = { id: 'exhibition_id', name: 'some name' }.to_json
+    exhibition = { name: 'some name', location: 'some location' }.to_json
     post '/api/exhibition/add', exhibition
 
-    exhibition_id = { id: 'exhibition_id' }.to_json
+    exhibition_id = { name: 'some name' }.to_json
     post '/api/exhibition/retrieve', exhibition_id
 
-    expect(parse_response['name']).to eq('some name')
+    expect(parse_response['location']).to eq('some location')
   end
 
   it 'retrieves all exhibitions' do
