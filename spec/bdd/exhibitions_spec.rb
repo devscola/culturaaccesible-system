@@ -1,6 +1,6 @@
 require 'spec_helper_bdd'
 require_relative 'test_support/exhibitions'
-require_relative 'test_support/fixture'
+require_relative 'test_support/fixture_exhibitions'
 
 feature 'Exhibitions' do
   scenario 'has items' do

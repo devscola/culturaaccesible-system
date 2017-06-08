@@ -13,26 +13,6 @@ class App < Sinatra::Base
     File.read(File.join('public', 'home.html'))
   end
 
-  get '/contact' do
-    File.read(File.join('public', 'contact.html'))
-  end
-
-  get '/info' do
-    File.read(File.join('public', 'info.html'))
-  end
-
-  get '/price' do
-    File.read(File.join('public', 'price.html'))
-  end
-
-  get '/schedule' do
-    File.read(File.join('public', 'schedule.html'))
-  end
-
-  get '/location' do
-    File.read(File.join('public', 'location.html'))
-  end
-
   get '/museum' do
     File.read(File.join('public', 'museum.html'))
   end
