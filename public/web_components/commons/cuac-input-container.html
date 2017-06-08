@@ -4,9 +4,9 @@
     <template>
         <style>
             .special-margin { margin-bottom: 10px; }
-            .col-md-12 { padding-left: 0px; padding-right: 0px; width: 100%; }
-            .col-md-10 { padding-left: 0px; padding-right: 0px; width: 90%; }
-            .col-md-2 { padding-left: 15px; width: 10%; margin-left:auto; margin-right: 0px; }
+            .col-md-12 { padding-left: 0; padding-right: 0; width: 100%; }
+            .col-md-10 { padding-left: 0; padding-right: 0; width: 90%; }
+            .col-md-2 { padding-left: 15px; width: 10%; margin-left: auto; margin-right: 0; }
         </style>
         <div class="col-md-12">
             <template is="dom-repeat" items="{{inputsAdded}}">
@@ -29,6 +29,7 @@
             ready: function() {
                 this.inputsAdded = [this.inputtype];
                 this.addEventListener('clicked', this.renderInput.bind(this));
+                this.addEventListener('dom-change', this.changeFocus.bind(this));
             },
 
             properties: {
@@ -49,15 +50,20 @@
                 var element = document.getElementsByName(name)[0];
                 var isFilled = element.value.length > 0;
 
-                if(isFilled){
+                if (isFilled) {
                     this.inputsAdded.push(name);
-                    this.refresh();
+                    this.polymerWorkaround();
                 }
 
                 this.activeAddButton = false;
             },
 
-            refresh: function() {
+            changeFocus: function() {
+                var focus = this.inputtype + this.inputsAdded.length;
+                document.getElementsByName(focus)[0].focus();
+            },
+
+            polymerWorkaround: function() {
                 var temporary = this.inputsAdded;
                 this.inputsAdded = [];
                 this.inputsAdded = temporary;

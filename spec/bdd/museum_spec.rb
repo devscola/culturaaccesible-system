@@ -61,6 +61,14 @@ feature 'Museum' do
 
       expect(current.button_enabled?('.phone')).to be false
     end
+
+    scenario 'moves focus to next input after adding' do
+      current = Fixture::Museum.contact_section_with_an_extra_input
+
+      result = current.focus_in_input?('phone2')
+
+      expect(result).to be true
+    end
   end
 
   context 'schedule section' do

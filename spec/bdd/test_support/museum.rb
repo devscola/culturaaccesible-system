@@ -95,6 +95,11 @@ module Page
       hours_field.length == 0
     end
 
+    def focus_in_input?(name)
+      focus = evaluate_script('document.activeElement.name')
+      name == focus
+    end
+
     private
 
     def validate!
