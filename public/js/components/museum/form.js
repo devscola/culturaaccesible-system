@@ -116,4 +116,5 @@ Class('Museum.Form', {
     disallowSubmit: function() {
         this.saveButton.active = false;
     }
+
 });
