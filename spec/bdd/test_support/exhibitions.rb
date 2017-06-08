@@ -12,7 +12,6 @@ module Page
       fill_in(field, with: content)
     end
 
-
     def form_submit_deactivated?
       button = find('.submit')
       button.disabled?

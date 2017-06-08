@@ -6,7 +6,6 @@ feature 'Museum' do
   scenario 'enables create new museum when triggered' do
     current = Fixture::Museum.initial_state
     current.click_new_museum
-
     expect(current.has_form?).to be true
   end
 
@@ -64,9 +63,7 @@ feature 'Museum' do
 
     scenario 'moves focus to next input after adding' do
       current = Fixture::Museum.contact_section_with_an_extra_input
-
       result = current.focus_in_input?('phone2')
-
       expect(result).to be true
     end
   end
