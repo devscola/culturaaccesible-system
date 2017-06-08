@@ -2,7 +2,7 @@
 
 <dom-module id="cuac-schedule-view">
     <template>
-        <template is="dom-repeat" items="{{toArray(schedule)}}">
+        <template is="dom-repeat" items="{{renderedSchedule}}">
             <div>
                 <label>{{item.day}}</label>
                 <template is="dom-repeat" items="{{item.hours}}" as="hours">
@@ -16,15 +16,24 @@
             is: 'cuac-schedule-view',
 
             properties: {
-                schedule: {type: Object}
+                schedule: {type: Object, observer: 'renderSchedule'},
+
+                renderedSchedule: {type: Array}
             },
 
-            toArray: function(object) {
-                var array = Object.keys(object).map(function(key) {
-                    return {day: key, hours: object[key]};
-                });
-                return array;
+            renderSchedule: function() {
+                initialSchedule = [];
+                for (var day in this.schedule) {
+                    if (this.schedule[day].length > 0) {
+                        var object = {};
+                        object.day = day;
+                        object.hours = this.schedule[day];
+                        initialSchedule.push(object);
+                    }
+                }
+                this.renderedSchedule = initialSchedule;
             }
+
         });
     </script>
 </dom-module>
