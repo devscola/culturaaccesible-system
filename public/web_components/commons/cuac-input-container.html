@@ -37,7 +37,9 @@
 
                 inputtype: {type: String},
 
-                fieldValue:{type: String, observer: 'toggleSave'},
+                fieldValue: {type: String, observer: 'toggleSave'},
+
+                activeAddButton: {type: Boolean}
 
             },
 
@@ -70,12 +72,13 @@
                 this.fire('blured', data);
             },
 
-            toggleSave: function(event) {
-                var name = this.inputtype + this.inputsAdded.length
+            toggleSave: function() {
+                var name = this.inputtype + this.inputsAdded.length;
                 var element = document.getElementsByName(name)[0];
-                if(element.value.length > 0){
-                    this.activeAddButton = true
-                    this.fire('saveToggled', true);
+                if (element.value.length > 0){
+                    this.activeAddButton = true;
+                } else {
+                    this.activeAddButton = false;
                 }
             },
 
