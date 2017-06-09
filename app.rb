@@ -18,4 +18,8 @@ class App < Sinatra::Base
     File.read(File.join('public', 'museum.html'))
   end
 
+  get '/item' do
+    File.read(File.join('public', 'item.html'))
+  end
+
 end
