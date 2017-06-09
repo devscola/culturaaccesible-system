@@ -9,9 +9,9 @@ module Museums
         museum
       end
 
-      def retrieve(id)
+      def retrieve(name)
         @content ||= []
-        result = @content.find { |museum| museum.id == id }
+        result = @content.find { |museum| museum.info.name == name }
         result
       end
 

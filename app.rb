@@ -1,5 +1,6 @@
 require 'sinatra/base'
 require_relative 'system/exhibitions/routes'
+require_relative 'system/museums/routes'
 
 class App < Sinatra::Base
   set :public_folder, 'public/'

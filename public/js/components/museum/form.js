@@ -70,12 +70,13 @@ Class('Museum.Form', {
             {price: this.priceForm.priceData},
             {schedule: this.scheduleForm.scheduleData}
         );
+        Bus.publish('museum.save', this.museumData);
         this.showsInfo();
     },
 
-    showsInfo: function() {
+    showsInfo: function(museumData) {
         this.hide();
-        this.result.museumData = this.museumData;
+        this.result.museumData = museumData;
         this.result.visibility = 'show';
     },
 
@@ -115,6 +116,10 @@ Class('Museum.Form', {
 
     disallowSubmit: function() {
         this.saveButton.active = false;
+    },
+
+    subscribe: function() {
+        Bus.subscribe('museum.saved', this.showsInfo.bind(this));
     }
 
 });

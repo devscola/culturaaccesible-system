@@ -14,22 +14,24 @@ describe 'Museum controller' do
   end
 
   it 'retrieve required museum' do
-    museum = { id: 'museum_id', name: 'some name' }.to_json
+    museum = { info: { name: 'some name', description: 'some description' } }.to_json
     post '/api/museum/add', museum
 
-    museum_id = { id: 'museum_id' }.to_json
-    post '/api/museum/retrieve', museum_id
-    result = parse_response['name']
+    payload = { name: 'some name' }.to_json
+    post '/api/museum/retrieve', payload
+    result = parse_response['info']['name']
 
     expect(result).to eq('some name')
   end
 
   it 'retrieves all museums', :museum do
+    museum = { info: { name: 'some name', description: 'some description' } }.to_json
+    post '/api/museum/add', museum
+
     post '/api/museum/list'
 
     result = parse_response
-    
-    expect(result).to be_an Array
+    expect(result.any?).to be true
   end
 
   def parse_response

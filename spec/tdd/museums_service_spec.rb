@@ -6,11 +6,12 @@ describe Museums::Service do
   it 'retrieve a museum' do
     name = 'some name'
     description = 'some description'
+    add_museum(name, description)
 
-    museum = add_museum(name, description)
+    museum = Museums::Service.retrieve(name)
 
-    expect(museum[:name]).to eq(name)
-    expect(museum[:description]).to eq(description)
+    expect(museum[:info][:name]).to eq(name)
+    expect(museum[:info][:description]).to eq(description)
   end
 
   it 'retrieves all museums' do
@@ -25,12 +26,7 @@ describe Museums::Service do
   end
 
   def add_museum(name, description)
-    museum_data = { 'id' => 'some id', 'name' => name, 'description' => description }
+    museum_data = { 'info' => {'name' => name, 'description' => description } }
     Museums::Service.store(museum_data)
-    retrieve_museum(museum_data['id'])
-  end
-
-  def retrieve_museum(id)
-    Museums::Service.retrieve(id)
   end
 end
