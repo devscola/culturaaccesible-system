@@ -1,6 +1,3 @@
-require 'mongo'
-require_relative '../../support/configuration'
-
 module Exhibitions
   class Repository
     @content = []
