@@ -3,9 +3,11 @@ require_relative 'test_support/item'
 require_relative 'test_support/fixture_item'
 
 feature 'Item' do
-  scenario 'has page' do
-    current = Page::Item.new
+  scenario 'allows type only four character on date' do
+    current = Fixture::Item.initial_state
 
-    expect(current).to be_a Page::Item
+    current.fill('date','19865')
+
+    expect(current.type_max_four_characters).to be true
   end
 end
