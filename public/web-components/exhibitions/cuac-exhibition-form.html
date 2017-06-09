@@ -10,6 +10,10 @@
             .form.hide {
                 display: none;
             }
+
+            label{
+              font-weight: normal;
+            }
         </style>
 
         <form class$="form {{formVisibility}}">
@@ -20,11 +24,11 @@
                 </label>
             </div>
             <div class="form-group">
-                <label for="name">Title</label>
+                <label class="obligatory" for="name"><b>Exhibition Name*</b></label>
                 <input class="form-control" name="name" value="{{name::input}}">
             </div>
             <div class="form-group">
-                <label for="location">Location</label>
+                <label for="location"><b>Location*</b></label>
                 <input class="form-control" name="location" value="{{location::input}}">
             </div>
             <div class="form-group">
