@@ -21,5 +21,4 @@ class App < Sinatra::Base
   get '/item' do
     File.read(File.join('public', 'item.html'))
   end
-
 end
