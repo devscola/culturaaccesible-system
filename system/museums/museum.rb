@@ -38,7 +38,7 @@ end
 
 class Location
   attr_reader :street, :postal, :city, :region, :link
-  def initialize(data={})
+  def initialize(data)
     @street = data['street']
     @postal = data['postal']
     @city = data['city']
