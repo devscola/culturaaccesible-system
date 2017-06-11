@@ -14,26 +14,33 @@ describe 'Exhibition controller' do
   end
 
   it 'stores exhibitions' do
-    exhibition = { name: 'some name', location: 'some location' }.to_json
+    add_exhibition
 
-    post '/api/exhibition/add', exhibition
-
-    expect(parse_response['name']).to eq('some name')
+    result = parse_response['name']
+    expect(result).to eq('some name')
   end
 
   it 'retrieves required exhibition' do
-    exhibition = { name: 'some name', location: 'some location' }.to_json
-    post '/api/exhibition/add', exhibition
+    add_exhibition
+    exhibition_data = { name: 'some name' }.to_json
+    post '/api/exhibition/retrieve', exhibition_data
 
-    exhibition_id = { name: 'some name' }.to_json
-    post '/api/exhibition/retrieve', exhibition_id
-
-    expect(parse_response['location']).to eq('some location')
+    result = parse_response['location']
+    expect(result).to eq('some location')
   end
 
   it 'retrieves all exhibitions' do
+    add_exhibition
+
     post '/api/exhibition/list'
-    expect(parse_response).to be_an Array
+
+    result = parse_response
+    expect(result.any?).to be true
+  end
+
+  def add_exhibition
+    exhibition = { name: 'some name', location: 'some location' }.to_json
+    post '/api/exhibition/add', exhibition
   end
 
   def parse_response
