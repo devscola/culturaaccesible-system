@@ -7,11 +7,11 @@ class App < Sinatra::Base
   enable :static
 
   get '/' do
-    File.read(File.join('public', 'home.html'))
+    File.read(File.join('public', 'exhibitions.html'))
   end
 
   get '/home' do
-    File.read(File.join('public', 'home.html'))
+    File.read(File.join('public', 'exhibitions.html'))
   end
 
   get '/museum' do
