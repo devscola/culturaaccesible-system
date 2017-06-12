@@ -4,12 +4,6 @@ Class('Museum.Form', {
 
     contactFields: {phone: [], email: [], web: []},
 
-    contactDetail: [
-        {type: "phone", label: "Phone number"},
-        {type: "email", label: "Email"},
-        {type: "web", label: "Website"}
-    ],
-
     priceFields: {freeEntrance: [], general: [], reduced: []},
 
     priceDetail: [
@@ -33,7 +27,6 @@ Class('Museum.Form', {
         this.scheduleForm = document.getElementById('schedule');
 
         this.scheduleForm.scheduleData = this.storage;
-        this.contactForm.contactDetail = this.contactDetail;
         this.contactForm.contactData = this.contactFields;
         this.priceForm.priceDetail = this.priceDetail;
         this.priceForm.priceData = this.priceFields;
