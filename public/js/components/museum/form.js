@@ -68,30 +68,30 @@ Class('Museum.Form', {
 
     revokeInfo: function() {
         this.enoughInfo = false;
-        this.verifyEnoughContent();
+        this.allowSave();
     },
 
     revokeLocation: function() {
         this.enoughLocation = false;
-        this.verifyEnoughContent();
+        this.allowSave();
     },
 
     storeInfo: function() {
         this.enoughInfo = true;
-        this.verifyEnoughContent();
+        this.allowSave();
     },
 
     storeLocation: function() {
         this.enoughLocation = true;
-        this.verifyEnoughContent();
+        this.allowSave();
     },
 
-    verifyEnoughContent: function() {
-        if (this.enoughInfo && this.enoughLocation) {
-            this.allowSubmit();
-        } else {
-            this.disallowSubmit();
-        }
+    allowSave: function() {
+        this.saveButton.active = this.hasEnoughContent();
+    },
+
+    hasEnoughContent: function(){
+        return (this.enoughInfo && this.enoughLocation);
     },
 
     allowSubmit: function() {
