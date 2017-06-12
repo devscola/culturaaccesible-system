@@ -70,11 +70,11 @@
                         schedule.push(object);
                     }
                 }
-                this.renderedSchedule = schedule;
-                this.polymerWorkaround();
+                this.polymerWorkaround(schedule);
             },
 
-            polymerWorkaround: function() {
+            polymerWorkaround: function(schedule) {
+                this.renderedSchedule = schedule;
                 var temp = this.renderedSchedule;
                 this.renderedSchedule = [];
                 this.renderedSchedule = temp;

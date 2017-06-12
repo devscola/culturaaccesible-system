@@ -40,10 +40,11 @@
                     var index = this.selection.indexOf(event.target.name);
                     this.selection.splice(index, 1);
                 }
-                this.polymerWorkaround();
+                this.polymerWorkaround(this.selection);
             },
 
-            polymerWorkaround: function() {
+            polymerWorkaround: function(selection) {
+                this.selection = selection;
                 var temp = this.selection;
                 this.selection = [];
                 this.selection = temp;

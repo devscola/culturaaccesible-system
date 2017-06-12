@@ -52,21 +52,22 @@
 
                 if (isFilled) {
                     this.inputsAdded.push(name);
-                    this.polymerWorkaround();
+                    this.polymerWorkaround(this.inputsAdded);
                 }
 
                 this.activeAddButton = false;
             },
 
-            changeFocus: function() {
-                var focus = this.inputtype + this.inputsAdded.length;
-                document.getElementsByName(focus)[0].focus();
-            },
-
-            polymerWorkaround: function() {
+            polymerWorkaround: function(inputsAdded) {
+                this.inputsAdded = inputsAdded;
                 var temporary = this.inputsAdded;
                 this.inputsAdded = [];
                 this.inputsAdded = temporary;
+            },
+
+            changeFocus: function() {
+                var focus = this.inputtype + this.inputsAdded.length;
+                document.getElementsByName(focus)[0].focus();
             },
 
             focusBlured: function(inputContent) {
