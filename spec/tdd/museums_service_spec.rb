@@ -20,12 +20,29 @@ describe Museums::Service do
     expect(result.any?).to be true
   end
 
+  it 'defense of nullable parameters' do
+    name = 'Musium'
+    description = nil
+    phone = nil
+    add_nil_museum_content(name, phone, description)
+
+    museum = Museums::Service.retrieve(name)
+
+    expect(museum[:info][:description]).to eq('')
+    expect(museum[:contact][:phone]).to eq([])
+  end
+
   def retrieve_all_museums
     Museums::Service.list
   end
 
   def add_museum(name, description)
     museum_data = { 'info' => { 'name' => name, 'description' => description } }
+    Museums::Service.store(museum_data)
+  end
+
+  def add_nil_museum_content(name, phone, description)
+    museum_data = { 'info' => { 'name' => name, 'description' => description }, 'contact' => { 'phone' => phone } }
     Museums::Service.store(museum_data)
   end
 end

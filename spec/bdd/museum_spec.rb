@@ -149,6 +149,7 @@ feature 'Museum' do
       expect(current.has_content?('08:00-14:00')).to be true
       expect(current.has_content?('16:00-20:00')).to be true
     end
+    
   end
 
   context 'view' do

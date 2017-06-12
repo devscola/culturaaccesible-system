@@ -42,8 +42,8 @@ end
 
 class Info
   def initialize(data)
-    @name = data['name']
-    @description = data['description']
+    @name = Defense::string_null_defense(data['name'])
+    @description = Defense::string_null_defense(data['description'])
   end
 
   def name
@@ -56,15 +56,16 @@ class Info
       description: @description
     }
   end
+
 end
 
 class Location
   def initialize(data)
-    @street = data['street']
-    @postal = data['postal']
-    @city = data['city']
-    @region = data['region']
-    @link = data['link']
+    @street = Defense::string_null_defense(data['street'])
+    @postal = Defense::string_null_defense(data['postal'])
+    @city = Defense::string_null_defense(data['city'])
+    @region = Defense::string_null_defense(data['region'])
+    @link = Defense::string_null_defense(data['link'])
   end
 
   def serialize
@@ -80,9 +81,9 @@ end
 
 class Contact
   def initialize(data)
-    @phone = data['phone']
-    @email = data['email']
-    @web = data['web']
+    @phone = Defense::array_null_defense(data['phone'])
+    @email = Defense::array_null_defense(data['email'])
+    @web = Defense::array_null_defense(data['web'])
   end
 
   def serialize
@@ -96,9 +97,9 @@ end
 
 class Price
   def initialize(data)
-    @free_entrance = data['freeEntrance']
-    @general = data['general']
-    @reduced = data['reduced']
+    @free_entrance = Defense::array_null_defense(data['freeEntrance'])
+    @general = Defense::array_null_defense(data['general'])
+    @reduced = Defense::array_null_defense(data['reduced'])
   end
 
   def serialize
@@ -112,13 +113,13 @@ end
 
 class Schedule
   def initialize(data)
-    @mon = data['MON']
-    @tue = data['TUE']
-    @wed = data['WED']
-    @thu = data['THU']
-    @fri = data['FRI']
-    @sat = data['SAT']
-    @sun = data['SUN']
+    @mon = Defense::array_null_defense(data['MON'])
+    @tue = Defense::array_null_defense(data['TUE'])
+    @wed = Defense::array_null_defense(data['WED'])
+    @thu = Defense::array_null_defense(data['THU'])
+    @fri = Defense::array_null_defense(data['FRI'])
+    @sat = Defense::array_null_defense(data['SAT'])
+    @sun = Defense::array_null_defense(data['SUN'])
   end
 
   def serialize
@@ -131,5 +132,16 @@ class Schedule
       SAT: @sat,
       SUN: @sun
     }
+  end
+end
+
+class Defense
+  class << self
+    def string_null_defense(value)
+      value || ''
+    end
+    def array_null_defense(value)
+      value || []
+    end
   end
 end
