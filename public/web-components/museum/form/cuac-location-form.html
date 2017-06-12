@@ -2,27 +2,25 @@
 
 <dom-module id="cuac-location-form">
     <template>
-        <div value="{{anyValue::input}}">
-            <div class="form-group">
-                <label for="street">Street</label>
-                <input class="form-control" name="street" on-blur="updateData" value="{{street::input}}">
-            </div>
-            <div class="form-group">
-                <label for="postal">Postal Code</label>
-                <input class="form-control" name="postal" on-blur="updateData" value="{{postal::input}}">
-            </div>
-            <div class="form-group">
-                <label for="city">City</label>
-                <input class="form-control" name="city" on-blur="updateData" value="{{city::input}}">
-            </div>
-            <div class="form-group">
-                <label for="region">Region</label>
-                <input class="form-control" name="region" on-blur="updateData" value="{{region::input}}">
-            </div>
-            <div class="form-group">
-                <label for="link">Link to Google Maps</label>
-                <input class="form-control" name="link" on-blur="updateData" value="{{link::input}}">
-            </div>
+        <div class="form-group">
+            <label for="street">Street</label>
+            <input class="form-control" name="street" on-blur="updateData" value="{{street::input}}">
+        </div>
+        <div class="form-group">
+            <label for="postal">Postal Code</label>
+            <input class="form-control" name="postal" on-blur="updateData" value="{{postal::input}}">
+        </div>
+        <div class="form-group">
+            <label for="city">City</label>
+            <input class="form-control" name="city" on-blur="updateData" value="{{city::input}}">
+        </div>
+        <div class="form-group">
+            <label for="region">Region</label>
+            <input class="form-control" name="region" on-blur="updateData" value="{{region::input}}">
+        </div>
+        <div class="form-group">
+            <label for="link">Link to Google Maps</label>
+            <input class="form-control" name="link" on-blur="updateData" value="{{link::input}}">
         </div>
     </template>
 
@@ -31,13 +29,11 @@
             is: 'cuac-location-form',
 
             properties: {
-                anyValue: {type: String, observer: 'validateInfo'},
-                street: {type: String},
-                postal: {type: String},
-                city: {type: String},
-                region: {type: String},
-                link: {type: String},
-                entireLocationContent: {type: Array, value: []},
+                street: {type: String, value: '', observer: 'validateInfo'},
+                postal: {type: String, value: '', observer: 'validateInfo'},
+                city: {type: String, value: '', observer: 'validateInfo'},
+                region: {type: String, value: '', observer: 'validateInfo'},
+                link: {type: String, value: '', observer: 'validateInfo'},
                 locationData: {type: Object, value: {}}
             },
 
@@ -50,7 +46,8 @@
             },
 
             validateInfo: function() {
-                if (this.anyValue !== '') {
+                this.content = this.street + this.postal + this.city + this.region + this.link;
+                if (this.content.length > 0) {
                     this.fire('enoughLocation');
                 } else {
                     this.fire('notEnoughLocation');

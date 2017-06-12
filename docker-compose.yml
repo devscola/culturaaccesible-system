@@ -6,7 +6,7 @@ services:
     ports:
       - "4567:4567"
     volumes:
-     - .:/opt/app/culturaaccesible-system
+     - .:/opt/culturaaccesible
      - bundle:/usr/local/bundle
 
     links:

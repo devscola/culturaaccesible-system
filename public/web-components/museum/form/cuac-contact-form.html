@@ -2,12 +2,18 @@
 
 <dom-module id="cuac-contact-form">
     <template>
-        <template is="dom-repeat" items="{{contactDetail}}">
-            <div class="form-group">
-                <label>{{item.label}}</label>
-                <cuac-input-container inputtype="{{item.type}}"></cuac-input-container>
-            </div>
-        </template>
+        <div class="form-group">
+            <label>Phone Number</label>
+            <cuac-input-container inputtype="phone"></cuac-input-container>
+        </div>
+        <div class="form-group">
+            <label>Email</label>
+            <cuac-input-container inputtype="email"></cuac-input-container>
+        </div>
+        <div class="form-group">
+            <label>Website</label>
+            <cuac-input-container inputtype="web"></cuac-input-container>
+        </div>
     </template>
 
     <script>
@@ -19,8 +25,6 @@
             },
 
             properties: {
-
-                contactDetail: {type: Array},
 
                 contactData: {type: Object},
 

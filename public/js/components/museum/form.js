@@ -4,19 +4,7 @@ Class('Museum.Form', {
 
     contactFields: {phone: [], email: [], web: []},
 
-    contactDetail: [
-        {type: "phone", label: "Phone number"},
-        {type: "email", label: "Email"},
-        {type: "web", label: "Website"}
-    ],
-
     priceFields: {freeEntrance: [], general: [], reduced: []},
-
-    priceDetail: [
-        {type: "freeEntrance", label: "Free entrance"},
-        {type: "general", label: "General"},
-        {type: "reduced", label: "Reduced"}
-    ],
 
     storage: {MON: [], TUE: [], WED: [], THU: [], FRI: [], SAT: [], SUN: []},
 
@@ -33,9 +21,7 @@ Class('Museum.Form', {
         this.scheduleForm = document.getElementById('schedule');
 
         this.scheduleForm.scheduleData = this.storage;
-        this.contactForm.contactDetail = this.contactDetail;
         this.contactForm.contactData = this.contactFields;
-        this.priceForm.priceDetail = this.priceDetail;
         this.priceForm.priceData = this.priceFields;
 
         this.addListeners();
