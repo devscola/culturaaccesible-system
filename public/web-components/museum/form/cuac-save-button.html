@@ -11,14 +11,14 @@
 
             properties: {
                 active: {type: Boolean, value: false, observer: 'activeSave'},
-                disableSave: {type: String, value: 'disabled'}
+                disableSave: {type: Boolean, value: true}
             },
 
             activeSave: function() {
                 if (this.active) {
-                    this.disableSave = null;
+                    this.disableSave = false;
                 } else {
-                    this.disableSave = 'disabled';
+                    this.disableSave = true;
                 }
             },
 

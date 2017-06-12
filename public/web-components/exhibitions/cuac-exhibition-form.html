@@ -79,7 +79,7 @@
 
                 formVisibility: {type: String, value: 'hide'},
 
-                submitDisabled: {type: String, value: 'disabled'},
+                submitDisabled: {type: Boolean, value: true},
 
                 checkShow: {type: Boolean, value: false},
 
@@ -131,11 +131,11 @@
             },
 
             activateSubmit: function() {
-                this.submitDisabled = null;
+                this.submitDisabled = false;
             },
 
             deactivateSubmit: function() {
-                this.submitDisabled = 'disabled';
+                this.submitDisabled = true;
             },
 
             collectData: function() {
