@@ -23,8 +23,7 @@ feature 'Museum' do
   context 'contact section' do
     scenario 'disallows add input without content' do
       current = Fixture::Museum.showing_form
-      result = current.button_enabled?('.phone')
-      expect(result).to be false
+      expect(current.button_enabled?('.phone')).to be false
     end
 
     xscenario 'disallows add input after removing content' do
@@ -32,16 +31,14 @@ feature 'Museum' do
       current.fill_input('phone1', 'some phone')
       current.fill_input('phone1', '')
 
-      result = current.button_enabled?('.phone')
-      expect(result).to be false
+      expect(current.button_enabled?('.phone')).to be false
     end
 
     scenario 'enables add input with content' do
       current = Fixture::Museum.showing_form
       current.fill_input('phone1', 'some phone')
 
-      result = current.button_enabled?('.phone')
-      expect(result).to be true
+      expect(current.button_enabled?('.phone')).to be true
     end
 
     scenario 'adds another input of the same type' do
@@ -63,8 +60,7 @@ feature 'Museum' do
 
     scenario 'moves focus to next input after adding' do
       current = Fixture::Museum.contact_section_with_an_extra_input
-      result = current.focus_in_input?('phone2')
-      expect(result).to be true
+      expect(current.focus_in_input?('phone2')).to be true
     end
   end
 
