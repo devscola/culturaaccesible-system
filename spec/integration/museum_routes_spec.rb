@@ -17,7 +17,7 @@ describe 'Museum controller' do
     museum = { info: { name: 'some name', description: 'some description' } }.to_json
     post '/api/museum/add', museum
 
-    payload = { name: 'some name' }.to_json
+    payload = { info: { name: 'some name' } }.to_json
     post '/api/museum/retrieve', payload
     result = parse_response['info']['name']
 

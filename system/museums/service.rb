@@ -4,13 +4,13 @@ require_relative 'museum'
 module Museums
   class Service
     class << self
-      def retrieve(name)
-        museum = Museums::Repository.retrieve(name)
+      def store(museum_data)
+        museum = Museums::Repository.store(museum_data)
         museum.serialize
       end
 
-      def store(museum_data)
-        museum = Museums::Repository.store(museum_data)
+      def retrieve(name)
+        museum = Museums::Repository.retrieve(name)
         museum.serialize
       end
 

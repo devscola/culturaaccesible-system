@@ -1,6 +1,5 @@
 module Museums
   class Museum
-    attr_reader :info, :location, :contact, :price, :schedule
     def initialize(data)
       @info = Info.new(data['info'] || {})
       @location = Location.new(data['location'] || {})
@@ -18,14 +17,37 @@ module Museums
         schedule: schedule.serialize
       }
     end
+
+    def info
+      @info
+    end
+
+    def location
+      @location
+    end
+
+    def contact
+      @contact
+    end
+
+    def price
+      @price
+    end
+
+    def schedule
+      @schedule
+    end
   end
 end
 
 class Info
-  attr_reader :name, :description
   def initialize(data)
     @name = data['name']
     @description = data['description']
+  end
+
+  def name
+    @name
   end
 
   def serialize
@@ -37,7 +59,6 @@ class Info
 end
 
 class Location
-  attr_reader :street, :postal, :city, :region, :link
   def initialize(data)
     @street = data['street']
     @postal = data['postal']
@@ -58,7 +79,6 @@ class Location
 end
 
 class Contact
-  attr_reader :phone, :email, :web
   def initialize(data)
     @phone = data['phone']
     @email = data['email']
@@ -75,7 +95,6 @@ class Contact
 end
 
 class Price
-  attr_reader :free_entrance, :general, :reduced
   def initialize(data)
     @free_entrance = data['freeEntrance']
     @general = data['general']
@@ -92,7 +111,6 @@ class Price
 end
 
 class Schedule
-  attr_reader :mon, :tue, :wed, :thu, :fri, :sat, :sun
   def initialize(data)
     @mon = data['MON']
     @tue = data['TUE']

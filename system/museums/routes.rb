@@ -11,7 +11,7 @@ class App < Sinatra::Base
 
   post '/api/museum/retrieve' do
     museum = JSON.parse(request.body.read)
-    result = Museums::Service.retrieve(museum['name'])
+    result = Museums::Service.retrieve(museum['info']['name'])
     result.to_json
   end
 
