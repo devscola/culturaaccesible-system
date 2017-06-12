@@ -22,7 +22,7 @@ module Page
     end
 
     def save
-      find('.submit').click
+      find('.submit.cuac-exhibition-form').click
     end
 
     def exhibition_panel_visible?
@@ -36,11 +36,11 @@ module Page
     end
 
     def exhibition_list?
-      has_css?('.list-item', wait: 2)
+      has_css?('.list-item.cuac-exhibition-detail', wait: 2)
     end
 
     def form_submit_deactivated?
-      has_css?('.submit[disabled]')
+      has_css?('.submit[disabled].cuac-exhibition-form')
     end
 
     private

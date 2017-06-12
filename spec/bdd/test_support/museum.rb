@@ -11,7 +11,7 @@ module Page
     end
 
     def click_new_museum
-      find('#newMuseum').click
+      find('#newMuseum.cuac-new-button').click
     end
 
     def has_form?
@@ -87,7 +87,7 @@ module Page
     end
 
     def click_add_hour
-      find('.add-button').click
+      find('.add-button.cuac-schedule-hours').click
     end
 
     def hours_field_empty?
@@ -103,7 +103,7 @@ module Page
     private
 
     def validate!
-      assert_selector('#newMuseum')
+      assert_selector('#newMuseum.cuac-new-button')
       assert_selector('#formulary', visible: false)
       assert_selector('#result', visible: false)
     end
