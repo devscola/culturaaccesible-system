@@ -37,19 +37,27 @@
 
             arrangeSchedule: function() {
                 this.storeSchedule();
-                this.resetDays();
                 this.generateRenderedSchedule();
-                this.selectedHours = '';
+                this.initializeSchedule();
             },
 
             storeSchedule: function() {
                 this.selectedDays.forEach(function(day) {
                     this.scheduleData[day].push(this.selectedHours);
-                    var duplicateHoursRemoved = this.scheduleData[day].filter(function(hours, index, self) {
-                        return index == self.indexOf(hours);
-                    });
-                    this.scheduleData[day] = duplicateHoursRemoved.sort();
+                    var duplicateHoursRemoved = this.removeDuplicateHours(day);
+                    this.sortScheduleHours(day, duplicateHoursRemoved);
                 }.bind(this));
+            },
+
+            removeDuplicateHours: function (day) {
+                var duplicateHoursRemoved = this.scheduleData[day].filter(function(hours, index, self) {
+                    return index == self.indexOf(hours);
+                });
+                return duplicateHoursRemoved;
+            },
+
+            sortScheduleHours: function(day, duplicateHoursRemoved) {
+                this.scheduleData[day] = duplicateHoursRemoved.sort();
             },
 
             generateRenderedSchedule: function() {
@@ -72,7 +80,8 @@
                 this.renderedSchedule = temp;
             },
 
-            resetDays: function() {
+            initializeSchedule: function() {
+                this.selectedHours = '';
                 this.selectedDays = [];
                 this.marked = true;
                 this.marked = false;
