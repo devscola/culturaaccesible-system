@@ -76,14 +76,12 @@ Class('Museum.Form', {
         this.verifyEnoughContent();
     },
 
-    storeInfo: function(event) {
-        this.infoValues = event.detail;
+    storeInfo: function() {
         this.enoughInfo = true;
         this.verifyEnoughContent();
     },
 
-    storeLocation: function(event) {
-        this.locationValues = event.detail;
+    storeLocation: function() {
         this.enoughLocation = true;
         this.verifyEnoughContent();
     },
