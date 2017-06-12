@@ -2,12 +2,18 @@
 
 <dom-module id="cuac-price-form">
     <template>
-        <template is="dom-repeat" items="{{priceDetail}}">
-            <div class="form-group">
-                <label >{{item.label}}</label>
-                <cuac-input-container inputtype="{{item.type}}"></cuac-input-container>
-            </div>
-        </template>
+        <div class="form-group">
+            <label >Free entrance</label>
+            <cuac-input-container inputtype="freeEntrance"></cuac-input-container>
+        </div>
+        <div class="form-group">
+            <label >General</label>
+            <cuac-input-container inputtype="general"></cuac-input-container>
+        </div>
+        <div class="form-group">
+            <label >Reduced</label>
+            <cuac-input-container inputtype="reduced"></cuac-input-container>
+        </div>
     </template>
 
     <script>
@@ -19,8 +25,6 @@
             },
 
             properties: {
-                priceDetail: {type: Array},
-
                 priceData: {type: Object}
             },
 

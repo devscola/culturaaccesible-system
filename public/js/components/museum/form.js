@@ -6,12 +6,6 @@ Class('Museum.Form', {
 
     priceFields: {freeEntrance: [], general: [], reduced: []},
 
-    priceDetail: [
-        {type: "freeEntrance", label: "Free entrance"},
-        {type: "general", label: "General"},
-        {type: "reduced", label: "Reduced"}
-    ],
-
     storage: {MON: [], TUE: [], WED: [], THU: [], FRI: [], SAT: [], SUN: []},
 
     initialize: function() {
@@ -28,7 +22,6 @@ Class('Museum.Form', {
 
         this.scheduleForm.scheduleData = this.storage;
         this.contactForm.contactData = this.contactFields;
-        this.priceForm.priceDetail = this.priceDetail;
         this.priceForm.priceData = this.priceFields;
 
         this.addListeners();
