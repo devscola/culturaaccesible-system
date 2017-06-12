@@ -105,6 +105,22 @@ feature 'Museum' do
       expect(current.button_enabled?('.add-button')).to be false
     end
 
+    scenario 'allows to add the same hour to a diferent day' do
+      current = Fixture::Museum.showing_form
+      current.click_checkbox('MON')
+      current.introduce_hours('08:00-14:00')
+      current.click_add_hour
+      current.click_checkbox('MON')
+      current.click_checkbox('TUE')
+      current.introduce_hours('08:00-14:00')
+      current.click_add_hour
+
+
+      expect(current.has_content?('TUE 08:00-14:00')). to be true
+      expect(current.has_content?('08:00-14:00', count: 3)). to be false
+      expect(current.all_fields_checked?).to be false
+    end
+
     scenario 'selects all days at once' do
       current = Fixture::Museum.showing_form
       current.click_checkbox('select-all')
