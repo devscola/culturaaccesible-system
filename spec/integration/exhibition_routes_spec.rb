@@ -10,7 +10,7 @@ describe 'Exhibition controller' do
   end
 
   before(:each) do
-    Exhibitions::Service.flush
+    Exhibitions::Repository.flush
   end
 
   it 'stores exhibitions' do

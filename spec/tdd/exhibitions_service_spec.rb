@@ -3,7 +3,7 @@ require_relative '../../system/exhibitions/service'
 
 describe Exhibitions::Service do
   before(:each) do
-    Exhibitions::Service.flush
+    Exhibitions::Repository.flush
   end
 
   it 'retrieves an exhibition' do
@@ -41,9 +41,5 @@ describe Exhibitions::Service do
   def add_exhibition(name, location)
     exhibition = { 'name' => name, 'location' => location }
     Exhibitions::Service.store(exhibition)
-  end
-
-  def flush
-    Exhibitions::Service.flush
   end
 end
