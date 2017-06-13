@@ -4,6 +4,7 @@ Class('Exhibitions.List', {
 
     initialize: function() {
         Exhibitions.List.Super.call(this, 'listing');
+        this.retrieve();
     },
 
     render: function(exhibitions) {
@@ -11,6 +12,10 @@ Class('Exhibitions.List', {
     },
 
     refresh: function() {
+        Bus.publish('exhibitions.list.retrieve');
+    },
+
+    retrieve: function() {
         Bus.publish('exhibitions.list.retrieve');
     },
 
