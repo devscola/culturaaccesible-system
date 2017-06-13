@@ -10,7 +10,7 @@ describe 'Museum controller' do
   end
 
   before(:each) do
-    Museums::Service.flush
+    Museums::Repository.flush
   end
 
   it 'retrieve required museum' do
