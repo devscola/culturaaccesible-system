@@ -18,10 +18,6 @@ module Exhibitions
         list = Exhibitions::Repository.all
         list.map { |exhibition| exhibition.serialize }
       end
-
-      def flush
-        Exhibitions::Repository.flush
-      end
     end
   end
 end

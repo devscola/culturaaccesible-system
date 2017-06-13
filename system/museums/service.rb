@@ -1,5 +1,11 @@
 require_relative 'repository'
 require_relative 'museum'
+require_relative 'info'
+require_relative 'location'
+require_relative 'contact'
+require_relative 'price'
+require_relative 'schedule'
+require_relative 'defense'
 
 module Museums
   class Service
@@ -17,10 +23,6 @@ module Museums
       def list
         list = Museums::Repository.all
         list.map { |museum| museum.serialize }
-      end
-
-      def flush
-        Museums::Repository.flush
       end
     end
   end
