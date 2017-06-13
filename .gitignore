@@ -2,6 +2,7 @@ Gemfile.lock
 /.config
 /test/tmp/
 /vendor/
+!/public/vendor/
 /test/version_tmp/
 /tmp/
 .ruby-version
