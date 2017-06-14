@@ -12,6 +12,14 @@ module Page
       fill_in(name, with: content)
     end
 
+    def content?(content)
+      has_content?(content)
+    end
+
+    def submit
+      find('[name=submit]').click
+    end
+
     def type_max_four_characters
       date_length = find('[name=date]').value.length
       (date_length <= 4)

@@ -10,4 +10,14 @@ feature 'Item' do
 
     expect(current.type_max_four_characters).to be true
   end
+
+  scenario 'shows data inserted' do
+    current = Fixture::Item.initial_state
+
+    current.fill('name','Guernica')
+
+    current.submit
+
+    expect(current.content?('Name: Guernica')).to be true
+  end
 end

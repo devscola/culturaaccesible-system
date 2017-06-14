@@ -6,18 +6,21 @@
         <link rel="stylesheet" href="vendor/bootstrap/bootstrap.min.css">
         <link rel="stylesheet" href="vendor/bootstrap/bootstrap-theme.min.css">
         <link rel="import" href="/web-components/item/cuac-item-form.html">
+        <link rel="import" href="/web-components/item/cuac-item-view.html">
 
     </head>
     <body>
         <div class="container">
             <cuac-item-form id="formulary"></cuac-item-form>
+            <cuac-item-view id="result"></cuac-item-view>
         </div>
-
         <script src="/vendor/polymer/webcomponents-lite.min.js"></script>
         <script src="/vendor/classjs/class.min.js"></script>
         <script src="/js/infrastructure/component.js"></script>
+        <script src="/js/infrastructure/bus.js"></script>
 
         <script src="/js/components/item/form.js"></script>
+        <script src="/js/components/item/panel.js"></script>
 
         <script src="/js/pages/item.js"></script>
 

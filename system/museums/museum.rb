@@ -22,6 +22,8 @@ module Museums
       @info
     end
 
+    private
+
     def location
       @location
     end

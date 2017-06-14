@@ -1,17 +1,10 @@
 require_relative 'environment_configuration'
-require_relative 'support/courier'
 require 'rspec/core/rake_task'
 
 SINATRA_PORT = retrieve_port
 TRAVIS = retrieve_travis
 
 task :default => :start
-
-task :prepare do
-  sh 'mkdir -p public/vendor/polymer'
-  sh 'mkdir -p public/vendor/classjs'
-  Support::Courier.act
-end
 
 task :start do
   if (TRAVIS == false)

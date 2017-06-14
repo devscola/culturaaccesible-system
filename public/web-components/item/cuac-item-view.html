@@ -1,0 +1,58 @@
+<link rel="import" href="/vendor/polymer/polymer.html">
+
+<dom-module id="cuac-item-view">
+    <template>
+        <style>
+            .show {
+                display: block;
+            }
+
+            .hide {
+                display: none;
+            }
+        </style>
+        <div class$="{{viewVisibility}}">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Item detail</h3>
+                </div>
+                <div class="panel-body">
+                    <div>Name: {{item.name}}</div>
+                    <div>Author: {{item.author}}</div>
+                    <div>Date: {{item.date}}</div>
+                    <div>Beacon number: {{item.beacon}}</div>
+                    <div>Description:</div>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <script>
+        Polymer({
+            is: 'cuac-item-view',
+
+            properties: {
+
+                viewVisibility: {
+                    type: String
+                },
+
+                visible: {
+                    type: Boolean,
+                    value: false,
+                    reflectToAttribute: true,
+                    observer: 'show'
+                },
+            },
+
+            ready: function() {
+                this.viewVisibility = 'hide';
+            },
+
+            show: function() {
+                this.viewVisibility = 'show';
+            }
+
+        });
+    </script>
+</dom-module>
