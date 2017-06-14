@@ -21,7 +21,7 @@ install:
   - sleep 5
 
 script:
-  - docker-compose run system /bin/sh -c "touch travis.ci; sh run_tests.sh"
+  - docker-compose run system /bin/sh -c "touch travis.ci; sh prepare_environment_tests.sh"
   - sleep 1
 
 after_script:

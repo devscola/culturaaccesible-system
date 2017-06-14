@@ -12,7 +12,7 @@ services:
     links:
       - selenium
       - mongo
-    command: bash -c "sh run_tests.sh"
+    command: bash -c "sh prepare_environment_tests.sh"
 
   selenium:
     container_name: chrome-cuac-container
