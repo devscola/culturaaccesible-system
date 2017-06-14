@@ -1,6 +1,7 @@
 require 'rack/test'
 require 'json'
 require_relative '../../system/exhibitions/routes'
+require_relative '../../system/exhibitions/test_repository'
 
 describe 'Exhibition controller' do
   include Rack::Test::Methods
@@ -10,7 +11,7 @@ describe 'Exhibition controller' do
   end
 
   before(:each) do
-    Exhibitions::Repository.flush
+    Exhibitions::TestRepository.flush
   end
 
   it 'stores exhibitions' do

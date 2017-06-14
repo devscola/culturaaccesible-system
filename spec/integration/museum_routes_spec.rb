@@ -1,8 +1,9 @@
 require 'rack/test'
 require 'json'
 require_relative '../../system/museums/routes'
+require_relative '../../system/museums/test_repository'
 
-describe 'Museum controller' do
+describe 'Museum controller', :wip do
   include Rack::Test::Methods
 
   def app
@@ -10,7 +11,7 @@ describe 'Museum controller' do
   end
 
   before(:each) do
-    Museums::Service.flush
+    Museums::TestRepository.flush
   end
 
   it 'retrieve required museum' do

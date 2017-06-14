@@ -56,7 +56,6 @@ class Info
       description: @description
     }
   end
-
 end
 
 class Location
@@ -140,6 +139,7 @@ class Defense
     def string_null_defense(value)
       value || ''
     end
+
     def array_null_defense(value)
       value || []
     end
