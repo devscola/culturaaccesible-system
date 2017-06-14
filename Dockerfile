@@ -8,5 +8,5 @@ ENV HOME=/opt/app/culturaaccesible-system
 RUN mkdir -p $HOME
 ADD . $HOME
 WORKDIR $HOME
-RUN gem install bundler
+RUN gem install bundler -v 1.14.6
 RUN bundle install
