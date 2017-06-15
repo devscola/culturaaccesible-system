@@ -39,6 +39,7 @@ Class('Museum.Form', {
     addListeners: function() {
         this.newButton.addEventListener('click', this.show.bind(this));
         this.element.addEventListener('submit', this.collectData.bind(this));
+        this.result.addEventListener('edit', this.showEditableData.bind(this));
 
         this.element.addEventListener('notEnoughInfo', this.revokeInfo.bind(this));
         this.element.addEventListener('notEnoughLocation', this.revokeLocation.bind(this));
@@ -58,6 +59,11 @@ Class('Museum.Form', {
         );
         Bus.publish('museum.save', this.museumData);
         this.showsInfo();
+    },
+
+    showEditableData: function() {
+        this.result.visibility = 'hide';
+        this.show();
     },
 
     showsInfo: function(museumData) {

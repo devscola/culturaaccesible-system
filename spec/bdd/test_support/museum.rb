@@ -35,8 +35,16 @@ module Page
       find('#action').click
     end
 
+    def click_edit_button
+      find('.edit-button').click
+    end
+
     def has_info?(content)
       has_content?(content)
+    end
+
+    def has_edit_button?
+      has_css?('.edit-button')
     end
 
     def shows_info?
@@ -71,6 +79,10 @@ module Page
 
     def click_checkbox(day)
       find_field(name: day).click
+    end
+
+    def editable_name
+      find('[name=name]').value
     end
 
     def all_fields_checked?

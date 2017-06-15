@@ -20,6 +20,10 @@ class Fixture
         current
       end
 
+      def data
+        MUSEUM_ENOUGH_DATA
+      end
+
       def enough_content
         current = showing_form
 

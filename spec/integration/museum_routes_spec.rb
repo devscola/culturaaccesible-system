@@ -3,7 +3,7 @@ require 'json'
 require_relative '../../system/museums/routes'
 require_relative '../../system/museums/test_repository'
 
-describe 'Museum controller', :wip do
+describe 'Museum controller' do
   include Rack::Test::Methods
 
   def app
