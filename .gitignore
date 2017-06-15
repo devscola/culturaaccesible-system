@@ -18,3 +18,4 @@ Gemfile.lock
 .ruby-gemset
 .rvmrc
 .DS_Store
+.bash_history
