@@ -7,7 +7,7 @@ describe Exhibitions::Service do
     Exhibitions::TestRepository.flush
   end
 
-  it 'retrieves an exhibition' do
+  it 'retrieves an exhibition with date creation' do
     name = 'some name'
     location = 'some location'
     add_exhibition(name, location)
@@ -15,7 +15,7 @@ describe Exhibitions::Service do
     exhibition = Exhibitions::Service.retrieve(name)
 
     expect(exhibition[:name]).to eq(name)
-    expect(exhibition[:location]).to eq(location)
+    expect(exhibition.include?(:creation_date)).to be true
   end
 
   it 'retrieves all exhibitions' do

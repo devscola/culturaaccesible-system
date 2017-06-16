@@ -3,6 +3,7 @@ module Exhibitions
     attr_reader :name
 
     def initialize(data)
+      @creation_date = Time.now.utc
       @show = null_defense(data['show'])
       @name = null_defense(data['name'])
       @location = null_defense(data['location'])
@@ -16,6 +17,7 @@ module Exhibitions
 
     def serialize
       {
+        creation_date: @creation_date,
         show: @show,
         name: @name,
         location: @location,
@@ -29,10 +31,9 @@ module Exhibitions
     end
 
     private
-    
+
     def null_defense(value)
       value || ''
     end
-
   end
 end
