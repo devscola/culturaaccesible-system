@@ -47,6 +47,14 @@ module Page
       first('.list-item').text
     end
 
+    def click_plus_button
+      first('.plus-button').click
+    end
+
+    def title(name)
+      page.has_title?(name)
+    end
+
     private
 
     def validate!
