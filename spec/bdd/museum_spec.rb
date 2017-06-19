@@ -20,13 +20,6 @@ feature 'Museum' do
     expect(current.shows_info?).to be true
   end
 
-  scenario 'shows fields when editing' do
-    current = Fixture::Museum.enough_content
-    current.submit
-    current.click_edit_button
-    expect(current.editable_name).to eq Fixture::Museum.data['name']
-  end
-
   context 'contact section' do
     scenario 'disallows add input without content' do
       current = Fixture::Museum.showing_form
@@ -170,12 +163,16 @@ feature 'Museum' do
 
       expect(current.has_info?('some edited phone')).to be true
     end
+  end
 
-    scenario 'shows edit button' do
-      current = Fixture::Museum.enough_content
-      current.submit
+  context 'edit' do
+    scenario 'shows fields when editing' do
+      current = Fixture::Museum.submitted
 
-      expect(current.has_edit_button?).to be true
+      current.click_edit_button
+
+      expect(current.editable_name).to eq Fixture::Museum.data['name']
+      expect(current.has_field?('phone1')).to eq Fixture::Museum.phone
     end
   end
 end

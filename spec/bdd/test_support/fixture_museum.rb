@@ -4,10 +4,12 @@ class Fixture
 
     MUSEUM_ENOUGH_DATA = {
       'name' => 'Some name',
-      'street' => 'Some street',
+      'street' => 'Some street'
     }
 
     EXTRA_PHONE = 'extra phone'
+
+    PHONE = '453534543'
 
     class << self
       def initial_state
@@ -24,6 +26,10 @@ class Fixture
         MUSEUM_ENOUGH_DATA
       end
 
+      def phone
+        PHONE
+      end
+
       def enough_content
         current = showing_form
 
@@ -31,6 +37,13 @@ class Fixture
           current.fill_input(field, content)
         end
 
+        current
+      end
+
+      def submitted
+        current = Fixture::Museum.enough_content
+        current.fill_input('phone1', PHONE)
+        current.submit
         current
       end
 
