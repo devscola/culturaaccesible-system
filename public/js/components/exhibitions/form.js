@@ -17,6 +17,7 @@ Class('Exhibitions.Form', {
 
     saveExhibition: function(exhibition) {
         Bus.publish('exhibition.save', exhibition);
+        this.exhibitionForm.visible = false;  
     }
 
 });

@@ -35,6 +35,11 @@ module Page
       form.visible?
     end
 
+    def exhibition_form_inputs_visible?
+      form = find('.form', visible: false)
+      form.visible?
+    end
+
     def exhibition_list?
       has_css?('.list-item.cuac-exhibition-detail', wait: 2)
     end

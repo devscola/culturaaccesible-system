@@ -109,7 +109,11 @@
             },
 
             showForm: function() {
-                this.formVisibility = 'show';
+                if (this.visible === true) {
+                    this.formVisibility = 'show';
+                } else {
+                    this.formVisibility = 'hide';
+                }
             },
 
             isSubmittable: function() {
