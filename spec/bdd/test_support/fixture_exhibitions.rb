@@ -36,6 +36,7 @@ class Fixture
     current.fill(LOCATION_FIELD, LOCATION)
     current.save
 
+    current.show
     current.fill(NAME_FIELD, other_name)
     current.fill(LOCATION_FIELD, LOCATION)
     current.save

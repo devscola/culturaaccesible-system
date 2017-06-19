@@ -46,4 +46,10 @@ feature 'Exhibitions' do
 
     expect(current.title('Item')).to be true
   end
+
+  scenario 'hide exhibition form' do
+    current = Fixture::save_exhibition
+
+    expect(current.exhibition_form_inputs_visible?).to be false     
+  end
 end

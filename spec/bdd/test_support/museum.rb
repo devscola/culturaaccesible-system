@@ -85,6 +85,10 @@ module Page
       find('[name=name]').value
     end
 
+    def has_field?(name)
+      find("[name=#{name}]").value
+    end
+
     def all_fields_checked?
       WEEK.each do |day|
         if day_unchecked?(day)
