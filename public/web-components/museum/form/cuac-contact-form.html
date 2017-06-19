@@ -21,7 +21,7 @@
             is: 'cuac-contact-form',
 
             ready: function() {
-                this.addEventListener('blured', this.updateContactData.bind(this));
+                this.addEventListener('blured', this.validateContactData.bind(this));
             },
 
             properties: {
@@ -30,9 +30,15 @@
 
             },
 
-            updateContactData: function(event) {
+            validateContactData: function(event) {
                 var input = event.detail;
+                
+                if (input.content !== '') {
+                    this.updateContactData(input);
+                } 
+            },
 
+            updateContactData: function(input) {
                 if (this.newEntry(input)) {
                     this.contactData[input.type].push(input.content);
                 } else {

@@ -21,16 +21,22 @@
             is: 'cuac-price-form',
 
             ready: function() {
-                this.addEventListener('blured', this.updatepriceData.bind(this));
+                this.addEventListener('blured', this.validatePriceData.bind(this));
             },
 
             properties: {
                 priceData: {type: Object}
             },
 
-            updatepriceData: function(event) {
+            validatePriceData: function(event) {
                 var input = event.detail;
+                
+                if (input.content !== '') {
+                    this.updatePriceData(input);
+                } 
+            },
 
+            updatePriceData: function(input) {
                 if (this.newEntry(input)) {
                     this.priceData[input.type].push(input.content);
                 } else {

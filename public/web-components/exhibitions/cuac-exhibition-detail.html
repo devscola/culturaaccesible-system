@@ -4,6 +4,7 @@
     <template>
         <li class="list-item">
             {{exhibition.name}}
+            <input type="submit" value="+" class="plus-button" on-click="goToItem">
         </li>
     </template>
 
@@ -15,6 +16,10 @@
                 exhibition: {
                     type: Object
                 }
+            },
+
+            goToItem: function(){
+                window.location = '/item';
             }
         });
     </script>

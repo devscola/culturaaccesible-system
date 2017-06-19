@@ -36,4 +36,14 @@ feature 'Exhibitions' do
 
     expect(result).to eq(name)
   end
+
+  scenario 'shows link button' do 
+    name = 'some name'
+    other_name = 'some other name'
+    current = Fixture.two_exhibitions_introduced(name, other_name)
+
+    current.click_plus_button
+
+    expect(current.title('Item')).to be true
+  end
 end
