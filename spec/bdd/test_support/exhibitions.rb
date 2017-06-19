@@ -43,6 +43,18 @@ module Page
       has_css?('.submit[disabled].cuac-exhibition-form')
     end
 
+    def first_element
+      first('.list-item').text
+    end
+
+    def click_plus_button
+      first('.plus-button').click
+    end
+
+    def title(name)
+      page.has_title?(name)
+    end
+
     private
 
     def validate!
