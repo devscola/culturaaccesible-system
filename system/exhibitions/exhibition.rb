@@ -13,11 +13,13 @@ module Exhibitions
       @type = null_defense(data['type'])
       @beacon = null_defense(data['beacon'])
       @description = null_defense(data['description'])
+      @id = generate_id
     end
 
     def serialize
       {
         creation_date: @creation_date,
+        id: @id,
         show: @show,
         name: @name,
         location: @location,
@@ -31,6 +33,10 @@ module Exhibitions
     end
 
     private
+
+    def generate_id
+      Digest::MD5.hexdigest(@creation_date.to_s + @creation_date.nsec.to_s + @name)
+    end 
 
     def null_defense(value)
       value || ''
