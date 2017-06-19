@@ -1,7 +1,7 @@
 require 'rack/test'
 require 'json'
 require_relative '../../system/museums/routes'
-require_relative '../../system/museums/test_repository'
+require_relative '../../system/museums/repository'
 
 describe 'Museum controller' do
   include Rack::Test::Methods
@@ -11,7 +11,7 @@ describe 'Museum controller' do
   end
 
   before(:each) do
-    Museums::TestRepository.flush
+    Museums::Repository.flush
   end
 
   it 'retrieve required museum' do

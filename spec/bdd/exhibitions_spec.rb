@@ -26,4 +26,14 @@ feature 'Exhibitions' do
 
     expect(current.exhibition_panel_visible?).to be true
   end
+
+  scenario 'shows list sorted by creation date' do
+    name = 'some name'
+    other_name = 'some other name'
+    current = Fixture.two_exhibitions_introduced(name, other_name)
+
+    result = current.first_element
+
+    expect(result).to eq(name)
+  end
 end

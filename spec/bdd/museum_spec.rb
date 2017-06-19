@@ -36,8 +36,8 @@ feature 'Museum' do
     scenario 'disallows add input after removing content' do
       current = Fixture::Museum.showing_form
 
-      current.fill_input('phone1', 'some phone')
-      current.find_field('phone1').send_keys([:control, "a"], :backspace)
+      current.fill_input('phone1', '0')
+      current.find_field('phone1').send_keys(:backspace)
 
       expect(current.button_enabled?('.phone')).to be false
     end

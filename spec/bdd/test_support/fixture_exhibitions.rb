@@ -30,4 +30,15 @@ class Fixture
     current
   end
 
+  def self.two_exhibitions_introduced(name, other_name)
+    current = self.show_exhibition_form
+    current.fill(NAME_FIELD, name)
+    current.fill(LOCATION_FIELD, LOCATION)
+    current.save
+
+    current.fill(NAME_FIELD, other_name)
+    current.fill(LOCATION_FIELD, LOCATION)
+    current.save
+    current
+  end
 end

@@ -1,10 +1,10 @@
 require 'spec_helper_tdd'
 require_relative '../../system/exhibitions/service'
-require_relative '../../system/exhibitions/test_repository'
+require_relative '../../system/exhibitions/repository'
 
 describe Exhibitions::Service do
   before(:each) do
-    Exhibitions::TestRepository.flush
+    Exhibitions::Repository.flush
   end
 
   it 'retrieves an exhibition with date creation' do
