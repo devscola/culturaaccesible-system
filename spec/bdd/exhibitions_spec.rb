@@ -52,4 +52,10 @@ feature 'Exhibitions' do
 
     expect(current.exhibition_form_inputs_visible?).to be false     
   end
+
+  scenario 'shows edit button' do
+    current = Fixture.save_exhibition
+
+    expect(current.has_edit_button?).to be true
+  end
 end

@@ -11,24 +11,27 @@
                 display: none;
             }
         </style>
-        <div class$="panel panel-primary {{panelVisibility}}">
-            <div class="panel-heading">
-                <h3 class="panel-title">Exhibition detail</h3>
-            </div>
-            <div class="panel-body">
-                <div>Show: {{exhibition.show}}</div>
-                <div>Name: {{exhibition.name}}</div>
-                <div>Location: {{exhibition.location}}</div>
-                <div>General description: {{exhibition.short_description}}</div>
-                <div>Type: {{exhibition.type}}</div>
-                <div>
-                    <span>Open</span>
-                    <span>From: {{exhibition.date_start}}</span>
-                    <span>To: {{exhibition.date_finish}}</span>
+        <div class$="view {{panelVisibility}}">
+            <div class$="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Exhibition detail</h3>
                 </div>
-                <div>Beacon number: {{exhibition.beacon}}</div>
-                <div>Extended description: {{exhibition.description}}</div>
+                <div class="panel-body">
+                    <div>Show: {{exhibition.show}}</div>
+                    <div>Name: {{exhibition.name}}</div>
+                    <div>Location: {{exhibition.location}}</div>
+                    <div>General description: {{exhibition.short_description}}</div>
+                    <div>Type: {{exhibition.type}}</div>
+                    <div>
+                        <span>Open</span>
+                        <span>From: {{exhibition.date_start}}</span>
+                        <span>To: {{exhibition.date_finish}}</span>
+                    </div>
+                    <div>Beacon number: {{exhibition.beacon}}</div>
+                    <div>Extended description: {{exhibition.description}}</div>
+                </div>
             </div>
+            <cuac-edit-button></cuac-edit-button>
         </div>
     </template>
 

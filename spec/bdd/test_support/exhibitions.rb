@@ -60,6 +60,10 @@ module Page
       page.has_title?(name)
     end
 
+    def has_edit_button?
+      has_css?('.edit-button')
+    end
+
     private
 
     def validate!
