@@ -25,17 +25,16 @@ module Page
       find('.submit.cuac-exhibition-form').click
     end
 
-    def exhibition_panel_visible?
-      form = find('#result', visible: false)
-      form.visible?
+    def click_edit
+      find('.edit-button').click
     end
 
-    def exhibition_form_visible?
-      form = find('#formulary', visible: false)
-      form.visible?
+    def view_visible?
+      view = find('.view', visible: false)
+      view.visible?
     end
 
-    def exhibition_form_inputs_visible?
+    def form_visible?
       form = find('.form', visible: false)
       form.visible?
     end
