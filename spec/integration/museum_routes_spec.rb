@@ -35,7 +35,26 @@ describe 'Museum controller' do
     expect(result.any?).to be true
   end
 
+  it 'stores museum with id' do
+    add_museum
+    first_museum_id = parse_response['id']
+
+    add_museum
+    second_museum_id = parse_response['id']
+
+    expect(first_museum_id == second_museum_id).to be false
+  end
+
+end
+
+  def add_museum
+    museum = {
+        info: {name: 'some name', description: 'some description'},
+        location: {street: 'some street'}
+      }.to_json
+    post '/api/museum/add', museum
+  end
+
   def parse_response
     JSON.parse(last_response.body)
   end
-end
