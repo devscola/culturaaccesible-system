@@ -10,9 +10,16 @@ module Exhibitions
         exhibition.serialize
       end
 
-      def retrieve(name)
-        exhibition = Exhibitions::Repository.retrieve(name)
+      def retrieve(id)
+        exhibition = Exhibitions::Repository.retrieve(id)
         exhibition.serialize
+      end
+
+      def update(exhibition_data)
+        id = exhibition_data['id']
+        exhibition = Exhibitions::Exhibition.new(exhibition_data, id)
+        updated_exhibition = Exhibitions::Repository.update(exhibition)
+        updated_exhibition.serialize
       end
 
       def list

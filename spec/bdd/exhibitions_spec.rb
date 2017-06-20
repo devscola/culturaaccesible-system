@@ -1,8 +1,13 @@
 require 'spec_helper_bdd'
+require_relative '../../system/exhibitions/repository'
 require_relative 'test_support/exhibitions'
 require_relative 'test_support/fixture_exhibitions'
 
 feature 'Exhibitions' do
+  before(:each) do 
+    Exhibitions::Repository.flush
+  end
+
   scenario 'has items' do
     current = Exhibitions::Fixture.exhibition_saved
 

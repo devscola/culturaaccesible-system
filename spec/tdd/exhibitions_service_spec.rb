@@ -10,9 +10,9 @@ describe Exhibitions::Service do
   it 'retrieves an exhibition with date creation' do
     name = 'some name'
     location = 'some location'
-    add_exhibition(name, location)
+    result = add_exhibition(name, location)
 
-    exhibition = Exhibitions::Service.retrieve(name)
+    exhibition = Exhibitions::Service.retrieve(result[:id])
 
     expect(exhibition[:name]).to eq(name)
     expect(exhibition.include?(:creation_date)).to be true
@@ -31,9 +31,9 @@ describe Exhibitions::Service do
   it 'defense of nullable parameters' do
     name = 'some name'
     location = nil
-    add_exhibition(name, location)
+    result = add_exhibition(name, location)
 
-    exhibition = Exhibitions::Service.retrieve(name)
+    exhibition = Exhibitions::Service.retrieve(result[:id])
 
     expect(exhibition[:name]).to eq(name)
     expect(exhibition[:location]).to eq('')

@@ -26,8 +26,9 @@ describe 'Exhibition controller' do
 
   it 'retrieves required exhibition' do
     add_exhibition
-    exhibition_data = { name: 'some name' }.to_json
-    post '/api/exhibition/retrieve', exhibition_data
+    exhibition_id = parse_response['id']
+    payload = { id: exhibition_id }.to_json
+    post '/api/exhibition/retrieve', payload
 
     result = parse_response['location']
     expect(result).to eq('some location')
@@ -40,6 +41,23 @@ describe 'Exhibition controller' do
 
     result = parse_response
     expect(result.any?).to be true
+  end
+
+  it 'updates existing exhibition' do
+    add_exhibition
+    exhibition_id = parse_response['id']
+
+    exhibition_updated = { 
+      id: exhibition_id, 
+      name: 'some other name', 
+      location: 'some location'
+    }.to_json
+    post '/api/exhibition/update', exhibition_updated
+    payload = { id: exhibition_id }.to_json
+    post '/api/exhibition/retrieve', payload
+
+    result = parse_response['name']
+    expect(result).to eq 'some other name'
   end
 
   def add_exhibition

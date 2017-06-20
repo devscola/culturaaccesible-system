@@ -1,8 +1,8 @@
 module Exhibitions
   class Exhibition
-    attr_reader :name
+    attr_reader :id
 
-    def initialize(data)
+    def initialize(data, id=nil)
       @creation_date = Time.now.utc
       @show = null_defense(data['show'])
       @name = null_defense(data['name'])
@@ -13,7 +13,7 @@ module Exhibitions
       @type = null_defense(data['type'])
       @beacon = null_defense(data['beacon'])
       @description = null_defense(data['description'])
-      @id = generate_id
+      @id = id || generate_id
     end
 
     def serialize

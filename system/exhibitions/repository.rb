@@ -9,10 +9,17 @@ module Exhibitions
         exhibition
       end
 
-      def retrieve(name)
+      def retrieve(id)
         @content ||= []
-        result = @content.find { |exhibition| exhibition.name == name }
+        result = @content.find { |exhibition| exhibition.id == id }
         result
+      end
+
+      def update(updated_exhibition)
+        old_exhibition = @content.find { |exhibition| exhibition.id == updated_exhibition.id }
+        index = @content.index(old_exhibition)
+        @content[index] = updated_exhibition
+        updated_exhibition
       end
 
       def all

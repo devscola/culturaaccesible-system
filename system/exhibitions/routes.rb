@@ -11,7 +11,13 @@ class App < Sinatra::Base
 
   post '/api/exhibition/retrieve' do
     exhibition = JSON.parse(request.body.read)
-    result = Exhibitions::Service.retrieve(exhibition['name'])
+    result = Exhibitions::Service.retrieve(exhibition['id'])
+    result.to_json
+  end
+
+  post '/api/exhibition/update' do
+    exhibition = JSON.parse(request.body.read)
+    result = Exhibitions::Service.update(exhibition)
     result.to_json
   end
 
