@@ -174,5 +174,16 @@ feature 'Museum' do
       expect(current.editable_name).to eq Fixture::Museum.data['name']
       expect(current.has_field?('phone1')).to eq Fixture::Museum.phone
     end
+
+    scenario 'editable hour with bad format disable save button' do
+      new_hour = '21:00-25:00'
+      current = Fixture::Museum.submitted
+
+      current.click_edit_button
+      current.edit_hour(new_hour)
+
+      expect(current.edited_hour).to eq new_hour
+      expect(current.save_disabled?).to be true
+    end
   end
 end

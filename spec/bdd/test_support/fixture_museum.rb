@@ -43,6 +43,9 @@ class Fixture
       def submitted
         current = Fixture::Museum.enough_content
         current.fill_input('phone1', PHONE)
+        current.click_checkbox('MON')
+        current.introduce_hours('08:00-14:00')
+        current.click_add_hour
         current.submit
         current
       end

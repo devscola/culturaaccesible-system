@@ -5,13 +5,13 @@
 <dom-module id="cuac-schedule-form">
     <template>
         <cuac-schedule-days class="col-md-12" checked="{{marked}}" selection="{{selectedDays}}"></cuac-schedule-days>
-        <cuac-schedule-hours class="col-md-12" days="{{selectedDays}}" selection="{{selectedHours}}"></cuac-schedule-hours>
+        <cuac-schedule-hours id="hours" class="col-md-12" days="{{selectedDays}}" selection="{{selectedHours}}"></cuac-schedule-hours>
         <div class="panel col-md-12">
             <template is="dom-repeat" items="{{renderedSchedule}}">
                 <div>
                     <label>{{item.day}}</label>
                     <template is="dom-repeat" items="{{item.hours}}" as="hours">
-                        <span> {{hours}} </span>
+                        <span class="editable-hour" contenteditable$="{{editable}}" on-keyup="checkHour"> {{hours}} </span>
                     </template>
                 </div>
             </template>
@@ -21,11 +21,18 @@
         Polymer({
             is: 'cuac-schedule-form',
 
+            ready: function() {
+              this.hours = document.getElementById('hours');
+              this.saveButton = document.getElementById('action');
+            },
+
             properties: {
 
                 selectedDays: {type: Array, value: []},
 
                 marked: {type: Boolean, value: false},
+
+                editable: {type: Boolean, value: false},
 
                 selectedHours: {type: String, observer: 'arrangeSchedule'},
 
@@ -33,6 +40,10 @@
 
                 renderedSchedule: {type: Array}
 
+            },
+
+            checkHour: function(e) {
+              this.saveButton.active = this.hours.isValid(e.target.innerText)
             },
 
             arrangeSchedule: function() {

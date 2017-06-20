@@ -64,6 +64,7 @@ Class('Museum.Form', {
     showEditableData: function() {
         this.result.visibility = 'hide';
         this.show();
+        this.scheduleForm.editable = true;
     },
 
     showsInfo: function(museumData) {

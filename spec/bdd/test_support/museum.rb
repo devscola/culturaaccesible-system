@@ -23,12 +23,11 @@ module Page
     end
 
     def save_enabled?
-      button = find('#action')
-      result = button[:disabled]
+      has_css?('.submit:enabled')
+    end
 
-      return true if result.nil?
-
-      false
+    def save_disabled?
+      has_css?('.submit:disabled')
     end
 
     def submit
@@ -83,6 +82,14 @@ module Page
 
     def editable_name
       find('[name=name]').value
+    end
+
+    def edit_hour(hour)
+      first('.editable-hour').set(hour)
+    end
+
+    def edited_hour
+      first('.editable-hour').text
     end
 
     def has_field?(name)
