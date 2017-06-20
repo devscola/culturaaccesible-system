@@ -36,7 +36,7 @@ module Exhibitions
 
     def generate_id
       Digest::MD5.hexdigest(@creation_date.to_s + @creation_date.nsec.to_s + @name)
-    end 
+    end
 
     def null_defense(value)
       value || ''
