@@ -48,7 +48,7 @@
 
                 visible: {
                     type: Boolean,
-                    observer: 'showPanel'
+                    observer: 'togglePanel'
                 },
 
                 panelVisibility: {
@@ -57,8 +57,12 @@
                 }
             },
 
-            showPanel: function() {
-                this.panelVisibility = 'show';
+            togglePanel: function() {
+                if (this.visible) {
+                    this.panelVisibility = 'show';
+                } else {
+                    this.panelVisibility = 'hide';
+                }
             }
         });
     </script>

@@ -4,15 +4,21 @@ Class('Exhibitions.Panel', {
 
     initialize: function() {
         Exhibitions.Panel.Super.call(this, 'result');
+        this.element.addEventListener('edit', this.hide.bind(this));
     },
 
     render: function(exhibition) {
         this.element.exhibition = exhibition;
-        this.showPanel();
+        this.show();
     },
 
-    showPanel: function() {
+    show: function() {
         this.element.visible = true;
+    },
+
+    hide: function() {
+        this.element.visible = false;
+        Bus.publish('exhibition.edit');
     },
 
     subscribe: function() {

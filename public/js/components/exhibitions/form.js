@@ -7,17 +7,21 @@ Class('Exhibitions.Form', {
         this.exhibitionForm = document.getElementById('formulary');
         this.exhibitionButton = document.getElementById('action');
 
-        this.exhibitionForm.addEventListener('submitted', this.saveExhibition.bind(this));
-        this.exhibitionButton.addEventListener('started', this.showForm.bind(this));
+        this.exhibitionForm.addEventListener('submitted', this.save.bind(this));
+        this.exhibitionButton.addEventListener('started', this.show.bind(this));
     },
 
-    showForm: function() {
+    show: function() {
         this.exhibitionForm.visible = true;
     },
 
-    saveExhibition: function(exhibition) {
+    save: function(exhibition) {
         Bus.publish('exhibition.save', exhibition);
         this.exhibitionForm.visible = false;  
+    },
+
+    subscribe: function() {
+        Bus.subscribe('exhibition.edit', this.show.bind(this));
     }
 
 });
