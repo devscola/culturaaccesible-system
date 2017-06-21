@@ -52,7 +52,7 @@ describe 'Exhibition controller' do
       name: 'some other name', 
       location: 'some location'
     }.to_json
-    post '/api/exhibition/update', exhibition_updated
+    post '/api/exhibition/add', exhibition_updated
     payload = { id: exhibition_id }.to_json
     post '/api/exhibition/retrieve', payload
 

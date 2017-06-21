@@ -15,12 +15,6 @@ class App < Sinatra::Base
     result.to_json
   end
 
-  post '/api/exhibition/update' do
-    exhibition = JSON.parse(request.body.read)
-    result = Exhibitions::Service.update(exhibition)
-    result.to_json
-  end
-
   post '/api/exhibition/list' do
     response.headers['Access-Control-Allow-Origin'] = '*'
     result = Exhibitions::Service.list
