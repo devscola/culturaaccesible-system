@@ -15,9 +15,13 @@ Class('Exhibitions.Form', {
         this.exhibitionForm.visible = true;
     },
 
+    hide: function() {
+        this.exhibitionForm.visible = false;
+    },
+
     save: function(exhibition) {
         Bus.publish('exhibition.save', exhibition.detail);
-        this.exhibitionForm.visible = false;
+        this.hide();
     },
 
     subscribe: function() {
