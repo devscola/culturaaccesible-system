@@ -25,6 +25,14 @@ module Page
       (date_length <= 4)
     end
 
+    def check_room
+      find_field(name: 'room').click
+    end
+
+    def input_visible?(field)
+      has_css?("input[name=#{field}]")
+    end
+
     private
 
     def validate!
