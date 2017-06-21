@@ -13,7 +13,7 @@ Class('Services.Exhibitions', {
     },
 
     saveExhibition: function(exhibition) {
-        this.doRequest('/exhibition/add', exhibition.detail, function(result) {
+        this.doRequest('/exhibition/add', exhibition, function(result) {
             Bus.publish('exhibition.saved', result);
         });
     },
