@@ -20,4 +20,16 @@ feature 'Item' do
 
     expect(current.content?('Name: Guernica')).to be true
   end
+
+  scenario 'disallows to fill author and date' do
+    current = Fixture::Item.initial_state
+
+    expect(current.input_visible?('author')).to be true
+    expect(current.input_visible?('date')).to be true    
+
+    current.check_room
+
+    expect(current.input_visible?('author')).to be false
+    expect(current.input_visible?('date')).to be false
+  end
 end

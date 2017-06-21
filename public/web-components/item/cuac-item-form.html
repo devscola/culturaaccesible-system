@@ -20,25 +20,33 @@
                     Item form
                 </div>
                 <div class="panel-body form-group">
-                    <div>
-                        <label for="name"><b>Name*</b></label>
-                        <input class="form-control" name="name" value="{{name::input}}" autofocus></input>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="room">Room</label>
+                            <input type="checkbox" name="room" on-change="hideUselessInputs"></input>
+                        </div>
+                        <div class="form-group">
+                            <label for="beacon">Beacon Number</label>
+                            <input class="form-control" name="beacon" value="{{beacon::input}}"></input>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="author">Author</label>
-                        <input class="form-control" name="author" value="{{author::input}}"></input>
-                    </div>
-                    <div class="form-group">
-                        <label for="date">Date</label>
-                        <input class="form-control" maxlength="4" name="date" value="{{date::input}}"></input>
-                    </div>
-                    <div class="form-group">
-                        <label for="beacon">Beacon Number</label>
-                        <input class="form-control" name="beacon" value="{{beacon::input}}"></input>
-                    </div>
-                    <div class="form-group">
-                        <label for="description">Description</label>
-                        <textarea class="form-control" name="description" value="{{description::input}}"></textarea>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="name"><b>Name*</b></label>
+                            <input class="form-control" name="name" value="{{name::input}}" autofocus></input>
+                        </div>
+                        <div class="form-group">
+                            <label for="author">Author</label>
+                            <input class="form-control" name="author" value="{{author::input}}" type="{{inputVisibility}}"></input>
+                        </div>
+                        <div class="form-group">
+                            <label for="date">Date</label>
+                            <input class="form-control" maxlength="4" name="date" value="{{date::input}}" type="{{inputVisibility}}"></input>
+                        </div>
+                        <div class="form-group">
+                            <label for="description">Description</label>
+                            <textarea class="form-control" name="description" value="{{description::input}}"></textarea>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -55,29 +63,27 @@
 
             properties: {
 
-                formVisibility: {
-                    type: String,
-                },
+                formVisibility: { type: String },
 
-                name: {
-                    type: String
-                },
+                inputVisibility: { type: String, value: 'text' },
 
-                author: {
-                    type: String
-                },
+                name: { type: String },
 
-                date: {
-                    type: String
-                },
+                author: { type: String },
 
-                beacon: {
-                    type: String
-                }, 
+                date: { type: String },
 
-                description: {
-                    type: String
-                } 
+                beacon: { type: String },
+
+                description: { type: String },
+            },
+
+            hideUselessInputs: function(event) {
+                if (event.target.checked) {
+                    this.inputVisibility = 'hidden';
+                } else {
+                    this.inputVisibility = 'text';
+                }
             },
 
             submitClicked: function(event) {
