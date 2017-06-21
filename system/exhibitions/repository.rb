@@ -16,8 +16,8 @@ module Exhibitions
       end
 
       def update(updated_exhibition)
-        old_exhibition = @content.find { |exhibition| exhibition.id == updated_exhibition.id }
-        index = @content.index(old_exhibition)
+        current_exhibition = @content.find { |exhibition| exhibition.id == updated_exhibition.id }
+        index = @content.index(current_exhibition)
         @content[index] = updated_exhibition
         updated_exhibition
       end

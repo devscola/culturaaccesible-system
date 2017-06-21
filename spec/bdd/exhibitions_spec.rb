@@ -4,7 +4,7 @@ require_relative 'test_support/exhibitions'
 require_relative 'test_support/fixture_exhibitions'
 
 feature 'Exhibitions' do
-  before(:each) do 
+  before(:each) do
     Exhibitions::Repository.flush
   end
 
@@ -42,7 +42,7 @@ feature 'Exhibitions' do
     expect(result).to eq(name)
   end
 
-  scenario 'shows link button' do 
+  scenario 'shows link button' do
     name = 'some name'
     other_name = 'some other name'
     current = Exhibitions::Fixture.two_exhibitions_introduced(name, other_name)
@@ -55,7 +55,7 @@ feature 'Exhibitions' do
   scenario 'hide exhibition form' do
     current = Exhibitions::Fixture.exhibition_saved
 
-    expect(current.form_visible?).to be false     
+    expect(current.form_visible?).to be false
   end
 
   scenario 'shows edit button' do
@@ -64,9 +64,9 @@ feature 'Exhibitions' do
     expect(current.has_edit_button?).to be true
   end
 
-  scenario 'hides view when edit' do 
+  scenario 'hides view when edit' do
     current = Exhibitions::Fixture.exhibition_saved
-    
+
     current.click_edit
 
     expect(current.view_visible?).to be false
