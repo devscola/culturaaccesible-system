@@ -11,7 +11,8 @@ Class('Exhibitions.Form', {
         this.exhibitionButton.addEventListener('started', this.show.bind(this));
     },
 
-    show: function() {
+    show: function(event) {
+        this.exhibitionForm.exhibition = event.detail;
         this.exhibitionForm.visible = true;
     },
 

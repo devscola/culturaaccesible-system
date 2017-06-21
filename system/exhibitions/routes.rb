@@ -20,4 +20,8 @@ class App < Sinatra::Base
     result = Exhibitions::Service.list
     result.to_json
   end
+
+  get '/api/exhibition/flush' do
+    Exhibitions::Service.flush
+  end
 end

@@ -1,0 +1,21 @@
+<link rel="import" href="/vendor/polymer/polymer.html">
+
+<dom-module id="cuac-exhibition-edit-button">
+    <template>
+        <button class="btn btn-primary edit-button" on-click="edited">Edit</button>
+    </template>
+
+    <script>
+        Polymer({
+            is: 'cuac-exhibition-edit-button',
+
+            properties: {
+                exhibition: { type: Object }
+            },
+
+            edited: function() {
+                this.fire('edit', this.exhibition);
+            }
+        });
+    </script>
+</dom-module>

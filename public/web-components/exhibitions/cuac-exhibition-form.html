@@ -83,6 +83,10 @@
 
                 checkShow: {type: Boolean, value: false},
 
+                exhibition: {type: Object, observer: 'storeId'},
+
+                exhibitionId: {type: String},
+
                 name: {observer: 'isSubmittable'},
 
                 location: {observer: 'isSubmittable'},
@@ -98,6 +102,10 @@
                 beacon: {},
 
                 description: {}
+            },
+
+            storeId: function() {
+                this.exhibitionId = this.exhibition.id;
             },
 
             checkName: function() {
@@ -144,6 +152,7 @@
 
             collectData: function() {
                 data = {
+                    id: this.exhibitionId,
                     show: this.checkShow,
                     name: this.name,
                     location: this.location,

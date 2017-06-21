@@ -16,9 +16,9 @@ Class('Exhibitions.Panel', {
         this.element.visible = true;
     },
 
-    hide: function() {
+    hide: function(event) {
         this.element.visible = false;
-        Bus.publish('exhibition.edit');
+        Bus.publish('exhibition.edit', event);
     },
 
     subscribe: function() {

@@ -5,9 +5,16 @@ module Exhibitions
     NAME_FIELD = 'name'
     LOCATION_FIELD = 'location'
     NAME = 'some name'
+    UPDATED_NAME = 'some updated name'
     LOCATION = 'some location'
 
     class << self
+
+      def pristine
+        visit('/api/exhibition/flush')
+        self
+      end
+
       def show_exhibition_form
         current = Page::Exhibitions.new
         current.show
@@ -18,20 +25,27 @@ module Exhibitions
         current = Page::Exhibitions.new
         current.show
 
-        current.fill(NAME_FIELD, NAME,)
+        current.fill(NAME_FIELD, NAME)
         current.fill(LOCATION_FIELD, LOCATION)
 
         current
       end
 
       def exhibition_saved
-        current = self.fill_form
+        current = Fixture.fill_form
         current.save
         current
       end
 
+      def exhibition_edited
+        current = Fixture.exhibition_saved
+        current.click_edit
+        current.fill(NAME_FIELD, UPDATED_NAME)
+        current
+      end
+
       def two_exhibitions_introduced(name, other_name)
-        current = self.show_exhibition_form
+        current = Fixture.show_exhibition_form
         current.fill(NAME_FIELD, name)
         current.fill(LOCATION_FIELD, LOCATION)
         current.save

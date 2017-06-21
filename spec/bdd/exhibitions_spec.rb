@@ -1,11 +1,10 @@
 require 'spec_helper_bdd'
-require_relative '../../system/exhibitions/repository'
 require_relative 'test_support/exhibitions'
 require_relative 'test_support/fixture_exhibitions'
 
 feature 'Exhibitions' do
   before(:each) do
-    Exhibitions::Repository.flush
+    Exhibitions::Fixture.pristine
   end
 
   scenario 'has items' do
@@ -78,5 +77,13 @@ feature 'Exhibitions' do
     current.click_edit
 
     expect(current.form_visible?).to be true
+  end
+
+  scenario 'updates exhibition info', :wip do
+    current = Exhibitions::Fixture.exhibition_edited
+
+    current.save
+
+    expect(current.first_element).to eq 'some updated name'
   end
 end
