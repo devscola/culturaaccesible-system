@@ -14,17 +14,6 @@ describe 'Museum controller' do
     Museums::Repository.flush
   end
 
-  it 'retrieve required museum' do
-    museum = { info: { name: 'some name', description: 'some description' } }.to_json
-    post '/api/museum/add', museum
-
-    payload = { info: { name: 'some name' } }.to_json
-    post '/api/museum/retrieve', payload
-    result = parse_response['info']['name']
-
-    expect(result).to eq('some name')
-  end
-
   it 'retrieves all museums', :museum do
     museum = { info: { name: 'some name', description: 'some description' } }.to_json
     post '/api/museum/add', museum
@@ -45,6 +34,30 @@ describe 'Museum controller' do
     expect(first_museum_id == second_museum_id).to be false
   end
 
+  it 'retrieve museum by id' do
+    add_museum
+    museum_id = parse_response['id']
+    payload = { id: museum_id }.to_json
+
+    post '/api/museum/retrieve', payload
+
+    museum_name = parse_response['info']['name']
+    expect(museum_name).to eq 'some name'
+  end
+
+  it 'updates museum with id' do
+    old_name = 'some name'
+    new_name = 'some updated name'
+
+    add_museum
+    museum_id = parse_response['id']
+
+    update_museum(museum_id)
+    updated_museum = parse_response
+
+    expect(museum_id).to eq updated_museum['id']
+    expect(new_name).to eq updated_museum['info']['name']
+  end
 end
 
   def add_museum
@@ -53,6 +66,15 @@ end
         location: {street: 'some street'}
       }.to_json
     post '/api/museum/add', museum
+  end
+
+  def update_museum(id)
+    museum = {
+        id: id,
+        info: {name: 'some updated name', description: 'some description'},
+        location: {street: 'some street'}
+      }.to_json
+    post 'api/museum/update', museum
   end
 
   def parse_response

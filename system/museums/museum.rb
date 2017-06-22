@@ -1,13 +1,13 @@
 module Museums
   class Museum
-    def initialize(data)
+    def initialize(data, id=nil)
       @creation_date = Time.now.utc
       @info = Info.new(data['info'] || {})
       @location = Location.new(data['location'] || {})
       @contact = Contact.new(data['contact'] || {})
       @price = Price.new(data['price'] || {})
       @schedule = Schedule.new(data['schedule'] || {})
-      @id = generate_id
+      @id = id || generate_id
     end
 
     def serialize
@@ -24,6 +24,10 @@ module Museums
 
     def info
       @info
+    end
+
+    def id
+      @id
     end
 
     private

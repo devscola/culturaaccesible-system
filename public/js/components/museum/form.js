@@ -38,7 +38,7 @@ Class('Museum.Form', {
 
     addListeners: function() {
         this.newButton.addEventListener('click', this.show.bind(this));
-        this.element.addEventListener('submit', this.collectData.bind(this));
+        this.element.addEventListener('submit', this.saveMuseum.bind(this));
         this.result.addEventListener('edit', this.showEditableData.bind(this));
 
         this.element.addEventListener('notEnoughInfo', this.revokeInfo.bind(this));
@@ -47,8 +47,20 @@ Class('Museum.Form', {
         this.element.addEventListener('enoughLocation', this.storeLocation.bind(this));
     },
 
+    saveMuseum: function() {
+        if(this.element.editable){
+            this.museumData = {id: this.result.museumData['id']}
+            this.collectData()
+            Bus.publish('museum.update', this.museumData);
+        }else{
+            this.museumData = {}
+            this.collectData()
+            Bus.publish('museum.save', this.museumData);
+        }
+        this.showsInfo();
+    },
+
     collectData: function() {
-        this.museumData = {};
         Object.assign(
             this.museumData,
             {info: this.infoForm.infoData},
@@ -57,13 +69,12 @@ Class('Museum.Form', {
             {price: this.priceForm.priceData},
             {schedule: this.scheduleForm.scheduleData}
         );
-        Bus.publish('museum.save', this.museumData);
-        this.showsInfo();
     },
 
     showEditableData: function() {
         this.result.visibility = 'hide';
         this.show();
+        this.element.editable = true;
         this.scheduleForm.editable = true;
     },
 

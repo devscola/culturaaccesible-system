@@ -9,9 +9,19 @@ module Museums
         museum
       end
 
-      def retrieve(name)
+      def update(museum_data)
+        museum = retrieve(museum_data['id'])
+        index = @content.index(museum)
+
+        updated_museum = Museums::Museum.new(museum_data, museum.id)
+
+        @content[index] = updated_museum
+        @content[index]
+      end
+
+      def retrieve(id)
         @content ||= []
-        result = @content.find { |museum| museum.info.name == name }
+        result = @content.find { |museum| museum.id == id }
         result
       end
 

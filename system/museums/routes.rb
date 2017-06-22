@@ -10,14 +10,20 @@ class App < Sinatra::Base
   end
 
   post '/api/museum/retrieve' do
-    museum = JSON.parse(request.body.read)
-    result = Museums::Service.retrieve(museum['info']['name'])
+    body = JSON.parse(request.body.read)
+    result = Museums::Service.retrieve(body['id'])
     result.to_json
   end
 
   post '/api/museum/list' do
     response.headers['Access-Control-Allow-Origin'] = '*'
     result = Museums::Service.list
+    result.to_json
+  end
+
+  post '/api/museum/update' do
+    museum_data = JSON.parse(request.body.read)
+    result = Museums::Service.update(museum_data)
     result.to_json
   end
 end

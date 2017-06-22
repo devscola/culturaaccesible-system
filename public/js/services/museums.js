@@ -12,8 +12,15 @@ Class('Services.Museums', {
         });
     },
 
+    update: function(museum_data) {
+        this.doRequest('/museum/update', museum_data, function(result) {
+            Bus.publish('museum.saved', result);
+        });
+    },
+
     subscribe: function() {
         Bus.subscribe('museum.save', this.save.bind(this));
+        Bus.subscribe('museum.update', this.update.bind(this));
     }
 
 });

@@ -16,8 +16,13 @@ module Museums
         museum.serialize
       end
 
-      def retrieve(name)
-        museum = Museums::Repository.retrieve(name)
+      def retrieve(id)
+        museum = Museums::Repository.retrieve(id)
+        museum.serialize
+      end
+
+      def update(museum_data)
+        museum = Museums::Repository.update(museum_data)
         museum.serialize
       end
 

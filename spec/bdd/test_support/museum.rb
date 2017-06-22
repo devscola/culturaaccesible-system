@@ -89,7 +89,12 @@ module Page
     end
 
     def edit_hour(hour)
-      first('.editable-hour').send_keys([:control, "a"], hour)
+      element = first('.editable-hour')
+      element.send_keys(:end)
+      (0..hour.length).each do |i|
+        element.send_keys(:backspace)
+      end
+      element.send_keys(hour)
     end
 
     def edited_hour
