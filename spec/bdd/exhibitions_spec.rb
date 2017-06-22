@@ -79,7 +79,7 @@ feature 'Exhibitions' do
     expect(current.form_visible?).to be true
   end
 
-  scenario 'updates exhibition info', :wip do
+  scenario 'updates exhibition info' do
     current = Exhibitions::Fixture.exhibition_edited
 
     current.save

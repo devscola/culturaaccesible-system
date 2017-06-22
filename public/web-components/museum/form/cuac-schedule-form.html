@@ -11,7 +11,7 @@
                 <div>
                     <label>{{item.day}}</label>
                     <template is="dom-repeat" items="{{item.hours}}" as="hours">
-                        <span class="editable-hour" contenteditable$="{{editable}}" on-keyup="checkHour"> {{hours}} </span>
+                        <span class="editable-hour" data-day="{{item.day}}" contenteditable$="{{editable}}" on-focus="removeHour" on-blur="checkHour" on-keyup="detectHour"> {{hours}} </span>
                     </template>
                 </div>
             </template>
@@ -22,8 +22,8 @@
             is: 'cuac-schedule-form',
 
             ready: function() {
-              this.hours = document.getElementById('hours');
-              this.saveButton = document.getElementById('action');
+                this.hours = document.getElementById('hours');
+                this.saveButton = document.getElementById('action');
             },
 
             properties: {
@@ -42,8 +42,30 @@
 
             },
 
+            detectHour: function(e) {
+                e.preventDefault();
+                this.editedHour = e.target.innerText;
+                this.saveButton.active = this.hours.isValid(this.editedHour);
+            },
+
             checkHour: function(e) {
-              this.saveButton.active = this.hours.isValid(e.target.innerText)
+                e.preventDefault();
+                var day = e.target.dataDay;
+                if(this.hours.isValid(this.editedHour)){
+                    this.saveButton.active = this.hours.isValid(this.editedHour)
+                    this.scheduleData[day].push(this.editedHour)
+                    this.removeDuplicateHours(day)
+                }
+            },
+
+            removeHour: function(e) {
+                e.preventDefault();
+                var day = e.target.dataDay;
+                var oldHour = e.target.innerText;
+                var index = this.scheduleData[day].indexOf(oldHour);
+                if(index > -1){
+                    this.scheduleData[day].splice(index, 1);
+                }
             },
 
             arrangeSchedule: function() {
@@ -92,7 +114,7 @@
             },
 
             initializeSchedule: function() {
-                this.selectedHours = '';
+                this.selectedHours = null;
                 this.selectedDays = [];
                 this.marked = true;
                 this.marked = false;

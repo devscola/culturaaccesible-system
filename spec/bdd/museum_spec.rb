@@ -181,9 +181,23 @@ feature 'Museum' do
 
       current.click_edit_button
       current.edit_hour(new_hour)
+      current.lose_focus
 
       expect(current.edited_hour).to eq new_hour
       expect(current.save_disabled?).to be true
+    end
+
+    scenario 'save edited hour' do
+      new_hour = '10:00-20:00'
+      old_hour = '08:00-14:00'
+      current = Fixture::Museum.submitted
+
+      current.click_edit_button
+      current.edit_hour(new_hour)
+      current.submit
+
+      expect(current.has_content?(new_hour)).to be true
+      expect(current.has_content?(old_hour)).to be false
     end
   end
 end

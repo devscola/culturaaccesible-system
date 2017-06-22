@@ -80,12 +80,16 @@ module Page
       find_field(name: day).click
     end
 
+    def lose_focus
+      submit
+    end
+
     def editable_name
       find('[name=name]').value
     end
 
     def edit_hour(hour)
-      first('.editable-hour').set(hour)
+      first('.editable-hour').send_keys([:control, "a"], hour)
     end
 
     def edited_hour
