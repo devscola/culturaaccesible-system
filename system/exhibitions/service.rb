@@ -1,6 +1,7 @@
 require 'digest/md5'
 require_relative 'repository'
 require_relative 'exhibition'
+require_relative '../helpers/defense'
 
 module Exhibitions
   class Service

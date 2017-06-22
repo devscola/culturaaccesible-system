@@ -6,7 +6,7 @@ require_relative 'location'
 require_relative 'contact'
 require_relative 'price'
 require_relative 'schedule'
-require_relative 'defense'
+require_relative '../helpers/defense'
 
 module Museums
   class Service

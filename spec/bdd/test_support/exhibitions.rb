@@ -48,7 +48,7 @@ module Page
     end
 
     def first_element
-      first('.list-item').text
+      first('.list-item', wait: 4).text
     end
 
     def click_plus_button
