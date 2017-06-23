@@ -26,7 +26,7 @@ module Page
     end
 
     def click_edit
-      find('.edit-button').click
+      find('.edit-button', wait: 4).click
     end
 
     def view_visible?
