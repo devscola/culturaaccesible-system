@@ -42,26 +42,27 @@
 
             },
 
-            detectHour: function(e) {
-                e.preventDefault();
-                this.editedHour = e.target.innerText;
-                this.saveButton.active = this.hours.isValid(this.editedHour);
+            detectHour: function(event) {
+                event.preventDefault();
+                var editedHour = event.target.innerText.replace(/\s/g,'');
+                this.saveButton.active = this.hours.isValid(editedHour);
             },
 
-            checkHour: function(e) {
-                e.preventDefault();
-                var day = e.target.dataDay;
-                if(this.hours.isValid(this.editedHour)){
-                    this.saveButton.active = this.hours.isValid(this.editedHour)
-                    this.scheduleData[day].push(this.editedHour)
-                    this.removeDuplicateHours(day)
+            checkHour: function(event) {
+                event.preventDefault();
+                var editedHour = event.target.innerText.replace(/\s/g,'');
+                var day = event.target.dataDay;
+                if(this.hours.isValid(editedHour)){
+                    this.saveButton.active = this.hours.isValid(editedHour);
+                    this.scheduleData[day].push(editedHour);
+                    this.removeDuplicateHours(day);
                 }
             },
 
-            removeHour: function(e) {
-                e.preventDefault();
-                var day = e.target.dataDay;
-                var oldHour = e.target.innerText;
+            removeHour: function(event) {
+                event.preventDefault();
+                var day = event.target.dataDay;
+                var oldHour = event.target.innerText.replace(/\s/g,'');
                 var index = this.scheduleData[day].indexOf(oldHour);
                 if(index > -1){
                     this.scheduleData[day].splice(index, 1);
@@ -76,7 +77,9 @@
 
             storeSchedule: function() {
                 this.selectedDays.forEach(function(day) {
-                    this.scheduleData[day].push(this.selectedHours);
+                    if(this.selectedHours !== null){
+                        this.scheduleData[day].push(this.selectedHours);
+                    }
                     var duplicateHoursRemoved = this.removeDuplicateHours(day);
                     this.sortScheduleHours(day, duplicateHoursRemoved);
                 }.bind(this));

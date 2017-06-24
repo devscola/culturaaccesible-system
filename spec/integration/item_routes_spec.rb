@@ -26,7 +26,7 @@ describe 'Item controller' do
         expect(first_item_name == second_item_name).to be false
     end
     
-    it 'stores items with same exhibition id with unique items name', :wip do
+    it 'stores items with same exhibition id with unique items name' do
         add_exhibition
         exhibition_id = parse_response['id']
 
