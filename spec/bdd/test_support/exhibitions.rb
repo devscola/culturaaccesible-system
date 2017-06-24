@@ -47,7 +47,7 @@ module Page
       has_css?('.submit[disabled].cuac-exhibition-form')
     end
 
-    def updated_name?
+    def other_name?
       has_css?('.list-item', text: 'some other name', wait: 2)
     end
 

@@ -36,7 +36,7 @@ feature 'Exhibitions' do
     other_name = 'some other name'
     current = Exhibitions::Fixture.two_exhibitions_introduced(name, other_name)
 
-    expect(current.updated_name?).to be true
+    expect(current.other_name?).to be true
   end
 
   scenario 'shows link button' do
@@ -82,6 +82,6 @@ feature 'Exhibitions' do
 
     current.save
 
-    expect(current.updated_name?).to be true
+    expect(current.other_name?).to be true
   end
 end
