@@ -26,7 +26,7 @@ module Page
     end
 
     def click_edit
-      find('.edit-button').click
+      find('.edit-button', wait: 4).click
     end
 
     def view_visible?
@@ -47,8 +47,8 @@ module Page
       has_css?('.submit[disabled].cuac-exhibition-form')
     end
 
-    def first_element
-      first('.list-item', wait: 4).text
+    def other_name?
+      has_css?('.list-item', text: 'some other name', wait: 2)
     end
 
     def click_plus_button

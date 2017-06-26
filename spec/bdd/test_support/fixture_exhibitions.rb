@@ -5,7 +5,7 @@ module Exhibitions
     NAME_FIELD = 'name'
     LOCATION_FIELD = 'location'
     NAME = 'some name'
-    UPDATED_NAME = 'some updated name'
+    OTHER_NAME = 'some other name'
     LOCATION = 'some location'
 
     class << self
@@ -40,7 +40,7 @@ module Exhibitions
       def exhibition_edited
         current = Fixture.exhibition_saved
         current.click_edit
-        current.fill(NAME_FIELD, UPDATED_NAME)
+        current.fill(NAME_FIELD, OTHER_NAME)
         current
       end
 
