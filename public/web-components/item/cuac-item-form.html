@@ -75,7 +75,7 @@
 
                 beacon: { type: String },
 
-                description: { type: String },
+                description: { type: String }
             },
 
             hideUselessInputs: function(event) {
@@ -92,13 +92,18 @@
                 this.fire('submitted', this.collectData());
             },
 
+            loadExhibitionId: function() {
+                return window.location.href.split('/item/')[1];
+            },
+
             collectData: function() {
                 data = {
                     name: this.name,
                     author: this.author,
                     date: this.date,
                     beacon: this.beacon,
-                    description: this.description
+                    description: this.description,
+                    exhibition_id: this.loadExhibitionId()
                 };
                 return data;
             }
