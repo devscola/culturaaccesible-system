@@ -1,5 +1,5 @@
-module Exhibitions
-  class Fixture
+module Fixture
+  class Exhibitions
     extend Capybara::DSL
 
     NAME_FIELD = 'name'
@@ -7,6 +7,7 @@ module Exhibitions
     NAME = 'some name'
     OTHER_NAME = 'some other name'
     LOCATION = 'some location'
+    REDIRECTED_PAGE_TITLE = 'Item'
 
     class << self
 
@@ -32,26 +33,26 @@ module Exhibitions
       end
 
       def exhibition_saved
-        current = Fixture.fill_form
+        current = fill_form
         current.save
         current
       end
 
       def exhibition_edited
-        current = Fixture.exhibition_saved
+        current = exhibition_saved
         current.click_edit
         current.fill(NAME_FIELD, OTHER_NAME)
         current
       end
 
-      def two_exhibitions_introduced(name, other_name)
-        current = Fixture.show_exhibition_form
-        current.fill(NAME_FIELD, name)
+      def two_exhibitions_introduced
+        current = show_exhibition_form
+        current.fill(NAME_FIELD, NAME)
         current.fill(LOCATION_FIELD, LOCATION)
         current.save
 
         current.show
-        current.fill(NAME_FIELD, other_name)
+        current.fill(NAME_FIELD, OTHER_NAME)
         current.fill(LOCATION_FIELD, LOCATION)
         current.save
         current

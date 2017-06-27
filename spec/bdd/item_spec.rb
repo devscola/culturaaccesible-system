@@ -6,7 +6,7 @@ feature 'Item', :wip do
   scenario 'allows type only four character on date' do
     current = Fixture::Item.initial_state
 
-    current.fill('date','19865')
+    current.fill('date',Fixture::Item::ERROR_LENGTH_DATE)
 
     expect(current.type_max_four_characters).to be true
   end
@@ -14,18 +14,17 @@ feature 'Item', :wip do
   scenario 'shows data inserted' do
     current = Fixture::Item.initial_state
 
-    current.fill('name','Guernica')
-
+    current.fill('name',Fixture::Item::ARTWORK)
     current.submit
 
-    expect(current.content?('Name: Guernica')).to be true
+    expect(current.content?(Fixture::Item::VISIBLE_ARTWORK)).to be true
   end
 
   scenario 'disallows to fill author and date' do
     current = Fixture::Item.initial_state
 
     expect(current.input_visible?('author')).to be true
-    expect(current.input_visible?('date')).to be true    
+    expect(current.input_visible?('date')).to be true
 
     current.check_room
 

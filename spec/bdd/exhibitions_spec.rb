@@ -4,65 +4,61 @@ require_relative 'test_support/fixture_exhibitions'
 
 feature 'Exhibitions' do
   before(:each) do
-    Exhibitions::Fixture.pristine
+    Fixture::Exhibitions.pristine
   end
 
   scenario 'has items' do
-    current = Exhibitions::Fixture.exhibition_saved
+    current = Fixture::Exhibitions.exhibition_saved
 
     expect(current.exhibition_list?).to be true
   end
 
   scenario 'shows exhibition form' do
-    current = Exhibitions::Fixture.show_exhibition_form
+    current = Fixture::Exhibitions.show_exhibition_form
 
     expect(current.form_visible?). to be true
   end
 
   scenario 'allows submit when required fields filled' do
-    current = Exhibitions::Fixture.fill_form
+    current = Fixture::Exhibitions.fill_form
 
     expect(current.form_submit_deactivated?).to be false
   end
 
   scenario 'displays when form is submited' do
-    current = Exhibitions::Fixture.exhibition_saved
+    current = Fixture::Exhibitions.exhibition_saved
 
     expect(current.view_visible?).to be true
   end
 
   scenario 'shows list sorted by creation date' do
-    name = 'some name'
-    other_name = 'some other name'
-    current = Exhibitions::Fixture.two_exhibitions_introduced(name, other_name)
+    current = Fixture::Exhibitions.two_exhibitions_introduced
 
     expect(current.other_name?).to be true
   end
 
   scenario 'shows link button' do
-    name = 'some name'
-    other_name = 'some other name'
-    current = Exhibitions::Fixture.two_exhibitions_introduced(name, other_name)
+    current = Fixture::Exhibitions.two_exhibitions_introduced
 
     current.click_plus_button
 
-    expect(current.title('Item')).to be true
+    expect(current.title(Fixture::Exhibitions::REDIRECTED_PAGE_TITLE)).to be true
   end
 
   scenario 'hide exhibition form' do
-    current = Exhibitions::Fixture.exhibition_saved
+    current = Fixture::Exhibitions.exhibition_saved
 
     expect(current.form_visible?).to be false
   end
 
   scenario 'shows edit button' do
-    current = Exhibitions::Fixture.exhibition_saved
+    current = Fixture::Exhibitions.exhibition_saved
 
     expect(current.has_edit_button?).to be true
   end
 
   scenario 'hides view when edit' do
-    current = Exhibitions::Fixture.exhibition_saved
+    current = Fixture::Exhibitions.exhibition_saved
 
     current.click_edit
 
@@ -70,7 +66,7 @@ feature 'Exhibitions' do
   end
 
   scenario 'shows form when edit' do
-    current = Exhibitions::Fixture.exhibition_saved
+    current = Fixture::Exhibitions.exhibition_saved
 
     current.click_edit
 
@@ -78,7 +74,7 @@ feature 'Exhibitions' do
   end
 
   scenario 'updates exhibition info' do
-    current = Exhibitions::Fixture.exhibition_edited
+    current = Fixture::Exhibitions.exhibition_edited
 
     current.save
 
