@@ -41,7 +41,7 @@ module Fixture
         current
       end
 
-      def submitted
+      def fill_with_extra_content
         current = Fixture::Museum.fill_mandatory_content
         current.fill_input('phone1', PHONE)
         current.click_checkbox(MONDAY)

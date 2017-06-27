@@ -174,7 +174,7 @@ feature 'Museum' do
 
   context 'edit' do
     scenario 'shows fields when editing' do
-      current = Fixture::Museum.submitted
+      current = Fixture::Museum.fill_with_extra_content
 
       current.click_edit_button
 
@@ -183,7 +183,7 @@ feature 'Museum' do
     end
 
     scenario 'editable hour with bad format disable save button' do
-      current = Fixture::Museum.submitted
+      current = Fixture::Museum.fill_with_extra_content
 
       current.click_edit_button
       current.edit_hour(Fixture::Museum::HOUR_OUT_OF_RANGE)
@@ -194,7 +194,7 @@ feature 'Museum' do
     end
 
     scenario 'save edited hour' do
-      current = Fixture::Museum.submitted
+      current = Fixture::Museum.fill_with_extra_content
 
       current.click_edit_button
       current.edit_hour(Fixture::Museum::ALTERNATIVE_HOUR)
