@@ -3,6 +3,15 @@ module Exhibitions
     @content = []
 
     class << self
+      def choose_action(exhibition_data)
+        id = exhibition_data['id']
+        if (id)
+          result = update(exhibition_data)
+        else
+          result = store(exhibition_data)
+        end
+      end
+
       def store(exhibition_data)
         exhibition = Exhibitions::Exhibition.new(exhibition_data)
 
