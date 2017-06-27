@@ -2,7 +2,7 @@ class Fixture
   class Museum
     extend Capybara::DSL
 
-    MUSEUM_ENOUGH_DATA = {
+    MANDATORY_DATA = {
       'name' => 'Some name',
       'street' => 'Some street'
     }
@@ -23,17 +23,17 @@ class Fixture
       end
 
       def data
-        MUSEUM_ENOUGH_DATA
+        MANDATORY_DATA
       end
 
       def phone
         PHONE
       end
 
-      def enough_content
+      def fill_mandatory_content
         current = showing_form
 
-        MUSEUM_ENOUGH_DATA.each do |field, content|
+        MANDATORY_DATA.each do |field, content|
           current.fill_input(field, content)
         end
 
@@ -41,7 +41,7 @@ class Fixture
       end
 
       def submitted
-        current = Fixture::Museum.enough_content
+        current = Fixture::Museum.fill_mandatory_content
         current.fill_input('phone1', PHONE)
         current.click_checkbox('MON')
         current.introduce_hours('08:00-14:00')
@@ -51,7 +51,7 @@ class Fixture
       end
 
       def contact_section_with_an_extra_input
-        current = enough_content
+        current = fill_mandatory_content
         current.fill_input('phone1', 'some phone')
         current.add_input('.phone')
         current

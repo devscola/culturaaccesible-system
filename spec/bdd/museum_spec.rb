@@ -10,12 +10,12 @@ feature 'Museum' do
   end
 
   scenario 'allows submit when enough content' do
-    current = Fixture::Museum.enough_content
+    current = Fixture::Museum.fill_mandatory_content
     expect(current.save_enabled?).to be true
   end
 
   scenario 'shows info when submitted' do
-    current = Fixture::Museum.enough_content
+    current = Fixture::Museum.fill_mandatory_content
     current.submit
     expect(current.shows_info?).to be true
   end
