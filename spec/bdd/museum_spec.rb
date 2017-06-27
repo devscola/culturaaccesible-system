@@ -109,20 +109,17 @@ feature 'Museum' do
       expect(current.button_enabled?('.add-button')).to be false
     end
 
-    scenario 'allows to add the same hour to a diferent day' do
+    scenario 'disallows to add the same hour to the same day' do
       current = Fixture::Museum.showing_form
       current.click_checkbox(Fixture::Museum::MONDAY)
       current.introduce_hours(Fixture::Museum::HOUR)
       current.click_add_hour
       current.click_checkbox(Fixture::Museum::MONDAY)
-      current.click_checkbox(Fixture::Museum::TUESDAY)
       current.introduce_hours(Fixture::Museum::HOUR)
       current.click_add_hour
 
-
-      expect(current.has_content?(Fixture::Museum::NOT_DUPLICATED_SCHENDULE_HOUR)). to be true
-      expect(current.has_content?(Fixture::Museum::HOUR, count: 3)). to be false
-      expect(current.all_fields_checked?).to be false
+      expect(current.has_content?(Fixture::Museum::NOT_DUPLICATED_SCHEDULE_HOUR)).to be true
+      expect(current.has_content?(Fixture::Museum::DUPLICATED_SCHEDULE_HOUR)).to be false
     end
 
     scenario 'selects all days at once' do
