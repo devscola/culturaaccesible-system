@@ -37,8 +37,8 @@ Class('Museum.Form', {
     },
 
     addListeners: function() {
-        this.newButton.addEventListener('click', this.show.bind(this));
-        this.element.addEventListener('submit', this.saveMuseum.bind(this));
+        this.newButton.addEventListener('createMuseum', this.show.bind(this));
+        this.element.addEventListener('submitted', this.saveMuseum.bind(this));
         this.result.addEventListener('edit', this.showEditableData.bind(this));
 
         this.element.addEventListener('notEnoughInfo', this.revokeInfo.bind(this));
