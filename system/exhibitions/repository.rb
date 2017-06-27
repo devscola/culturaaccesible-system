@@ -18,7 +18,7 @@ module Exhibitions
         current_exhibition = @content.find { |element| element.id == exhibition.id }
         index = @content.index(current_exhibition)
         @content[index] = exhibition
-        exhibition
+        @content[index]
       end
 
       def all
