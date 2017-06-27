@@ -23,6 +23,7 @@ feature 'Museum' do
     current.submit
 
     expect(current.shows_info?).to be true
+    expect(current.has_content?(Fixture::Museum::MANDATORY_DATA['name'])).to be true
   end
 
   context 'contact section' do
