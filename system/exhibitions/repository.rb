@@ -12,18 +12,21 @@ module Exhibitions
         end
       end
 
-      def store(exhibition_data)
-        exhibition = Exhibitions::Exhibition.new(exhibition_data)
-
-        @content << exhibition
-        exhibition
-      end
-
       def retrieve(id)
         @content ||= []
         result = @content.find { |exhibition| exhibition.id == id }
         result
       end
+
+      def all
+        @content
+      end
+
+      def flush
+        @content = []
+      end
+
+      private
 
       def update(exhibition_data)
         id =  exhibition_data['id']
@@ -35,12 +38,11 @@ module Exhibitions
         @content[index]
       end
 
-      def all
-        @content
-      end
+      def store(exhibition_data)
+        exhibition = Exhibitions::Exhibition.new(exhibition_data)
 
-      def flush
-        @content = []
+        @content << exhibition
+        exhibition
       end
     end
   end
