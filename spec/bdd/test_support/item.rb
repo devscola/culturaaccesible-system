@@ -37,6 +37,7 @@ module Page
 
     def validate!
       assert_selector('#formulary')
+      assert_selector("input[name='name']", visible: false)
     end
   end
 end

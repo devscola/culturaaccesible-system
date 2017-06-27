@@ -138,6 +138,9 @@ module Page
       assert_selector('#newMuseum.cuac-new-button')
       assert_selector('#formulary', visible: false)
       assert_selector('#result', visible: false)
+      assert_selector("input[name='name']", visible: false)
+      assert_selector("input[name='street']", visible: false)
+
     end
   end
 end

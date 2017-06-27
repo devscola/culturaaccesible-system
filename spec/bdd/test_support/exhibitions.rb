@@ -66,10 +66,12 @@ module Page
     private
 
     def validate!
-      page.assert_selector('#formulary', visible: false)
-      page.assert_selector('#action')
-      page.assert_selector('#listing', visible: false)
-      page.assert_selector('#result', visible: false)
+      assert_selector('#formulary', visible: false)
+      assert_selector('#action')
+      assert_selector('#listing', visible: false)
+      assert_selector('#result', visible: false)
+      assert_selector("input[name='name']", visible: false)
+      assert_selector("input[name='location']", visible: false)
     end
   end
 end
