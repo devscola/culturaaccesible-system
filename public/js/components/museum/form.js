@@ -49,7 +49,7 @@ Class('Museum.Form', {
 
     saveMuseum: function() {
         if(this.element.editable){
-            this.museumData = {id: this.result.museumData['id']}
+            this.museumData = {id: this.result.museumData.id}
             this.collectData()
             Bus.publish('museum.update', this.museumData);
         }else{
