@@ -116,11 +116,15 @@
                 this.renderedSchedule = temp;
             },
 
+            refreshChecksPolymerWorkaround: function() {
+                this.marked = true;
+                this.marked = false;
+            },
+
             initializeSchedule: function() {
                 this.selectedHours = null;
                 this.selectedDays = [];
-                this.marked = true;
-                this.marked = false;
+                this.refreshChecksPolymerWorkaround();
             }
         });
     </script>
