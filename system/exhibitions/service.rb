@@ -8,11 +8,10 @@ module Exhibitions
     class << self
       def store(exhibition_data)
         id = exhibition_data['id']
-        exhibition = Exhibitions::Exhibition.new(exhibition_data, id)
         if (id)
-          result = Exhibitions::Repository.update(exhibition)
+          result = Exhibitions::Repository.update(exhibition_data)
         else
-          result = Exhibitions::Repository.store(exhibition)
+          result = Exhibitions::Repository.store(exhibition_data)
         end
         result.serialize
       end

@@ -3,7 +3,9 @@ module Exhibitions
     @content = []
 
     class << self
-      def store(exhibition)
+      def store(exhibition_data)
+        exhibition = Exhibitions::Exhibition.new(exhibition_data)
+
         @content << exhibition
         exhibition
       end
@@ -14,7 +16,10 @@ module Exhibitions
         result
       end
 
-      def update(exhibition)
+      def update(exhibition_data)
+        id =  exhibition_data['id']
+        exhibition = Exhibitions::Exhibition.new(exhibition_data, id)
+
         current_exhibition = @content.find { |element| element.id == exhibition.id }
         index = @content.index(current_exhibition)
         @content[index] = exhibition
