@@ -3,7 +3,8 @@ module Items
     @content = []
 
     class << self
-      def store(item)
+      def store(item_data)
+        item = Items::Item.new(item_data)
         @content << item
         item
       end

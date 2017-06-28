@@ -11,7 +11,7 @@ module Page
     end
 
     def click_new_museum
-      find('#newMuseum.cuac-new-button').click
+      find('#newMuseum').click
     end
 
     def has_form?
@@ -135,7 +135,7 @@ module Page
     private
 
     def validate!
-      assert_selector('#newMuseum.cuac-new-button')
+      assert_selector('#newMuseum')
       assert_selector('#formulary', visible: false)
       assert_selector('#result', visible: false)
       assert_selector("input[name='name']", visible: false)

@@ -3,9 +3,13 @@ module Exhibitions
     @content = []
 
     class << self
-      def store(exhibition)
-        @content << exhibition
-        exhibition
+      def choose_action(exhibition_data)
+        id = exhibition_data['id']
+        if (id)
+          result = update(exhibition_data)
+        else
+          result = store(exhibition_data)
+        end
       end
 
       def retrieve(id)
@@ -14,19 +18,31 @@ module Exhibitions
         result
       end
 
-      def update(exhibition)
-        current_exhibition = @content.find { |element| element.id == exhibition.id }
-        index = @content.index(current_exhibition)
-        @content[index] = exhibition
-        @content[index]
-      end
-
       def all
         @content
       end
 
       def flush
         @content = []
+      end
+
+      private
+
+      def update(exhibition_data)
+        id =  exhibition_data['id']
+        exhibition = Exhibitions::Exhibition.new(exhibition_data, id)
+
+        current_exhibition = @content.find { |element| element.id == exhibition.id }
+        index = @content.index(current_exhibition)
+        @content[index] = exhibition
+        @content[index]
+      end
+
+      def store(exhibition_data)
+        exhibition = Exhibitions::Exhibition.new(exhibition_data)
+
+        @content << exhibition
+        exhibition
       end
     end
   end

@@ -18,7 +18,8 @@ module Fixture
     ALTERNATIVE_HOUR = '16:00-20:00'
     MONDAY = 'MON'
     TUESDAY = 'TUE'
-    NOT_DUPLICATED_SCHENDULE_HOUR = 'TUE 08:00-14:00'
+    NOT_DUPLICATED_SCHEDULE_HOUR = 'MON 08:00-14:00'
+    DUPLICATED_SCHEDULE_HOUR = 'MON 08:00-14:00 08:00-14:00'
 
     class << self
       def initial_state

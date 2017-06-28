@@ -7,14 +7,8 @@ module Exhibitions
   class Service
     class << self
       def store(exhibition_data)
-        id = exhibition_data['id']
-        exhibition = Exhibitions::Exhibition.new(exhibition_data, id)
-        if (id)
-          result = Exhibitions::Repository.update(exhibition)
-        else
-          result = Exhibitions::Repository.store(exhibition)
-        end
-        result.serialize
+        exhibition = Exhibitions::Repository.choose_action(exhibition_data)
+        exhibition.serialize
       end
 
       def retrieve(id)

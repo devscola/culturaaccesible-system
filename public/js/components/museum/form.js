@@ -37,8 +37,8 @@ Class('Museum.Form', {
     },
 
     addListeners: function() {
-        this.newButton.addEventListener('click', this.show.bind(this));
-        this.element.addEventListener('submit', this.saveMuseum.bind(this));
+        this.newButton.addEventListener('createMuseum', this.show.bind(this));
+        this.element.addEventListener('submitted', this.saveMuseum.bind(this));
         this.result.addEventListener('edit', this.showEditableData.bind(this));
 
         this.element.addEventListener('notEnoughInfo', this.revokeInfo.bind(this));
@@ -57,7 +57,7 @@ Class('Museum.Form', {
             this.collectData()
             Bus.publish('museum.save', this.museumData);
         }
-        this.showsInfo();
+        this.hide()
     },
 
     collectData: function() {
@@ -76,12 +76,6 @@ Class('Museum.Form', {
         this.show();
         this.element.editable = true;
         this.scheduleForm.editable = true;
-    },
-
-    showsInfo: function(museumData) {
-        this.hide();
-        this.result.museumData = museumData;
-        this.result.visibility = 'show';
     },
 
     revokeInfo: function() {
@@ -110,18 +104,6 @@ Class('Museum.Form', {
 
     hasEnoughContent: function(){
         return (this.enoughInfo && this.enoughLocation);
-    },
-
-    allowSubmit: function() {
-        this.saveButton.active = true;
-    },
-
-    disallowSubmit: function() {
-        this.saveButton.active = false;
-    },
-
-    subscribe: function() {
-        Bus.subscribe('museum.saved', this.showsInfo.bind(this));
     }
 
 });

@@ -14,6 +14,7 @@
         <link rel="import" href="/web-components/museum/form/cuac-price-form.html">
         <link rel="import" href="/web-components/museum/form/cuac-schedule-form.html">
         <link rel="import" href="/web-components/museum/form/cuac-save-button.html">
+        <link rel="import" href="/web-components/museum/form/cuac-editable-hour.html">
 
         <link rel="import" href="/web-components/museum/view/cuac-museum-view.html">
         <link rel="import" href="/web-components/museum/view/cuac-info-view.html">
@@ -21,8 +22,8 @@
         <link rel="import" href="/web-components/museum/view/cuac-contact-view.html">
         <link rel="import" href="/web-components/museum/view/cuac-price-view.html">
         <link rel="import" href="/web-components/museum/view/cuac-schedule-view.html">
-        <link rel="import" href="/web-components/commons/cuac-edit-button.html">
 
+        <link rel="import" href="/web-components/commons/cuac-edit-button.html">
         <link rel="import" href="/web-components/commons/cuac-input-container.html">
         <link rel="import" href="/web-components/commons/cuac-add-button.html">
     </head>
@@ -34,7 +35,7 @@
     <body>
         <div class="container">
             <div class="col-md-12">
-                <cuac-new-button></cuac-new-button>
+                <cuac-new-button id="newMuseum"></cuac-new-button>
             </div>
             <div id="formulary">
                 <div class="col-md-6">
@@ -86,6 +87,7 @@
         <script src="/js/infrastructure/component.js"></script>
         <script src="/js/infrastructure/service.js"></script>
         <script src="/js/components/museum/form.js"></script>
+        <script src="/js/components/museum/panel.js"></script>
 
         <script src="/js/services/museums.js"></script>
 
