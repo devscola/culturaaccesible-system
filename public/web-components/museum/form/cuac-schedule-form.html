@@ -10,8 +10,8 @@
             <template is="dom-repeat" items="{{renderedSchedule}}">
                 <div>
                     <label>{{item.day}}</label>
-                    <template is="dom-repeat" items="{{item.hours}}" as="hours">
-                        <span class="editable-hour" data-day="{{item.day}}" contenteditable$="{{editable}}" on-focus="removeHour" on-blur="checkHour" on-keyup="detectHour"> {{hours}} </span>
+                    <template is="dom-repeat" items="{{item.hours}}" as="hour">
+                        <cuac-editable-hour editable$="{{editable}}" day="{{item.day}}" hour={{hour}}></cuac-editable-hour>
                     </template>
                 </div>
             </template>
@@ -42,31 +42,8 @@
 
             },
 
-            detectHour: function(event) {
-                event.preventDefault();
-                var editedHour = event.target.innerText.replace(/\s/g,'');
-                this.saveButton.active = this.hours.isValid(editedHour);
-            },
-
-            checkHour: function(event) {
-                event.preventDefault();
-                var editedHour = event.target.innerText.replace(/\s/g,'');
-                var day = event.target.dataDay;
-                if(this.hours.isValid(editedHour)){
-                    this.saveButton.active = this.hours.isValid(editedHour);
-                    this.scheduleData[day].push(editedHour);
-                    this.removeDuplicateHours(day);
-                }
-            },
-
-            removeHour: function(event) {
-                event.preventDefault();
-                var day = event.target.dataDay;
-                var oldHour = event.target.innerText.replace(/\s/g,'');
-                var index = this.scheduleData[day].indexOf(oldHour);
-                if(index > -1){
-                    this.scheduleData[day].splice(index, 1);
-                }
+            getSchedule: function() {
+                return this.scheduleData;
             },
 
             arrangeSchedule: function() {

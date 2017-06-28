@@ -1,0 +1,53 @@
+<link rel="import" href="/vendor/polymer/polymer.html">
+
+<dom-module id="cuac-editable-hour">
+    <template>
+        <span class="editable-hour" data-day="{{day}}" contenteditable$="{{editable}}" on-focus="removeHour" on-blur="checkHour" on-keyup="detectHour"> {{hour}} </span>
+    </template>
+    <script>
+        Polymer({
+            is: 'cuac-editable-hour',
+
+            ready: function() {
+                this.hours = document.getElementById('hours');
+                this.saveButton = document.getElementById('action');
+                this.schedule = document.getElementById('schedule');
+                this.scheduleData = this.schedule.getSchedule();
+            },
+
+            properties: {
+                editable: {type: Boolean, value: false},
+                day: {type: String},
+                hour: {type: String}
+            },
+
+            detectHour: function(event) {
+                event.preventDefault();
+                var editedHour = event.target.innerText.replace(/\s/g,'');
+                this.saveButton.active = this.hours.isValid(editedHour);
+            },
+
+            checkHour: function(event) {
+                event.preventDefault();
+                var editedHour = event.target.innerText.replace(/\s/g,'');
+                var day = event.target.dataDay;
+                if(this.hours.isValid(editedHour)){
+                    this.saveButton.active = this.hours.isValid(editedHour);
+                    this.scheduleData[day].push(editedHour);
+                    this.schedule.removeDuplicateHours(day);
+                }
+            },
+
+            removeHour: function(event) {
+                event.preventDefault();
+                var day = event.target.dataDay;
+                var oldHour = event.target.innerText.replace(/\s/g,'');
+                var index = this.scheduleData[day].indexOf(oldHour);
+                if(index > -1){
+                    this.scheduleData[day].splice(index, 1);
+                }
+            }
+
+        });
+    </script>
+</dom-module>
