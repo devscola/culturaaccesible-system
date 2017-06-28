@@ -3,8 +3,6 @@ module Page
     include Capybara::DSL
 
     def initialize
-      url = '/item/:id'
-      visit(url)
       validate!
     end
 

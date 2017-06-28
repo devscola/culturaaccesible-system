@@ -17,7 +17,7 @@
         <div class$="{{formVisibility}}">
             <div class="panel panel-primary">
                 <div class="panel-heading">
-                    Item form
+                    New item for: {{exhibition.name}}
                 </div>
                 <div class="panel-body form-group">
                     <div class="col-md-6">
@@ -75,7 +75,9 @@
 
                 beacon: { type: String },
 
-                description: { type: String }
+                description: { type: String },
+
+                exhibition: { type: Object }
             },
 
             hideUselessInputs: function(event) {
@@ -92,10 +94,6 @@
                 this.fire('submitted', this.collectData());
             },
 
-            loadExhibitionId: function() {
-                return window.location.href.split('/item/')[1];
-            },
-
             collectData: function() {
                 data = {
                     name: this.name,
@@ -103,11 +101,10 @@
                     date: this.date,
                     beacon: this.beacon,
                     description: this.description,
-                    exhibition_id: this.loadExhibitionId()
+                    exhibition_id: this.exhibition.id
                 };
                 return data;
             }
-
         });
     </script>
 </dom-module>

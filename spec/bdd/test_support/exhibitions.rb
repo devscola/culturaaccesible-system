@@ -21,6 +21,11 @@ module Page
       find('#action').click
     end
 
+    def first_exhibition_name
+      has_css?('.list-item', wait: 2)
+      first('.list-item').text
+    end
+
     def save
       find('.submit.cuac-exhibition-form').click
     end
