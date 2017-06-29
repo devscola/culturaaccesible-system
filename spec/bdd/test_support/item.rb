@@ -3,8 +3,6 @@ module Page
     include Capybara::DSL
 
     def initialize
-      url = '/item/:id'
-      visit(url)
       validate!
     end
 
@@ -29,8 +27,28 @@ module Page
       find_field(name: 'room').click
     end
 
-    def input_visible?(field)
-      has_css?("input[name=#{field}]")
+    def room_checked?
+      has_checked_field?(name: 'room')
+    end
+
+    def accept_alert
+      find('.accept-alert').click
+    end
+
+    def cancel_alert
+      find('.cancel-alert').click
+    end
+
+    def alert_displayed?
+      has_css?('.room-alert')
+    end
+
+    def input_disabled?(field)
+      has_css?("input[name=#{field}]:disabled")
+    end
+
+    def input_blank?(field)
+      find("input[name=#{field}]", visible: false ).value.length < 1
     end
 
     private

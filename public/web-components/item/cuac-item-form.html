@@ -14,16 +14,17 @@
                 display: none;
             }
         </style>
+        <cuac-room-alert id="alert"></cuac-room-alert>
         <div class$="{{formVisibility}}">
             <div class="panel panel-primary">
                 <div class="panel-heading">
-                    Item form
+                    Exhibition: {{exhibition.name}}
                 </div>
                 <div class="panel-body form-group">
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="room">Room</label>
-                            <input type="checkbox" name="room" on-change="hideUselessInputs"></input>
+                            <input type="checkbox" class="room" name="room" on-change="hideUselessInputs"></input>
                         </div>
                         <div class="form-group">
                             <label for="beacon">Beacon Number</label>
@@ -37,11 +38,11 @@
                         </div>
                         <div class="form-group">
                             <label for="author">Author</label>
-                            <input class="form-control" name="author" value="{{author::input}}" type="{{inputVisibility}}"></input>
+                            <input class="form-control" name="author" value="{{author::input}}" disabled="{{disableItemInput}}" type="text"></input>
                         </div>
                         <div class="form-group">
                             <label for="date">Date</label>
-                            <input class="form-control" maxlength="4" name="date" value="{{date::input}}" type="{{inputVisibility}}"></input>
+                            <input class="form-control" maxlength="4" name="date" value="{{date::input}}" disabled="{{disableItemInput}}" type="text"></input>
                         </div>
                         <div class="form-group">
                             <label for="description">Description</label>
@@ -65,35 +66,41 @@
 
                 formVisibility: { type: String },
 
-                inputVisibility: { type: String, value: 'text' },
+                disableItemInput: { type: Boolean, value: false },
 
                 name: { type: String },
 
-                author: { type: String },
+                author: { type: String, value: '' },
 
-                date: { type: String },
+                date: { type: String, value: ''},
 
                 beacon: { type: String },
 
-                description: { type: String }
+                description: { type: String },
+
+                exhibition: { type: Object },
+
             },
 
             hideUselessInputs: function(event) {
                 if (event.target.checked) {
-                    this.inputVisibility = 'hidden';
+                    if(this.essentialItemFieldsHasContent()){
+                        this.fire('roomAlert');
+                    }
+                    this.disableItemInput = true;
                 } else {
-                    this.inputVisibility = 'text';
+                    this.disableItemInput = false;
                 }
+            },
+
+            essentialItemFieldsHasContent: function() {
+                return (this.date.length > 0 || this.author.length > 0)
             },
 
             submitClicked: function(event) {
                 event.preventDefault();
                 this.formVisibility = 'hide';
                 this.fire('submitted', this.collectData());
-            },
-
-            loadExhibitionId: function() {
-                return window.location.href.split('/item/')[1];
             },
 
             collectData: function() {
@@ -103,11 +110,10 @@
                     date: this.date,
                     beacon: this.beacon,
                     description: this.description,
-                    exhibition_id: this.loadExhibitionId()
+                    exhibition_id: this.exhibition.id
                 };
                 return data;
             }
-
         });
     </script>
 </dom-module>

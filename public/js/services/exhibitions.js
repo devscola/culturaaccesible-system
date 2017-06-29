@@ -6,6 +6,12 @@ Class('Services.Exhibitions', {
         Services.Exhibitions.Super.call(this, '/api');
     },
 
+    retrieveExhibition: function(payload) {
+        this.doRequest('/exhibition/retrieve', payload, function(exhibition){
+            Bus.publish('exhibition.retrieved', exhibition);
+        });
+    },
+
     retrieveList: function(result) {
         this.doRequest('/exhibition/list', '', function(result) {
             Bus.publish('exhibitions.list.retrieved', result);
@@ -19,6 +25,7 @@ Class('Services.Exhibitions', {
     },
 
     subscribe: function() {
+        Bus.subscribe('exhibition.retrieve', this.retrieveExhibition.bind(this));
         Bus.subscribe('exhibitions.list.retrieve', this.retrieveList.bind(this));
         Bus.subscribe('exhibition.save', this.saveExhibition.bind(this));
     }
