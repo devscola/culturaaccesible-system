@@ -26,6 +26,17 @@ feature 'Museum' do
     expect(current.has_content?(Fixture::Museum::MANDATORY_DATA['name'])).to be true
   end
 
+  context 'location section' do
+    scenario 'validates that google maps link has coordinates' do
+      current = Fixture::Museum.showing_form
+
+      current.fill_with_bad_link
+      current.change_focus
+
+      expect(current.has_css?('.has-error')).to be true
+    end
+  end
+
   context 'contact section' do
     scenario 'disallows add input without content' do
       current = Fixture::Museum.showing_form

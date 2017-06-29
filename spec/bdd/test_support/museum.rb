@@ -132,6 +132,15 @@ module Page
       name == focus
     end
 
+    def fill_with_bad_link
+      bad_link = "https://www.google.es/maps/place/Museo+Guggenheim+Bilbao/"
+      fill_in('link', with: bad_link)
+    end
+
+    def change_focus
+      find('[name=region]').click
+    end
+
     private
 
     def validate!

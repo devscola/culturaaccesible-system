@@ -1,0 +1,43 @@
+<link rel="import" href="/vendor/polymer/polymer.html">
+
+<dom-module id="cuac-location-link">
+    <template>
+        <div class="form-group">
+            <label for="link">Link to Google Maps</label>
+            <input class="form-control" name="link" on-blur="validate">
+        </div>
+    </template>
+
+    <script>
+        Polymer({
+            is: 'cuac-location-link',
+
+            properties: {
+                link: {type: String, value: ''}
+            },
+
+            validate: function() {
+                if(this.isValid()){
+                    this.quitError()
+                }else {
+                    this.showError()
+                }
+            },
+
+            isValid: function() {
+                var coordinatesRegExp = /([+-]?\d+\.?\d+)\s*,\s*([+-]?\d+\.?\d+)/
+                var isGoogle = this.link.substring(0, 27) == "https://www.google.es/maps/"
+                var hasCoordinates = coordinatesRegExp.test(this.link)
+                return isGoogle && hasCoordinates
+            },
+
+            showError: function() {
+                this.$$(".form-group").classList.add('has-error');
+            },
+
+            quitError: function() {
+                this.$$(".form-group").classList.remove('has-error');
+            }
+        });
+    </script>
+</dom-module>
