@@ -1,6 +1,7 @@
 module Exhibitions
   class Exhibition
     attr_reader :id
+    attr_accessor :numbers
 
     def initialize(data, id=nil)
       @creation_date = Time.now.utc
@@ -11,6 +12,7 @@ module Exhibitions
       @date_start = Defense.string_null_defense(data['date_start'])
       @date_finish = Defense.string_null_defense(data['date_finish'])
       @type = Defense.string_null_defense(data['type'])
+      @numbers = Defense.array_null_defense(data['numbers'])
       @beacon = Defense.string_null_defense(data['beacon'])
       @description = Defense.string_null_defense(data['description'])
       @id = id || generate_id
@@ -28,10 +30,19 @@ module Exhibitions
         date_start: @date_start,
         date_finish: @date_finish,
         type: @type,
+        numbers: @numbers,
         beacon: @beacon,
         description: @description,
         index: @index
       }
+    end
+
+    def get_numbers
+      @numbers
+    end
+
+    def set_numbers(number)
+      @numbers << number
     end
 
     private

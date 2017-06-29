@@ -1,5 +1,6 @@
 require_relative 'repository'
 require_relative 'item'
+require_relative '../exhibitions/service'
 
 module Items
   class Service

@@ -7,6 +7,9 @@ module Fixture
     AUTHOR = 'Picasso'
     ARTWORK = 'Guernica'
     VISIBLE_ARTWORK = 'Name: Guernica'
+    FIRST_NUMBER = 1
+    SECOND_NUMBER = 2
+    REPEATED_NUMBER = FIRST_NUMBER
 
     class << self
       def initial_state

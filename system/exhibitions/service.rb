@@ -24,6 +24,11 @@ module Exhibitions
       def flush
         Exhibitions::Repository.flush
       end
+
+      def add_number(exhibition_id, number)
+        Exhibitions::Repository.add_number(exhibition_id, number)
+      end
+
     end
   end
 end

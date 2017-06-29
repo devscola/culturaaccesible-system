@@ -26,6 +26,11 @@ module Exhibitions
         @content = []
       end
 
+      def add_number(exhibition_id, number)
+        exhibition = retrieve(exhibition_id)
+        exhibition.set_numbers(number)
+      end
+
       private
 
       def update(exhibition_data)

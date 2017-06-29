@@ -27,6 +27,10 @@
                             <input type="checkbox" class="room" name="room" on-change="hideUselessInputs"></input>
                         </div>
                         <div class="form-group">
+                            <label for="number">Number</label>
+                            <input class="form-control" name="number" value="{{number::input}}" on-input="numberValidate"></input>
+                        </div>
+                        <div class="form-group">
                             <label for="beacon">Beacon Number</label>
                             <input class="form-control" name="beacon" value="{{beacon::input}}"></input>
                         </div>
@@ -52,7 +56,7 @@
                 </div>
             </div>
             <div class="text-center">
-                <button type="button" class="btn btn-primary" on-click="submitClicked" name="submit">Save</button>
+                <button type="button" class="btn btn-primary submit" on-click="submitClicked" disabled="{{disableSaveButton}}">Save</button>
             </div>
         </div>
 
@@ -68,11 +72,15 @@
 
                 disableItemInput: { type: Boolean, value: false },
 
-                name: { type: String },
+                disableSaveButton: { type: Boolean, value: true},
+
+                name: { type: String, value: '' },
 
                 author: { type: String, value: '' },
 
                 date: { type: String, value: ''},
+
+                number: {type: Number },
 
                 beacon: { type: String },
 
@@ -108,11 +116,21 @@
                     name: this.name,
                     author: this.author,
                     date: this.date,
+                    number: this.number,
                     beacon: this.beacon,
                     description: this.description,
                     exhibition_id: this.exhibition.id
                 };
                 return data;
+            },
+
+            numberValidate: function(event) {
+              var number = event.target.value
+              if (this.exhibition.numbers.indexOf(number) < 0 && this.name.length > 0) {
+                this.disableSaveButton = false
+              } else {
+                this.disableSaveButton = true
+              }
             }
         });
     </script>

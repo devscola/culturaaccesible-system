@@ -71,4 +71,47 @@ feature 'Item' do
 
     expect(has_content?(exhibition_name)).to be true
   end
+
+  scenario 'valid for submit if item number is validated' do
+    current = Fixture::Item.from_exhibition_to_new_item
+
+    current.fill('name',Fixture::Item::ARTWORK)
+    current.fill('number',Fixture::Item::FIRST_NUMBER)
+
+    current.submit
+
+    current = Page::Exhibitions.new
+    current.click_plus_button
+
+    current = Page::Item.new
+
+    current.fill('name',Fixture::Item::ARTWORK)
+    current.fill('number',Fixture::Item::SECOND_NUMBER)
+
+    expect(current.submit_disabled?).to be false
+
+  end
+
+  scenario 'invalid for submit if item number is not validated' do
+    current = Fixture::Item.from_exhibition_to_new_item
+
+    current.fill('name',Fixture::Item::ARTWORK)
+    current.fill('number',Fixture::Item::FIRST_NUMBER)
+
+    current.submit
+    save_screenshot('s1.png')
+
+    current = Page::Exhibitions.new
+    save_screenshot('s2.png')
+    current.click_plus_button
+
+    current = Page::Item.new
+
+    current.fill('name',Fixture::Item::ARTWORK)
+    current.fill('number',Fixture::Item::REPEATED_NUMBER)
+    save_screenshot('s3.png')
+
+    expect(current.submit_disabled?).to be true
+
+  end
 end

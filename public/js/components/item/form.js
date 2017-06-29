@@ -46,7 +46,7 @@ Class('Item.Form', {
     },
 
     save: function(item) {
-        Bus.publish('item.save', item.detail);
+      Bus.publish('item.save', item.detail);
     },
 
     subscribe: function() {
