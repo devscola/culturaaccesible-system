@@ -27,6 +27,22 @@ module Page
       find_field(name: 'room').click
     end
 
+    def room_checked?
+      has_checked_field?(name: 'room')
+    end
+
+    def accept_alert
+      find('.accept-alert').click
+    end
+
+    def cancel_alert
+      find('.cancel-alert').click
+    end
+
+    def alert_displayed?
+      has_css?('.room-alert')
+    end
+
     def input_visible?(field)
       has_css?("input[name=#{field}]")
     end

@@ -14,16 +14,17 @@
                 display: none;
             }
         </style>
+        <cuac-room-alert id="alert"></cuac-room-alert>
         <div class$="{{formVisibility}}">
             <div class="panel panel-primary">
                 <div class="panel-heading">
-                    New item for: {{exhibition.name}}
+                    Exhibition: {{exhibition.name}}
                 </div>
                 <div class="panel-body form-group">
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="room">Room</label>
-                            <input type="checkbox" name="room" on-change="hideUselessInputs"></input>
+                            <input type="checkbox" class="room" name="room" on-change="hideUselessInputs"></input>
                         </div>
                         <div class="form-group">
                             <label for="beacon">Beacon Number</label>
@@ -69,23 +70,32 @@
 
                 name: { type: String },
 
-                author: { type: String },
+                author: { type: String, value: '' },
 
-                date: { type: String },
+                date: { type: String, value: ''},
 
                 beacon: { type: String },
 
                 description: { type: String },
 
-                exhibition: { type: Object }
+                exhibition: { type: Object },
+
             },
 
             hideUselessInputs: function(event) {
                 if (event.target.checked) {
-                    this.inputVisibility = 'hidden';
+                    if(this.essentialItemFieldsHasContent()){
+                        this.fire('roomAlert');
+                    }else{
+                        this.inputVisibility = 'hidden';
+                    }
                 } else {
                     this.inputVisibility = 'text';
                 }
+            },
+
+            essentialItemFieldsHasContent: function() {
+                return (this.date.length > 0 || this.author.length > 0)
             },
 
             submitClicked: function(event) {

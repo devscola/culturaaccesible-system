@@ -4,8 +4,24 @@ Class('Item.Form', {
 
     initialize: function() {
         Item.Form.Super.call(this, 'formulary');
+        this.alert = document.getElementById('alert');
+        this.alert.addEventListener('hideFields', this.hideFields.bind(this));
+        this.alert.addEventListener('uncheckRoom', this.uncheckRoom.bind(this));
         this.element.addEventListener('submitted', this.save.bind(this));
+        this.element.addEventListener('roomAlert', this.showAlert.bind(this));
         this.retrieveAnExhibition();
+    },
+
+    showAlert: function() {
+        this.alert.visibility = 'show';
+    },
+
+    hideFields: function() {
+        this.element.inputVisibility = 'hidden';
+    },
+
+    uncheckRoom: function() {
+        document.getElementsByClassName("room")[0].checked = false;
     },
 
     retrieveAnExhibition: function() {
@@ -17,7 +33,7 @@ Class('Item.Form', {
     loadExhibitionId: function() {
         return window.location.href.split('/item/')[1];
     },
-    
+
     renderExhibition: function(exhibition) {
         this.element.exhibition = exhibition;
     },

@@ -22,6 +22,32 @@ feature 'Item' do
     expect(current.content?(Fixture::Item::VISIBLE_ARTWORK)).to be true
   end
 
+  scenario 'displays an alert when author or date are filled and room checkbox is typed' do
+    current = Fixture::Item.shows_room_alert
+
+    expect(current.alert_displayed?).to be true
+  end
+
+  scenario 'disallows to fill author and date when alert is accepted' do
+    current = Fixture::Item.shows_room_alert
+
+    current.accept_alert
+
+    expect(current.room_checked?).to be true
+    expect(current.input_visible?('author')).to be false
+    expect(current.input_visible?('date')).to be false
+  end
+
+  scenario 'allows to fill author and date when alert is canceled' do
+    current = Fixture::Item.shows_room_alert
+
+    current.cancel_alert
+
+    expect(current.room_checked?).to be false
+    expect(current.input_visible?('author')).to be true
+    expect(current.input_visible?('date')).to be true
+  end
+
   scenario 'disallows to fill author and date' do
     current = Fixture::Item.from_exhibition_to_new_item
 
@@ -39,7 +65,7 @@ feature 'Item' do
     exhibition_name = current.first_exhibition_name
 
     current.click_plus_button
-    
+
     expect(has_content?(exhibition_name)).to be true
   end
 end

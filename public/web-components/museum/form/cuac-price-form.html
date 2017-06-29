@@ -3,15 +3,15 @@
 <dom-module id="cuac-price-form">
     <template>
         <div class="form-group">
-            <label >Free entrance</label>
+            <label>Free entrance</label>
             <cuac-input-container inputtype="freeEntrance"></cuac-input-container>
         </div>
         <div class="form-group">
-            <label >General</label>
+            <label>General</label>
             <cuac-input-container inputtype="general"></cuac-input-container>
         </div>
         <div class="form-group">
-            <label >Reduced</label>
+            <label>Reduced</label>
             <cuac-input-container inputtype="reduced"></cuac-input-container>
         </div>
     </template>
@@ -30,10 +30,10 @@
 
             validatePriceData: function(event) {
                 var input = event.detail;
-                
+
                 if (input.content !== '') {
                     this.updatePriceData(input);
-                } 
+                }
             },
 
             updatePriceData: function(input) {
