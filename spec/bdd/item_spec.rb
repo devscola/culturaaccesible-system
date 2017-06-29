@@ -63,7 +63,7 @@ feature 'Item' do
     expect(current.input_visible?('date')).to be false
   end
 
-  scenario 'check if an exhibition name is in form item' do
+  scenario 'check if an exhibition name is in breadcrumb' do
     current = Fixture::Exhibitions.pristine.exhibition_saved
     exhibition_name = current.first_exhibition_name
 
@@ -71,4 +71,18 @@ feature 'Item' do
 
     expect(has_content?(exhibition_name)).to be true
   end
+
+  scenario 'check if item name is in breadcrumb when it is saved' do
+    current = Fixture::Exhibitions.pristine.exhibition_saved
+    exhibition_name = current.first_exhibition_name
+    breadcrumb =  exhibition_name + ' > ' + Fixture::Item::ARTWORK
+
+    current.click_plus_button
+    current_item = Fixture::Item.initial_state
+
+    current_item.fill('name',Fixture::Item::ARTWORK)
+    current_item.submit
+
+    expect(has_content?(breadcrumb)).to be true
+  end  
 end

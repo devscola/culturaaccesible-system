@@ -14,7 +14,9 @@
         <div class$="{{viewVisibility}}">
             <div class="panel panel-primary">
                 <div class="panel-heading">
-                    <h3 class="panel-title">Item detail</h3>
+                    <h3 class="panel-title">
+                        {{exhibition.name}} &gt; {{item.name}}
+                    </h3>
                 </div>
                 <div class="panel-body">
                     <div>Name: {{item.name}}</div>
@@ -43,6 +45,8 @@
                     reflectToAttribute: true,
                     observer: 'show'
                 },
+
+                exhibition: { type: Object }
             },
 
             ready: function() {
