@@ -17,7 +17,13 @@ Class('Item.Form', {
     },
 
     hideFields: function() {
+        this.emptyFields();
         this.element.inputVisibility = 'hidden';
+    },
+
+    emptyFields: function() {
+        this.element.date = '';
+        this.element.author = '';
     },
 
     uncheckRoom: function() {

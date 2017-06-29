@@ -47,6 +47,10 @@ module Page
       has_css?("input[name=#{field}]")
     end
 
+    def input_blank?(field)
+      find("input[name=#{field}]", visible: false ).value.length < 1
+    end
+
     private
 
     def validate!

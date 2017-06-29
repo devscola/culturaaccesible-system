@@ -31,9 +31,12 @@ feature 'Item' do
   scenario 'disallows to fill author and date when alert is accepted' do
     current = Fixture::Item.shows_room_alert
 
+
     current.accept_alert
 
     expect(current.room_checked?).to be true
+    expect(current.input_blank?('author')).to be true
+    expect(current.input_blank?('date')).to be true
     expect(current.input_visible?('author')).to be false
     expect(current.input_visible?('date')).to be false
   end
