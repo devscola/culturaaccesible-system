@@ -5,7 +5,7 @@ Class('Item.Form', {
     initialize: function() {
         Item.Form.Super.call(this, 'formulary');
         this.alert = document.getElementById('alert');
-        this.alert.addEventListener('hideFields', this.hideFields.bind(this));
+        this.alert.addEventListener('disableFields', this.disableFields.bind(this));
         this.alert.addEventListener('uncheckRoom', this.uncheckRoom.bind(this));
         this.element.addEventListener('submitted', this.save.bind(this));
         this.element.addEventListener('roomAlert', this.showAlert.bind(this));
@@ -16,9 +16,9 @@ Class('Item.Form', {
         this.alert.visibility = 'show';
     },
 
-    hideFields: function() {
+    disableFields: function() {
+        this.element.disableItemInput = true;
         this.emptyFields();
-        this.element.inputVisibility = 'hidden';
     },
 
     emptyFields: function() {
@@ -28,6 +28,7 @@ Class('Item.Form', {
 
     uncheckRoom: function() {
         document.getElementsByClassName("room")[0].checked = false;
+        this.element.disableItemInput = false;
     },
 
     retrieveAnExhibition: function() {

@@ -14,7 +14,7 @@
         <div class$="{{visibility}} room-alert">
             <p>By checking the option room, the Author and Date fields will be disabled. Are you sure you want to continue?</p>
             <div>
-                <button class="accept-alert" on-click="hideFields">OK</button>
+                <button class="accept-alert" on-click="disableFields">OK</button>
                 <button class="cancel-alert" on-click="cancelAlert">CANCEL</button>
             </div>
         </div>
@@ -36,9 +36,9 @@
                 this.visibility = 'hide';
             },
 
-            hideFields: function() {
+            disableFields: function() {
                 this.visibility = 'hide'
-                this.fire('hideFields');
+                this.fire('disableFields');
             },
 
             cancelAlert: function() {
