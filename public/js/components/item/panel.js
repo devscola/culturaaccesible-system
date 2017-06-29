@@ -16,7 +16,7 @@ Class('Item.View', {
     },
 
     subscribe: function() {
-        Bus.subscribe('item.save', this.render.bind(this));
+        Bus.subscribe('item.saved', this.render.bind(this));
     }
 
 });

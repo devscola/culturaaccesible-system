@@ -4,7 +4,16 @@ require_relative 'test_support/fixture_item'
 require_relative 'test_support/exhibitions'
 require_relative 'test_support/fixture_exhibitions'
 
-feature 'Item' do
+feature 'Item', :wip do
+  scenario 'allows submit when fill required name' do
+    current = Fixture::Item.from_exhibition_to_new_item
+    expect(current.submit_disabled?).to be true
+
+    current.fill('name',Fixture::Item::ARTWORK)
+
+    expect(current.submit_disabled?).to be false
+  end
+
   scenario 'allows type only four character on date' do
     current = Fixture::Item.from_exhibition_to_new_item
 
@@ -99,19 +108,16 @@ feature 'Item' do
     current.fill('number',Fixture::Item::FIRST_NUMBER)
 
     current.submit
-    save_screenshot('s1.png')
 
     current = Page::Exhibitions.new
-    save_screenshot('s2.png')
     current.click_plus_button
 
     current = Page::Item.new
 
     current.fill('name',Fixture::Item::ARTWORK)
     current.fill('number',Fixture::Item::REPEATED_NUMBER)
-    save_screenshot('s3.png')
 
     expect(current.submit_disabled?).to be true
-
   end
+
 end

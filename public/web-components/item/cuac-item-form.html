@@ -28,7 +28,7 @@
                         </div>
                         <div class="form-group">
                             <label for="number">Number</label>
-                            <input class="form-control" name="number" value="{{number::input}}" on-input="numberValidate"></input>
+                            <input class="form-control" name="number" value="{{number::input}}" on-keyup="numberValidate"></input>
                         </div>
                         <div class="form-group">
                             <label for="beacon">Beacon Number</label>
@@ -38,7 +38,7 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="name"><strong>Name*</strong></label>
-                            <input class="form-control" name="name" value="{{name::input}}" autofocus></input>
+                            <input class="form-control" name="name" value="{{name::input}}" on-keyup="nameValidation" autofocus></input>
                         </div>
                         <div class="form-group">
                             <label for="author">Author</label>
@@ -124,12 +124,21 @@
                 return data;
             },
 
-            numberValidate: function(event) {
-              var number = event.target.value
-              if (this.exhibition.numbers.indexOf(number) < 0 && this.name.length > 0) {
-                this.disableSaveButton = false
+            nameValidation: function(event) {
+              var name = event.target.value;
+              if ( (this.exhibition.numbers.indexOf(this.number) < 0 ) && (this.name.length >0) ) {
+                this.disableSaveButton = false;
               } else {
-                this.disableSaveButton = true
+                this.disableSaveButton = true;
+              }
+            },
+
+            numberValidate: function(event) {
+              var number = event.target.value;
+              if ( (this.exhibition.numbers.indexOf(number) < 0) && (this.name.length > 0) ) {
+                this.disableSaveButton = false;
+              } else {
+                this.disableSaveButton = true;
               }
             }
         });

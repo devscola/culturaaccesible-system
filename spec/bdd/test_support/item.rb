@@ -44,7 +44,7 @@ module Page
     end
 
     def input_disabled?(field)
-      has_css?('input[name=#{field}]:disabled')
+      has_css?("input[name=#{field}]:disabled")
     end
 
     def submit_disabled?
@@ -52,7 +52,7 @@ module Page
     end
 
     def input_blank?(field)
-      find('input[name=#{field}]', visible: false ).value.length < 1
+      find("input[name=#{field}]", visible: false ).value.length < 1
     end
 
     private
