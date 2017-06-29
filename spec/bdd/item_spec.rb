@@ -72,7 +72,7 @@ feature 'Item', :wip do
     expect(current.input_disabled?('date')).to be true
   end
 
-  scenario 'check if an exhibition name is in form item' do
+  scenario 'check if an exhibition name is in breadcrumb' do
     current = Fixture::Exhibitions.pristine.exhibition_saved
     exhibition_name = current.first_exhibition_name
 
@@ -98,7 +98,6 @@ feature 'Item', :wip do
     current.fill('number',Fixture::Item::SECOND_NUMBER)
 
     expect(current.submit_disabled?).to be false
-
   end
 
   scenario 'invalid for submit if item number is not validated' do
@@ -120,4 +119,17 @@ feature 'Item', :wip do
     expect(current.submit_disabled?).to be true
   end
 
+  scenario 'check if item name is in breadcrumb when it is saved' do
+    current = Fixture::Exhibitions.pristine.exhibition_saved
+    exhibition_name = current.first_exhibition_name
+    breadcrumb =  exhibition_name + ' > ' + Fixture::Item::ARTWORK
+
+    current.click_plus_button
+    current_item = Fixture::Item.initial_state
+
+    current_item.fill('name',Fixture::Item::ARTWORK)
+    current_item.submit
+
+    expect(has_content?(breadcrumb)).to be true
+  end  
 end
