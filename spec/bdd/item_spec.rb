@@ -37,8 +37,8 @@ feature 'Item' do
     expect(current.room_checked?).to be true
     expect(current.input_blank?('author')).to be true
     expect(current.input_blank?('date')).to be true
-    expect(current.input_visible?('author')).to be false
-    expect(current.input_visible?('date')).to be false
+    expect(current.input_disabled?('author')).to be true
+    expect(current.input_disabled?('date')).to be true
   end
 
   scenario 'allows to fill author and date when alert is canceled' do
@@ -47,20 +47,20 @@ feature 'Item' do
     current.cancel_alert
 
     expect(current.room_checked?).to be false
-    expect(current.input_visible?('author')).to be true
-    expect(current.input_visible?('date')).to be true
+    expect(current.input_disabled?('author')).to be false
+    expect(current.input_disabled?('date')).to be false
   end
 
   scenario 'disallows to fill author and date' do
     current = Fixture::Item.from_exhibition_to_new_item
 
-    expect(current.input_visible?('author')).to be true
-    expect(current.input_visible?('date')).to be true
+    expect(current.input_disabled?('author')).to be false
+    expect(current.input_disabled?('date')).to be false
 
     current.check_room
 
-    expect(current.input_visible?('author')).to be false
-    expect(current.input_visible?('date')).to be false
+    expect(current.input_disabled?('author')).to be true
+    expect(current.input_disabled?('date')).to be true
   end
 
   scenario 'check if an exhibition name is in form item' do

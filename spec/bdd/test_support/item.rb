@@ -43,8 +43,8 @@ module Page
       has_css?('.room-alert')
     end
 
-    def input_visible?(field)
-      has_css?("input[name=#{field}]")
+    def input_disabled?(field)
+      has_css?("input[name=#{field}]:disabled")
     end
 
     def input_blank?(field)
