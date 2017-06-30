@@ -137,6 +137,11 @@ module Page
       fill_in('link', with: bad_link)
     end
 
+    def fill_with_good_link
+      good_link = "https://www.google.es/maps/place/Institut+Valenci%C3%A0+d'Art+Modern/@39.4723137,-0.3909856,15z"
+      fill_in('link', with: good_link)
+    end
+
     def change_focus
       find('[name=region]').click
     end

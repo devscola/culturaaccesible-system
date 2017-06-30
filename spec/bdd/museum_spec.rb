@@ -34,6 +34,11 @@ feature 'Museum' do
       current.change_focus
 
       expect(current.has_css?('.has-error')).to be true
+
+      current.fill_with_good_link
+      current.change_focus
+
+      expect(current.has_css?('.has-error')).to be false
     end
   end
 
