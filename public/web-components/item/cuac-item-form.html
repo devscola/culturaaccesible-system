@@ -26,9 +26,9 @@
                             <label for="room">Room</label>
                             <input type="checkbox" class="room" name="room" on-change="hideUselessInputs"></input>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group number">
                             <label for="number">Number</label>
-                            <input class="form-control" name="number" value="{{number::input}}" on-keyup="numberValidate"></input>
+                            <input class="form-control" name="number" value="{{number::input}}" on-keyup="numberValidation"></input>
                         </div>
                         <div class="form-group">
                             <label for="beacon">Beacon Number</label>
@@ -38,7 +38,7 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="name"><strong>Name*</strong></label>
-                            <input class="form-control" name="name" value="{{name::input}}" on-keyup="nameValidation" autofocus></input>
+                            <input class="form-control" name="name" value="{{name::input}}" on-keyup="saveActivation" autofocus></input>
                         </div>
                         <div class="form-group">
                             <label for="author">Author</label>
@@ -124,23 +124,35 @@
                 return data;
             },
 
-            nameValidation: function(event) {
-              var name = event.target.value;
-              if ( (this.exhibition.numbers.indexOf(this.number) < 0 ) && (this.name.length >0) ) {
-                this.disableSaveButton = false;
-              } else {
-                this.disableSaveButton = true;
-              }
+            numberValidation: function() {
+                this.saveActivation();
+                this.numberTextboxColor();
             },
 
-            numberValidate: function(event) {
-              var number = event.target.value;
-              if ( (this.exhibition.numbers.indexOf(number) < 0) && (this.name.length > 0) ) {
-                this.disableSaveButton = false;
-              } else {
-                this.disableSaveButton = true;
-              }
+            saveActivation: function() {
+                if ( (this.exhibition.numbers.indexOf(this.number) < 0) && (this.name.length > 0) ) {
+                    this.disableSaveButton = false;
+                } else {
+                    this.disableSaveButton = true;
+                }
+            },
+
+            numberTextboxColor: function(){
+                if((this.exhibition.numbers.indexOf(this.number) >= 0)){
+                    this.showError();
+                }else{
+                    this.quitError();
+                }
+            },
+
+            showError: function() {
+                this.$$(".number").classList.add('has-error');
+            },
+
+            quitError: function() {
+                this.$$(".number").classList.remove('has-error');
             }
+
         });
     </script>
 </dom-module>
