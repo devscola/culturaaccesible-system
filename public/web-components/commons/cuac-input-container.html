@@ -84,9 +84,14 @@
                 var element = document.getElementsByName(name)[0];
                 if (element.value.length > 0){
                     this.activeAddButton = true;
+                    this.refreshFieldValue();
                 } else {
                     this.activeAddButton = false;
                 }
+            },
+
+            refreshFieldValue: function() {
+                this.fieldValue = ' ';
             },
 
             inputIndex: function(index) {

@@ -87,6 +87,16 @@ feature 'Museum' do
 
       expect(current.focus_in_input?('phone2')).to be true
     end
+
+    scenario 'allows adding with only one character' do
+      current = Fixture::Museum.showing_form
+
+      current.fill_input('phone1', '0')
+      current.add_input('.phone')
+      current.fill_input('phone2', '0')
+
+      expect(current.button_enabled?('.phone')).to be true
+    end
   end
 
   context 'schedule section' do
