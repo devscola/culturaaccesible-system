@@ -9,11 +9,17 @@ Class('Item.Form', {
         this.alert.addEventListener('uncheckRoom', this.uncheckRoom.bind(this));
         this.element.addEventListener('submitted', this.save.bind(this));
         this.element.addEventListener('roomAlert', this.showAlert.bind(this));
+        this.itemForm = document.getElementById('formulary');
         this.retrieveAnExhibition();
     },
 
     showAlert: function() {
         this.alert.visibility = 'show';
+    },
+
+    show: function(event) {
+        this.itemForm.item = event.detail;
+        this.itemForm.formVisibility = 'show';
     },
 
     disableFields: function() {
@@ -51,5 +57,6 @@ Class('Item.Form', {
 
     subscribe: function() {
         Bus.subscribe('exhibition.retrieved', this.renderExhibition.bind(this));
+        Bus.subscribe('item.edit', this.show.bind(this));
     }
 });

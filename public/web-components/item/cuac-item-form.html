@@ -15,7 +15,7 @@
             }
         </style>
         <cuac-room-alert id="alert"></cuac-room-alert>
-        <div class$="{{formVisibility}}">
+        <form class$="form {{formVisibility}}">
             <div class="panel panel-primary">
                 <div class="panel-heading">
                     {{exhibition.name}} &gt; <strong>New content</strong>
@@ -58,7 +58,7 @@
             <div class="text-center">
                 <button type="button" class="btn btn-primary submit" on-click="submitClicked" disabled="{{disableSaveButton}}">Save</button>
             </div>
-        </div>
+        </form>
 
     </template>
 

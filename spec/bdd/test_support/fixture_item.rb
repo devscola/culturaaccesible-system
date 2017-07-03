@@ -6,6 +6,7 @@ module Fixture
     DATE = '1937'
     AUTHOR = 'Picasso'
     ARTWORK = 'Guernica'
+    OTHER_ARTWORK = 'La costellazione'
     VISIBLE_ARTWORK = 'Name: Guernica'
     FIRST_NUMBER = 1
     SECOND_NUMBER = 2

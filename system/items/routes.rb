@@ -9,4 +9,9 @@ class App < Sinatra::Base
     result.to_json
   end
 
+  post '/api/item/retrieve' do
+    item = JSON.parse(request.body.read)
+    result = Items::Service.retrieve(item['id'])
+    result.to_json
+  end
 end

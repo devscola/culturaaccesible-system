@@ -4,6 +4,8 @@ Class('Item.View', {
 
     initialize: function() {
         Item.View.Super.call(this, 'result');
+        this.element.addEventListener('edit', this.hide.bind(this));
+        this.element.addEventListener('submitted', this.show.bind(this));
         this.retrieveAnExhibition();
     },
 
@@ -13,7 +15,12 @@ Class('Item.View', {
     },
 
     show: function() {
-        this.element.visible = true;
+        this.element.viewVisibility = 'show';
+    },
+
+    hide: function(event) {
+        this.element.viewVisibility = 'hide';
+        Bus.publish('item.edit', event);
     },
 
     retrieveAnExhibition: function() {

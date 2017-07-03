@@ -6,7 +6,12 @@ module Items
   class Service
     class << self
       def store(item_data)
-        result = Items::Repository.store(item_data)
+        result = Items::Repository.choose_action(item_data)
+        result.serialize
+      end
+
+      def retrieve(id)
+        result = Items::Repository.retrieve(id)
         result.serialize
       end
     end

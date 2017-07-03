@@ -18,6 +18,23 @@ module Page
       find('.submit').click
     end
 
+    def has_edit_button?
+      has_css?('.edit-button')
+    end
+
+    def click_edit
+      find('.edit-button', wait: 4).click
+    end
+
+    def form_visible?
+      form = find('.form', visible: false)
+      form.visible?
+    end
+
+    def other_name?
+      has_content?('La costellazione')
+    end
+
     def type_max_four_characters
       date_length = find('[name=date]').value.length
       (date_length <= 4)
