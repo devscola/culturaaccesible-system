@@ -97,6 +97,14 @@ module Page
       element.send_keys(hour)
     end
 
+    def remove_added_input(name)
+      element = find("[name=#{name}]")
+      element.send_keys(:end)
+      (0..element.value.length).each do |i|
+        element.send_keys(:backspace)
+      end
+    end
+
     def edited_hour
       first('.editable-hour').text
     end

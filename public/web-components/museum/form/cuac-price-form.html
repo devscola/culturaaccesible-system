@@ -33,6 +33,8 @@
 
                 if (input.content !== '') {
                     this.updatePriceData(input);
+                } else {
+                  this.removeInputData(input);
                 }
             },
 
@@ -51,6 +53,10 @@
 
             updateEntry: function(input) {
                 this.priceData[input.type][input.index] = input.content;
+            },
+
+            removeInputData: function(input) {
+                this.priceData[input.type].splice([input.index],1)
             }
 
         });

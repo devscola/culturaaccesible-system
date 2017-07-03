@@ -9,6 +9,10 @@ module Fixture
 
     EXTRA_PHONE = '99999999'
     PHONE = '000000000'
+    OTHER_PHONE = '123456789'
+
+    PRICE = '25'
+    OTHER_PRICE = '30'
 
     HOUR_OUT_OF_RANGE = '23:00-24:00'
     MINUTES_OUT_OF_RANGE = '08:60-14:00'
@@ -56,6 +60,17 @@ module Fixture
         current = fill_mandatory_content
         current.fill_input('phone1', PHONE)
         current.add_input('.phone')
+        current
+      end
+
+      def add_content_with_extra_phones_and_prices
+        current = fill_mandatory_content
+        current.fill_input('phone1', PHONE)
+        current.add_input('.phone')
+        current.fill_input('phone2', OTHER_PHONE)
+        current.fill_input('general1', PRICE)
+        current.add_input('.general')
+        current.fill_input('general2', OTHER_PRICE)
         current
       end
     end
