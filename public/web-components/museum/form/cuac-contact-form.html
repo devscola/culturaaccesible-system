@@ -32,10 +32,12 @@
 
             validateContactData: function(event) {
                 var input = event.detail;
-                
+                console.log(event.detail);
                 if (input.content !== '') {
                     this.updateContactData(input);
-                } 
+                } else {
+                  this.removeInputData(input);
+                }
             },
 
             updateContactData: function(input) {
@@ -53,6 +55,10 @@
 
             updateEntry: function(input) {
                 this.contactData[input.type][input.index] = input.content;
+            },
+
+            removeInputData: function(input) {
+                this.contactData[input.type].splice([input.index],1)
             }
         });
     </script>

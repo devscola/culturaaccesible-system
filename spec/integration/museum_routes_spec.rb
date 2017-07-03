@@ -45,7 +45,7 @@ describe 'Museum controller' do
     expect(museum_name).to eq 'some name'
   end
 
-  it 'updates museum with id' do
+  it 'updates museum returns updated phone and price data' do
     old_name = 'some name'
     new_name = 'some updated name'
 
@@ -57,6 +57,8 @@ describe 'Museum controller' do
 
     expect(museum_id).to eq updated_museum['id']
     expect(new_name).to eq updated_museum['info']['name']
+    expect(updated_museum['contact']['phone']).to eq ['123456789', '987654321']
+    expect(updated_museum['price']['general']).to eq ['25', '30']
   end
 end
 
@@ -72,7 +74,9 @@ end
     museum = {
         id: id,
         info: {name: 'some updated name', description: 'some description'},
-        location: {street: 'some street'}
+        location: {street: 'some street'},
+        contact: {phone: ['123456789', '987654321']},
+        price: {general: ['25', '30']}
       }.to_json
     post 'api/museum/update', museum
   end

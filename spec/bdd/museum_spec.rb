@@ -227,5 +227,18 @@ feature 'Museum' do
       expect(current.has_content?(Fixture::Museum::ALTERNATIVE_HOUR)).to be true
       expect(current.has_content?(Fixture::Museum::HOUR)).to be false
     end
+
+    scenario 'update edited phone and price deleted' do
+      current = Fixture::Museum.add_content_with_extra_phones_and_prices
+      current.submit
+
+      current.click_edit_button
+      current.remove_added_input('phone1')
+      current.remove_added_input('general1')
+      current.submit
+
+      expect(current.has_content?(Fixture::Museum::PHONE)).to be false
+      expect(current.has_content?(Fixture::Museum::PRICE)).to be false
+    end
   end
 end
