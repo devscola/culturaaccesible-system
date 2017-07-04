@@ -32,6 +32,26 @@ include Rack::Test::Methods
     expect(first_item_exhibition_id == second_item_exhibition_id).to be true
   end
 
+  it 'stores rooms' do
+    add_exhibition
+    exhibition_id = parse_response['id']
+
+    add_room(FIRST_NAME, exhibition_id)
+    room_name = parse_response['name']
+
+    expect(room_name == FIRST_NAME).to be true
+  end
+
+  it 'stores items' do
+    add_exhibition
+    exhibition_id = parse_response['id']
+
+    add_item(FIRST_NAME, exhibition_id)
+    item_parent_class = parse_response['parent_class']
+
+    expect(item_parent_class == "Exhibitions").to be true
+  end
+
   it 'validate if item number exists' do
     add_exhibition
 
@@ -45,8 +65,13 @@ include Rack::Test::Methods
   end
 
   def add_item(unique_name, exhibition_id, number=ITEM_NUMBER_VALID)
-    item = { name: unique_name, exhibition_id: exhibition_id, number: number }.to_json
+    item = { name: unique_name, room: false, exhibition_id: exhibition_id, number: number, parent_class: "Exhibitions" }.to_json
     post '/api/item/add', item
+  end
+
+  def add_room(unique_name, exhibition_id)
+    room = { name: unique_name, room: true, exhibition_id: exhibition_id }.to_json
+    post '/api/item/add', room
   end
 
   def add_exhibition

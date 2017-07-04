@@ -88,6 +88,8 @@
 
                 exhibition: { type: Object },
 
+                room: {type: Boolean, value: false},
+
             },
 
             hideUselessInputs: function(event) {
@@ -96,8 +98,10 @@
                         this.fire('roomAlert');
                     }
                     this.disableItemInput = true;
+                    this.room = true;
                 } else {
                     this.disableItemInput = false;
+                    this.room = false;
                 }
             },
 
@@ -113,12 +117,14 @@
 
             collectData: function() {
                 data = {
+                    room: this.room,
                     name: this.name,
                     author: this.author,
                     date: this.date,
                     number: this.number,
                     beacon: this.beacon,
                     description: this.description,
+                    parent_class: "Exhibition",
                     exhibition_id: this.exhibition.id
                 };
                 return data;

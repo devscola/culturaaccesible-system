@@ -1,32 +1,24 @@
-module Items
-  class Item
+module Rooms
+  class Room
     attr_reader :name, :id
 
-    def initialize(data, id=nil)
+    def initialize(data, id = nil)
       @creation_date = Time.now.utc
       @name = null_defense(data['name'])
-      @author = null_defense(data['author'])
-      @date = null_defense(data['date'])
       @number = null_defense(data['number'])
       @beacon = null_defense(data['beacon'])
       @description = null_defense(data['description'])
       @exhibition_id = null_defense(data['exhibition_id'])
-      @room_id = null_defense(data['room_id'])
-      @parent_class = null_defense(data['parent_class'])
       @id = id || generate_id
     end
 
     def serialize
       {
         name: @name,
-        author: @author,
-        date: @date,
         number: @number,
         beacon: @beacon,
         description: @description,
         exhibition_id: @exhibition_id,
-        room_id: @room_id,
-        parent_class: @parent_class,
         id: @id
       }
     end
