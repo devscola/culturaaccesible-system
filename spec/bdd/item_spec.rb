@@ -158,4 +158,5 @@ feature 'Item' do
 
     expect(current.other_name?).to be true
   end
+
 end

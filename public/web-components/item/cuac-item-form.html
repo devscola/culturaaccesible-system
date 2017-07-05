@@ -24,7 +24,7 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="room">Room</label>
-                            <input type="checkbox" class="room" name="room" on-change="hideUselessInputs"></input>
+                            <input type="checkbox" class="room" name="room" on-change="roomToggle"></input>
                         </div>
                         <div class="form-group number">
                             <label for="number">Number</label>
@@ -90,9 +90,13 @@
 
                 room: {type: Boolean, value: false},
 
+                parentClass: {type: String},
+                
+                parentId: {type: String}
+
             },
 
-            hideUselessInputs: function(event) {
+            roomToggle: function(event) {
                 if (event.target.checked) {
                     if(this.essentialItemFieldsHasContent()){
                         this.fire('roomAlert');
@@ -124,7 +128,8 @@
                     number: this.number,
                     beacon: this.beacon,
                     description: this.description,
-                    parent_class: "Exhibition",
+                    parent_id: this.parentId,
+                    parent_class: this.parentClass,
                     exhibition_id: this.exhibition.id
                 };
                 return data;
