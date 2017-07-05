@@ -14,6 +14,12 @@ module Items
         result = Items::Repository.retrieve(id)
         result.serialize
       end
+
+      def retrieve_by_exhibition(exhibition_id)
+        result = Items::Repository.retrieve_by_exhibition(exhibition_id)
+        result.map! { |item| item.serialize }
+        result
+      end
     end
   end
 end

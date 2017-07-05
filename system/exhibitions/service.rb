@@ -16,6 +16,16 @@ module Exhibitions
         exhibition.serialize
       end
 
+      def retrieve_for_list(id)
+        exhibition = Exhibitions::Repository.retrieve(id)
+        children = Items::Service.retrieve_by_exhibition(id)
+        children.map! do |item|
+          type = item[:author] === '' ? 'room' : 'item'
+          { id: item[:id], name: item[:name], type: type }
+        end
+        { name: exhibition.name, :children => children }
+      end
+
       def list
         list = Exhibitions::Repository.all
         list.map { |exhibition| exhibition.serialize }

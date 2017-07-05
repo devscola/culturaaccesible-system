@@ -15,6 +15,12 @@ class App < Sinatra::Base
     result.to_json
   end
 
+  post '/api/exhibition/retrieve-for-list' do
+    exhibition = JSON.parse(request.body.read)
+    result = Exhibitions::Service.retrieve_for_list(exhibition['id'])
+    result.to_json
+  end
+
   post '/api/exhibition/list' do
     response.headers['Access-Control-Allow-Origin'] = '*'
     result = Exhibitions::Service.list
