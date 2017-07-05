@@ -136,6 +136,9 @@ feature 'Item', :wip do
   end
 
   scenario 'click edit button' do
+    current = Fixture::Exhibitions.pristine.exhibition_saved
+    exhibition_name = current.first_exhibition_name
+    breadcrumb =  exhibition_name + ' > ' + Fixture::Item::ARTWORK
     current = Fixture::Item.from_exhibition_to_new_item
     current.fill('name',Fixture::Item::ARTWORK)
     current.fill('number',Fixture::Item::FIRST_NUMBER)
@@ -143,7 +146,22 @@ feature 'Item', :wip do
 
     current.click_edit
 
+    expect(has_content?(breadcrumb)).to be true
     expect(current.form_visible?).to be true
+  end
+
+  scenario 'show breadcrumb in edit', :wip do
+    current = Fixture::Exhibitions.pristine.exhibition_saved
+    exhibition_name = current.first_exhibition_name
+    breadcrumb =  exhibition_name + ' > ' + Fixture::Item::ARTWORK
+    current = Fixture::Item.from_exhibition_to_new_item
+    current.fill('name',Fixture::Item::ARTWORK)
+    current.fill('number',Fixture::Item::FIRST_NUMBER)
+    current.submit
+
+    current.click_edit
+
+    expect(has_content?(breadcrumb)).to be true
   end
 
   scenario 'updates item info' do
