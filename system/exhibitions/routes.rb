@@ -43,6 +43,11 @@ class App < Sinatra::Base
       exhibition['name'] = item[:name]
       result.push(exhibition)
     end
+
+  post '/api/exhibition/retrieve-for-list' do
+    exhibition = JSON.parse(request.body.read)
+    result = Exhibitions::Service.retrieve_for_list(exhibition['id'])
+
     result.to_json
   end
 

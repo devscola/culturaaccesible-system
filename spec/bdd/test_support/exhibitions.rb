@@ -9,7 +9,7 @@ module Page
     end
 
     def fill(field, content)
-      fill_in(field, with: content)
+      fill_in(field, with: content, wait: 2)
     end
 
     def form_submit_deactivated?
@@ -18,6 +18,7 @@ module Page
     end
 
     def show
+      has_css?('#action', wait: 2)
       find('#action').click
     end
 

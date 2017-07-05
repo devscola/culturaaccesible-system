@@ -25,6 +25,7 @@ Class('Item.Form', {
     disableFields: function() {
         this.element.disableItemInput = true;
         this.emptyFields();
+        this.element.parentClass = "Exhibitions";
     },
 
     emptyFields: function() {
@@ -35,6 +36,11 @@ Class('Item.Form', {
     uncheckRoom: function() {
         document.getElementsByClassName("room")[0].checked = false;
         this.element.disableItemInput = false;
+        this.element.parentClass = this.itemParentClass();
+    },
+
+    itemParentClass: function(){
+        return "Exhibitions";
     },
 
     retrieveAnExhibition: function() {
@@ -49,6 +55,12 @@ Class('Item.Form', {
 
     renderExhibition: function(exhibition) {
         this.element.exhibition = exhibition;
+        this.setInitialParentAttributes(exhibition);
+    },
+
+    setInitialParentAttributes: function(exhibition) {
+        this.element.parentId = exhibition.id;
+        this.element.parentClass = this.itemParentClass();
     },
 
     save: function(item) {
