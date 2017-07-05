@@ -1,6 +1,6 @@
 module Exhibitions
   class Exhibition
-    attr_reader :id
+    attr_reader :id, :name
     attr_accessor :numbers
 
     def initialize(data, id=nil)

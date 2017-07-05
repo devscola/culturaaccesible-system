@@ -1,6 +1,6 @@
 module Items
   class Item
-    attr_reader :name, :id
+    attr_reader :name, :id, :exhibition_id
 
     def initialize(data, id=nil)
       @creation_date = Time.now.utc

@@ -18,6 +18,11 @@ module Items
         result
       end
 
+      def retrieve_by_exhibition(exhibition_id)
+        result = @content.select { |item| item.exhibition_id == exhibition_id }
+        result
+      end
+
       def flush
         @content = []
       end
