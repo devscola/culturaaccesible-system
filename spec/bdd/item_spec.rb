@@ -78,7 +78,9 @@ feature 'Item' do
 
     current.click_plus_button
 
-    expect(has_content?(exhibition_name)).to be true
+    current = Page::Item.new
+
+    expect(current.content?(exhibition_name)).to be true
   end
 
   scenario 'valid for submit if item number is validated' do

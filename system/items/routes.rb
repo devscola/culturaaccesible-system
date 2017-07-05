@@ -4,8 +4,12 @@ require_relative 'service'
 
 class App < Sinatra::Base
   post '/api/item/add' do
-    item_data = JSON.parse(request.body.read)
-    result = Items::Service.store(item_data)
+    data = JSON.parse(request.body.read)
+    if (data['room'] == false)
+      result = Items::Service.store_item(data)
+    else
+      result = Items::Service.store_room(data)
+    end
     result.to_json
   end
 
