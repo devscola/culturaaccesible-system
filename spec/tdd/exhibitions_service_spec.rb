@@ -60,7 +60,7 @@ describe Exhibitions::Service do
   end
 
   def add_item(name, number, exhibition_id, author='')
-    item = { 'name' => name, 'number' => number, 'exhibition_id' => exhibition_id, 'author' => author }
-    Items::Service.store(item)
+    item = { 'name' => name, 'number' => number, 'parent_id' => exhibition_id, 'author' => author }
+    Items::Service.store_item(item)
   end
 end

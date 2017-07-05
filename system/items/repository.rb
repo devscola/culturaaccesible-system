@@ -19,7 +19,7 @@ module Items
       end
 
       def retrieve_by_exhibition(exhibition_id)
-        result = @content.select { |item| item.exhibition_id == exhibition_id }
+        result = @content.select { |item| item.parent_id == exhibition_id }
         result
       end
 
@@ -38,7 +38,7 @@ module Items
       end
 
       def store(item_data)
-        Exhibitions::Service.add_number(item_data['exhibition_id'], item_data['number'])
+        Exhibitions::Service.add_number(item_data['parent_id'], item_data['number'])
         item = Items::Item.new(item_data)
         @content << item
         item

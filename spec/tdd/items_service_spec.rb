@@ -20,7 +20,7 @@ describe Items::Service do
   end
 
 	def add_item(name, number, exhibition_id)
-    item = { 'name' => name, 'number' => number, 'exhibition_id' => exhibition_id }
+    item = { 'name' => name, 'number' => number, 'parent_id' => exhibition_id }
     Items::Service.store_item(item)
   end
 

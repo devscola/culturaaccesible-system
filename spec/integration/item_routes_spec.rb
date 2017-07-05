@@ -22,11 +22,11 @@ include Rack::Test::Methods
 
     add_item(FIRST_NAME, exhibition_id)
     first_item_name = parse_response['name']
-    first_item_exhibition_id = parse_response['exhibition_id']
+    first_item_exhibition_id = parse_response['parent_id']
 
     add_item(SECOND_NAME, exhibition_id)
     second_item_name = parse_response['name']
-    second_item_exhibition_id = parse_response['exhibition_id']
+    second_item_exhibition_id = parse_response['parent_id']
 
     expect(first_item_name == second_item_name).to be false
     expect(first_item_exhibition_id == second_item_exhibition_id).to be true
@@ -65,7 +65,7 @@ include Rack::Test::Methods
   end
 
   def add_item(unique_name, exhibition_id, number=ITEM_NUMBER_VALID)
-    item = { name: unique_name, room: false, exhibition_id: exhibition_id, number: number, parent_class: "Exhibitions" }.to_json
+    item = { name: unique_name, room: false, parent_id: exhibition_id, number: number, parent_class: "Exhibitions" }.to_json
     post '/api/item/add', item
   end
 
