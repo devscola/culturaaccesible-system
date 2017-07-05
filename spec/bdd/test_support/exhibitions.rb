@@ -23,7 +23,7 @@ module Page
 
     def first_exhibition_name
       has_css?('.list-item', wait: 2)
-      first('.list-item').text
+      first('.exhibition-name').text
     end
 
     def save
@@ -48,12 +48,24 @@ module Page
       has_css?('.list-item.cuac-exhibition-detail', wait: 2)
     end
 
+    def list_has_items?
+      has_css?('.exhibition-item', wait: 2)
+    end
+
+    def list_has_rooms?
+      has_css?('.exhibition-room', wait: 2)
+    end
+
+    def item_and_room_have_plus_button?
+      has_css?('.exhibition-room .plus-button', wait: 2) && has_css?('.exhibition-item .plus-button', wait: 2)
+    end
+
     def form_submit_deactivated?
       has_css?('.submit[disabled].cuac-exhibition-form')
     end
 
     def other_name?
-      has_css?('.list-item', text: 'some other name', wait: 2)
+      has_css?('.exhibition-name', text: 'some other name', wait: 2)
     end
 
     def click_plus_button

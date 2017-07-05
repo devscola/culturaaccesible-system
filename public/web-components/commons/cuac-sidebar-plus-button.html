@@ -1,0 +1,24 @@
+<link rel="import" href="/vendor/polymer/polymer.html">
+
+<dom-module id="cuac-sidebar-plus-button">
+    <template>
+        <button class="btn btn-primary plus-button" on-click="goToItem">+</button>
+    </template>
+
+    <script>
+        Polymer({
+            is: 'cuac-sidebar-plus-button',
+
+            properties: {
+              exhibition: {
+                  type: Object
+              }
+            },
+
+            goToItem: function(){
+                window.location = '/item/' + this.exhibition.id;
+            }
+
+        });
+    </script>
+</dom-module>

@@ -13,6 +13,19 @@ feature 'Exhibitions' do
     expect(current.exhibition_list?).to be true
   end
 
+  scenario 'shows a list of items and rooms' do
+    current = Fixture::Exhibitions.exhibition_saved
+
+    expect(current.list_has_items?).to be true
+    expect(current.list_has_rooms?).to be true
+  end
+
+  scenario 'shows each items and rooms with + button' do
+    current = Fixture::Exhibitions.exhibition_saved
+
+    expect(current.item_and_room_have_plus_button?).to be true
+  end
+
   scenario 'shows exhibition form' do
     current = Fixture::Exhibitions.show_exhibition_form
 
@@ -31,7 +44,7 @@ feature 'Exhibitions' do
     expect(current.view_visible?).to be true
   end
 
-  scenario 'shows list sorted by creation date' do
+  scenario 'shows list sorted by creation date'  do
     current = Fixture::Exhibitions.two_exhibitions_introduced
 
     expect(current.other_name?).to be true

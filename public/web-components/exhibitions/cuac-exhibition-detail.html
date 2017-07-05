@@ -3,8 +3,9 @@
 <dom-module id="cuac-exhibition-detail">
     <template>
         <li class="list-item">
-            {{exhibition.name}}
-            <input type="submit" value="+" class="plus-button" on-click="goToItem">
+            <span class="exhibition-name">{{exhibition.name}}</span>
+            <cuac-sidebar-plus-button class="sidebar-plus" exhibition$="[[exhibition]]"></cuac-sidebar-plus-button>
+            <cuac-item-list exhibition$="{{exhibition}}"></cuac-item-list>
         </li>
     </template>
 
@@ -16,11 +17,8 @@
                 exhibition: {
                     type: Object
                 }
-            },
-
-            goToItem: function(){
-                window.location = '/item/' + this.exhibition.id;
             }
+
         });
     </script>
 </dom-module>

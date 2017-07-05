@@ -13,7 +13,7 @@ Class('Services.Exhibitions', {
     },
 
     retrieveList: function(result) {
-        this.doRequest('/exhibition/list', '', function(result) {
+        this.doRequest('/exhibition/retrieve-for-list-fake', '', function(result) {
             Bus.publish('exhibitions.list.retrieved', result);
         });
     },
