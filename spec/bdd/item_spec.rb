@@ -4,7 +4,7 @@ require_relative 'test_support/fixture_item'
 require_relative 'test_support/exhibitions'
 require_relative 'test_support/fixture_exhibitions'
 
-feature 'Item' do
+feature 'Item', :wip do
   scenario 'allows submit when fill required name' do
     current = Fixture::Item.from_exhibition_to_new_item
     expect(current.submit_disabled?).to be true
