@@ -5,7 +5,7 @@
         <ul class="list-group">
           <template is="dom-repeat" items="{{exhibition.children}}">
             <li class$="list-group-item exhibition-{{item.type}}">
-              {{item.title}}
+              {{item.name}}
               <cuac-sidebar-plus-button exhibition$="{{exhibition}}"></cuac-sidebar-plus-button>
             </li>
           </template>
@@ -21,7 +21,7 @@
               exhibition: {
                 type: Object
               }
-              
+
             },
 
             publishClicked: function() {

@@ -4,7 +4,7 @@
     <template>
         <h3>EXHIBITIONS</h3>
         <ul>
-            <template is="dom-repeat" items="{{exhibitionsList}}">
+            <template is="dom-repeat" items$="{{exhibitionsList}}">
                 <cuac-exhibition-detail exhibition="{{item}}"></cuac-exhibition-detail>
             </template>
         </ul>

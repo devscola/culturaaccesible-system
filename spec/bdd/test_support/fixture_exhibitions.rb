@@ -38,6 +38,18 @@ module Fixture
         current
       end
 
+      def exhibition_saved_with_room
+        current = exhibition_saved
+        current.add_room
+        Page::Exhibitions.new
+      end
+
+      def exhibition_saved_with_item
+        current = exhibition_saved
+        current.add_item
+        Page::Exhibitions.new
+      end
+
       def exhibition_edited
         current = exhibition_saved
         current.click_edit

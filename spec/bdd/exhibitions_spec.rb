@@ -13,17 +13,22 @@ feature 'Exhibitions' do
     expect(current.exhibition_list?).to be true
   end
 
-  scenario 'shows a list of items and rooms' do
-    current = Fixture::Exhibitions.exhibition_saved
+  scenario 'shows a list of rooms' do
+    current = Fixture::Exhibitions.exhibition_saved_with_room
 
-    expect(current.list_has_items?).to be true
     expect(current.list_has_rooms?).to be true
   end
 
-  scenario 'shows each items and rooms with + button' do
-    current = Fixture::Exhibitions.exhibition_saved
+  scenario 'shows a list of items' do
+    current = Fixture::Exhibitions.exhibition_saved_with_item
 
-    expect(current.item_and_room_have_plus_button?).to be true
+    expect(current.list_has_items?).to be true
+  end
+
+  scenario 'shows each room with + button' do
+    current = Fixture::Exhibitions.exhibition_saved_with_room
+
+    expect(current.room_have_plus_button?).to be true
   end
 
   scenario 'shows exhibition form' do

@@ -19,7 +19,12 @@ module Exhibitions
       end
 
       def all
-        @content
+        @content.map do |exhibition|
+          {
+            "id": exhibition.id,
+            "name": exhibition.name
+          }
+        end
       end
 
       def flush

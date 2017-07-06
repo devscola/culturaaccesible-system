@@ -13,8 +13,14 @@ Class('Services.Exhibitions', {
     },
 
     retrieveList: function(result) {
-        this.doRequest('/exhibition/retrieve-for-list-fake', '', function(result) {
+        this.doRequest('/exhibition/list', '', function(result) {
             Bus.publish('exhibitions.list.retrieved', result);
+        });
+    },
+
+    retrieveExhibitionForSidebar: function(payload) {
+        this.doRequest('/exhibition/retrieve-for-list', payload, function(exhibition){
+            Bus.publish('exhibition.for.list.retrieved', exhibition)
         });
     },
 
@@ -27,6 +33,7 @@ Class('Services.Exhibitions', {
     subscribe: function() {
         Bus.subscribe('exhibition.retrieve', this.retrieveExhibition.bind(this));
         Bus.subscribe('exhibitions.list.retrieve', this.retrieveList.bind(this));
+        Bus.subscribe('exhibition.for.list.retrieve', this.retrieveExhibitionForSidebar.bind(this));
         Bus.subscribe('exhibition.save', this.saveExhibition.bind(this));
     }
 

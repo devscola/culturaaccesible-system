@@ -23,12 +23,11 @@ module Exhibitions
           type = item[:author] === '' ? 'room' : 'item'
           { id: item[:id], name: item[:name], type: type }
         end
-        { name: exhibition.name, :children => children }
+        { id: exhibition.id, name: exhibition.name, :children => children }
       end
 
       def list
         list = Exhibitions::Repository.all
-        list.map { |exhibition| exhibition.serialize }
       end
 
       def flush

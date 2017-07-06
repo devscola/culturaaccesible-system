@@ -31,6 +31,18 @@ module Page
       find('.submit.cuac-exhibition-form').click
     end
 
+    def add_room
+      click_plus_button
+      item_page = Page::Item.new
+      item_page.add_room
+    end
+
+    def add_item
+      click_plus_button
+      item_page = Page::Item.new
+      item_page.add_item
+    end
+
     def click_edit
       find('.edit-button', wait: 4).click
     end
@@ -49,16 +61,16 @@ module Page
       has_css?('.list-item.cuac-exhibition-detail', wait: 2)
     end
 
-    def list_has_items?
-      has_css?('.exhibition-item', wait: 2)
-    end
-
     def list_has_rooms?
       has_css?('.exhibition-room', wait: 2)
     end
 
-    def item_and_room_have_plus_button?
-      has_css?('.exhibition-room .plus-button', wait: 2) && has_css?('.exhibition-item .plus-button', wait: 2)
+    def list_has_items?
+      has_css?('.exhibition-item', wait: 2)
+    end
+
+    def room_have_plus_button?
+      has_css?('.exhibition-room .plus-button', wait: 4)
     end
 
     def form_submit_deactivated?
@@ -70,6 +82,7 @@ module Page
     end
 
     def click_plus_button
+      has_css?('.plus-button', wait: 4)
       first('.plus-button').click
     end
 

@@ -72,6 +72,17 @@ module Page
       find("input[name=#{field}]", visible: false ).value.length < 1
     end
 
+    def add_room
+      fill('name', 'some room name')
+      submit
+    end
+
+    def add_item
+      fill('name', 'some item name')
+      fill('author', 'some author')
+      submit
+    end
+
     private
 
     def validate!

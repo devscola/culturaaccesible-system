@@ -15,40 +15,9 @@ class App < Sinatra::Base
     result.to_json
   end
 
-  post '/api/exhibition/retrieve-for-list-fake' do
-    exhibition = {
-      "name": "exhibition-name",
-      "id": "",
-      "children": [
-        {
-          "id": "as76876fsdgg6h78fasdg7h",
-          "title": "Soy un item",
-          "type": "item"
-        },
-        {
-          "id": "as76hkjhgggg6h78fasa4a",
-          "title": "Soy un item",
-          "type": "item"
-        },
-        {
-          "id": "as7fasdfasfasdfasffads",
-          "title": "Soy un room",
-          "type": "room"
-        }
-      ]
-    }
-    result = []
-    Exhibitions::Service.list.each do |item|
-      exhibition['id'] = item[:id]
-      exhibition['name'] = item[:name]
-      result.push(exhibition)
-    end
-    result.to_json
-  end
-
   post '/api/exhibition/retrieve-for-list' do
     exhibition = JSON.parse(request.body.read)
-    result = Exhibitions::Service.retrieve_for_list
+    result = Exhibitions::Service.retrieve_for_list(exhibition['id'])
 
     result.to_json
   end
