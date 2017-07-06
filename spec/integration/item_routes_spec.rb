@@ -3,7 +3,7 @@ require 'json'
 require_relative '../../system/exhibitions/routes'
 require_relative '../../system/items/routes'
 
-describe 'Item controller' do
+describe 'Item controller', :wip do
 include Rack::Test::Methods
 
   def app
@@ -42,6 +42,19 @@ include Rack::Test::Methods
     expect(room_name == FIRST_NAME).to be true
   end
 
+  it 'retrieve room' do
+    add_exhibition
+    exhibition_id = parse_response['id']
+
+    add_room(FIRST_NAME, exhibition_id)
+    room = parse_response
+    room_id = parse_response['id']
+    retrieve_room(room)
+    retrieved_room_id = parse_response['id']
+
+    expect(room_id == retrieved_room_id).to be true
+  end
+
   it 'stores items' do
     add_exhibition
     exhibition_id = parse_response['id']
@@ -65,12 +78,12 @@ include Rack::Test::Methods
   end
 
   def add_item(unique_name, exhibition_id, number=ITEM_NUMBER_VALID)
-    item = { name: unique_name, room: false, parent_id: exhibition_id, number: number, parent_class: "Exhibitions" }.to_json
+    item = { name: unique_name, room: false, parent_id: exhibition_id, exhibition_id: exhibition_id, number: number, parent_class: "Exhibitions" }.to_json
     post '/api/item/add', item
   end
 
   def add_room(unique_name, exhibition_id)
-    room = { name: unique_name, room: true, parent_id: exhibition_id }.to_json
+    room = { name: unique_name, room: true, exhibition_id: exhibition_id, parent_id: exhibition_id }.to_json
     post '/api/item/add', room
   end
 
@@ -85,5 +98,9 @@ include Rack::Test::Methods
 
   def retrieve_exhibition(exhibition)
     post '/api/exhibition/retrieve', exhibition.to_json
+  end
+
+  def retrieve_room(room)
+    post 'api/room/retrieve', room.to_json
   end
 end

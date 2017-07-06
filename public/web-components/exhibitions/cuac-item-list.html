@@ -3,10 +3,10 @@
 <dom-module id="cuac-item-list">
     <template>
         <ul class="list-group">
-          <template is="dom-repeat" items="{{exhibition.children}}">
-            <li class$="list-group-item exhibition-{{item.type}}">
-              {{item.name}}
-              <cuac-sidebar-plus-button parent$="{{item}}"></cuac-sidebar-plus-button>
+          <template is="dom-repeat" items="{{exhibition.children}}" as="child">
+            <li class$="list-group-item exhibition-{{child.type}}">
+              {{child.name}}
+              <cuac-sidebar-plus-button parent$="{{child}}"></cuac-sidebar-plus-button>
             </li>
           </template>
         </ul>

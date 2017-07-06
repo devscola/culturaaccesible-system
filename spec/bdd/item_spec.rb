@@ -133,6 +133,27 @@ feature 'Item' do
     expect(current.content?(Fixture::Item::VISIBLE_ARTWORK)).to be true
   end
 
+  scenario 'add item to a room' do
+    current = Fixture::Item.from_exhibition_to_new_item
+
+    current.check_room
+    current.fill('name',Fixture::Item::ARTWORK)
+    current.fill('number',Fixture::Item::FIRST_NUMBER)
+
+    current.submit
+
+    current = Page::Exhibitions.new
+    current.click_room_plus_button
+
+    current = Page::Item.new
+    current.fill('name',Fixture::Item::OTHER_ARTWORK)
+    current.fill('number',Fixture::Item::SECOND_NUMBER)
+
+    current.submit
+
+    expect(current.content?(Fixture::Item::VISIBLE_OTHER_ARTWORK)).to be true
+  end
+
   scenario 'check if item name is in breadcrumb when it is saved' do
     current = Fixture::Exhibitions.pristine.exhibition_saved
     exhibition_name = current.first_exhibition_name

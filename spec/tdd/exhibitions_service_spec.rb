@@ -58,12 +58,12 @@ describe Exhibitions::Service do
   end
 
   def add_item(name, number, parent_id)
-    item = { 'name' => name, 'number' => number, 'parent_id' => parent_id }
+    item = { 'name' => name, 'number' => number, 'parent_id' => parent_id, 'exhibition_id' => parent_id }
     Items::Service.store_item(item)
   end
 
   def add_room(name, number, exhibition_id)
-    room = { 'name' => name, 'number' => number, 'parent_id' => exhibition_id }
+    room = { 'name' => name, 'number' => number, 'parent_id' => exhibition_id, 'exhibition_id' => exhibition_id }
     Items::Service.store_room(room)
   end
 end

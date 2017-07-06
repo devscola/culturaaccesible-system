@@ -40,13 +40,28 @@ Class('Item.Form', {
     },
 
     itemParentClass: function(){
-        return "Exhibitions";
+        return this.loadParentClass();
     },
 
     retrieveAnExhibition: function() {
-        var exhibitionId = this.loadParentId();
-        var payload = { 'id': exhibitionId };
-        Bus.publish('exhibition.retrieve', payload);
+        var parentId = this.loadParentId();
+        var parentClass = this.loadParentClass();
+        if (parentClass == 'room') {
+            this.retrieveAnExhibitionByRoom(parentId);
+        } else {
+          var payload = { 'id': parentId };
+          Bus.publish('exhibition.retrieve', payload);
+        }
+    },
+
+    loadExhibitionByRoom: function(room) {
+      var payload = { 'id': room.parent_id };
+      Bus.publish('exhibition.retrieve', payload);
+    },
+
+    retrieveAnExhibitionByRoom: function(parentId) {
+      var payload = { 'id': parentId };
+      Bus.publish('room.retrieve', payload);
     },
 
     loadParentId: function() {
@@ -55,13 +70,19 @@ Class('Item.Form', {
         return regexp.exec(urlString)[1];
     },
 
+    loadParentClass: function() {
+        var urlString = window.location.href;
+        var regexp = /(.*)\/(.*)\/(.*)\/[/item]/;
+        return regexp.exec(urlString)[2];
+    },
+
     renderExhibition: function(exhibition) {
         this.element.exhibition = exhibition;
         this.setInitialParentAttributes(exhibition);
     },
 
     setInitialParentAttributes: function(exhibition) {
-        this.element.parentId = exhibition.id;
+        this.element.parentId = this.loadParentId();
         this.element.parentClass = this.itemParentClass();
     },
 
@@ -72,5 +93,6 @@ Class('Item.Form', {
     subscribe: function() {
         Bus.subscribe('exhibition.retrieved', this.renderExhibition.bind(this));
         Bus.subscribe('item.edit', this.show.bind(this));
+        Bus.subscribe('room.retrieved', this.loadExhibitionByRoom.bind(this));
     }
 });

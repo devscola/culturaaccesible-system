@@ -18,4 +18,10 @@ class App < Sinatra::Base
     result = Items::Service.retrieve(item['id'])
     result.to_json
   end
+
+  post '/api/room/retrieve' do
+    room = JSON.parse(request.body.read)
+    result = Items::Service.retrieve(room['id'])
+    result.to_json
+  end
 end

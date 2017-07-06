@@ -8,6 +8,7 @@ module Fixture
     ARTWORK = 'Guernica'
     OTHER_ARTWORK = 'La costellazione'
     VISIBLE_ARTWORK = 'Name: Guernica'
+    VISIBLE_OTHER_ARTWORK = 'Name: La costellazione'
     FIRST_NUMBER = 1
     SECOND_NUMBER = 2
     REPEATED_NUMBER = FIRST_NUMBER

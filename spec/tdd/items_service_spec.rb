@@ -10,7 +10,7 @@ describe Items::Service do
 
 	let(:exhibition) { add_exhibition }
 
-  it 'retrive an item by id' do
+  it 'retrieve an item by id' do
 		name = 'Item'
 		number = '1.2'
 		result = add_item(name, number, exhibition[:id])
@@ -20,7 +20,7 @@ describe Items::Service do
   end
 
 	def add_item(name, number, exhibition_id)
-    item = { 'name' => name, 'number' => number, 'parent_id' => exhibition_id }
+    item = { 'name' => name, 'number' => number, 'parent_id' => exhibition_id, 'exhibition_id' => exhibition_id }
     Items::Service.store_item(item)
   end
 

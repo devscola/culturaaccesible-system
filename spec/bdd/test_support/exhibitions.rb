@@ -44,6 +44,12 @@ module Page
       item_page.add_item
     end
 
+    def add_item_from_room
+      click_plus_button
+      item_page = Page::Item.new
+      item_page.add_item
+    end
+
     def click_edit
       has_css?('.edit-button', wait: 4)
       find('.edit-button').click
@@ -86,6 +92,11 @@ module Page
     def click_plus_button
       has_css?('.plus-button', wait: 4)
       first('.plus-button').click
+    end
+
+    def click_room_plus_button
+      has_css?('.exhibition-room .plus-button', wait: 4)
+      first('.exhibition-room .plus-button').click
     end
 
     def title(name)

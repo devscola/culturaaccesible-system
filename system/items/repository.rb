@@ -38,7 +38,7 @@ module Items
       end
 
       def store(item_data, type)
-        Exhibitions::Service.add_number(item_data['parent_id'], item_data['number'])
+        Exhibitions::Service.add_number(item_data['exhibition_id'], item_data['number'])
         item = type == 'item' ? Items::Item.new(item_data) : Items::Room.new(item_data)
         @content << item
         item
