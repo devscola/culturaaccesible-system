@@ -150,7 +150,7 @@ feature 'Item' do
     expect(current.form_visible?).to be true
   end
 
-  scenario 'show breadcrumb in edit', :wip do
+  scenario 'show breadcrumb in edit' do
     current = Fixture::Exhibitions.pristine.exhibition_saved
     exhibition_name = current.first_exhibition_name
     breadcrumb =  exhibition_name + ' > ' + Fixture::Item::ARTWORK

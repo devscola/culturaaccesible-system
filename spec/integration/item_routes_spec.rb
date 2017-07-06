@@ -70,7 +70,7 @@ include Rack::Test::Methods
   end
 
   def add_room(unique_name, exhibition_id)
-    room = { name: unique_name, room: true, exhibition_id: exhibition_id }.to_json
+    room = { name: unique_name, room: true, parent_id: exhibition_id }.to_json
     post '/api/item/add', room
   end
 

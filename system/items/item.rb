@@ -25,7 +25,8 @@ module Items
         description: @description,
         parent_id: @parent_id,
         parent_class: @parent_class,
-        id: @id
+        id: @id,
+        type: 'item'
       }
     end
 

@@ -74,6 +74,7 @@ module Page
 
     def add_room
       fill('name', 'some room name')
+      check_room
       submit
     end
 

@@ -1,6 +1,6 @@
-module Rooms
+module Items
   class Room
-    attr_reader :name, :id
+    attr_reader :name, :id, :parent_id
 
     def initialize(data, id = nil)
       @creation_date = Time.now.utc
@@ -8,7 +8,7 @@ module Rooms
       @number = null_defense(data['number'])
       @beacon = null_defense(data['beacon'])
       @description = null_defense(data['description'])
-      @exhibition_id = null_defense(data['exhibition_id'])
+      @parent_id = null_defense(data['parent_id'])
       @id = id || generate_id
     end
 
@@ -18,8 +18,9 @@ module Rooms
         number: @number,
         beacon: @beacon,
         description: @description,
-        exhibition_id: @exhibition_id,
-        id: @id
+        parent_id: @parent_id,
+        id: @id,
+        type: 'room'
       }
     end
 

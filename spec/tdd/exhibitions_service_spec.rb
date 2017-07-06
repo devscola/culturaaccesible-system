@@ -21,16 +21,14 @@ describe Exhibitions::Service do
     name = 'some name'
     location = 'some location'
     result = add_exhibition(name, location)
-    add_item('first name', 'first number', result[:id])
-    add_item('second name', 'second number', result[:id], 'author name')
+    item = add_item('item name', 'item number', result[:id])
+    room = add_room('room name', 'room number', result[:id])
 
     exhibition = Exhibitions::Service.retrieve_for_list(result[:id])
 
     expect(exhibition[:name]).to eq(name)
-    expect(exhibition[:children].first[:name]).to eq('first name')
-    expect(exhibition[:children].first[:type]).to eq('room')
-    expect(exhibition[:children].last[:name]).to eq('second name')
-    expect(exhibition[:children].last[:type]).to eq('item')
+    expect(exhibition[:children]).to include({:id => item[:id], :name => item[:name], :type => 'item'})
+    expect(exhibition[:children]).to include({:id => room[:id], :name => room[:name], :type => 'room'})
   end
 
   it 'retrieves all exhibitions' do
@@ -59,8 +57,13 @@ describe Exhibitions::Service do
     Exhibitions::Service.store(exhibition)
   end
 
-  def add_item(name, number, exhibition_id, author='')
-    item = { 'name' => name, 'number' => number, 'parent_id' => exhibition_id, 'author' => author }
+  def add_item(name, number, parent_id)
+    item = { 'name' => name, 'number' => number, 'parent_id' => parent_id }
     Items::Service.store_item(item)
+  end
+
+  def add_room(name, number, exhibition_id)
+    room = { 'name' => name, 'number' => number, 'parent_id' => exhibition_id }
+    Items::Service.store_room(room)
   end
 end

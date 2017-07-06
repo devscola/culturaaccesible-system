@@ -1,8 +1,7 @@
 require_relative 'repository'
 require_relative 'item'
+require_relative 'room'
 require_relative '../exhibitions/service'
-require_relative '../rooms/repository'
-require_relative '../rooms/room'
 
 module Items
   class Service
@@ -13,7 +12,7 @@ module Items
       end
 
       def store_room(room_data)
-        result = Rooms::Repository.choose_action(room_data)
+        result = Items::Repository.choose_action(room_data, 'room')
         result.serialize
       end
 

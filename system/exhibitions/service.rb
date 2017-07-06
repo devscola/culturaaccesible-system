@@ -20,8 +20,7 @@ module Exhibitions
         exhibition = Exhibitions::Repository.retrieve(id)
         children = Items::Service.retrieve_by_exhibition(id)
         children.map! do |item|
-          type = item[:author] === '' ? 'room' : 'item'
-          { id: item[:id], name: item[:name], type: type }
+          { id: item[:id], name: item[:name], type: item[:type] }
         end
         { id: exhibition.id, name: exhibition.name, :children => children }
       end
