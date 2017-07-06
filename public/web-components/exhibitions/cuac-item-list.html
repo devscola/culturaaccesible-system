@@ -6,7 +6,7 @@
           <template is="dom-repeat" items="{{exhibition.children}}">
             <li class$="list-group-item exhibition-{{item.type}}">
               {{item.name}}
-              <cuac-sidebar-plus-button exhibition$="{{exhibition}}"></cuac-sidebar-plus-button>
+              <cuac-sidebar-plus-button parent$="{{item}}"></cuac-sidebar-plus-button>
             </li>
           </template>
         </ul>
@@ -27,6 +27,7 @@
             publishClicked: function() {
                 this.fire('started');
             }
+
         });
     </script>
 </dom-module>

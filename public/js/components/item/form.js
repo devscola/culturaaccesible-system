@@ -44,13 +44,15 @@ Class('Item.Form', {
     },
 
     retrieveAnExhibition: function() {
-        var exhibitionId = this.loadExhibitionId();
+        var exhibitionId = this.loadParentId();
         var payload = { 'id': exhibitionId };
         Bus.publish('exhibition.retrieve', payload);
     },
 
-    loadExhibitionId: function() {
-        return window.location.href.split('/item/')[1];
+    loadParentId: function() {
+        var urlString = window.location.href;
+        var regexp = /[exhibition|room|item]\/(.*)\/[/item]/;
+        return regexp.exec(urlString)[1];
     },
 
     renderExhibition: function(exhibition) {

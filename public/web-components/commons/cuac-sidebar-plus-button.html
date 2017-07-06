@@ -10,13 +10,17 @@
             is: 'cuac-sidebar-plus-button',
 
             properties: {
-              exhibition: {
+              parent: {
                   type: Object
               }
             },
 
             goToItem: function(){
-                window.location = '/item/' + this.exhibition.id;
+              if (this.parent.type) {
+                window.location = '/' + this.parent.type + '/' + this.parent.id + '/item';
+              } else {
+                window.location = '/exhibition/' + this.parent.id + '/item'
+              }
             }
 
         });
