@@ -28,6 +28,7 @@ module Page
     end
 
     def save
+      has_css?('.submit.cuac-exhibition-form', wait: 4)
       find('.submit.cuac-exhibition-form').click
     end
 
@@ -44,7 +45,8 @@ module Page
     end
 
     def click_edit
-      find('.edit-button', wait: 4).click
+      has_css?('.edit-button', wait: 4)
+      find('.edit-button').click
     end
 
     def view_visible?

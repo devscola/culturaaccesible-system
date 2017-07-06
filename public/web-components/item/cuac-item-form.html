@@ -18,7 +18,7 @@
         <form class$="form {{formVisibility}}">
             <div class="panel panel-primary">
                 <div class="panel-heading">
-                    {{exhibition.name}} &gt; <strong>New content</strong>
+                    {{exhibition.name}} &gt; <strong>{{breadcrumbName}}</strong>
                 </div>
                 <div class="panel-body form-group">
                     <div class="col-md-6">
@@ -66,6 +66,10 @@
         Polymer({
             is: 'cuac-item-form',
 
+            ready: function() {
+                this.breadcrumbName = 'New content';
+            },
+
             properties: {
 
                 formVisibility: { type: String },
@@ -74,7 +78,7 @@
 
                 disableSaveButton: { type: Boolean, value: true},
 
-                name: { type: String, value: '' },
+                name: { type: String, value: '', observer: 'updateItemName' },
 
                 author: { type: String, value: '' },
 
@@ -91,8 +95,10 @@
                 room: {type: Boolean, value: false},
 
                 parentClass: {type: String},
-                
-                parentId: {type: String}
+
+                parentId: {type: String},
+
+                breadcrumbName: { type: String}
 
             },
 
@@ -162,6 +168,10 @@
 
             quitError: function() {
                 this.$$(".number").classList.remove('has-error');
+            },
+
+            updateItemName: function() {
+                this.breadcrumbName = this.name;
             }
 
         });
