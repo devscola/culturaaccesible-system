@@ -73,6 +73,14 @@ module Page
       has_css?('.exhibition-room', wait: 2)
     end
 
+    def room_has_children?
+      has_css?('.exhibition-room .exhibition-item', wait: 2)
+    end
+
+    def item_has_children?
+      has_css?('.exhibition-item .exhibition-item', wait: 2)
+    end
+
     def list_has_items?
       has_css?('.exhibition-item', wait: 2)
     end
@@ -97,6 +105,11 @@ module Page
     def click_room_plus_button
       has_css?('.exhibition-room .plus-button', wait: 4)
       first('.exhibition-room .plus-button').click
+    end
+
+    def click_item_plus_button
+      has_css?('.exhibition-item .plus-button', wait: 4)
+      first('.exhibition-item .plus-button').click
     end
 
     def title(name)

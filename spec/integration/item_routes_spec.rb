@@ -3,7 +3,7 @@ require 'json'
 require_relative '../../system/exhibitions/routes'
 require_relative '../../system/items/routes'
 
-describe 'Item controller', :wip do
+describe 'Item controller' do
 include Rack::Test::Methods
 
   def app

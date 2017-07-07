@@ -48,20 +48,29 @@ Class('Item.Form', {
         var parentClass = this.loadParentClass();
         if (parentClass == 'room') {
             this.retrieveAnExhibitionByRoom(parentId);
-        } else {
+        }
+        if (parentClass == 'item') {
+            this.retrieveAnExhibitionByItem(parentId)
+        }
+        if (parentClass == 'exhibition') {
           var payload = { 'id': parentId };
           Bus.publish('exhibition.retrieve', payload);
         }
     },
 
-    loadExhibitionByRoom: function(room) {
-      var payload = { 'id': room.parent_id };
+    loadExhibitionByChildren: function(children) {
+      var payload = { 'id': children.parent_id };
       Bus.publish('exhibition.retrieve', payload);
     },
 
     retrieveAnExhibitionByRoom: function(parentId) {
       var payload = { 'id': parentId };
       Bus.publish('room.retrieve', payload);
+    },
+
+    retrieveAnExhibitionByItem: function(parentId) {
+      var payload = { 'id': parentId };
+      Bus.publish('item.retrieve', payload);
     },
 
     loadParentId: function() {
@@ -93,6 +102,7 @@ Class('Item.Form', {
     subscribe: function() {
         Bus.subscribe('exhibition.retrieved', this.renderExhibition.bind(this));
         Bus.subscribe('item.edit', this.show.bind(this));
-        Bus.subscribe('room.retrieved', this.loadExhibitionByRoom.bind(this));
+        Bus.subscribe('room.retrieved', this.loadExhibitionByChildren.bind(this));
+        Bus.subscribe('item.retrieved', this.loadExhibitionByChildren.bind(this));
     }
 });

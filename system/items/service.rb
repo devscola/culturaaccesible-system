@@ -21,9 +21,15 @@ module Items
         result.serialize
       end
 
-      def retrieve_by_exhibition(exhibition_id)
-        result = Items::Repository.retrieve_by_exhibition(exhibition_id)
-        result.map! { |item| item.serialize }
+      def retrieve_by_parent(id)
+        result = Items::Repository.retrieve_by_parent(id)
+        result.map! do |item|
+          {
+            id: item.id,
+            name: item.name,
+            type: item.type
+          }
+        end
         result
       end
     end

@@ -19,8 +19,21 @@ describe Items::Service do
 		expect(item[:name]).to eq name
   end
 
-	def add_item(name, number, exhibition_id)
-    item = { 'name' => name, 'number' => number, 'parent_id' => exhibition_id, 'exhibition_id' => exhibition_id }
+  it 'retrieve all item children by parent id' do
+    item_name = 'Item'
+    item_number = '1.2'
+    sub_item_name = 'Sub Item'
+    sub_item_number = '1.2.2'
+
+    item = add_item(item_name, item_number, exhibition[:id], exhibition[:id])
+    sub_item = add_item(sub_item_name, sub_item_number, item[:id], exhibition[:id])
+    children = Items::Service.retrieve_by_parent(item[:id])
+
+    expect(children.first[:name]).to eq sub_item_name
+  end
+
+	def add_item(name, number, parent_id, exhibition_id)
+    item = { 'name' => name, 'number' => number, 'parent_id' => parent_id, 'exhibition_id' => exhibition_id }
     Items::Service.store_item(item)
   end
 

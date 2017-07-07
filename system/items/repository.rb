@@ -18,8 +18,8 @@ module Items
         result
       end
 
-      def retrieve_by_exhibition(exhibition_id)
-        result = @content.select { |item| item.parent_id == exhibition_id }
+      def retrieve_by_parent(id)
+        result = @content.select { |item| item.parent_id == id }
         result
       end
 

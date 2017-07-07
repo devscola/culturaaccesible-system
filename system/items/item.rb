@@ -1,6 +1,6 @@
 module Items
   class Item
-    attr_reader :name, :id, :parent_id
+    attr_reader :name, :id, :parent_id, :type
 
     def initialize(data, id=nil)
       @creation_date = Time.now.utc
@@ -12,6 +12,7 @@ module Items
       @description = null_defense(data['description'])
       @parent_id = null_defense(data['parent_id'])
       @parent_class = null_defense(data['parent_class'])
+      @type = 'item'
       @id = id || generate_id
     end
 
@@ -26,7 +27,7 @@ module Items
         parent_id: @parent_id,
         parent_class: @parent_class,
         id: @id,
-        type: 'item'
+        type: @type
       }
     end
 
