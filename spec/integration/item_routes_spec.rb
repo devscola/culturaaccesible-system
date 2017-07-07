@@ -1,7 +1,7 @@
 require 'rack/test'
 require 'json'
-require_relative '../../system/exhibitions/routes'
-require_relative '../../system/items/routes'
+require_relative '../../system/routes/exhibitions'
+require_relative '../../system/routes/items'
 
 describe 'Item controller' do
 include Rack::Test::Methods
