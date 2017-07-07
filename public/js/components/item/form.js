@@ -66,7 +66,7 @@ Class('Item.Form', {
 
     loadParentId: function() {
         var urlString = window.location.href;
-        var regexp = /[exhibition|room|item]\/(.*)\/[/item]/;
+        var regexp = /[exhibition|room|scene]\/(.*)\/[/item]/;
         return regexp.exec(urlString)[1];
     },
 

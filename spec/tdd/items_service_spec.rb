@@ -10,18 +10,18 @@ describe Items::Service do
 
 	let(:exhibition) { add_exhibition }
 
-  it 'retrieve an item by id' do
+  it 'retrieve an scene by id' do
 		name = 'Item'
 		number = '1.2'
-		result = add_item(name, number, exhibition[:id])
+		result = add_scene(name, number, exhibition[:id])
 		item = Items::Service.retrieve(result[:id])
 
 		expect(item[:name]).to eq name
   end
 
-	def add_item(name, number, exhibition_id)
-    item = { 'name' => name, 'number' => number, 'parent_id' => exhibition_id, 'exhibition_id' => exhibition_id }
-    Items::Service.store_item(item)
+	def add_scene(name, number, exhibition_id)
+    scene = { 'name' => name, 'number' => number, 'parent_id' => exhibition_id, 'exhibition_id' => exhibition_id }
+    Items::Service.store_scene(scene)
   end
 
 	def add_exhibition

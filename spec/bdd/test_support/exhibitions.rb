@@ -73,8 +73,8 @@ module Page
       has_css?('.exhibition-room', wait: 2)
     end
 
-    def list_has_items?
-      has_css?('.exhibition-item', wait: 2)
+    def list_has_scenes?
+      has_css?('.exhibition-scene', wait: 2)
     end
 
     def room_have_plus_button?

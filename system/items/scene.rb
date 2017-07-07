@@ -1,5 +1,5 @@
 module Items
-  class Item
+  class Scene
     attr_reader :name, :id, :parent_id
 
     def initialize(data, id=nil)
@@ -26,7 +26,7 @@ module Items
         parent_id: @parent_id,
         parent_class: @parent_class,
         id: @id,
-        type: 'item'
+        type: 'scene'
       }
     end
 
