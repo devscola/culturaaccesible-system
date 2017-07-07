@@ -133,7 +133,7 @@ feature 'Item' do
     expect(current.content?(Fixture::Item::VISIBLE_ARTWORK)).to be true
   end
 
-  scenario 'add item to a room', :wip do
+  scenario 'add item to a room' do
     Fixture::Item.from_exhibition_to_new_item
 
     Fixture::Item.room_saved
@@ -145,7 +145,7 @@ feature 'Item' do
     expect(current.room_has_children?).to be true
   end
 
-  scenario 'add item to an item', :wip do
+  scenario 'add item to an item' do
     Fixture::Item.from_exhibition_to_new_item
 
     Fixture::Item.item_saved
@@ -154,7 +154,7 @@ feature 'Item' do
 
     current = Page::Exhibitions.new
 
-    expect(current.item_has_children?).to be true
+    expect(current.scene_has_children?).to be true
   end
 
   scenario 'check if item name is in breadcrumb when it is saved' do

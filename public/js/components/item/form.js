@@ -49,7 +49,7 @@ Class('Item.Form', {
         if (parentClass == 'room') {
             this.retrieveAnExhibitionByRoom(parentId);
         }
-        if (parentClass == 'item') {
+        if (parentClass == 'scene') {
             this.retrieveAnExhibitionByItem(parentId)
         }
         if (parentClass == 'exhibition') {
@@ -75,7 +75,7 @@ Class('Item.Form', {
 
     loadParentId: function() {
         var urlString = window.location.href;
-        var regexp = /[exhibition|room|item]\/(.*)\/[/item]/;
+        var regexp = /[exhibition|room|scene]\/(.*)\/[/item]/;
         return regexp.exec(urlString)[1];
     },
 

@@ -3,7 +3,7 @@ module Items
     @content = []
 
     class << self
-      def choose_action(item_data, type='item')
+      def choose_action(item_data, type='scene')
         id = item_data['id']
         if (id)
           result = update(item_data, type)
@@ -31,7 +31,7 @@ module Items
 
       def update(item_data, type)
         id =  item_data['id']
-        item = type == 'item' ? Items::Item.new(item_data, id) : Items::Room.new(item_data, id)
+        item = type == 'item' ? Items::Scene.new(item_data, id) : Items::Room.new(item_data, id)
 
         current_item = @content.find { |element| element.id == item.id }
         current_item
@@ -39,7 +39,7 @@ module Items
 
       def store(item_data, type)
         Exhibitions::Service.add_number(item_data['exhibition_id'], item_data['number'])
-        item = type == 'item' ? Items::Item.new(item_data) : Items::Room.new(item_data)
+        item = type == 'scene' ? Items::Scene.new(item_data) : Items::Room.new(item_data)
         @content << item
         item
       end

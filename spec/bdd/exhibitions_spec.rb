@@ -22,7 +22,7 @@ feature 'Exhibitions' do
   scenario 'shows a list of items' do
     current = Fixture::Exhibitions.exhibition_saved_with_item
 
-    expect(current.list_has_items?).to be true
+    expect(current.list_has_scenes?).to be true
   end
 
   scenario 'shows each room with + button' do

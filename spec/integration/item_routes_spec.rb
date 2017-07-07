@@ -1,7 +1,7 @@
 require 'rack/test'
 require 'json'
-require_relative '../../system/exhibitions/routes'
-require_relative '../../system/items/routes'
+require_relative '../../system/routes/exhibitions'
+require_relative '../../system/routes/items'
 
 describe 'Item controller' do
 include Rack::Test::Methods
@@ -16,20 +16,20 @@ include Rack::Test::Methods
   ITEM_NUMBER_NOT_VALID = 1
   ITEM_NUMBER_VALID = 4
 
-  it 'stores items with same exhibition id with unique items name' do
+  it 'stores scene with same exhibition id with unique scene name' do
     add_exhibition
     exhibition_id = parse_response['id']
 
-    add_item(FIRST_NAME, exhibition_id)
-    first_item_name = parse_response['name']
-    first_item_exhibition_id = parse_response['parent_id']
+    add_scene(FIRST_NAME, exhibition_id)
+    first_scene_name = parse_response['name']
+    first_scene_exhibition_id = parse_response['parent_id']
 
-    add_item(SECOND_NAME, exhibition_id)
-    second_item_name = parse_response['name']
-    second_item_exhibition_id = parse_response['parent_id']
+    add_scene(SECOND_NAME, exhibition_id)
+    second_scene_name = parse_response['name']
+    second_scene_exhibition_id = parse_response['parent_id']
 
-    expect(first_item_name == second_item_name).to be false
-    expect(first_item_exhibition_id == second_item_exhibition_id).to be true
+    expect(first_scene_name == second_scene_name).to be false
+    expect(first_scene_exhibition_id == second_scene_exhibition_id).to be true
   end
 
   it 'stores rooms' do
@@ -55,17 +55,17 @@ include Rack::Test::Methods
     expect(room_id == retrieved_room_id).to be true
   end
 
-  it 'stores items' do
+  it 'stores scenes' do
     add_exhibition
     exhibition_id = parse_response['id']
 
-    add_item(FIRST_NAME, exhibition_id)
-    item_parent_class = parse_response['parent_class']
+    add_scene(FIRST_NAME, exhibition_id)
+    scene_parent_class = parse_response['parent_class']
 
-    expect(item_parent_class == "Exhibitions").to be true
+    expect(scene_parent_class == "Exhibitions").to be true
   end
 
-  it 'validate if item number exists' do
+  it 'validate if scene number exists' do
     add_exhibition
 
     exhibition = parse_response
@@ -77,9 +77,9 @@ include Rack::Test::Methods
 
   end
 
-  def add_item(unique_name, exhibition_id, number=ITEM_NUMBER_VALID)
-    item = { name: unique_name, room: false, parent_id: exhibition_id, exhibition_id: exhibition_id, number: number, parent_class: "Exhibitions" }.to_json
-    post '/api/item/add', item
+  def add_scene(unique_name, exhibition_id, number=ITEM_NUMBER_VALID)
+    scene = { name: unique_name, room: false, parent_id: exhibition_id, exhibition_id: exhibition_id, number: number, parent_class: "Exhibitions" }.to_json
+    post '/api/item/add', scene
   end
 
   def add_room(unique_name, exhibition_id)

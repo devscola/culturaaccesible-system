@@ -1,8 +1,7 @@
 require 'sinatra/base'
-require_relative 'system/exhibitions/routes'
-require_relative 'system/museums/routes'
-require_relative 'system/items/routes'
-
+require_relative 'system/routes/exhibitions'
+require_relative 'system/routes/museums'
+require_relative 'system/routes/items'
 
 class App < Sinatra::Base
   set :public_folder, 'public/'
@@ -28,7 +27,7 @@ class App < Sinatra::Base
     File.read(File.join('public', 'item.html'))
   end
 
-  get '/item/:id/item' do
+  get '/scene/:id/item' do
     File.read(File.join('public', 'item.html'))
   end
 

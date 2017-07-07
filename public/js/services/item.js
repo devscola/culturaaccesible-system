@@ -7,7 +7,7 @@ Class('Services.Items', {
     },
 
     retrieveItem: function(payload) {
-        this.doRequest('/item/retrieve', payload, function(item){
+        this.doRequest('/scene/retrieve', payload, function(item){
             Bus.publish('item.retrieved', item);
         });
     },
