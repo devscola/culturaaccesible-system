@@ -48,13 +48,12 @@ Class('Item.Form', {
         var parentClass = this.loadParentClass();
         if (parentClass == 'room') {
             this.retrieveAnExhibitionByRoom(parentId);
-        }
-        if (parentClass == 'scene') {
+            this.element.disableCheckBox = true;
+        } else if (parentClass == 'scene') {
             this.retrieveAnExhibitionByItem(parentId)
-        }
-        if (parentClass == 'exhibition') {
-          var payload = { 'id': parentId };
-          Bus.publish('exhibition.retrieve', payload);
+        } else if (parentClass == 'exhibition') {
+            var payload = { 'id': parentId };
+            Bus.publish('exhibition.retrieve', payload);
         }
     },
 

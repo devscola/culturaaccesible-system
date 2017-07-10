@@ -1,5 +1,6 @@
 require 'sinatra/base'
 require 'json'
+require 'json/add/exception'
 require_relative '../items/service'
 
 class App < Sinatra::Base
@@ -8,7 +9,13 @@ class App < Sinatra::Base
     if (data['room'] == false)
       result = Items::Service.store_scene(data)
     else
-      result = Items::Service.store_room(data)
+      begin
+        result = Items::Service.store_room(data)
+      rescue => ArgumentError
+        status 503
+        body 'Creating rooms inside scenes or other rooms is not allowed'
+        result = ArgumentError
+      end
     end
     result.to_json
   end

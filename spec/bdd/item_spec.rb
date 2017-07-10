@@ -133,6 +133,21 @@ feature 'Item' do
     expect(current.content?(Fixture::Item::VISIBLE_ARTWORK)).to be true
   end
 
+  scenario 'add item to a room has disabled checkbox' do
+    Fixture::Item.from_exhibition_to_new_item
+
+    Fixture::Item.room_saved
+
+    current = Page::Exhibitions.new
+
+    current.click_room_plus_button
+
+    current = Page::Item.new
+
+    expect(current.room_check_disabled?).to be true
+
+  end
+
   scenario 'add item to a room' do
     Fixture::Item.from_exhibition_to_new_item
 

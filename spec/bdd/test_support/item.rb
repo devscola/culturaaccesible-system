@@ -48,6 +48,10 @@ module Page
       has_checked_field?(name: 'room')
     end
 
+    def room_check_disabled?
+      input_disabled?('room')
+    end
+
     def accept_alert
       find('.accept-alert').click
     end

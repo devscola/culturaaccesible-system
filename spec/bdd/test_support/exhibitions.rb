@@ -102,7 +102,7 @@ module Page
     end
 
     def click_plus_button
-      has_css?('.plus-button', wait: 4)
+      has_css?('.plus-button', wait: 2, :text => '+')
       first('.plus-button').click
     end
 
