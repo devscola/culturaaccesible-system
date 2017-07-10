@@ -35,6 +35,47 @@ module Fixture
 
         current
       end
+
+      def room_saved
+        current = initial_state
+
+        current.check_room
+        current.fill('name', ARTWORK)
+        current.fill('number', FIRST_NUMBER)
+
+        current.submit
+      end
+
+      def item_saved
+        current = initial_state
+
+        current.fill('name',Fixture::Item::ARTWORK)
+        current.fill('number',Fixture::Item::FIRST_NUMBER)
+
+        current.submit
+      end
+
+      def item_saved_in_room
+        current = Page::Exhibitions.new
+        current.click_room_plus_button
+
+        current = Page::Item.new
+        current.fill('name',Fixture::Item::OTHER_ARTWORK)
+        current.fill('number',Fixture::Item::SECOND_NUMBER)
+
+        current.submit
+      end
+
+      def item_saved_in_item
+        current = Page::Exhibitions.new
+        current.click_item_plus_button
+
+        current = Page::Item.new
+        current.fill('name',Fixture::Item::OTHER_ARTWORK)
+        current.fill('number',Fixture::Item::SECOND_NUMBER)
+
+        current.submit
+      end
     end
   end
 end

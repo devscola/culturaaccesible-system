@@ -1,13 +1,13 @@
 require_relative 'repository'
-require_relative 'item'
+require_relative 'scene'
 require_relative 'room'
 require_relative '../exhibitions/service'
 
 module Items
   class Service
     class << self
-      def store_item(item_data)
-        result = Items::Repository.choose_action(item_data)
+      def store_scene(scene_data)
+        result = Items::Repository.choose_action(scene_data)
         result.serialize
       end
 
@@ -25,9 +25,15 @@ module Items
         result.serialize
       end
 
-      def retrieve_by_exhibition(exhibition_id)
-        result = Items::Repository.retrieve_by_exhibition(exhibition_id)
-        result.map! { |item| item.serialize }
+      def retrieve_by_parent(id)
+        result = Items::Repository.retrieve_by_parent(id)
+        result.map! do |item|
+          {
+            id: item.id,
+            name: item.name,
+            type: item.type
+          }
+        end
         result
       end
     end

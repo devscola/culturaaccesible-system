@@ -21,14 +21,14 @@ describe Exhibitions::Service do
     name = 'some name'
     location = 'some location'
     result = add_exhibition(name, location)
-    item = add_item('item name', 'item number', result[:id])
+    scene = add_scene('scene name', 'scene number', result[:id])
     room = add_room('room name', 'room number', result[:id])
 
     exhibition = Exhibitions::Service.retrieve_for_list(result[:id])
 
     expect(exhibition[:name]).to eq(name)
-    expect(exhibition[:children]).to include({:id => item[:id], :name => item[:name], :type => 'item'})
-    expect(exhibition[:children]).to include({:id => room[:id], :name => room[:name], :type => 'room'})
+    expect(exhibition[:children]).to include({:id => scene[:id], :name => scene[:name], :type => 'scene', :children => []})
+    expect(exhibition[:children]).to include({:id => room[:id], :name => room[:name], :type => 'room', :children => []})
   end
 
   it 'retrieves all exhibitions' do
@@ -57,9 +57,9 @@ describe Exhibitions::Service do
     Exhibitions::Service.store(exhibition)
   end
 
-  def add_item(name, number, parent_id)
-    item = { 'name' => name, 'number' => number, 'parent_id' => parent_id, 'exhibition_id' => parent_id, 'parent_class' => 'exhibition' }
-    Items::Service.store_item(item)
+  def add_scene(name, number, parent_id)
+    scene = { 'name' => name, 'number' => number, 'parent_id' => parent_id, 'exhibition_id' => parent_id, 'parent_class' => 'exhibition' }
+    Items::Service.store_scene(scene)
   end
 
   def add_room(name, number, exhibition_id)

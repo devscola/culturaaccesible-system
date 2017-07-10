@@ -1,6 +1,6 @@
 require 'rack/test'
 require 'json'
-require_relative '../../system/museums/routes'
+require_relative '../../system/routes/museums'
 require_relative '../../system/museums/repository'
 
 describe 'Museum controller' do

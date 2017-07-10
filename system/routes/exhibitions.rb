@@ -1,6 +1,6 @@
 require 'sinatra/base'
 require 'json'
-require_relative 'service'
+require_relative '../exhibitions/service'
 
 class App < Sinatra::Base
   post '/api/exhibition/add' do

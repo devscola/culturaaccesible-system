@@ -133,28 +133,43 @@ feature 'Item' do
     expect(current.content?(Fixture::Item::VISIBLE_ARTWORK)).to be true
   end
 
-  scenario 'add item to a room' do
-    current = Fixture::Item.from_exhibition_to_new_item
+  scenario 'add item to a room has disabled checkbox' do
+    Fixture::Item.from_exhibition_to_new_item
 
-    current.check_room
-    current.fill('name',Fixture::Item::ARTWORK)
-    current.fill('number',Fixture::Item::FIRST_NUMBER)
-
-    current.submit
+    Fixture::Item.room_saved
 
     current = Page::Exhibitions.new
+
     current.click_room_plus_button
 
     current = Page::Item.new
 
     expect(current.room_check_disabled?).to be true
 
-    current.fill('name',Fixture::Item::OTHER_ARTWORK)
-    current.fill('number',Fixture::Item::SECOND_NUMBER)
+  end
 
-    current.submit
+  scenario 'add item to a room' do
+    Fixture::Item.from_exhibition_to_new_item
 
-    expect(current.content?(Fixture::Item::VISIBLE_OTHER_ARTWORK)).to be true
+    Fixture::Item.room_saved
+
+    Fixture::Item.item_saved_in_room
+
+    current = Page::Exhibitions.new
+
+    expect(current.room_has_children?).to be true
+  end
+
+  scenario 'add item to an item' do
+    Fixture::Item.from_exhibition_to_new_item
+
+    Fixture::Item.item_saved
+
+    Fixture::Item.item_saved_in_item
+
+    current = Page::Exhibitions.new
+
+    expect(current.scene_has_children?).to be true
   end
 
   scenario 'check if item name is in breadcrumb when it is saved' do

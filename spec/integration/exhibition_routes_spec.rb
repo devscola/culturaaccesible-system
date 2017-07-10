@@ -1,6 +1,6 @@
 require 'rack/test'
 require 'json'
-require_relative '../../system/exhibitions/routes'
+require_relative '../../system/routes/exhibitions'
 require_relative '../../system/exhibitions/repository'
 
 describe 'Exhibition controller' do

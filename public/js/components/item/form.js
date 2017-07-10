@@ -46,17 +46,19 @@ Class('Item.Form', {
     retrieveAnExhibition: function() {
         var parentId = this.loadParentId();
         var parentClass = this.loadParentClass();
-        if ((parentClass == 'room') || (parentClass == 'item')) {
+        if (parentClass == 'room') {
             this.retrieveAnExhibitionByRoom(parentId);
             this.element.disableCheckBox = true;
-        } else {
-          var payload = { 'id': parentId };
-          Bus.publish('exhibition.retrieve', payload);
+        } else if (parentClass == 'scene') {
+            this.retrieveAnExhibitionByItem(parentId)
+        } else if (parentClass == 'exhibition') {
+            var payload = { 'id': parentId };
+            Bus.publish('exhibition.retrieve', payload);
         }
     },
 
-    loadExhibitionByRoom: function(room) {
-      var payload = { 'id': room.parent_id };
+    loadExhibitionByChildren: function(children) {
+      var payload = { 'id': children.parent_id };
       Bus.publish('exhibition.retrieve', payload);
     },
 
@@ -65,9 +67,14 @@ Class('Item.Form', {
       Bus.publish('room.retrieve', payload);
     },
 
+    retrieveAnExhibitionByItem: function(parentId) {
+      var payload = { 'id': parentId };
+      Bus.publish('item.retrieve', payload);
+    },
+
     loadParentId: function() {
         var urlString = window.location.href;
-        var regexp = /[exhibition|room|item]\/(.*)\/[/item]/;
+        var regexp = /[exhibition|room|scene]\/(.*)\/[/item]/;
         return regexp.exec(urlString)[1];
     },
 
@@ -94,6 +101,7 @@ Class('Item.Form', {
     subscribe: function() {
         Bus.subscribe('exhibition.retrieved', this.renderExhibition.bind(this));
         Bus.subscribe('item.edit', this.show.bind(this));
-        Bus.subscribe('room.retrieved', this.loadExhibitionByRoom.bind(this));
+        Bus.subscribe('room.retrieved', this.loadExhibitionByChildren.bind(this));
+        Bus.subscribe('item.retrieved', this.loadExhibitionByChildren.bind(this));
     }
 });

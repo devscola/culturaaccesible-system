@@ -18,9 +18,14 @@ module Exhibitions
 
       def retrieve_for_list(id)
         exhibition = Exhibitions::Repository.retrieve(id)
-        children = Items::Service.retrieve_by_exhibition(id)
+        children = Items::Service.retrieve_by_parent(id)
         children.map! do |item|
-          { id: item[:id], name: item[:name], type: item[:type] }
+          {
+            id: item[:id],
+            name: item[:name],
+            type: item[:type],
+            children: Items::Service.retrieve_by_parent(item[:id])
+          }
         end
         { id: exhibition.id, name: exhibition.name, :children => children }
       end

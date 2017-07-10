@@ -73,8 +73,16 @@ module Page
       has_css?('.exhibition-room', wait: 2)
     end
 
-    def list_has_items?
-      has_css?('.exhibition-item', wait: 2)
+    def room_has_children?
+      has_css?('.exhibition-room .exhibition-scene', wait: 2)
+    end
+
+    def scene_has_children?
+      has_css?('.exhibition-scene .exhibition-scene', wait: 2)
+    end
+
+    def list_has_scenes?
+      has_css?('.exhibition-scene', wait: 2)
     end
 
     def room_have_plus_button?
@@ -90,13 +98,18 @@ module Page
     end
 
     def click_plus_button
-      has_css?('.plus-button', wait: 4)
+      has_css?('.plus-button', wait: 2, :text => '+')
       first('.plus-button').click
     end
 
     def click_room_plus_button
       has_css?('.exhibition-room .plus-button', wait: 4)
       first('.exhibition-room .plus-button').click
+    end
+
+    def click_item_plus_button
+      has_css?('.exhibition-scene .plus-button', wait: 4)
+      first('.exhibition-scene .plus-button').click
     end
 
     def title(name)
