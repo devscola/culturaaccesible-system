@@ -146,6 +146,9 @@ feature 'Item' do
     current.click_room_plus_button
 
     current = Page::Item.new
+
+    expect(current.room_check_disabled?).to be true
+
     current.fill('name',Fixture::Item::OTHER_ARTWORK)
     current.fill('number',Fixture::Item::SECOND_NUMBER)
 

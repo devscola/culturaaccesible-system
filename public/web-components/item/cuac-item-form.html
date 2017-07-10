@@ -24,7 +24,7 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="room">Room</label>
-                            <input type="checkbox" class="room" name="room" on-change="roomToggle"></input>
+                            <input type="checkbox" class="room" name="room" on-change="roomToggle" disabled$="{{disableCheckBox}}"></input>
                         </div>
                         <div class="form-group number">
                             <label for="number">Number</label>
@@ -93,6 +93,8 @@
                 exhibition: { type: Object },
 
                 room: {type: Boolean, value: false},
+
+                disableCheckBox: {type: Boolean, value: false},
 
                 parentClass: {type: String},
 

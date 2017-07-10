@@ -46,8 +46,9 @@ Class('Item.Form', {
     retrieveAnExhibition: function() {
         var parentId = this.loadParentId();
         var parentClass = this.loadParentClass();
-        if (parentClass == 'room') {
+        if ((parentClass == 'room') || (parentClass == 'item')) {
             this.retrieveAnExhibitionByRoom(parentId);
+            this.element.disableCheckBox = true;
         } else {
           var payload = { 'id': parentId };
           Bus.publish('exhibition.retrieve', payload);

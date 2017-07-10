@@ -3,7 +3,7 @@ require 'json'
 require_relative '../../system/exhibitions/routes'
 require_relative '../../system/items/routes'
 
-describe 'Item controller', :wip do
+describe 'Item controller' do
 include Rack::Test::Methods
 
   def app
@@ -15,6 +15,8 @@ include Rack::Test::Methods
   ITEM_NUMBERS = [1, 2, 3]
   ITEM_NUMBER_NOT_VALID = 1
   ITEM_NUMBER_VALID = 4
+  NUMBER = 10
+  ANOTHER_NUMBER = 11
 
   it 'stores items with same exhibition id with unique items name' do
     add_exhibition
@@ -42,6 +44,21 @@ include Rack::Test::Methods
     expect(room_name == FIRST_NAME).to be true
   end
 
+  it 'cant store a room inside another room' do
+    add_exhibition
+    exhibition_id = parse_response['id']
+
+    add_room(FIRST_NAME, exhibition_id)
+    room = parse_response
+    room_id = parse_response['id']
+
+    add_room_inside_a_room(SECOND_NAME, exhibition_id, room_id)
+
+    expect(parse_response['json_class']).to eq('ArgumentError')
+    expect(parse_response['m']).to eq('Creating rooms inside scenes or other rooms is not allowed')
+
+  end
+
   it 'retrieve room' do
     add_exhibition
     exhibition_id = parse_response['id']
@@ -62,7 +79,7 @@ include Rack::Test::Methods
     add_item(FIRST_NAME, exhibition_id)
     item_parent_class = parse_response['parent_class']
 
-    expect(item_parent_class == "Exhibitions").to be true
+    expect(item_parent_class == "exhibition").to be true
   end
 
   it 'validate if item number exists' do
@@ -78,12 +95,17 @@ include Rack::Test::Methods
   end
 
   def add_item(unique_name, exhibition_id, number=ITEM_NUMBER_VALID)
-    item = { name: unique_name, room: false, parent_id: exhibition_id, exhibition_id: exhibition_id, number: number, parent_class: "Exhibitions" }.to_json
+    item = { name: unique_name, room: false, parent_id: exhibition_id, exhibition_id: exhibition_id, number: number, parent_class: "exhibition" }.to_json
     post '/api/item/add', item
   end
 
   def add_room(unique_name, exhibition_id)
-    room = { name: unique_name, room: true, exhibition_id: exhibition_id, parent_id: exhibition_id }.to_json
+    room = { name: unique_name, room: true, exhibition_id: exhibition_id, parent_id: exhibition_id, parent_class: 'exhibition', number: NUMBER }.to_json
+    post '/api/item/add', room
+  end
+
+  def add_room_inside_a_room(unique_name, exhibition_id, parent_id)
+    room = { name: unique_name, room: true, exhibition_id: exhibition_id, parent_id: parent_id, parent_class: 'room', number: ANOTHER_NUMBER }.to_json
     post '/api/item/add', room
   end
 
