@@ -41,7 +41,8 @@ module Fixture
       def exhibition_saved_with_room
         current = exhibition_saved
         current.add_room
-        Page::Exhibitions.new
+        current = Page::Exhibitions.new
+        current
       end
 
       def exhibition_saved_with_item

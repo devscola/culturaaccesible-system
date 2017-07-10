@@ -2,10 +2,14 @@
 
 <dom-module id="cuac-exhibition-detail">
     <template>
+        <style type="text/css">
+          @import url("//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css")
+        </style>
         <li class="list-item">
             <span class="exhibition-name">{{exhibition.name}}</span>
+            <span class="glyphicon glyphicon-list toggle-exhibition-list" on-click="toggleVisibility"></span>
             <cuac-sidebar-plus-button class="sidebar-plus" parent$="{{exhibition}}"></cuac-sidebar-plus-button>
-            <cuac-item-list exhibition$="{{exhibition}}"></cuac-item-list>
+            <cuac-item-list collapse$="{{collapse}}" exhibition$="{{exhibition}}"></cuac-item-list>
         </li>
     </template>
 
@@ -16,7 +20,17 @@
             properties: {
                 exhibition: {
                     type: Object
+                },
+                collapse: {
+                    type: Boolean
                 }
+            },
+
+            toggleVisibility: function() {
+                if(this.collapse){
+                    return this.collapse = false;
+                }
+                this.collapse = true;
             }
         });
     </script>

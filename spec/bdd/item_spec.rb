@@ -140,6 +140,8 @@ feature 'Item' do
 
     current = Page::Exhibitions.new
 
+    current.toggle_list
+
     current.click_room_plus_button
 
     current = Page::Item.new
@@ -156,6 +158,7 @@ feature 'Item' do
     Fixture::Item.item_saved_in_room
 
     current = Page::Exhibitions.new
+    current.toggle_list
 
     expect(current.room_has_children?).to be true
   end
@@ -168,6 +171,7 @@ feature 'Item' do
     Fixture::Item.item_saved_in_item
 
     current = Page::Exhibitions.new
+    current.toggle_list
 
     expect(current.scene_has_children?).to be true
   end
@@ -182,6 +186,7 @@ feature 'Item' do
     Fixture::Item.item_saved_in_item
 
     current = Page::Exhibitions.new
+    current.toggle_list
 
     expect(current.scene_in_room_has_children?).to be true
   end

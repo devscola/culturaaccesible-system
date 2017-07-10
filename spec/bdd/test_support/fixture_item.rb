@@ -58,6 +58,7 @@ module Fixture
 
       def item_saved_in_room
         current = Page::Exhibitions.new
+        current.toggle_list
         current.click_room_plus_button
 
         current = Page::Item.new
@@ -69,6 +70,7 @@ module Fixture
 
       def item_saved_in_item
         current = Page::Exhibitions.new
+        current.toggle_list
         current.click_item_plus_button
 
         current = Page::Item.new
