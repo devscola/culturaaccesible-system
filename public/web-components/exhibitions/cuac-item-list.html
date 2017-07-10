@@ -12,6 +12,14 @@
                   <li class$="list-group-item exhibition-{{item.type}}">
                     {{item.name}}
                     <cuac-sidebar-plus-button parent$="{{item}}"></cuac-sidebar-plus-button>
+                    <ul class="list-group">
+                      <template is="dom-repeat" items="{{item.children}}">
+                        <li class$="list-group-item exhibition-{{item.type}}">
+                          {{item.name}}
+                          <cuac-sidebar-plus-button parent$="{{item}}"></cuac-sidebar-plus-button>
+                        </li>
+                      </template>
+                    </ul>
                   </li>
                 </template>
               </ul>

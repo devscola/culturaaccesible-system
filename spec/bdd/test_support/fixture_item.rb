@@ -11,6 +11,7 @@ module Fixture
     VISIBLE_OTHER_ARTWORK = 'Name: La costellazione'
     FIRST_NUMBER = 1
     SECOND_NUMBER = 2
+    THIRD_NUMBER = 3
     REPEATED_NUMBER = FIRST_NUMBER
 
     class << self
@@ -72,7 +73,7 @@ module Fixture
 
         current = Page::Item.new
         current.fill('name',Fixture::Item::OTHER_ARTWORK)
-        current.fill('number',Fixture::Item::SECOND_NUMBER)
+        current.fill('number',Fixture::Item::THIRD_NUMBER)
 
         current.submit
       end

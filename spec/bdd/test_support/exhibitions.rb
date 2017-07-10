@@ -81,6 +81,10 @@ module Page
       has_css?('.exhibition-scene .exhibition-scene', wait: 2)
     end
 
+    def scene_in_room_has_children?
+      has_css?('.exhibition-room .exhibition-scene .exhibition-scene', wait: 2)
+    end
+
     def list_has_scenes?
       has_css?('.exhibition-scene', wait: 2)
     end

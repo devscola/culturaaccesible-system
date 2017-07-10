@@ -59,6 +59,10 @@ Class('Item.Form', {
     },
 
     loadExhibitionByChildren: function(children) {
+      if(children.parent_class == 'room'){
+        this.retrieveAnExhibitionByRoom(children.parent_id)
+        return
+      }
       var payload = { 'id': children.parent_id };
       Bus.publish('exhibition.retrieve', payload);
     },

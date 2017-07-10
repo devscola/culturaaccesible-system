@@ -27,7 +27,8 @@ module Items
           {
             id: item.id,
             name: item.name,
-            type: item.type
+            type: item.type,
+            children: Items::Service.retrieve_by_parent(item.id)
           }
         end
         result

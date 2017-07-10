@@ -157,6 +157,20 @@ feature 'Item' do
     expect(current.scene_has_children?).to be true
   end
 
+  scenario 'add sub-item to an item inside a room' do
+    Fixture::Item.from_exhibition_to_new_item
+
+    Fixture::Item.room_saved
+
+    Fixture::Item.item_saved_in_room
+
+    Fixture::Item.item_saved_in_item
+
+    current = Page::Exhibitions.new
+
+    expect(current.scene_in_room_has_children?).to be true
+  end
+
   scenario 'check if item name is in breadcrumb when it is saved' do
     current = Fixture::Exhibitions.pristine.exhibition_saved
     exhibition_name = current.first_exhibition_name
