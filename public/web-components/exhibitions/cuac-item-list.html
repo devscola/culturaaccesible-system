@@ -14,8 +14,14 @@
         <ul class$="list-group {{listVisibility}}">
           <template is="dom-repeat" items="{{exhibition.children}}" as="child">
             <li class$="list-group-item exhibition-{{child.type}}">
-              {{child.name}}
-              <cuac-sidebar-plus-button parent$="{{child}}"></cuac-sidebar-plus-button>
+              <template is="dom-if" if="{{isRoom(child.type)}}">
+                <a href="/room/{{child.id}}" class="room-name">{{child.name}}</a>
+                <cuac-sidebar-plus-button parent$="{{child}}"></cuac-sidebar-plus-button>
+              </template>
+              <template is="dom-if" if="{{isScene(child.type)}}">
+                <a href="/scene/{{child.id}}" class="scene-name">{{child.name}}</a>
+                <cuac-sidebar-plus-button parent$="{{child}}"></cuac-sidebar-plus-button>
+              </template>
               <ul class="list-group">
                 <template is="dom-repeat" items="{{child.children}}">
                   <li class$="list-group-item exhibition-{{item.type}}">
@@ -61,6 +67,14 @@
                 } else {
                     this.listVisibility = 'hide';
                 }
+            },
+
+            isRoom: function(type) {
+              return type == 'room';
+            },
+
+            isScene: function(type) {
+              return type == 'scene';
             },
 
             publishClicked: function() {

@@ -1,0 +1,32 @@
+<link rel="import" href="/vendor/polymer/polymer.html">
+
+<dom-module id="cuac-room-info">
+    <template>
+        <style>
+        </style>
+          <div class="panel panel-primary">
+              <div class="panel-heading">
+                  <h3 class="panel-title">Room detail</h3>
+              </div>
+              <div class="panel-body">
+                  <div>Name: {{room.name}}</div>
+                  <div>Number: {{room.number}}</div>
+                  <div>Beacon number: {{room.beacon}}</div>
+                  <div>Description: {{room.description}}</div>
+              </div>
+          </div>
+    </template>
+
+    <script>
+        Polymer({
+            is: 'cuac-room-info',
+
+            properties: {
+
+                room: { type: Object }
+                
+            }
+
+        });
+    </script>
+</dom-module>

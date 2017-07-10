@@ -23,6 +23,14 @@ class App < Sinatra::Base
     File.read(File.join('public', 'exhibition-info.html'))
   end
 
+  get '/room/:id' do
+    File.read(File.join('public', 'room-info.html'))
+  end
+
+  get '/scene/:id' do
+    File.read(File.join('public', 'scene-info.html'))
+  end
+
   get '/exhibition/:id/item' do
     File.read(File.join('public', 'item.html'))
   end

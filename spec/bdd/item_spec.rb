@@ -3,6 +3,7 @@ require_relative 'test_support/item'
 require_relative 'test_support/fixture_item'
 require_relative 'test_support/exhibitions'
 require_relative 'test_support/fixture_exhibitions'
+require_relative 'test_support/room_info'
 
 feature 'Item' do
   scenario 'allows submit when fill required name' do
@@ -161,6 +162,21 @@ feature 'Item' do
     current.toggle_list
 
     expect(current.room_has_children?).to be true
+  end
+
+  scenario 'shows room info when room name is clicked' do
+    Fixture::Item.from_exhibition_to_new_item
+
+    Fixture::Item.room_saved
+
+    current = Page::Exhibitions.new
+    current.toggle_list
+
+    current.go_to_room_info
+
+    current = Page::RoomInfo.new
+
+    expect(current.content?(Fixture::Item::VISIBLE_ARTWORK)).to be true
   end
 
   scenario 'add item to an item' do
