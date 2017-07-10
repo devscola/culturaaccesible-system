@@ -121,6 +121,11 @@ module Page
       first('.exhibition-scene .plus-button').click
     end
 
+    def go_to_exhibition_info
+      has_css?('.exhibition-name', wait: 4)
+      first('.exhibition-name').click
+    end
+
     def title(name)
       page.has_title?(name)
     end
