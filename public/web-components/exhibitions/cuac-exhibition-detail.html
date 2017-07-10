@@ -3,7 +3,9 @@
 <dom-module id="cuac-exhibition-detail">
     <template>
         <li class="list-item">
-            <span class="exhibition-name">{{exhibition.name}}</span>
+            <span>
+              <a href="/exhibition/{{exhibition.id}}" class="exhibition-name">{{exhibition.name}}</a>
+            </span>
             <cuac-sidebar-plus-button class="sidebar-plus" parent$="{{exhibition}}"></cuac-sidebar-plus-button>
             <cuac-item-list exhibition$="{{exhibition}}"></cuac-item-list>
         </li>

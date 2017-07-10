@@ -8,6 +8,7 @@ module Fixture
     OTHER_NAME = 'some other name'
     LOCATION = 'some location'
     REDIRECTED_PAGE_TITLE = 'Item'
+    EXHIBITION_NAME = 'Name: some name'
 
     class << self
 

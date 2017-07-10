@@ -1,6 +1,8 @@
 require 'spec_helper_bdd'
 require_relative 'test_support/exhibitions'
 require_relative 'test_support/fixture_exhibitions'
+require_relative 'test_support/exhibition_info'
+
 
 feature 'Exhibitions' do
   before(:each) do
@@ -97,5 +99,14 @@ feature 'Exhibitions' do
     current.save
 
     expect(current.other_name?).to be true
+  end
+
+  scenario 'shows exhibition info when exhibition name is clicked' do
+    current = Fixture::Exhibitions.exhibition_saved
+    current.go_to_exhibition_info
+
+    current = Page::ExhibitionInfo.new
+
+    expect(current.content?(Fixture::Exhibitions::EXHIBITION_NAME)).to be true
   end
 end

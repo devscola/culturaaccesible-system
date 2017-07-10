@@ -1,17 +1,11 @@
 <link rel="import" href="/vendor/polymer/polymer.html">
 
-<dom-module id="cuac-exhibition-view">
+<dom-module id="cuac-exhibition-info">
     <template>
         <style>
-            .panel.show {
-                display: block;
-            }
 
-            .panel.hide {
-                display: none;
-            }
         </style>
-        <div class$="view {{panelVisibility}}">
+        <div class="view">
             <div class="panel panel-primary">
                 <div class="panel-heading">
                     <h3 class="panel-title">Exhibition detail</h3>
@@ -31,37 +25,18 @@
                     <div>Extended description: {{exhibition.description}}</div>
                 </div>
             </div>
-            <cuac-exhibition-edit-button exhibition="{{exhibition}}"></cuac-exhibition-edit-button>
         </div>
     </template>
 
     <script>
         Polymer({
-            is: 'cuac-exhibition-view',
+            is: 'cuac-exhibition-info',
 
             properties: {
 
                 exhibition: {
                     type: Object,
                     reflectToAttribute: true
-                },
-
-                visible: {
-                    type: Boolean,
-                    observer: 'togglePanel'
-                },
-
-                panelVisibility: {
-                    type: String,
-                    value: 'hide'
-                }
-            },
-
-            togglePanel: function() {
-                if (this.visible) {
-                    this.panelVisibility = 'show';
-                } else {
-                    this.panelVisibility = 'hide';
                 }
             }
         });
