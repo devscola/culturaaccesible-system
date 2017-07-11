@@ -12,6 +12,9 @@ module Fixture
     FIRST_NUMBER = 1
     SECOND_NUMBER = 2
     THIRD_NUMBER = 3
+    INFO_FIRST_NUMBER = 'Number: 1'
+    INFO_SECOND_NUMBER = 'Number: 2'
+    INFO_THIRD_NUMBER = 'Number: 3'
     REPEATED_NUMBER = FIRST_NUMBER
 
     class << self
@@ -51,7 +54,7 @@ module Fixture
         current = initial_state
 
         current.fill('name',Fixture::Item::ARTWORK)
-        current.fill('number',Fixture::Item::FIRST_NUMBER)
+        current.fill('number',Fixture::Item::SECOND_NUMBER)
 
         current.submit
       end

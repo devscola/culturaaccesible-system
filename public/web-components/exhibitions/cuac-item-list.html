@@ -14,23 +14,17 @@
         <ul class$="list-group {{listVisibility}}">
           <template is="dom-repeat" items="{{exhibition.children}}" as="child">
             <li class$="list-group-item exhibition-{{child.type}}">
-              <template is="dom-if" if="{{isRoom(child.type)}}">
-                <a href="/room/{{child.id}}" class="room-name">{{child.name}}</a>
-                <cuac-sidebar-plus-button parent$="{{child}}"></cuac-sidebar-plus-button>
-              </template>
-              <template is="dom-if" if="{{isScene(child.type)}}">
-                <a href="/scene/{{child.id}}" class="scene-name">{{child.name}}</a>
-                <cuac-sidebar-plus-button parent$="{{child}}"></cuac-sidebar-plus-button>
-              </template>
+              <a href="/{{child.type}}/{{child.id}}" class$="{{child.type}}-name">{{child.name}}</a>
+              <cuac-sidebar-plus-button parent$="{{child}}"></cuac-sidebar-plus-button>
               <ul class="list-group">
                 <template is="dom-repeat" items="{{child.children}}">
                   <li class$="list-group-item exhibition-{{item.type}}">
-                    {{item.name}}
+                    <a href="/scene/{{item.id}}" class="item-name">{{item.name}}</a>
                     <cuac-sidebar-plus-button parent$="{{item}}"></cuac-sidebar-plus-button>
                     <ul class="list-group">
                       <template is="dom-repeat" items="{{item.children}}">
                         <li class$="list-group-item exhibition-{{item.type}}">
-                          {{item.name}}
+                          <a href="/scene/{{item.id}}" class="subscene-name">{{item.name}}</a>
                           <cuac-sidebar-plus-button parent$="{{item}}"></cuac-sidebar-plus-button>
                         </li>
                       </template>
@@ -67,14 +61,6 @@
                 } else {
                     this.listVisibility = 'hide';
                 }
-            },
-
-            isRoom: function(type) {
-              return type == 'room';
-            },
-
-            isScene: function(type) {
-              return type == 'scene';
             },
 
             publishClicked: function() {

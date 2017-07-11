@@ -4,6 +4,7 @@ require_relative 'test_support/fixture_item'
 require_relative 'test_support/exhibitions'
 require_relative 'test_support/fixture_exhibitions'
 require_relative 'test_support/room_info'
+require_relative 'test_support/scene_info'
 
 feature 'Item' do
   scenario 'allows submit when fill required name' do
@@ -176,7 +177,61 @@ feature 'Item' do
 
     current = Page::RoomInfo.new
 
-    expect(current.content?(Fixture::Item::VISIBLE_ARTWORK)).to be true
+    expect(current.content?(Fixture::Item::INFO_FIRST_NUMBER)).to be true
+  end
+
+  scenario 'shows scene info when scene name is clicked' do
+    Fixture::Item.from_exhibition_to_new_item
+
+    Fixture::Item.item_saved
+
+    current = Page::Exhibitions.new
+    current.toggle_list
+
+    current.go_to_scene_info
+
+    current = Page::SceneInfo.new
+
+    expect(current.content?(Fixture::Item::INFO_SECOND_NUMBER)).to be true
+  end
+
+  scenario 'shows subscene info when subscene name is clicked' do
+    Fixture::Item.from_exhibition_to_new_item
+
+    Fixture::Item.item_saved
+
+    Fixture::Item.item_saved_in_item
+
+    current = Page::Exhibitions.new
+    current.toggle_list
+
+    current.go_to_subscene_info
+
+    current = Page::SceneInfo.new
+
+    expect(current.content?(Fixture::Item::INFO_THIRD_NUMBER)).to be true
+  end
+
+  scenario 'shows subscene info when subscene name from room > scene >subscene is clicked' do
+    Fixture::Item.from_exhibition_to_new_item
+
+    Fixture::Item.room_saved
+
+    Fixture::Item.item_saved_in_room
+
+    Fixture::Item.item_saved_in_item
+
+    current = Page::Exhibitions.new
+    current.toggle_list
+
+    expect(current.scene_in_room_has_children?).to be true
+
+    current.go_to_last_subscene_info
+
+    current = Page::SceneInfo.new
+
+
+    expect(current.content?(Fixture::Item::INFO_THIRD_NUMBER)).to be true
   end
 
   scenario 'add item to an item' do
@@ -190,21 +245,6 @@ feature 'Item' do
     current.toggle_list
 
     expect(current.scene_has_children?).to be true
-  end
-
-  scenario 'add sub-item to an item inside a room' do
-    Fixture::Item.from_exhibition_to_new_item
-
-    Fixture::Item.room_saved
-
-    Fixture::Item.item_saved_in_room
-
-    Fixture::Item.item_saved_in_item
-
-    current = Page::Exhibitions.new
-    current.toggle_list
-
-    expect(current.scene_in_room_has_children?).to be true
   end
 
   scenario 'check if item name is in breadcrumb when it is saved' do

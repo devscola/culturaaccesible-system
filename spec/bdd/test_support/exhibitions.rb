@@ -131,6 +131,21 @@ module Page
       first('.room-name').click
     end
 
+    def go_to_scene_info
+      has_css?('.scene-name', wait: 4)
+      first('.scene-name').click
+    end
+
+    def go_to_subscene_info
+      has_css?('.item-name', wait: 4)
+      first('.item-name').click
+    end
+
+    def go_to_last_subscene_info
+      has_css?('.subscene-name', wait: 4)
+      first('.subscene-name').click
+    end
+
     def title(name)
       page.has_title?(name)
     end
