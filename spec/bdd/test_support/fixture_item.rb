@@ -9,6 +9,7 @@ module Fixture
     OTHER_ARTWORK = 'La costellazione'
     VISIBLE_ARTWORK = 'Name: Guernica'
     VISIBLE_OTHER_ARTWORK = 'Name: La costellazione'
+    VISIBLE_AUTHOR = 'Author: Picasso'
     FIRST_NUMBER = 1
     SECOND_NUMBER = 2
     THIRD_NUMBER = 3
@@ -57,6 +58,17 @@ module Fixture
         current.fill('number',Fixture::Item::SECOND_NUMBER)
 
         current.submit
+      end
+
+      def item_filled
+        current = initial_state
+
+        current.fill('name',Fixture::Item::ARTWORK)
+        current.fill('number',Fixture::Item::SECOND_NUMBER)
+        current.fill('author',Fixture::Item::AUTHOR)
+
+        current
+
       end
 
       def item_saved_in_room

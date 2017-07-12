@@ -25,7 +25,7 @@ Class('Item.Form', {
     disableFields: function() {
         this.element.disableItemInput = true;
         this.emptyFields();
-        this.element.parentClass = "Exhibitions";
+        this.element.parentClass = "exhibition";
     },
 
     emptyFields: function() {

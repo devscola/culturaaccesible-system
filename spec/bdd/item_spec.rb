@@ -152,6 +152,20 @@ feature 'Item' do
 
   end
 
+  scenario 'fix add room when item fields are filled' do
+    Fixture::Item.from_exhibition_to_new_item
+
+    current = Fixture::Item.item_filled
+
+    current.check_room
+    current.accept_alert
+
+    current.submit
+
+    expect(current.content?(Fixture::Item::VISIBLE_ARTWORK)).to be true
+    expect(current.content?(Fixture::Item::VISIBLE_AUTHOR)).to be false
+  end
+
   scenario 'add item to a room' do
     Fixture::Item.from_exhibition_to_new_item
 
