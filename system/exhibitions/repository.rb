@@ -27,6 +27,11 @@ module Exhibitions
         end
       end
 
+      def retrieve_next_ordinal(id, ordinal)
+        exhibition = retrieve(id)
+        exhibition.order.next_child(ordinal)
+      end
+
       def flush
         @content = []
       end

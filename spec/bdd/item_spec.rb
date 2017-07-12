@@ -123,6 +123,14 @@ feature 'Item' do
     expect(current.submit_disabled?).to be true
   end
 
+  scenario 'suggests next order number' do
+    current = Fixture::Item.from_exhibition_to_new_item
+
+    current.fill('name',Fixture::Item::ARTWORK)
+    result = current.find_suggested_number
+    expect(result).to eq('1.0.0')
+  end
+
   scenario 'save room when submit' do
     current = Fixture::Item.from_exhibition_to_new_item
 

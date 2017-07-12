@@ -88,6 +88,10 @@ module Page
       submit
     end
 
+    def find_suggested_number
+      find('[name=number]').value
+    end
+
     private
 
     def validate!

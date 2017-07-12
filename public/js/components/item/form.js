@@ -54,6 +54,8 @@ Class('Item.Form', {
         } else if (parentClass == 'exhibition') {
             var payload = { 'id': parentId };
             Bus.publish('exhibition.retrieve', payload);
+            var payload = { 'id': parentId, 'ordinal': '0.0.0' }
+            Bus.publish('next.number.retrieve', payload);
         }
     },
 
@@ -64,6 +66,10 @@ Class('Item.Form', {
       }
       var payload = { 'id': children.parent_id };
       Bus.publish('exhibition.retrieve', payload);
+    },
+
+    suggestNextNumber: function(nextNumber) {
+        this.element.number = nextNumber;
     },
 
     retrieveAnExhibitionByRoom: function(parentId) {
@@ -107,5 +113,6 @@ Class('Item.Form', {
         Bus.subscribe('item.edit', this.show.bind(this));
         Bus.subscribe('room.retrieved', this.loadExhibitionByChildren.bind(this));
         Bus.subscribe('item.retrieved', this.loadExhibitionByChildren.bind(this));
+        Bus.subscribe('next.number.retrieved', this.suggestNextNumber.bind(this));
     }
 });

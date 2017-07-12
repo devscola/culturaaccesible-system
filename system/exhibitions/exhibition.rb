@@ -1,6 +1,6 @@
 module Exhibitions
   class Exhibition
-    attr_reader :id, :name
+    attr_reader :id, :name, :order
     attr_accessor :numbers
 
     def initialize(data, id=nil)
@@ -17,6 +17,7 @@ module Exhibitions
       @description = Defense.string_null_defense(data['description'])
       @id = id || generate_id
       @index = []
+      @order = Order.new
     end
 
     def serialize
