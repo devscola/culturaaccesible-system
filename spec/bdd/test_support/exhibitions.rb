@@ -98,6 +98,10 @@ module Page
       has_css?('.exhibition-room .plus-button', wait: 4)
     end
 
+    def subscene_has_plus_button?
+      has_css?('.exhibition-scene .exhibition-scene .plus-button', wait: 4)
+    end
+
     def form_submit_deactivated?
       has_css?('.submit[disabled].cuac-exhibition-form')
     end
