@@ -32,6 +32,13 @@ feature 'Exhibitions' do
     expect(current.room_have_plus_button?).to be true
   end
 
+  scenario 'shows each sub-scene without + button' do
+    current = Fixture::Exhibitions.exhibition_saved_with_subscenes
+    current.toggle_list
+
+    expect(current.subscene_has_plus_button?).to be false
+  end
+
   scenario 'shows exhibition form' do
     current = Fixture::Exhibitions.show_exhibition_form
 

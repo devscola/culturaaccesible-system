@@ -20,12 +20,13 @@
                 <template is="dom-repeat" items="{{child.children}}">
                   <li class$="list-group-item exhibition-{{item.type}}">
                     <a href="/scene/{{item.id}}" class="item-name">{{item.name}}</a>
-                    <cuac-sidebar-plus-button parent$="{{item}}"></cuac-sidebar-plus-button>
+                    <template is="dom-if" if="{{isRoomChild(child.type)}}">
+                      <cuac-sidebar-plus-button parent$="{{item}}"></cuac-sidebar-plus-button>
+                    </template>
                     <ul class="list-group">
                       <template is="dom-repeat" items="{{item.children}}">
                         <li class$="list-group-item exhibition-{{item.type}}">
                           <a href="/scene/{{item.id}}" class="subscene-name">{{item.name}}</a>
-                          <cuac-sidebar-plus-button parent$="{{item}}"></cuac-sidebar-plus-button>
                         </li>
                       </template>
                     </ul>
@@ -53,6 +54,10 @@
                 observer: 'toogleClass'
               }
 
+            },
+
+            isRoomChild: function(parentType) {
+              return parentType === 'room'
             },
 
             toogleClass: function() {
