@@ -51,7 +51,17 @@ Class('Item.Form', {
           if(this.loadType() == 'room') {
             this.retrieveAnExhibitionByRoom(parentId);
             var payload = { 'id': parentId };
-            Bus.publish('room.retrieve', payload);
+            Bus.publish('room.retrieve.editable', payload);
+          }
+          if(this.loadType() == 'scene-in-room'){
+              this.retrieveItem(parentId);
+              var payload = { 'id': parentId };
+              Bus.publish('item.retrieve.editable', payload);
+          }
+          if(this.loadType() == 'scene'){
+              this.retrieveAnExhibitionByItem(parentId);
+              var payload = { 'id': parentId };
+              Bus.publish('item.retrieve.editable', payload);
           }
         } else {
           if (parentClass == 'room') {
@@ -73,8 +83,12 @@ Class('Item.Form', {
       return url.indexOf('edit') >= 0;
     },
 
+    retrieveItem: function() {
+        Bus.publish('item.retrieve.editable');
+    },
+
     loadExhibitionByChildren: function(children) {
-      if(children.parent_class == 'room'){
+      if(children.parent_class == 'room' ){
         this.retrieveAnExhibitionByRoom(children.parent_id)
         return
       }
@@ -147,7 +161,7 @@ Class('Item.Form', {
     },
 
     editRoom: function(room) {
-      if (this.isEditable()) {
+      if (this.isEditable() && room.type == 'room') {
         this.element.name = room.name;
         this.element.number = room.number;
         this.element.description = room.description;
@@ -160,12 +174,26 @@ Class('Item.Form', {
         this.disableFields();
       }
     },
+    editScene: function(scene) {
+        if (this.isEditable() && scene.type == 'scene') {
+            this.element.name = scene.name;
+            this.element.number = scene.number;
+            this.element.description = scene.description;
+            this.element.beacon = scene.beacon;
+            document.getElementsByClassName("room")[0].checked = false;
+            this.element.room = false;
+            this.element.lastNumber = scene.number;
+            this.element.disableSaveButton = false;
+            this.element.editId = scene.id ;
+        }
+    },
 
     subscribe: function() {
         Bus.subscribe('exhibition.retrieved', this.renderExhibition.bind(this));
         Bus.subscribe('item.edit', this.show.bind(this));
         Bus.subscribe('room.retrieved', this.loadExhibitionByChildren.bind(this));
         Bus.subscribe('item.retrieved', this.loadExhibitionByChildren.bind(this));
+        Bus.subscribe('scene.retrieved.editable', this.editScene.bind(this));
         Bus.subscribe('room.retrieved.editable', this.editRoom.bind(this));
         Bus.subscribe('next.number.retrieved', this.suggestNextNumber.bind(this));
     }

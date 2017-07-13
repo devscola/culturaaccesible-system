@@ -46,4 +46,12 @@ class App < Sinatra::Base
   get '/room/:id/edit' do
       File.read(File.join('public', 'item.html'))
   end
+
+  get '/scene/:id/edit' do
+      File.read(File.join('public', 'item.html'))
+  end
+
+  get '/scene-in-room/:id/edit' do
+      File.read(File.join('public', 'item.html'))
+  end
 end

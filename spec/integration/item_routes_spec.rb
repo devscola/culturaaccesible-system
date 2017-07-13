@@ -114,6 +114,27 @@ include Rack::Test::Methods
     expect(exhibition_numbers.include?(NUMBER)).to be false
   end
 
+  it 'updates scene' do
+    add_exhibition
+
+    exhibition = parse_response
+    exhibition_id = parse_response['id']
+
+
+    add_scene(FIRST_NAME, exhibition_id, NUMBER)
+    scene_id = parse_response['id']
+    scene_number = parse_response['number']
+    update_scene(scene_id, exhibition_id, scene_number)
+    updated_scene_id = parse_response['id']
+
+    retrieve_exhibition(exhibition)
+    exhibition_numbers = parse_response['numbers']
+
+    expect(scene_id == updated_scene_id).to be true
+    expect(exhibition_numbers.include?(ANOTHER_NUMBER)).to be true
+    expect(exhibition_numbers.include?(NUMBER)).to be false
+  end
+
   def add_scene(unique_name, exhibition_id, number=ITEM_NUMBER_VALID)
     scene = { id: '', name: unique_name, room: false, parent_id: exhibition_id, exhibition_id: exhibition_id, number: number, parent_class: "exhibition" }.to_json
     post '/api/item/add', scene
@@ -149,6 +170,11 @@ include Rack::Test::Methods
   def update_room(id, exhibition_id, room_number)
     room = { id: id, name: FIRST_NAME, room: true, exhibition_id: exhibition_id, parent_id: exhibition_id, parent_class: 'exhibition', number: ANOTHER_NUMBER, last_number: room_number }.to_json
     post '/api/item/update', room
+  end
+
+  def update_scene(id, exhibition_id, scene_number)
+    scene = { id: id, name: FIRST_NAME, room: false, exhibition_id: exhibition_id, parent_id: exhibition_id, parent_class: 'exhibition', number: ANOTHER_NUMBER, last_number: scene_number }.to_json
+    post '/api/item/update', scene
   end
 
 end

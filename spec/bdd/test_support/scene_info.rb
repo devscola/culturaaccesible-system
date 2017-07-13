@@ -10,6 +10,11 @@ module Page
       has_content?(name)
     end
 
+    def click_edit
+      has_css?('.edit-button', wait: 4)
+      find('.edit-button').click
+    end
+
     private
 
     def validate!

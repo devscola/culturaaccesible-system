@@ -4,6 +4,7 @@ Class('Scene.Info', {
 
     initialize: function() {
         Scene.Info.Super.call(this, 'sceneInfo');
+        this.element.addEventListener('edit', this.goToEditForm.bind(this));
         this.loadScene();
     },
 
@@ -20,6 +21,11 @@ Class('Scene.Info', {
     getSceneId: function() {
       var url = window.location.href;
       return url.split('/scene/')[1];
+    },
+
+    goToEditForm: function() {
+      var url = '/scene/' + this.getSceneId() + '/edit';
+      window.location = url;
     },
 
     subscribe: function() {

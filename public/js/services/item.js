@@ -12,11 +12,21 @@ Class('Services.Items', {
         });
     },
 
+    retrieveEditableScene: function(payload) {
+        this.doRequest('/scene/retrieve', payload, function(item){
+            Bus.publish('scene.retrieved.editable', item);
+        });
+    },
+
     retrieveRoom: function(payload) {
         this.doRequest('/room/retrieve', payload, function(room){
             Bus.publish('room.retrieved', room);
-            Bus.publish('room.retrieved.editable', room);
+        });
+    },
 
+    retrieveEditableRoom: function(payload) {
+        this.doRequest('/room/retrieve', payload, function(room){
+            Bus.publish('room.retrieved.editable', room);
         });
     },
 
@@ -42,6 +52,8 @@ Class('Services.Items', {
         Bus.subscribe('item.save', this.saveItem.bind(this));
         Bus.subscribe('item.update', this.updateItem.bind(this));
         Bus.subscribe('item.retrieve', this.retrieveItem.bind(this));
+        Bus.subscribe('item.retrieve.editable', this.retrieveEditableScene.bind(this));
+        Bus.subscribe('room.retrieve.editable', this.retrieveEditableRoom.bind(this));
         Bus.subscribe('room.retrieve', this.retrieveRoom.bind(this));
         Bus.subscribe('next.number.retrieve', this.retrieveNextNumber.bind(this));
     }
