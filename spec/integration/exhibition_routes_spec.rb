@@ -60,6 +60,29 @@ describe 'Exhibition controller' do
     expect(result).to eq 'some other name'
   end
 
+  it 'retrieve next order number for first level item' do
+    add_exhibition
+    exhibition_id = parse_response['id']
+
+    request_body = {
+      id: exhibition_id,
+      ordinal: '0.0.0'
+    }.to_json
+    post '/api/exhibition/retrieve-next-ordinal', request_body
+
+    result = parse_response['next_child']
+    expect(result).to eq('1.0.0')
+
+    request_body = {
+      id: exhibition_id,
+      ordinal: '1.0.0'
+    }.to_json
+    post '/api/exhibition/retrieve-next-ordinal', request_body
+
+    result = parse_response['next_child']
+    expect(result).to eq('1.1.0')
+  end
+
   def add_exhibition
     exhibition = { name: 'some name', location: 'some location' }.to_json
     post '/api/exhibition/add', exhibition

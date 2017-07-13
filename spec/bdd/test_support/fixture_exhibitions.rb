@@ -52,6 +52,15 @@ module Fixture
         Page::Exhibitions.new
       end
 
+      def exhibition_saved_with_subscenes
+        Fixture::Item.from_exhibition_to_new_item
+
+        Fixture::Item.item_saved
+        Fixture::Item.item_saved_in_item
+
+        Page::Exhibitions.new
+      end
+
       def exhibition_edited
         current = exhibition_saved
         current.click_edit

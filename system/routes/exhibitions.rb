@@ -28,6 +28,13 @@ class App < Sinatra::Base
     result.to_json
   end
 
+  post '/api/exhibition/retrieve-next-ordinal' do
+    data = JSON.parse(request.body.read)
+    result = Exhibitions::Service.retrieve_next_ordinal(data['id'], data['ordinal'])
+
+    result.to_json
+  end
+
   get '/api/exhibition/flush' do
     Exhibitions::Service.flush
   end

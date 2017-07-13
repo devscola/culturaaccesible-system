@@ -1,6 +1,7 @@
 require 'digest/md5'
 require_relative 'repository'
 require_relative 'exhibition'
+require_relative 'order'
 require_relative '../helpers/defense'
 
 module Exhibitions
@@ -28,6 +29,11 @@ module Exhibitions
           }
         end
         { id: exhibition.id, name: exhibition.name, :children => children }
+      end
+
+      def retrieve_next_ordinal(id, ordinal)
+        next_child = Exhibitions::Repository.retrieve_next_ordinal(id, ordinal)
+        { next_child: next_child }
       end
 
       def list

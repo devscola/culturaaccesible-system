@@ -91,7 +91,6 @@ include Rack::Test::Methods
 
     expect(exhibition_numbers.include?(ITEM_NUMBER_NOT_VALID)).to be true
     expect(exhibition_numbers.include?(ITEM_NUMBER_VALID)).to be false
-
   end
 
   it 'updates rooms' do
