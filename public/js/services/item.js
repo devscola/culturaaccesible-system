@@ -15,6 +15,8 @@ Class('Services.Items', {
     retrieveRoom: function(payload) {
         this.doRequest('/room/retrieve', payload, function(room){
             Bus.publish('room.retrieved', room);
+            Bus.publish('room.retrieved.editable', room);
+
         });
     },
 
@@ -24,8 +26,15 @@ Class('Services.Items', {
         });
     },
 
+    updateItem: function(item) {
+        this.doRequest('/item/update', item, function(result) {
+            Bus.publish('item.saved', result);
+        });
+    },
+
     subscribe: function() {
         Bus.subscribe('item.save', this.saveItem.bind(this));
+        Bus.subscribe('item.update', this.updateItem.bind(this));
         Bus.subscribe('item.retrieve', this.retrieveItem.bind(this));
         Bus.subscribe('room.retrieve', this.retrieveRoom.bind(this));
 

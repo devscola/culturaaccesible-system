@@ -76,7 +76,7 @@
 
                 disableItemInput: { type: Boolean, value: false },
 
-                disableSaveButton: { type: Boolean, value: true},
+                disableSaveButton: { type: Boolean },
 
                 name: { type: String, value: '', observer: 'updateItemName' },
 
@@ -100,7 +100,11 @@
 
                 parentId: {type: String},
 
-                breadcrumbName: { type: String}
+                breadcrumbName: { type: String},
+
+                lastNumber: {type: Number},
+
+                editId: { type: String }
 
             },
 
@@ -134,11 +138,13 @@
                     author: this.author,
                     date: this.date,
                     number: this.number,
+                    last_number: this.lastNumber || '',
                     beacon: this.beacon,
                     description: this.description,
                     parent_id: this.parentId,
                     parent_class: this.parentClass,
-                    exhibition_id: this.exhibition.id
+                    exhibition_id: this.exhibition.id,
+                    id: this.editId || ''
                 };
                 return data;
             },
@@ -149,7 +155,7 @@
             },
 
             saveActivation: function() {
-                if ( (this.exhibition.numbers.indexOf(this.number) < 0) && (this.name.length > 0) ) {
+                if ( (this.exhibition.numbers.indexOf(this.number) < 0 || (this.number == this.lastNumber)) && (this.name.length > 0) ) {
                     this.disableSaveButton = false;
                 } else {
                     this.disableSaveButton = true;
@@ -157,10 +163,10 @@
             },
 
             numberTextboxColor: function(){
-                if((this.exhibition.numbers.indexOf(this.number) >= 0)){
-                    this.showError();
-                }else{
+                if((this.exhibition.numbers.indexOf(this.number) < 0) || (this.number == this.lastNumber)){
                     this.quitError();
+                }else{
+                    this.showError();
                 }
             },
 

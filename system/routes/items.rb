@@ -20,6 +20,16 @@ class App < Sinatra::Base
     result.to_json
   end
 
+  post '/api/item/update' do
+    data = JSON.parse(request.body.read)
+    if (data['room'] == false)
+      result = Items::Service.store_scene(data)
+    else
+      result = Items::Service.store_room(data)
+    end
+    result.to_json
+  end
+
   post '/api/scene/retrieve' do
     scene = JSON.parse(request.body.read)
     result = Items::Service.retrieve(scene['id'])

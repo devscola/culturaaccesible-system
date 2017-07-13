@@ -31,9 +31,13 @@ module Exhibitions
         @content = []
       end
 
-      def add_number(exhibition_id, number)
+      def add_number(exhibition_id, number, last_number)
         exhibition = retrieve(exhibition_id)
         exhibition.set_numbers(number)
+
+        if last_number != ''
+          exhibition.remove_number(last_number)
+        end
       end
 
       private

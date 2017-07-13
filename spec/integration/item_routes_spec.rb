@@ -94,18 +94,39 @@ include Rack::Test::Methods
 
   end
 
+  it 'updates rooms' do
+    add_exhibition
+
+    exhibition = parse_response
+    exhibition_id = parse_response['id']
+
+
+    add_room(FIRST_NAME, exhibition_id)
+    room_id = parse_response['id']
+    room_number = parse_response['number']
+    update_room(room_id, exhibition_id, room_number)
+    updated_room_id = parse_response['id']
+
+    retrieve_exhibition(exhibition)
+    exhibition_numbers = parse_response['numbers']
+
+    expect(room_id == updated_room_id).to be true
+    expect(exhibition_numbers.include?(ANOTHER_NUMBER)).to be true
+    expect(exhibition_numbers.include?(NUMBER)).to be false
+  end
+
   def add_scene(unique_name, exhibition_id, number=ITEM_NUMBER_VALID)
-    scene = { name: unique_name, room: false, parent_id: exhibition_id, exhibition_id: exhibition_id, number: number, parent_class: "exhibition" }.to_json
+    scene = { id: '', name: unique_name, room: false, parent_id: exhibition_id, exhibition_id: exhibition_id, number: number, parent_class: "exhibition" }.to_json
     post '/api/item/add', scene
   end
 
   def add_room(unique_name, exhibition_id)
-    room = { name: unique_name, room: true, exhibition_id: exhibition_id, parent_id: exhibition_id, parent_class: 'exhibition', number: NUMBER }.to_json
+    room = { id: '', name: unique_name, room: true, exhibition_id: exhibition_id, parent_id: exhibition_id, parent_class: 'exhibition', number: NUMBER }.to_json
     post '/api/item/add', room
   end
 
   def add_room_inside_a_room(unique_name, exhibition_id, parent_id)
-    room = { name: unique_name, room: true, exhibition_id: exhibition_id, parent_id: parent_id, parent_class: 'room', number: ANOTHER_NUMBER }.to_json
+    room = { id: '', name: unique_name, room: true, exhibition_id: exhibition_id, parent_id: parent_id, parent_class: 'room', number: ANOTHER_NUMBER }.to_json
     post '/api/item/add', room
   end
 
@@ -125,4 +146,10 @@ include Rack::Test::Methods
   def retrieve_room(room)
     post 'api/room/retrieve', room.to_json
   end
+
+  def update_room(id, exhibition_id, room_number)
+    room = { id: id, name: FIRST_NAME, room: true, exhibition_id: exhibition_id, parent_id: exhibition_id, parent_class: 'exhibition', number: ANOTHER_NUMBER, last_number: room_number }.to_json
+    post '/api/item/update', room
+  end
+
 end

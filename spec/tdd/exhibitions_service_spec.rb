@@ -58,12 +58,12 @@ describe Exhibitions::Service do
   end
 
   def add_scene(name, number, parent_id)
-    scene = { 'name' => name, 'number' => number, 'parent_id' => parent_id, 'exhibition_id' => parent_id, 'parent_class' => 'exhibition' }
+    scene = {'id' => '', 'name' => name, 'number' => number, 'parent_id' => parent_id, 'exhibition_id' => parent_id, 'parent_class' => 'exhibition' }
     Items::Service.store_scene(scene)
   end
 
   def add_room(name, number, exhibition_id)
-    room = { 'name' => name, 'number' => number, 'parent_id' => exhibition_id, 'exhibition_id' => exhibition_id, 'parent_class' => 'exhibition', 'room' => true }
+    room = {'id' => '', 'name' => name, 'number' => number, 'parent_id' => exhibition_id, 'exhibition_id' => exhibition_id, 'parent_class' => 'exhibition', 'room' => true }
     Items::Service.store_room(room)
   end
 end

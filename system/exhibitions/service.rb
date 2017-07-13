@@ -38,8 +38,8 @@ module Exhibitions
         Exhibitions::Repository.flush
       end
 
-      def add_number(exhibition_id, number)
-        Exhibitions::Repository.add_number(exhibition_id, number)
+      def add_number(exhibition_id, number, last_number = '')
+        Exhibitions::Repository.add_number(exhibition_id, number, last_number)
       end
 
     end

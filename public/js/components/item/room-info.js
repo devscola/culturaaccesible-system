@@ -5,6 +5,8 @@ Class('Room.Info', {
     initialize: function() {
         Room.Info.Super.call(this, 'roomInfo');
         this.loadRoom();
+        this.element.addEventListener('edit', this.goToEditForm.bind(this));
+
     },
 
     render: function(room) {
@@ -20,6 +22,11 @@ Class('Room.Info', {
     getRoomId: function() {
       var url = window.location.href;
       return url.split('/room/')[1];
+    },
+
+    goToEditForm: function() {
+      var url = '/room/' + this.getRoomId() + '/edit';
+      window.location = url;
     },
 
     subscribe: function() {

@@ -15,6 +15,7 @@
                   <div>Description: {{room.description}}</div>
               </div>
           </div>
+          <cuac-item-edit-button item="{{room}}"></cuac-item-edit-button>
     </template>
 
     <script>
@@ -24,7 +25,7 @@
             properties: {
 
                 room: { type: Object }
-                
+
             }
 
         });
