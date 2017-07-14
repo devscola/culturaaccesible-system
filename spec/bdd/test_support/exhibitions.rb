@@ -155,6 +155,10 @@ module Page
       first('.subscene-name').click
     end
 
+    def subscene_info?(content)
+      has_css?('.exhibition-scene .exhibition-scene', wait: 4, text: content)
+    end
+
     def title(name)
       page.has_title?(name)
     end

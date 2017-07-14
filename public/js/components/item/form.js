@@ -48,27 +48,32 @@ Class('Item.Form', {
         var parentId = this.loadParentId();
         var parentClass = this.loadParentClass();
         if (this.isEditable()) {
+          var itemId = parentId;
           if(this.loadType() == 'room') {
-            this.retrieveAnExhibitionByRoom(parentId);
-            var payload = { 'id': parentId };
+            this.retrieveRoomToLoadAnExhibition(itemId);
+            var payload = { 'id': itemId };
             Bus.publish('room.retrieve.editable', payload);
           }
           if(this.loadType() == 'scene-in-room'){
-              this.retrieveItem(parentId);
-              var payload = { 'id': parentId };
+              var payload = { 'id': itemId };
               Bus.publish('item.retrieve.editable', payload);
           }
           if(this.loadType() == 'scene'){
-              this.retrieveAnExhibitionByItem(parentId);
-              var payload = { 'id': parentId };
+              this.retrieveItemToLoadAnExhibition(itemId);
+              var payload = { 'id': itemId };
+              Bus.publish('item.retrieve.editable', payload);
+          }
+          if(this.loadType() == 'subscene'){
+              this.retrieveSubsceneToLoadAnExhibition(itemId);
+              var payload = { 'id': itemId };
               Bus.publish('item.retrieve.editable', payload);
           }
         } else {
           if (parentClass == 'room') {
-              this.retrieveAnExhibitionByRoom(parentId);
+              this.retrieveRoomToLoadAnExhibition(parentId);
               this.element.disableCheckBox = true;
           } else if (parentClass == 'scene') {
-              this.retrieveAnExhibitionByItem(parentId)
+              this.retrieveItemToLoadAnExhibition(parentId)
           } else if (parentClass == 'exhibition') {
               var payload = { 'id': parentId };
               Bus.publish('exhibition.retrieve', payload);
@@ -83,16 +88,20 @@ Class('Item.Form', {
       return url.indexOf('edit') >= 0;
     },
 
-    retrieveItem: function() {
-        Bus.publish('item.retrieve.editable');
+    retrieveSubsceneToLoadAnExhibition: function(subsceneId) {
+      var payload = { 'id': subsceneId };
+      Bus.publish('subscene.retrieve', payload);
     },
 
-    loadExhibitionByChildren: function(children) {
-      if(children.parent_class == 'room' ){
-        this.retrieveAnExhibitionByRoom(children.parent_id)
+    loadExhibitionByChildren: function(item) {
+      if(item.parent_class == 'room' ){
+        this.retrieveRoomToLoadAnExhibition(item.parent_id)
+        return
+      } else if(item.parent_class == 'scene' ){
+        this.retrieveItemToLoadAnExhibition(item.parent_id)
         return
       }
-      var payload = { 'id': children.parent_id };
+      var payload = { 'id': item.parent_id };
       Bus.publish('exhibition.retrieve', payload);
     },
 
@@ -100,12 +109,12 @@ Class('Item.Form', {
         this.element.number = nextNumber;
     },
 
-    retrieveAnExhibitionByRoom: function(parentId) {
-      var payload = { 'id': parentId };
+    retrieveRoomToLoadAnExhibition: function(roomId) {
+      var payload = { 'id': roomId };
       Bus.publish('room.retrieve', payload);
     },
 
-    retrieveAnExhibitionByItem: function(parentId) {
+    retrieveItemToLoadAnExhibition: function(parentId) {
       var payload = { 'id': parentId };
       Bus.publish('item.retrieve', payload);
     },
@@ -146,6 +155,10 @@ Class('Item.Form', {
     setInitialParentAttributes: function(exhibition) {
         if (this.isEditable()) {
           this.element.parentId = exhibition.id;
+          if(this.loadParentClass() == 'subscene') {
+            var payload = { id: this.loadParentId() };
+            Bus.publish('subscene.parentId.retrieve', payload)
+          }
         } else {
           this.element.parentId = this.loadParentId();
         }
@@ -188,11 +201,17 @@ Class('Item.Form', {
         }
     },
 
+    setSubsceneParentId: function(subscene) {
+        this.element.parentId = subscene.parent_id;
+    },
+
     subscribe: function() {
         Bus.subscribe('exhibition.retrieved', this.renderExhibition.bind(this));
         Bus.subscribe('item.edit', this.show.bind(this));
         Bus.subscribe('room.retrieved', this.loadExhibitionByChildren.bind(this));
         Bus.subscribe('item.retrieved', this.loadExhibitionByChildren.bind(this));
+        Bus.subscribe('subscene.parentId.retrieved', this.setSubsceneParentId.bind(this));
+        Bus.subscribe('subscene.retrieved', this.loadExhibitionByChildren.bind(this));
         Bus.subscribe('scene.retrieved.editable', this.editScene.bind(this));
         Bus.subscribe('room.retrieved.editable', this.editRoom.bind(this));
         Bus.subscribe('next.number.retrieved', this.suggestNextNumber.bind(this));

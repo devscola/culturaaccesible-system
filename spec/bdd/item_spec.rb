@@ -371,19 +371,14 @@ feature 'Item' do
 
   scenario 'scene info inside a room is editable when edit button is clicked' do
     Fixture::Item.from_exhibition_to_new_item
-
     Fixture::Item.room_saved
-
     Fixture::Item.item_saved_in_room
-
     current = Page::Exhibitions.new
     current.toggle_list
-
     current.go_to_scene_inside_room_info
 
     current = Page::SceneInfo.new
     current.click_edit
-
     current = Page::Item.new
 
     expect(current.content?(Fixture::Item::OTHER_ARTWORK)).to be true
@@ -395,5 +390,31 @@ feature 'Item' do
     expect(current.content?(Fixture::Item::VISIBLE_ARTWORK)).to be true
   end
 
+  scenario 'subscene info inside a scene is editable when edit button is clicked' do
+    Fixture::Item.from_exhibition_to_new_item
+    Fixture::Item.item_saved
+    Fixture::Item.item_saved_in_item
+    current = Page::Exhibitions.new
+    current.toggle_list
+    current.go_to_subscene_info
+
+    current = Page::SceneInfo.new
+    current.click_edit
+    current = Page::Item.new
+
+    expect(current.content?(Fixture::Item::OTHER_ARTWORK)).to be true
+    expect(current.content?(Fixture::Item::SAVE_BUTTON)).to be true
+
+    current.fill('name',Fixture::Item::ARTWORK)
+    current.submit
+
+    expect(current.content?(Fixture::Item::VISIBLE_ARTWORK)).to be true
+
+    current = Page::Exhibitions.new
+    current.toggle_list
+
+    expect(current.subscene_info?(Fixture::Item::ARTWORK)).to be true
+
+  end
 
 end

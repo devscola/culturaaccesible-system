@@ -4,7 +4,7 @@ Class('Scene.Info', {
 
     initialize: function() {
         Scene.Info.Super.call(this, 'sceneInfo');
-        this.element.addEventListener('edit', this.goToEditForm.bind(this));
+        this.element.addEventListener('edit', this.goToEditItem.bind(this));
         this.loadScene();
     },
 
@@ -23,8 +23,14 @@ Class('Scene.Info', {
       return url.split('/scene/')[1];
     },
 
-    goToEditForm: function() {
-      var url = '/scene/' + this.getSceneId() + '/edit';
+    goToEditItem: function(item) {
+      var item = event.detail
+      var url = ''
+      if (item.parent_class == 'scene') {
+        url = '/subscene/' + this.getSceneId() + '/edit';
+      } else {
+        url = '/scene/' + this.getSceneId() + '/edit';
+      }
       window.location = url;
     },
 
