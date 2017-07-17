@@ -160,6 +160,37 @@ feature 'Item' do
 
   end
 
+
+  scenario 'lock checkbox when room is edited' do
+    Fixture::Item.from_exhibition_to_new_item
+    Fixture::Item.room_saved
+    current = Page::Exhibitions.new
+    current.toggle_list
+    current.go_to_room_info
+
+    current = Page::RoomInfo.new
+    current.click_edit
+    current = Page::Item.new
+
+    expect(current.room_check_disabled?).to be true
+
+  end
+
+  scenario 'lock checkbox when scene is edited' do
+    Fixture::Item.from_exhibition_to_new_item
+    Fixture::Item.item_saved
+    current = Page::Exhibitions.new
+    current.toggle_list
+    current.go_to_scene_info
+
+    current = Page::SceneInfo.new
+    current.click_edit
+    current = Page::Item.new
+
+    expect(current.room_check_disabled?).to be true
+
+  end
+
   scenario 'fix add room when item fields are filled' do
     Fixture::Item.from_exhibition_to_new_item
 

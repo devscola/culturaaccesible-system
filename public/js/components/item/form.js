@@ -174,18 +174,20 @@ Class('Item.Form', {
     },
 
     editRoom: function(room) {
-      if (this.isEditable() && room.type == 'room') {
-        this.element.name = room.name;
-        this.element.number = room.number;
-        this.element.description = room.description;
-        this.element.beacon = room.beacon;
-        document.getElementsByClassName("room")[0].checked = true;
-        this.element.room = true;
-        this.element.lastNumber = room.number;
-        this.element.disableSaveButton = false;
-        this.element.editId = room.id
-        this.disableFields();
-      }
+        if (this.isEditable() && room.type == 'room') {
+            this.element.name = room.name;
+            this.element.number = room.number;
+            this.element.description = room.description;
+            this.element.beacon = room.beacon;
+            document.getElementsByClassName("room")[0].checked = true;
+            this.element.room = true;
+            this.element.lastNumber = room.number;
+            this.element.disableSaveButton = false;
+            this.element.editId = room.id;
+            this.element.disableCheckBox = true;
+            this.element.type = room.type;
+            this.disableFields();
+        }
     },
     editScene: function(scene) {
         if (this.isEditable() && scene.type == 'scene') {
@@ -198,6 +200,8 @@ Class('Item.Form', {
             this.element.lastNumber = scene.number;
             this.element.disableSaveButton = false;
             this.element.editId = scene.id ;
+            this.element.disableCheckBox = true;
+            this.element.type = scene.type;
         }
     },
 
