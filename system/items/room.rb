@@ -9,6 +9,7 @@ module Items
       @beacon = null_defense(data['beacon'])
       @description = null_defense(data['description'])
       @parent_id = null_defense(data['parent_id'])
+      @parent_class = null_defense(data['parent_class'])
       @type = 'room'
       @id = id || generate_id
     end
@@ -20,6 +21,7 @@ module Items
         beacon: @beacon,
         description: @description,
         parent_id: @parent_id,
+        parent_class: @parent_class,
         id: @id,
         type: @type
       }

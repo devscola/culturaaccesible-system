@@ -27,8 +27,8 @@ module Exhibitions
         end
       end
 
-      def retrieve_next_ordinal(id, ordinal)
-        exhibition = retrieve(id)
+      def retrieve_next_ordinal(exhibition_id, ordinal)
+        exhibition = retrieve(exhibition_id)
         exhibition.order.next_child(ordinal)
       end
 

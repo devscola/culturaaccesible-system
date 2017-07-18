@@ -36,5 +36,4 @@ Class('Services.Exhibitions', {
         Bus.subscribe('exhibition.for.list.retrieve', this.retrieveExhibitionForSidebar.bind(this));
         Bus.subscribe('exhibition.save', this.saveExhibition.bind(this));
     }
-
 });

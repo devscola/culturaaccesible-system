@@ -14,19 +14,19 @@
         <ul class$="list-group {{listVisibility}}">
           <template is="dom-repeat" items="{{exhibition.children}}" as="child">
             <li class$="list-group-item exhibition-{{child.type}}">
-              <a href="/{{child.type}}/{{child.id}}" class$="{{child.type}}-name">{{child.name}}</a>
-              <cuac-sidebar-plus-button parent$="{{child}}"></cuac-sidebar-plus-button>
+              <a href="/exhibition/{{exhibition.id}}/{{child.type}}/{{child.id}}" class$="{{child.type}}-name">{{child.name}}</a>
+              <cuac-sidebar-plus-button exhibition$="{{exhibition}}" parent$="{{child}}"></cuac-sidebar-plus-button>
               <ul class="list-group">
                 <template is="dom-repeat" items="{{child.children}}">
                   <li class$="list-group-item exhibition-{{item.type}}">
-                    <a href="/scene/{{item.id}}" class="item-name">{{item.name}}</a>
+                    <a href="/exhibition/{{exhibition.id}}/{{item.type}}/{{item.id}}" class="item-name">{{item.name}}</a>
                     <template is="dom-if" if="{{isRoomChild(child.type)}}">
-                      <cuac-sidebar-plus-button parent$="{{item}}"></cuac-sidebar-plus-button>
+                      <cuac-sidebar-plus-button exhibition$="{{exhibition}}" parent$="{{item}}"></cuac-sidebar-plus-button>
                     </template>
                     <ul class="list-group">
                       <template is="dom-repeat" items="{{item.children}}">
                         <li class$="list-group-item exhibition-{{item.type}}">
-                          <a href="/scene/{{item.id}}" class="subscene-name">{{item.name}}</a>
+                          <a href="/exhibition/{{exhibition.id}}/{{item.type}}/{{item.id}}" class="subscene-name">{{item.name}}</a>
                         </li>
                       </template>
                     </ul>

@@ -46,16 +46,17 @@ Class('Item.Form', {
     retrieveAnExhibition: function() {
         var parentId = this.loadParentId();
         var parentClass = this.loadParentClass();
+        var exhibitionId = this.loadExhibitionId();
         if (parentClass == 'room') {
             this.retrieveAnExhibitionByRoom(parentId);
             this.element.disableCheckBox = true;
+            this.retrieveAnRoomNextNumber(exhibitionId);
         } else if (parentClass == 'scene') {
-            this.retrieveAnExhibitionByItem(parentId)
+            this.retrieveAnExhibitionByItem(parentId);
+            this.retrieveAnSceneNextNumber(exhibitionId);
         } else if (parentClass == 'exhibition') {
-            var payload = { 'id': parentId };
-            Bus.publish('exhibition.retrieve', payload);
-            var payload = { 'id': parentId, 'ordinal': '0.0.0' }
-            Bus.publish('next.number.retrieve', payload);
+            this.retrieveAnExhibitionById(parentId);
+            this.retrieveAnExhibitionNextNumber(exhibitionId);
         }
     },
 
@@ -72,9 +73,24 @@ Class('Item.Form', {
         this.element.number = nextNumber;
     },
 
+    retrieveAnExhibitionById: function(parentId) {
+        var payload = { 'id': parentId };
+        Bus.publish('exhibition.retrieve', payload);
+    },
+
+    retrieveAnExhibitionNextNumber: function(exhibitionId) {
+      var payload = { 'exhibition_id': exhibitionId, 'ordinal': '0.0.0' };
+      Bus.publish('next.number.retrieve', payload);
+    },
+
     retrieveAnExhibitionByRoom: function(parentId) {
       var payload = { 'id': parentId };
       Bus.publish('room.retrieve', payload);
+    },
+
+    retrieveAnRoomNextNumber: function(exhibitionId) {
+        var payload = { 'exhibition_id': exhibitionId, 'ordinal': '1.0.0' };
+        Bus.publish('next.number.retrieve', payload);
     },
 
     retrieveAnExhibitionByItem: function(parentId) {
@@ -82,16 +98,30 @@ Class('Item.Form', {
       Bus.publish('item.retrieve', payload);
     },
 
+    retrieveAnSceneNextNumber: function(exhibitionId) {
+        var payload = { 'exhibition_id': exhibitionId, 'ordinal': '1.1.0' };
+        Bus.publish('next.number.retrieve', payload);
+    },
+
+    loadExhibitionId: function() {
+        var urlString = window.location.href;
+        var regexp = /\/(exhibition)(\/)(.*)(\/)(exhibition|room|scene)(\/)(.*)(\/)(.*)/;
+        var urlParentId = regexp.exec(urlString)[3];
+        return urlParentId;
+    },
+
     loadParentId: function() {
         var urlString = window.location.href;
-        var regexp = /[exhibition|room|scene]\/(.*)\/[/item]/;
-        return regexp.exec(urlString)[1];
+        var regexp = /\/(exhibition)(\/)(.*)(\/)(exhibition|room|scene)(\/)(.*)(\/)(.*)/;
+        var urlParentId = regexp.exec(urlString)[7];
+        return urlParentId;
     },
 
     loadParentClass: function() {
         var urlString = window.location.href;
-        var regexp = /(.*)\/(.*)\/(.*)\/[/item]/;
-        return regexp.exec(urlString)[2];
+        var regexp = /\/(exhibition)(\/)(.*)(\/)(exhibition|room|scene)(\/)(.*)(\/)(.*)/;
+        var urlParentType = regexp.exec(urlString)[5];
+        return urlParentType;
     },
 
     renderExhibition: function(exhibition) {

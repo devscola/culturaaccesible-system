@@ -12,17 +12,20 @@
             properties: {
               parent: {
                   type: Object
-              }
+              },
+              exhibition: {
+                  type: Object
+              },
             },
 
             goToItem: function(){
-              if (this.parent.type) {
-                window.location = '/' + this.parent.type + '/' + this.parent.id + '/item';
-              } else {
-                window.location = '/exhibition/' + this.parent.id + '/item'
+              var urlParent = '/' + this.parent.type + '/';
+              var urlParentId = this.parent.id;
+              if(urlParentId === this.exhibition.id) {
+                urlParent = '/exhibition/';
               }
+                window.location = '/exhibition/' + this.exhibition.id + urlParent + urlParentId + '/item';
             }
-
         });
     </script>
 </dom-module>

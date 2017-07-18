@@ -123,12 +123,27 @@ feature 'Item' do
     expect(current.submit_disabled?).to be true
   end
 
-  scenario 'suggests next order number' do
+  scenario 'suggests next first order number' do
     current = Fixture::Item.from_exhibition_to_new_item
 
     current.fill('name',Fixture::Item::ARTWORK)
     result = current.find_suggested_number
+
     expect(result).to eq('1.0.0')
+  end
+
+  scenario 'suggests next second order number' do
+    Fixture::Item.from_exhibition_to_new_item
+    Fixture::Item.room_saved
+    current = Page::Exhibitions.new
+    current.toggle_list
+    current.click_room_plus_button
+    current = Page::Item.new
+
+    current.fill('name',Fixture::Item::OTHER_ARTWORK)
+    result = current.find_suggested_number
+
+    expect(result).to eq('1.1.0')
   end
 
   scenario 'save room when submit' do
@@ -157,7 +172,6 @@ feature 'Item' do
     current = Page::Item.new
 
     expect(current.room_check_disabled?).to be true
-
   end
 
   scenario 'fix add room when item fields are filled' do

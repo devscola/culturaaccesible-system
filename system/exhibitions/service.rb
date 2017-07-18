@@ -31,8 +31,8 @@ module Exhibitions
         { id: exhibition.id, name: exhibition.name, :children => children }
       end
 
-      def retrieve_next_ordinal(id, ordinal)
-        next_child = Exhibitions::Repository.retrieve_next_ordinal(id, ordinal)
+      def retrieve_next_ordinal(exhibition_id, ordinal)
+        next_child = Exhibitions::Repository.retrieve_next_ordinal(exhibition_id, ordinal)
         { next_child: next_child }
       end
 
