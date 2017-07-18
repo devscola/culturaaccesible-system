@@ -46,6 +46,10 @@ module Exhibitions
       @numbers << number
     end
 
+    def remove_number(number)
+      @numbers.delete(number) 
+    end
+
     private
 
     def generate_id

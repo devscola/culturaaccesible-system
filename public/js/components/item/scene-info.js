@@ -4,6 +4,7 @@ Class('Scene.Info', {
 
     initialize: function() {
         Scene.Info.Super.call(this, 'sceneInfo');
+        this.element.addEventListener('edit', this.goToEditForm.bind(this));
         this.loadScene();
     },
 
@@ -18,8 +19,35 @@ Class('Scene.Info', {
     },
 
     getSceneId: function() {
-      var url = window.location.href;
-      return url.split('/scene/')[1];
+      return this.loadParentId();
+    },
+
+    goToEditForm: function() {
+      var parentId = this.loadParentId();
+      var exhibitionId = this.loadExhibitionId();
+      var parentClass = this.loadParentClass();
+      window.location = '/exhibition/' + exhibitionId + '/' + parentClass + '/' + parentId + '/edit';
+    },
+
+    loadExhibitionId: function() {
+        var urlString = window.location.href;
+        var regexp = /\/(exhibition)(\/)(.*)(\/)(exhibition|room|scene|subscene)(\/)(.*)(|\/)(|.*)/;
+        var urlParentId = regexp.exec(urlString)[3];
+        return urlParentId;
+    },
+
+    loadParentId: function() {
+        var urlString = window.location.href;
+        var regexp = /\/(exhibition)(\/)(.*)(\/)(exhibition|room|scene|subscene)(\/)(.*)(|\/)(|.*)/;
+        var urlParentId = regexp.exec(urlString)[7];
+        return urlParentId;
+    },
+
+    loadParentClass: function() {
+        var urlString = window.location.href;
+        var regexp = /\/(exhibition)(\/)(.*)(\/)(exhibition|room|scene|subscene)(\/)(.*)(|\/)(|.*)/;
+        var urlParentType = regexp.exec(urlString)[5];
+        return urlParentType;
     },
 
     subscribe: function() {

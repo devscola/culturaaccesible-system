@@ -7,16 +7,20 @@ module Items
   class Service
     class << self
       def store_scene(scene_data)
-        result = Items::Repository.choose_action(scene_data)
-        result.serialize
+        if (scene_data['type'] == 'scene')
+          result = Items::Repository.choose_action(scene_data)
+          result.serialize
+        else
+          raise ArgumentError, 'Updating room not allows changing it to scene'
+        end
       end
 
       def store_room(room_data)
-        if ((room_data['parent_class'] == 'exhibition') && (room_data['room'] == true))
+        if ((room_data['parent_class'] == 'exhibition') && (room_data['room'] == true) && (room_data['type'] == 'room'))
           result = Items::Repository.choose_action(room_data, 'room')
           result.serialize
         else
-          raise ArgumentError, 'Creating rooms inside scenes or other rooms is not allowed'
+          raise ArgumentError, 'Store or update item error'
         end
       end
 

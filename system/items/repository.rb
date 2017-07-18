@@ -5,7 +5,7 @@ module Items
     class << self
       def choose_action(item_data, type='scene')
         id = item_data['id']
-        if (id)
+        if (id != '')
           result = update(item_data, type)
         else
           result = store(item_data, type)
@@ -31,10 +31,13 @@ module Items
 
       def update(item_data, type)
         id =  item_data['id']
-        item = type == 'item' ? Items::Scene.new(item_data, id) : Items::Room.new(item_data, id)
+        Exhibitions::Service.add_number(item_data['exhibition_id'], item_data['number'], item_data['last_number'])
+        last_item = retrieve(id)
+        index = @content.index(last_item)
+        updated_item = type == 'scene' ? Items::Scene.new(item_data, id) : Items::Room.new(item_data, id)
 
-        current_item = @content.find { |element| element.id == item.id }
-        current_item
+        @content[index] = updated_item
+        @content[index]
       end
 
       def store(item_data, type)

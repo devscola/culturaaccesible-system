@@ -33,7 +33,7 @@ describe Items::Service do
   end
 
 	def add_scene(name, number, parent_id, exhibition_id)
-    scene = { 'name' => name, 'number' => number, 'parent_id' => parent_id, 'exhibition_id' => exhibition_id }
+    scene = { 'id'=> '', 'name' => name, 'number' => number, 'parent_id' => parent_id, 'exhibition_id' => exhibition_id, 'type' => 'scene' }
     Items::Service.store_scene(scene)
   end
 

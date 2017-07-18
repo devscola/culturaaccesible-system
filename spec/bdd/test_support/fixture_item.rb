@@ -17,6 +17,7 @@ module Fixture
     INFO_SECOND_NUMBER = 'Number: 2'
     INFO_THIRD_NUMBER = 'Number: 3'
     REPEATED_NUMBER = FIRST_NUMBER
+    SAVE_BUTTON = 'Save'
 
     class << self
       def initial_state

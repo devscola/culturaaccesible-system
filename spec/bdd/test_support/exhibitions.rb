@@ -140,6 +140,11 @@ module Page
       first('.scene-name').click
     end
 
+    def go_to_scene_inside_room_info
+      has_css?('.item-name', wait: 4)
+      first('.item-name').click
+    end
+
     def go_to_subscene_info
       has_css?('.item-name', wait: 4)
       first('.item-name').click
@@ -148,6 +153,10 @@ module Page
     def go_to_last_subscene_info
       has_css?('.subscene-name', wait: 4)
       first('.subscene-name').click
+    end
+
+    def subscene_info?(content)
+      has_css?('.exhibition-scene .exhibition-scene', wait: 4, text: content)
     end
 
     def title(name)

@@ -5,6 +5,8 @@ Class('Room.Info', {
     initialize: function() {
         Room.Info.Super.call(this, 'roomInfo');
         this.loadRoom();
+        this.element.addEventListener('edit', this.goToEditForm.bind(this));
+
     },
 
     render: function(room) {
@@ -18,8 +20,27 @@ Class('Room.Info', {
     },
 
     getRoomId: function() {
-      var url = window.location.href;
-      return url.split('/room/')[1];
+      return this.loadParentId();
+    },
+
+    goToEditForm: function() {
+      var parentId = this.loadParentId();
+      var exhibitionId = this.loadExhibitionId();
+      window.location = '/exhibition/' + exhibitionId + '/exhibition/' + parentId + '/edit';
+    },
+
+    loadExhibitionId: function() {
+        var urlString = window.location.href;
+        var regexp = /\/(exhibition)(\/)(.*)(\/)(exhibition|room|scene|subscene)(\/)(.*)(|\/)(|.*)/;
+        var urlParentId = regexp.exec(urlString)[3];
+        return urlParentId;
+    },
+
+    loadParentId: function() {
+        var urlString = window.location.href;
+        var regexp = /\/(exhibition)(\/)(.*)(\/)(exhibition|room|scene|subscene)(\/)(.*)(|\/)(|.*)/;
+        var urlParentId = regexp.exec(urlString)[7];
+        return urlParentId;
     },
 
     subscribe: function() {
