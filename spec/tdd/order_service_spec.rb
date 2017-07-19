@@ -53,6 +53,25 @@ describe Order do
     expect(result).to eq('3.5.1')
   end
 
+  it 'returns two elements for all levels' do
+    order = Order.new
+
+    order.add_element('1.0.0')
+    result = order.next_child('1.0.0')
+    expect(result).to eq('1.1.0')
+
+    order.add_element('2.0.0')
+    result = order.next_child('2.0.0')
+    expect(result).to eq('2.1.0')
+
+    result = order.next_child('1.1.0')
+    expect(result).to eq('1.1.1')
+
+    order.add_element('1.2.0')
+    result = order.next_child('1.2.0')
+    expect(result).to eq('1.2.1')
+  end
+
   it 'returns Error if parent not exists' do
     order = Order.new
 
