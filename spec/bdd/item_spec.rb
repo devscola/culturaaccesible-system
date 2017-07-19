@@ -134,7 +134,7 @@ feature 'Item' do
 
   scenario 'suggests next second order number' do
     Fixture::Item.from_exhibition_to_new_item
-    Fixture::Item.room_saved
+    Fixture::Item.room_saved('1.0.0')
     current = Page::Exhibitions.new
     current.toggle_list
     current.click_room_plus_button

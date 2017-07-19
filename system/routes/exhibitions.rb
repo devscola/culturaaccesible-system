@@ -1,6 +1,9 @@
 require 'sinatra/base'
 require 'json'
 require_relative '../exhibitions/service'
+require_relative '../items/repository'
+require_relative '../items/scene'
+require_relative '../items/room'
 
 class App < Sinatra::Base
   post '/api/exhibition/add' do
@@ -30,7 +33,12 @@ class App < Sinatra::Base
 
   post '/api/exhibition/retrieve-next-ordinal' do
     data = JSON.parse(request.body.read)
-    result = Exhibitions::Service.retrieve_next_ordinal(data['exhibition_id'], data['ordinal'])
+    number = '0.0.0'
+    if(data['parent_class'] != 'exhibition')
+      item = Items::Repository.retrieve(data['parent_id'])
+      number = item.number
+    end
+    result = Exhibitions::Service.retrieve_next_ordinal(data['exhibition_id'], number)
 
     result.to_json
   end

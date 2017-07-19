@@ -165,13 +165,53 @@ include Rack::Test::Methods
     expect(exhibition_numbers.include?(NUMBER)).to be false
   end
 
+  it 'retrieve next order number for first level item' do
+    add_exhibition
+    exhibition_id = parse_response['id']
+
+    request_body = {
+      exhibition_id: exhibition_id,
+      parent_id: exhibition_id,
+      parent_class: 'exhibition'
+    }.to_json
+    post '/api/exhibition/retrieve-next-ordinal', request_body
+
+    result = parse_response['next_child']
+    expect(result).to eq('1.0.0')
+  end
+
+  it 'retrieve next order number for second level item' do
+    add_exhibition
+    exhibition_id = parse_response['id']
+
+    request_body = {
+      exhibition_id: exhibition_id,
+      parent_id: exhibition_id,
+      parent_class: 'exhibition'
+    }.to_json
+    post '/api/exhibition/retrieve-next-ordinal', request_body
+    result = parse_response['next_child']
+
+    add_room(FIRST_NAME, exhibition_id, '1.0.0')
+    room_id = parse_response['id']
+    request_body = {
+      exhibition_id: exhibition_id,
+      parent_id: room_id,
+      parent_class: 'room'
+    }.to_json
+    post '/api/exhibition/retrieve-next-ordinal', request_body
+    result = parse_response['next_child']
+
+    expect(result).to eq('1.1.0')
+  end
+
   def add_scene(unique_name, exhibition_id, number=ITEM_NUMBER_VALID)
     scene = { id: '', name: unique_name, room: false, parent_id: exhibition_id, exhibition_id: exhibition_id, number: number, parent_class: "exhibition", type: 'scene' }.to_json
     post '/api/item/add', scene
   end
 
-  def add_room(unique_name, exhibition_id)
-    room = { id: '', name: unique_name, room: true, exhibition_id: exhibition_id, parent_id: exhibition_id, parent_class: 'exhibition', number: NUMBER, type: 'room' }.to_json
+  def add_room(unique_name, exhibition_id, number = NUMBER)
+    room = { id: '', name: unique_name, room: true, exhibition_id: exhibition_id, parent_id: exhibition_id, parent_class: 'exhibition', number: number, type: 'room' }.to_json
     post '/api/item/add', room
   end
 

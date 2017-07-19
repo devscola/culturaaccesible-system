@@ -1,6 +1,6 @@
 module Items
   class Room
-    attr_reader :name, :id, :parent_id, :type
+    attr_reader :name, :id, :parent_id, :type, :number
 
     def initialize(data, id = nil)
       @creation_date = Time.now.utc
@@ -25,6 +25,10 @@ module Items
         id: @id,
         type: @type
       }
+    end
+    
+    def number
+      @number
     end
 
     private

@@ -42,12 +42,12 @@ module Fixture
         current
       end
 
-      def room_saved
+      def room_saved(number = FIRST_NUMBER)
         current = initial_state
 
         current.check_room
         current.fill('name', ARTWORK)
-        current.fill('number', FIRST_NUMBER)
+        current.fill('number', number)
 
         current.submit
       end

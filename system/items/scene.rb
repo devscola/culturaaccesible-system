@@ -17,6 +17,10 @@ module Items
       @id = id || generate_id
     end
 
+    def number
+      @number
+    end
+
     def serialize
       {
         name: @name,

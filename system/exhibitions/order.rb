@@ -7,7 +7,7 @@ class Order
 
 
   def add_element (el)
-    parts = el.split(@separator)
+    parts = el.to_s.split(@separator)
     @elements << parts.map!{|e| e.to_i}
   end
 
@@ -27,7 +27,7 @@ class Order
   end
 
   def to_array(string)
-    string.split(@separator).map{|e| e.to_i}
+    string.to_s.split(@separator).map{|e| e.to_i}
   end
 
   def to_string(array)
@@ -53,15 +53,15 @@ class Order
   end
 
   def next_child_for_minor(parent)
-    parent_mayor = parent.split(@separator)[0].to_i
-    parent_minor = parent.split(@separator)[1].to_i
+    parent_mayor = parent.to_s.to_s.split(@separator)[0].to_i
+    parent_minor = parent.to_s.split(@separator)[1].to_i
     children = elements.select {|e| e[0] == parent_mayor && e[1] == parent_minor}
     next_detail = children.empty? ? 1 : children.last[2] + 1
     to_string [parent_mayor, parent_minor, next_detail]
   end
 
   def level(parent)
-    parent_elements = parent.split(@separator)
+    parent_elements = parent.to_s.split(@separator)
     return :minor if(parent_elements[1] != '0')
     return :mayor if(parent_elements[0] != '0')
     return :exhibition

@@ -19,35 +19,21 @@ Class('Scene.Info', {
     },
 
     getSceneId: function() {
-      return this.loadParentId();
+      return this.loadShortUrlData(7);
     },
 
     goToEditForm: function() {
-      var parentId = this.loadParentId();
-      var exhibitionId = this.loadExhibitionId();
-      var parentClass = this.loadParentClass();
+      var parentId = this.loadShortUrlData(7);
+      var exhibitionId = this.loadShortUrlData(3);
+      var parentClass = this.loadShortUrlData(5);
       window.location = '/exhibition/' + exhibitionId + '/' + parentClass + '/' + parentId + '/edit';
     },
 
-    loadExhibitionId: function() {
+    loadShortUrlData: function(index) {
         var urlString = window.location.href;
-        var regexp = /\/(exhibition)(\/)(.*)(\/)(exhibition|room|scene|subscene)(\/)(.*)(|\/)(|.*)/;
-        var urlParentId = regexp.exec(urlString)[3];
-        return urlParentId;
-    },
-
-    loadParentId: function() {
-        var urlString = window.location.href;
-        var regexp = /\/(exhibition)(\/)(.*)(\/)(exhibition|room|scene|subscene)(\/)(.*)(|\/)(|.*)/;
-        var urlParentId = regexp.exec(urlString)[7];
-        return urlParentId;
-    },
-
-    loadParentClass: function() {
-        var urlString = window.location.href;
-        var regexp = /\/(exhibition)(\/)(.*)(\/)(exhibition|room|scene|subscene)(\/)(.*)(|\/)(|.*)/;
-        var urlParentType = regexp.exec(urlString)[5];
-        return urlParentType;
+        var regexp = /\/(exhibition)(\/)(.*)(\/)(exhibition|room|scene)(\/)(.*)(|\/)(|.*)/;
+        var data = regexp.exec(urlString)[index];
+        return data;
     },
 
     subscribe: function() {
