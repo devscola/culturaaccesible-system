@@ -27,8 +27,8 @@ describe Exhibitions::Service do
     exhibition = Exhibitions::Service.retrieve_for_list(result[:id])
 
     expect(exhibition[:name]).to eq(name)
-    expect(exhibition[:children]).to include({:id => scene[:id], :name => scene[:name], :type => 'scene', :children => []})
-    expect(exhibition[:children]).to include({:id => room[:id], :name => room[:name], :type => 'room', :children => []})
+    expect(exhibition[:children]).to include({:id => scene[:id], :name => scene[:name], :number => scene[:number], :type => 'scene', :children => []})
+    expect(exhibition[:children]).to include({:id => room[:id], :name => room[:name], :number => room[:number], :type => 'room', :children => []})
   end
 
   it 'retrieves all exhibitions' do

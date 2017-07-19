@@ -279,7 +279,7 @@ feature 'Item' do
     expect(current.content?(Fixture::Item::INFO_THIRD_NUMBER)).to be true
   end
 
-  scenario 'shows subscene info when subscene name from room > scene >subscene is clicked' do
+  scenario 'shows subscene info when subscene name from room > scene > subscene is clicked' do
     Fixture::Item.from_exhibition_to_new_item
 
     Fixture::Item.room_saved
@@ -299,6 +299,23 @@ feature 'Item' do
 
 
     expect(current.content?(Fixture::Item::INFO_THIRD_NUMBER)).to be true
+  end
+
+  scenario 'shows number of items in exhibition list' do
+    room_number = '1.0.0'
+    scene_number = '1.1.0'
+    subscene_number = '1.1.1'
+    Fixture::Item.from_exhibition_to_new_item
+    Fixture::Item.room_saved(room_number)
+    Fixture::Item.item_saved_in_room(scene_number)
+    Fixture::Item.item_saved_in_item(subscene_number)
+
+    current = Page::Exhibitions.new
+    current.toggle_list
+
+    expect(current.content?(room_number)).to be true
+    expect(current.content?(scene_number)).to be true
+    expect(current.content?(subscene_number)).to be true
   end
 
   scenario 'add item to an item' do

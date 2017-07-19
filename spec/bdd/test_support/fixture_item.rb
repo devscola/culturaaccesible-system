@@ -74,26 +74,26 @@ module Fixture
 
       end
 
-      def item_saved_in_room
+      def item_saved_in_room(number = SECOND_NUMBER)
         current = Page::Exhibitions.new
         current.toggle_list
         current.click_room_plus_button
 
         current = Page::Item.new
         current.fill('name',Fixture::Item::OTHER_ARTWORK)
-        current.fill('number',Fixture::Item::SECOND_NUMBER)
+        current.fill('number', number)
 
         current.submit
       end
 
-      def item_saved_in_item
+      def item_saved_in_item(number = THIRD_NUMBER)
         current = Page::Exhibitions.new
         current.toggle_list
         current.click_item_plus_button
 
         current = Page::Item.new
         current.fill('name',Fixture::Item::OTHER_ARTWORK)
-        current.fill('number',Fixture::Item::THIRD_NUMBER)
+        current.fill('number', number)
 
         current.submit
       end

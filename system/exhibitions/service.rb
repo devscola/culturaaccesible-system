@@ -25,6 +25,7 @@ module Exhibitions
             id: item[:id],
             name: item[:name],
             type: item[:type],
+            number: item[:number],
             children: Items::Service.retrieve_by_parent(item[:id])
           }
         end

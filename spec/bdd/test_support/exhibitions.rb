@@ -22,6 +22,10 @@ module Page
       find('#action').click
     end
 
+    def content?(content)
+      has_content?(content)
+    end
+
     def toggle_list
       has_css?('.toggle-exhibition-list', wait: 2)
       find('.toggle-exhibition-list').click
