@@ -129,6 +129,11 @@ module Page
       first('.exhibition-scene .plus-button').click
     end
 
+    def click_last_item_plus_button
+      has_css?('.plus-button', wait: 4)
+      all('.plus-button').last.click
+    end
+
     def go_to_exhibition_info
       has_css?('.exhibition-name', wait: 4)
       first('.exhibition-name').click
@@ -155,6 +160,11 @@ module Page
     end
 
     def go_to_last_subscene_info
+      has_css?('.item-name', wait: 4)
+      all('.item-name').last.click
+    end
+
+    def go_to_subscene_info_into_room
       has_css?('.subscene-name', wait: 4)
       first('.subscene-name').click
     end

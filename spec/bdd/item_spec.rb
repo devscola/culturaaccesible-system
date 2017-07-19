@@ -293,7 +293,7 @@ feature 'Item' do
 
     expect(current.scene_in_room_has_children?).to be true
 
-    current.go_to_last_subscene_info
+    current.go_to_subscene_info_into_room
 
     current = Page::SceneInfo.new
 
@@ -493,7 +493,51 @@ feature 'Item' do
     current.toggle_list
 
     expect(current.subscene_info?(Fixture::Item::ARTWORK)).to be true
+  end
 
+  scenario 'returns right ordinal number in each level' do
+    Fixture::Item.from_exhibition_to_new_item
+    Fixture::Item.room_saved_with_automatic_number
+    current = Page::Exhibitions.new
+    current.toggle_list
+    current.go_to_room_info
+    current = Page::RoomInfo.new
+
+    expect(current.content?('1.0.0')).to be true
+
+    Fixture::Item.scene_saved_in_room_with_automatic_number
+    current = Page::Exhibitions.new
+    current.toggle_list
+    current.go_to_scene_inside_room_info
+    current = Page::SceneInfo.new
+
+    expect(current.content?('1.1.0')).to be true
+
+    Fixture::Item.subscene_saved_in_scene_with_automatic_number
+    current = Page::Exhibitions.new
+    current.toggle_list
+    current.go_to_subscene_info_into_room
+    current = Page::SceneInfo.new
+
+    expect(current.content?('1.1.1')).to be true
+
+    current = Page::Exhibitions.new
+    current.click_plus_button
+    current = Fixture::Item.scene_saved_with_automatic_number
+    current = Page::Exhibitions.new
+    current.toggle_list
+    current.go_to_scene_info
+    current = Page::SceneInfo.new
+
+    expect(current.content?('2.0.0')).to be true
+
+    Fixture::Item.subscene_saved_in_second_scene_with_automatic_number
+    current = Page::Exhibitions.new
+    current.toggle_list
+    current.go_to_last_subscene_info
+    current = Page::SceneInfo.new
+
+    expect(current.content?('2.1.0')).to be true
   end
 
 end

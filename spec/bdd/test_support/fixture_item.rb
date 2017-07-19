@@ -31,6 +31,13 @@ module Fixture
         initial_state
       end
 
+      def from_exhibition_to_second_item
+        current = Fixture::Exhibitions.exhibition_saved
+        current.exhibition_list?
+        current.click_plus_button
+        initial_state
+      end
+
       def shows_room_alert
         current = from_exhibition_to_new_item
 
@@ -94,6 +101,55 @@ module Fixture
         current = Page::Item.new
         current.fill('name',Fixture::Item::OTHER_ARTWORK)
         current.fill('number', number)
+
+        current.submit
+      end
+
+      def scene_saved_with_automatic_number
+        current = initial_state
+
+        current.fill('name',Fixture::Item::ARTWORK)
+        current.submit
+      end
+
+      def room_saved_with_automatic_number
+        current = initial_state
+
+        current.check_room
+        current.fill('name', ARTWORK)
+
+        current.submit
+      end
+
+      def scene_saved_in_room_with_automatic_number
+        current = Page::Exhibitions.new
+        current.toggle_list
+        current.click_room_plus_button
+
+        current = Page::Item.new
+        current.fill('name',Fixture::Item::OTHER_ARTWORK)
+
+        current.submit
+      end
+
+      def subscene_saved_in_scene_with_automatic_number
+        current = Page::Exhibitions.new
+        current.toggle_list
+        current.click_item_plus_button
+
+        current = Page::Item.new
+        current.fill('name',Fixture::Item::OTHER_ARTWORK)
+
+        current.submit
+      end
+
+      def subscene_saved_in_second_scene_with_automatic_number
+        current = Page::Exhibitions.new
+        current.toggle_list
+        current.click_last_item_plus_button
+
+        current = Page::Item.new
+        current.fill('name',Fixture::Item::OTHER_ARTWORK)
 
         current.submit
       end
