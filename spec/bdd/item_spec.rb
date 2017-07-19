@@ -391,6 +391,11 @@ feature 'Item' do
     current.submit
 
     expect(current.content?(Fixture::Item::VISIBLE_OTHER_ARTWORK)).to be true
+
+    current = Page::Exhibitions.new
+    current.toggle_list
+
+    expect(current.room_info?(Fixture::Item::OTHER_ARTWORK)).to be true
   end
 
   scenario 'scene info is editable when edit button is clicked' do
@@ -406,12 +411,19 @@ feature 'Item' do
     current = Page::Item.new
 
     expect(current.content?(Fixture::Item::ARTWORK)).to be true
+    expect(current.input_value?('author')).to eq Fixture::Item::AUTHOR
+    expect(current.input_value?('date')).to eq Fixture::Item::DATE
     expect(current.content?(Fixture::Item::SAVE_BUTTON)).to be true
 
     current.fill('name',Fixture::Item::OTHER_ARTWORK)
     current.submit
 
     expect(current.content?(Fixture::Item::VISIBLE_OTHER_ARTWORK)).to be true
+
+    current = Page::Exhibitions.new
+    current.toggle_list
+
+    expect(current.scene_info?(Fixture::Item::OTHER_ARTWORK)).to be true
   end
 
   scenario 'scene info inside a room is editable when edit button is clicked' do
@@ -433,6 +445,11 @@ feature 'Item' do
     current.submit
 
     expect(current.content?(Fixture::Item::VISIBLE_ARTWORK)).to be true
+
+    current = Page::Exhibitions.new
+    current.toggle_list
+
+    expect(current.scene_inside_room_info?(Fixture::Item::ARTWORK)).to be true
   end
 
   scenario 'subscene info inside a scene is editable when edit button is clicked' do

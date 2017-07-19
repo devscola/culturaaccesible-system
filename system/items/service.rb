@@ -30,8 +30,8 @@ module Items
       end
 
       def retrieve_by_parent(id)
-        result = Items::Repository.retrieve_by_parent(id)
-        result.map! do |item|
+        children = Items::Repository.retrieve_by_parent(id)
+        children.map! do |item|
           {
             id: item.id,
             name: item.name,
@@ -39,7 +39,7 @@ module Items
             children: Items::Service.retrieve_by_parent(item.id)
           }
         end
-        result
+        children
       end
     end
   end

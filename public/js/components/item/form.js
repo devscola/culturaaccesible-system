@@ -43,6 +43,8 @@ Class('Item.Form', {
         if (this.isEditable() && scene.type == 'scene') {
             this.element.name = scene.name;
             this.element.number = scene.number;
+            this.element.author = scene.author;
+            this.element.date = scene.date;
             this.element.description = scene.description;
             this.element.beacon = scene.beacon;
             document.getElementsByClassName("room")[0].checked = false;
@@ -109,15 +111,17 @@ Class('Item.Form', {
 
     renderExhibition: function(exhibition) {
         this.element.exhibition = exhibition;
-        this.setInitialParentAttributes();
+        this.setInitialParentAttributes(exhibition);
     },
 
-    setInitialParentAttributes: function() {
-        this.element.parentId = this.loadUrlData(7);
+    setInitialParentAttributes: function(exhibition) {
         if (this.isEditable()) {
+            this.element.parentId = exhibition.id;
             if(this.loadUrlData(5) == 'scene') {
                 this.retrieveSubsceneParentId();
             }
+        } else {
+            this.element.parentId = this.loadUrlData(7);
         }
         this.setParentClass();
     },

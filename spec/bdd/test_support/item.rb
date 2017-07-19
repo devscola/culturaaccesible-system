@@ -14,6 +14,10 @@ module Page
       has_content?(content)
     end
 
+    def input_value?(field)
+      find("[name=#{field}]").value
+    end
+
     def submit
       find('.submit').click
     end
