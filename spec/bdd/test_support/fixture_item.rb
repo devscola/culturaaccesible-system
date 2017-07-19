@@ -64,6 +64,8 @@ module Fixture
 
         current.fill('name',Fixture::Item::ARTWORK)
         current.fill('number',Fixture::Item::SECOND_NUMBER)
+        current.fill('author', Fixture::Item::AUTHOR)
+        current.fill('date', Fixture::Item::DATE)
 
         current.submit
       end

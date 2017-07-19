@@ -169,6 +169,18 @@ module Page
       has_css?('.exhibition-scene .exhibition-scene', wait: 4, text: content)
     end
 
+    def room_info?(content)
+      has_css?('.exhibition-room .room-name', wait: 4, text: content)
+    end
+
+    def scene_info?(content)
+      has_css?('.exhibition-scene .scene-name', wait: 4, text: content)
+    end
+
+    def scene_inside_room_info?(content)
+      has_css?('.exhibition-scene .item-name', wait: 4, text: content)
+    end
+
     def title(name)
       page.has_title?(name)
     end
