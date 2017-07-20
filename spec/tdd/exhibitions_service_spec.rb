@@ -31,6 +31,31 @@ describe Exhibitions::Service do
     expect(exhibition[:children]).to include({:id => room[:id], :name => room[:name], :number => room[:number], :type => 'room', :children => []})
   end
 
+  it 'retrieve ordered major level list of an exhibition' do
+    name = 'some name'
+    location = 'some location'
+    exhibition = add_exhibition(name, location)
+    scene = add_scene('scene name', '2.0.0', exhibition[:id])
+    room = add_room('room name', '1.0.0', exhibition[:id])
+
+    exhibition_list = Exhibitions::Service.retrieve_for_list(exhibition[:id])
+
+    expect((exhibition_list[:children]).first).to include({:number => '1.0.0'})
+  end
+
+  it 'retrieve ordered minor level list of an exhibition' do
+    name = 'some name'
+    location = 'some location'
+    exhibition = add_exhibition(name, location)
+    room = add_room('room name', '1.0.0', exhibition[:id])
+    scene_into_room = add_scene_into_room('scene name', '1.2.0', exhibition[:id], room[:id])
+    other_scene_into_room = add_scene_into_room('scene name', '1.1.0', exhibition[:id], room[:id])
+
+    exhibition_list = Exhibitions::Service.retrieve_for_list(exhibition[:id])
+
+    expect((exhibition_list[:children][0][:children]).first).to include({:number => '1.1.0'})
+  end
+
   it 'retrieves all exhibitions' do
     name = 'some name'
     location = 'some location'
@@ -59,6 +84,11 @@ describe Exhibitions::Service do
 
   def add_scene(name, number, parent_id)
     scene = {'id' => '', 'name' => name, 'number' => number, 'parent_id' => parent_id, 'exhibition_id' => parent_id, 'parent_class' => 'exhibition',  'type' => 'scene' }
+    Items::Service.store_scene(scene)
+  end
+
+  def add_scene_into_room(name, number, exhibition_id, room_id)
+    scene = {'id' => '', 'name' => name, 'number' => number, 'parent_id' => room_id, 'exhibition_id' => exhibition_id, 'parent_class' => 'room',  'type' => 'scene' }
     Items::Service.store_scene(scene)
   end
 

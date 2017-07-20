@@ -40,8 +40,14 @@ module Items
             children: Items::Service.retrieve_by_parent(item.id)
           }
         end
-        children
+        children_list = sorted_list(children)
+        children_list
       end
+
+      def sorted_list(children)
+      children.sort_by { |child| child[:number] }
+      end
+
     end
   end
 end

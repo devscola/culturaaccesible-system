@@ -29,7 +29,12 @@ module Exhibitions
             children: Items::Service.retrieve_by_parent(item[:id])
           }
         end
-        { id: exhibition.id, name: exhibition.name, :children => children }
+        sorted_children = sorted_list(children)
+        { id: exhibition.id, name: exhibition.name, :children => sorted_children }
+      end
+
+      def sorted_list(children)
+        children.sort_by { |child| child[:number] }
       end
 
       def retrieve_next_ordinal(exhibition_id, ordinal)
