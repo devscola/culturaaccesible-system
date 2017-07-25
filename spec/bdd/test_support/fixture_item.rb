@@ -153,6 +153,20 @@ module Fixture
 
         current.submit
       end
+
+      def edit_room_number(number)
+        current = Page::Exhibitions.new
+        current.toggle_list
+        current.go_to_room_info
+        current = Page::RoomInfo.new
+        current.click_edit
+        current = Page::Item.new
+        current.fill('number', number)
+        current.submit
+        current = Page::Exhibitions.new
+        current.toggle_list
+        current
+      end
     end
   end
 end

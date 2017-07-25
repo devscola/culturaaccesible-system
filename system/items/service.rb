@@ -2,6 +2,7 @@ require_relative 'repository'
 require_relative 'scene'
 require_relative 'room'
 require_relative '../exhibitions/service'
+require_relative 'relation'
 
 module Items
   class Service
@@ -45,7 +46,7 @@ module Items
       end
 
       def sorted_list(children)
-      children.sort_by { |child| child[:number] }
+        children.sort_by { |child| child[:number] }
       end
 
     end

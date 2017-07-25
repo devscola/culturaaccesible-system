@@ -12,6 +12,7 @@ module Items
       @parent_class = null_defense(data['parent_class'])
       @type = 'room'
       @id = id || generate_id
+      @relation = Relation.new(@number, @id, @parent_id)
     end
 
     def serialize
@@ -23,8 +24,18 @@ module Items
         parent_id: @parent_id,
         parent_class: @parent_class,
         id: @id,
-        type: @type
+        type: @type,
+        relation: @relation.serialize
       }
+    end
+
+
+    def relation
+      @relation
+    end
+
+    def set_number(number)
+      @number = number
     end
 
     def number

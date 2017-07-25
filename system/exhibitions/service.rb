@@ -2,6 +2,8 @@ require 'digest/md5'
 require_relative 'repository'
 require_relative 'exhibition'
 require_relative 'order'
+require_relative '../items/repository'
+require_relative '../items/relation'
 require_relative '../helpers/defense'
 
 module Exhibitions
@@ -43,7 +45,7 @@ module Exhibitions
       end
 
       def list
-        list = Exhibitions::Repository.all
+        Exhibitions::Repository.all
       end
 
       def flush

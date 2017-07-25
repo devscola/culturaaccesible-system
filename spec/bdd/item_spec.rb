@@ -406,7 +406,7 @@ feature 'Item' do
 
     current.fill('name',Fixture::Item::OTHER_ARTWORK)
     current.submit
-
+    current.has_css?('.item-view', wait: 2)
     expect(current.content?(Fixture::Item::VISIBLE_OTHER_ARTWORK)).to be true
 
     current = Page::Exhibitions.new
@@ -539,5 +539,30 @@ feature 'Item' do
 
     expect(current.content?('2.1.0')).to be true
   end
+
+  scenario 'shows correct number item tree in edit' do
+   room_number = '1.0.0'
+   scene_number = '1.1.0'
+   subscene_number = '1.1.1'
+   Fixture::Item.from_exhibition_to_new_item
+   Fixture::Item.room_saved(room_number)
+   Fixture::Item.item_saved_in_room(scene_number)
+   Fixture::Item.item_saved_in_item(subscene_number)
+
+   current = Fixture::Item.edit_room_number('2.0.0')
+   expect(current.content?('2.0.0')).to be true
+   expect(current.content?('2.1.0')).to be true
+   expect(current.content?('2.1.1')).to be true
+
+   current = Fixture::Item.edit_room_number('4.0.0')
+   expect(current.content?('4.0.0')).to be true
+   expect(current.content?('4.1.0')).to be true
+   expect(current.content?('4.1.1')).to be true
+
+   current =  Fixture::Item.edit_room_number('7.0.0')
+   expect(current.content?('7.0.0')).to be true
+   expect(current.content?('7.1.0')).to be true
+   expect(current.content?('7.1.1')).to be true
+ end
 
 end

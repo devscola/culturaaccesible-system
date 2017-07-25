@@ -38,10 +38,11 @@ module Exhibitions
 
       def add_number(exhibition_id, number, last_number)
         exhibition = retrieve(exhibition_id)
-        exhibition.set_numbers(number)
 
         if last_number != ''
-          exhibition.remove_number(last_number)
+          exhibition.update_order(number, last_number, exhibition_id)
+        else
+          exhibition.set_numbers(number)
         end
       end
 

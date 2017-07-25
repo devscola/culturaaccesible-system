@@ -6,24 +6,18 @@ class Order
   end
 
 
-  def add_element (el)
+  def add_element(el)
     parts = el.to_s.split(@separator)
     @elements << parts.map!{|e| e.to_i}
   end
 
-  def next_child (parent)
+  def next_child(parent)
     return :error unless parent_exists?(parent)
 
     m = self.method('next_child_for_' + level(parent).to_s)
     next_child = m.call(parent)
     add_element(next_child)
     next_child
-  end
-
-  private
-
-  def elements
-    @elements.sort
   end
 
   def to_array(string)
@@ -33,6 +27,13 @@ class Order
   def to_string(array)
     array.join(@separator)
   end
+
+  private
+
+  def elements
+    @elements.sort
+  end
+
 
   def parent_exists?(parent)
     return true if parent == '0.0.0'

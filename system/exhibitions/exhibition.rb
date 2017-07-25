@@ -47,7 +47,94 @@ module Exhibitions
     end
 
     def remove_number(number)
-      @numbers.delete(number) 
+      @numbers.delete(number)
+    end
+
+    def update_order(new_number, last_number, exhibition_id)
+      order = Order.new
+      new_number = order.to_array(new_number)
+      last_number = order.to_array(last_number)
+
+      @numbers.map! do |number|
+        iteration_last_number = number
+        number = order.to_array(number)
+        detail_changed = change_detail(number, new_number, last_number)
+        minor_changed = change_minor(number, new_number, last_number) if detail_changed || three_times_not_changed?(new_number, last_number)
+        major_changed = change_major(number, new_number, last_number) if minor_changed || twice_not_changed?(new_number, last_number)
+        number = order.to_string(number)
+        if major_changed || minor_changed || detail_changed
+          relation = Items::Repository.retrieve_relation(iteration_last_number, exhibition_id)
+          update_item(relation, iteration_last_number, number)
+        end
+        number
+      end
+    end
+
+    def update_item(relation, iteration_last_number, number)
+      id = ''
+      if relation != nil
+        serialized_relation = relation.serialize
+        if(serialized_relation.key?(iteration_last_number))
+          id = serialized_relation[iteration_last_number]
+        end
+        item = Items::Repository.retrieve(id)
+        item.relation.order(number)
+        item.relation.id(id)
+        item.set_number(number)
+      end
+    end
+
+    def change_detail(number, new_number, last_number)
+      changed = false
+      if( detail_change?(number, last_number) &&
+          minor_change?(number,last_number) &&
+          major_change?(number, last_number))
+        number[2] = new_number[2]
+        changed = true
+      end
+      changed
+    end
+
+    def change_minor(number, new_number, last_number)
+      changed = false
+      if( minor_change?(number, last_number) &&
+          major_change?(number,last_number))
+          number[1] = new_number[1]
+          changed = true
+      end
+      changed
+    end
+
+    def change_major(number, new_number, last_number)
+      changed = false
+      if(major_change?(number, last_number))
+        number[0] = new_number[0]
+        changed = true
+      end
+      changed
+    end
+
+    def major_change?(number, last_number)
+      (number[0] == last_number[0])
+    end
+
+    def minor_change?(number, last_number)
+      (number[1] == last_number[1])
+    end
+
+    def detail_change?(number, last_number)
+      (number[2] == last_number[2])
+    end
+
+    def twice_not_changed?(new_number, last_number)
+      return true if (new_number[0] == last_number[0] ||
+                      new_number[1] == last_number[1])
+    end
+
+    def three_times_not_changed?(new_number, last_number)
+      return true if (new_number[0] == last_number[0] ||
+                      new_number[1] == last_number[1] ||
+                      new_number[2] == last_number[2])
     end
 
     private

@@ -17,16 +17,19 @@ include Rack::Test::Methods
   ITEM_NUMBER_VALID = 4
   NUMBER = 10
   ANOTHER_NUMBER = 11
+  FIRST_NUMBER = '1.0.0'
+  SECOND_NUMBER = '2.0.0'
 
   it 'stores scene with same exhibition id with unique scene name' do
     add_exhibition
     exhibition_id = parse_response['id']
 
-    add_scene(FIRST_NAME, exhibition_id)
+    add_scene(FIRST_NAME, exhibition_id, FIRST_NUMBER)
     first_scene_name = parse_response['name']
     first_scene_exhibition_id = parse_response['parent_id']
 
-    add_scene(SECOND_NAME, exhibition_id)
+
+    add_scene(SECOND_NAME, exhibition_id, SECOND_NUMBER)
     second_scene_name = parse_response['name']
     second_scene_exhibition_id = parse_response['parent_id']
 
@@ -124,24 +127,24 @@ include Rack::Test::Methods
   end
 
   it 'updates rooms' do
-    add_exhibition
-
+    add_exhibition([])
     exhibition = parse_response
     exhibition_id = parse_response['id']
 
-
-    add_room(FIRST_NAME, exhibition_id)
+    add_room(FIRST_NAME, exhibition_id, FIRST_NUMBER)
     room_id = parse_response['id']
     room_number = parse_response['number']
-    update_room(room_id, exhibition_id, room_number)
+    update_room(room_id, exhibition_id, room_number, true, SECOND_NUMBER)
     updated_room_id = parse_response['id']
+    room_relation = parse_response['relation']
 
     retrieve_exhibition(exhibition)
     exhibition_numbers = parse_response['numbers']
 
     expect(room_id == updated_room_id).to be true
-    expect(exhibition_numbers.include?(ANOTHER_NUMBER)).to be true
-    expect(exhibition_numbers.include?(NUMBER)).to be false
+    expect(room_relation[SECOND_NUMBER]).to eq(room_id)
+    expect(exhibition_numbers.include?(FIRST_NUMBER)).to be false
+    expect(exhibition_numbers.include?(SECOND_NUMBER)).to be true
   end
 
   it 'updates scene' do
@@ -151,18 +154,18 @@ include Rack::Test::Methods
     exhibition_id = parse_response['id']
 
 
-    add_scene(FIRST_NAME, exhibition_id, NUMBER)
+    add_scene(FIRST_NAME, exhibition_id, FIRST_NUMBER)
     scene_id = parse_response['id']
-    scene_number = parse_response['number']
-    update_scene(scene_id, exhibition_id, scene_number)
+    last_number = parse_response['number']
+    update_scene(scene_id, exhibition_id, last_number)
     updated_scene_id = parse_response['id']
 
     retrieve_exhibition(exhibition)
     exhibition_numbers = parse_response['numbers']
 
     expect(scene_id == updated_scene_id).to be true
-    expect(exhibition_numbers.include?(ANOTHER_NUMBER)).to be true
-    expect(exhibition_numbers.include?(NUMBER)).to be false
+    expect(exhibition_numbers.include?(SECOND_NUMBER)).to be true
+    expect(exhibition_numbers.include?(FIRST_NUMBER)).to be false
   end
 
   it 'retrieve next order number for first level item' do
@@ -220,8 +223,8 @@ include Rack::Test::Methods
     post '/api/item/add', room
   end
 
-  def add_exhibition
-    exhibition = { name: 'some name', location: 'some location', numbers: ITEM_NUMBERS }.to_json
+  def add_exhibition(numbers = ITEM_NUMBERS)
+    exhibition = { name: 'some name', location: 'some location', numbers: numbers }.to_json
     post '/api/exhibition/add', exhibition
   end
 
@@ -237,13 +240,13 @@ include Rack::Test::Methods
     post 'api/room/retrieve', room.to_json
   end
 
-  def update_room(id, exhibition_id, room_number, check_room = true)
-    room = { id: id, name: FIRST_NAME, room: check_room, exhibition_id: exhibition_id, parent_id: exhibition_id, parent_class: 'exhibition', number: ANOTHER_NUMBER, last_number: room_number, type: 'room' }.to_json
+  def update_room(id, exhibition_id, last_number, check_room = true, number = ANOTHER_NUMBER)
+    room = { id: id, name: FIRST_NAME, room: check_room, exhibition_id: exhibition_id, parent_id: exhibition_id, parent_class: 'exhibition', number: number, last_number: last_number, type: 'room' }.to_json
     post '/api/item/update', room
   end
 
-  def update_scene(id, exhibition_id, scene_number, check_room = false)
-    scene = { id: id, name: FIRST_NAME, room: check_room, exhibition_id: exhibition_id, parent_id: exhibition_id, parent_class: 'exhibition', number: ANOTHER_NUMBER, last_number: scene_number, type: 'scene' }.to_json
+  def update_scene(id, exhibition_id, last_number, check_room = false)
+    scene = { id: id, name: FIRST_NAME, room: check_room, exhibition_id: exhibition_id, parent_id: exhibition_id, parent_class: 'exhibition', number: SECOND_NUMBER, last_number: last_number, type: 'scene' }.to_json
     post '/api/item/update', scene
   end
 
