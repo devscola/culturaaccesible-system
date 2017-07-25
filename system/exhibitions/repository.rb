@@ -22,7 +22,8 @@ module Exhibitions
         @content.map do |exhibition|
           {
             "id": exhibition.id,
-            "name": exhibition.name
+            "name": exhibition.name,
+            "show": exhibition.show
           }
         end
       end

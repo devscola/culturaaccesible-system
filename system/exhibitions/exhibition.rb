@@ -1,6 +1,6 @@
 module Exhibitions
   class Exhibition
-    attr_reader :id, :name, :order
+    attr_reader :id, :name, :order, :show
     attr_accessor :numbers
 
     def initialize(data, id=nil)
@@ -47,7 +47,7 @@ module Exhibitions
     end
 
     def remove_number(number)
-      @numbers.delete(number) 
+      @numbers.delete(number)
     end
 
     private
