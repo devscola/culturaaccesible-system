@@ -31,6 +31,18 @@ describe Exhibitions::Service do
     expect(exhibition[:children]).to include({:id => room[:id], :name => room[:name], :number => room[:number], :type => 'room', :children => []})
   end
 
+  it 'retrieve exhibition item list' do
+    name = 'some name'
+    location = 'some location'
+    exhibition = add_exhibition(name, location)
+    scene = add_scene(name, exhibition[:id])
+
+    children = Exhibitions::Service.retrieve_items(exhibition[:id])
+
+    expect(children.any?).to be true
+    expect(children.first[:name]).to eq name
+  end
+
   it 'retrieve ordered major level list of an exhibition' do
     name = 'some name'
     location = 'some location'
@@ -82,7 +94,7 @@ describe Exhibitions::Service do
     Exhibitions::Service.store(exhibition)
   end
 
-  def add_scene(name, number, parent_id)
+  def add_scene(name, number='', parent_id)
     scene = {'id' => '', 'name' => name, 'number' => number, 'parent_id' => parent_id, 'exhibition_id' => parent_id, 'parent_class' => 'exhibition',  'type' => 'scene' }
     Items::Service.store_scene(scene)
   end

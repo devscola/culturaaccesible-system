@@ -25,6 +25,15 @@ class App < Sinatra::Base
     result.to_json
   end
 
+  post '/api/exhibition/items' do
+    response.headers['Access-Control-Allow-Origin'] = '*'
+    body = JSON.parse(request.body.read)
+    exhibition = Exhibitions::Repository.all.first
+    result = Exhibitions::Service.retrieve_items(exhibition[:id])
+
+    result.to_json
+  end
+
   post '/api/exhibition/list' do
     response.headers['Access-Control-Allow-Origin'] = '*'
     result = Exhibitions::Service.list

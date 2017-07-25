@@ -43,6 +43,19 @@ describe 'Exhibition controller' do
     expect(result.any?).to be true
   end
 
+  it 'retrieves all items in exhibitions' do
+    add_exhibition
+    exhibition_id = parse_response['id']
+    payload = { exhibition_id: exhibition_id }.to_json
+
+    add_item(exhibition_id)
+
+    post '/api/exhibition/items', payload
+
+    result = parse_response
+    expect(result.any?).to be true
+  end
+
   it 'updates existing exhibition' do
     add_exhibition
     exhibition_id = parse_response['id']
@@ -63,6 +76,11 @@ describe 'Exhibition controller' do
   def add_exhibition
     exhibition = { name: 'some name', location: 'some location' }.to_json
     post '/api/exhibition/add', exhibition
+  end
+
+  def add_item(exhibition_id)
+    scene = { id: '', name: 'name', room: false, parent_id: exhibition_id, exhibition_id: exhibition_id, parent_class: "exhibition", type: 'scene' }.to_json
+    post '/api/item/add', scene
   end
 
   def parse_response

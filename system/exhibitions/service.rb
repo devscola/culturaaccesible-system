@@ -29,11 +29,17 @@ module Exhibitions
             children: Items::Service.retrieve_by_parent(item[:id])
           }
         end
-        sorted_children = sorted_list(children)
+        sorted_children = sort_list(children)
         { id: exhibition.id, name: exhibition.name, :children => sorted_children }
       end
 
-      def sorted_list(children)
+      def retrieve_items(id)
+        exhibition = Exhibitions::Repository.retrieve(id)
+        children = Items::Service.retrieve_by_parent(id)
+        sort_list(children)
+      end
+
+      def sort_list(children)
         children.sort_by { |child| child[:number] }
       end
 
