@@ -38,6 +38,7 @@ module Items
             type: item.type,
             number: item.number,
             media_file: 'https://s3.amazonaws.com/pruebas-cova/3minutes.mp4',
+            description: item.description,
             children: Items::Service.retrieve_by_parent(item.id)
           }
         end
