@@ -65,6 +65,7 @@ module Page
     end
 
     def view_visible?
+      has_css?('.view', wait: 2, visible: false)
       view = find('.view', visible: false)
       view.visible?
     end
@@ -115,8 +116,8 @@ module Page
     end
 
     def click_plus_button
-      has_css?('.plus-button', wait: 2, :text => '+')
-      first('.plus-button').click
+      has_css?('.plus-button', wait: 4, :text => '+')
+      find('.plus-button').click
     end
 
     def click_room_plus_button

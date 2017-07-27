@@ -2,7 +2,7 @@ module Items
   class Room
     attr_reader :name, :id, :parent_id, :type
 
-    def initialize(data, id = nil)
+    def initialize(data, id=nil)
       @creation_date = Time.now.utc
       @name = null_defense(data['name'])
       @number = null_defense(data['number'])
@@ -29,6 +29,18 @@ module Items
 
     def number
       @number
+    end
+
+    def type
+      @type
+    end
+
+    def author
+      nil
+    end
+
+    def date
+      nil
     end
 
     private

@@ -2,7 +2,6 @@ module Items
   class Scene
     attr_reader :name, :id, :parent_id, :type
 
-
     def initialize(data, id=nil)
       @creation_date = Time.now.utc
       @name = null_defense(data['name'])
@@ -34,6 +33,18 @@ module Items
         id: @id,
         type: @type
       }
+    end
+
+    def type
+      @type
+    end
+
+    def author
+      @author
+    end
+
+    def date
+      @date
     end
 
     private
