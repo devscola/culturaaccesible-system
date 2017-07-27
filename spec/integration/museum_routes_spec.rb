@@ -14,10 +14,8 @@ describe 'Museum controller' do
     Museums::Repository.flush
   end
 
-  it 'retrieves all museums', :museum do
-    museum = { info: { name: 'some name', description: 'some description' } }.to_json
-    post '/api/museum/add', museum
-
+  it 'retrieves all museums' do
+    add_museum
     post '/api/museum/list'
 
     result = parse_response

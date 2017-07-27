@@ -16,7 +16,6 @@ module Exhibitions
       @beacon = Defense.string_null_defense(data['beacon'])
       @description = Defense.string_null_defense(data['description'])
       @id = id || generate_id
-      @index = []
       @order = Order.new
     end
 
@@ -33,8 +32,7 @@ module Exhibitions
         type: @type,
         numbers: @numbers,
         beacon: @beacon,
-        description: @description,
-        index: @index
+        description: @description
       }
     end
 

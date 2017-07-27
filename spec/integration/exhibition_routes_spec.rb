@@ -30,8 +30,8 @@ describe 'Exhibition controller' do
     payload = { id: exhibition_id }.to_json
     post '/api/exhibition/retrieve', payload
 
-    result = parse_response['index']
-    expect(result).to eq([])
+    retrieved_exhibition_id = parse_response['id']
+    expect(retrieved_exhibition_id).to eq(exhibition_id)
   end
 
   it 'retrieves all exhibitions' do
