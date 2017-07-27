@@ -1,6 +1,6 @@
 module Items
   class Scene
-    attr_reader :name, :id, :parent_id, :type
+    attr_reader :name, :id, :parent_id, :type, :description
 
     def initialize(data, id=nil)
       @creation_date = Time.now.utc
