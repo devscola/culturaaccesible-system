@@ -1,0 +1,58 @@
+<link rel="import" href="/vendor/polymer/polymer.html">
+
+<dom-module id="cuac-museum-form">
+    <template>
+        <style>
+
+        </style>
+
+        <div class="col-md-6">
+            <div class="panel panel-primary">
+                <div class="panel-heading">Info</div>
+                <div class="panel-body">
+                    <cuac-info-form id="info"></cuac-info-form>
+                </div>
+            </div>
+            <div class="panel panel-primary">
+                <div class="panel-heading">Contact</div>
+                <div class="panel-body">
+                    <cuac-contact-form id="contact"></cuac-contact-form>
+                </div>
+            </div>
+            <div class="panel panel-primary">
+                <div class="panel-heading">Schedule</div>
+                <div class="panel-body">
+                    <cuac-schedule-form id="schedule"></cuac-schedule-form>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="panel panel-primary">
+                <div class="panel-heading"><b>Location*</b></div>
+                <div class="panel-body">
+                    <cuac-location-form id="location"></cuac-location-form>
+                </div>
+            </div>
+            <div class="panel panel-primary">
+                <div class="panel-heading">Price</div>
+                <div class="panel-body">
+                    <cuac-price-form id="price"></cuac-price-form>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <cuac-save-button id="action"></cuac-save-button>
+        </div>
+
+    </template>
+
+    <script>
+        Polymer({
+            is: 'cuac-museum-form',
+
+            properties: {
+
+            },
+        });
+    </script>
+</dom-module>
