@@ -1,6 +1,7 @@
 require 'sinatra/base'
 require 'json'
 require_relative '../exhibitions/service'
+require_relative '../actions/exhibitions'
 require_relative '../items/repository'
 require_relative '../items/scene'
 require_relative '../items/room'
@@ -19,8 +20,10 @@ class App < Sinatra::Base
   end
 
   post '/api/exhibition/retrieve-for-list' do
-    exhibition = JSON.parse(request.body.read)
-    result = Exhibitions::Service.retrieve_for_list(exhibition['id'])
+    body = JSON.parse(request.body.read)
+    exhibition = Exhibitions::Service.retrieve(body['id'])
+
+    result = Actions::Exhibition.retrieve_for_list(exhibition)
 
     result.to_json
   end
@@ -28,8 +31,10 @@ class App < Sinatra::Base
   post '/api/exhibition/items' do
     response.headers['Access-Control-Allow-Origin'] = '*'
     body = JSON.parse(request.body.read)
+
     exhibition = Exhibitions::Repository.retrieve(body['exhibition_id'])
-    result = Exhibitions::Service.retrieve_items(exhibition.id)
+
+    result = Items::Service.retrieve_by_parent(exhibition.id)
 
     result.to_json
   end
