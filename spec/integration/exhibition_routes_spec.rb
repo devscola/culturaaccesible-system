@@ -53,7 +53,23 @@ describe 'Exhibition controller' do
     post '/api/exhibition/items', payload
 
     result = parse_response
+
     expect(result.any?).to be true
+  end
+
+  it 'retrieves an exhibition for sidebar', :wip do
+    add_exhibition
+    exhibition_id = parse_response['id']
+    payload = { id: exhibition_id }.to_json
+
+    add_item(exhibition_id)
+
+    post '/api/exhibition/retrieve-for-list', payload
+
+    result = parse_response
+
+    expect(result['id']).to eq exhibition_id
+    expect(result['children'].any?).to be true
   end
 
   it 'updates existing exhibition' do
