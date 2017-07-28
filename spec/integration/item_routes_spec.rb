@@ -17,6 +17,8 @@ include Rack::Test::Methods
   ITEM_NUMBER_VALID = 4
   NUMBER = 10
   ANOTHER_NUMBER = 11
+  AUTHOR = 'author name'
+  DATE = '2017'
 
   it 'stores scene with same exhibition id with unique scene name' do
     add_exhibition
@@ -123,6 +125,20 @@ include Rack::Test::Methods
     expect(exhibition_numbers.include?(ITEM_NUMBER_VALID)).to be false
   end
 
+  it 'creates a scene with author and date' do
+    add_exhibition
+
+    exhibition = parse_response
+    exhibition_id = parse_response['id']
+
+    add_scene(FIRST_NAME, exhibition_id, NUMBER)
+    scene_author = parse_response['author']
+    scene_date = parse_response['date']
+
+    expect(scene_author).to eq AUTHOR
+    expect(scene_date).to eq DATE
+  end
+
   it 'updates rooms' do
     add_exhibition
 
@@ -206,7 +222,7 @@ include Rack::Test::Methods
   end
 
   def add_scene(unique_name, exhibition_id, number=ITEM_NUMBER_VALID)
-    scene = { id: '', name: unique_name, room: false, parent_id: exhibition_id, exhibition_id: exhibition_id, number: number, parent_class: "exhibition", type: 'scene' }.to_json
+    scene = { id: '', name: unique_name, room: false, parent_id: exhibition_id, exhibition_id: exhibition_id, number: number, parent_class: "exhibition", type: 'scene', author: AUTHOR, date: DATE }.to_json
     post '/api/item/add', scene
   end
 
