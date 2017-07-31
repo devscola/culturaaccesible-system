@@ -162,7 +162,7 @@ module Page
       assert_selector('#result', visible: false)
       assert_selector("input[name='name']", visible: false)
       assert_selector("input[name='street']", visible: false)
-
+      has_no_css?('.has-error')
     end
   end
 end
