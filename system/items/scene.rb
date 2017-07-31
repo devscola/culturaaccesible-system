@@ -1,6 +1,6 @@
 module Items
   class Scene
-    attr_reader :name, :id, :parent_id, :type, :description
+    attr_reader :name, :id, :parent_id, :type, :description, :number, :author, :date
 
     def initialize(data, id=nil)
       @creation_date = Time.now.utc
@@ -16,10 +16,6 @@ module Items
       @id = id || generate_id
     end
 
-    def number
-      @number
-    end
-
     def serialize
       {
         name: @name,
@@ -33,18 +29,6 @@ module Items
         id: @id,
         type: @type
       }
-    end
-
-    def type
-      @type
-    end
-
-    def author
-      @author
-    end
-
-    def date
-      @date
     end
 
     private
