@@ -17,20 +17,6 @@ describe Exhibitions::Service do
     expect(exhibition.include?(:creation_date)).to be true
   end
 
-  it 'retrieve exhibition and children names' do
-    name = 'some name'
-    location = 'some location'
-    result = add_exhibition(name, location)
-    scene = add_scene('scene name', 'scene number', result[:id])
-    room = add_room('room name', 'room number', result[:id])
-
-    exhibition = Exhibitions::Service.retrieve_for_list(result[:id])
-
-    expect(exhibition[:name]).to eq(name)
-    expect(exhibition[:children]).to include({:id => scene[:id], :name => scene[:name], :number => scene[:number], :type => 'scene', :children => []})
-    expect(exhibition[:children]).to include({:id => room[:id], :name => room[:name], :number => room[:number], :type => 'room', :children => []})
-  end
-
   it 'retrieve ordered major level list of an exhibition' do
     name = 'some name'
     location = 'some location'
@@ -38,9 +24,10 @@ describe Exhibitions::Service do
     scene = add_scene('scene name', '2.0.0', exhibition[:id])
     room = add_room('room name', '1.0.0', exhibition[:id])
 
-    exhibition_list = Exhibitions::Service.retrieve_for_list(exhibition[:id])
+    children = Items::Service.retrieve_by_parent(exhibition[:id])
+    sorted_children = Exhibitions::Service.sort_list(children)
 
-    expect((exhibition_list[:children]).first).to include({:number => '1.0.0'})
+    expect(sorted_children.first).to include({:number => '1.0.0'})
   end
 
   it 'retrieve ordered minor level list of an exhibition' do
@@ -51,9 +38,10 @@ describe Exhibitions::Service do
     scene_into_room = add_scene_into_room('scene name', '1.2.0', exhibition[:id], room[:id])
     other_scene_into_room = add_scene_into_room('scene name', '1.1.0', exhibition[:id], room[:id])
 
-    exhibition_list = Exhibitions::Service.retrieve_for_list(exhibition[:id])
+    children = Items::Service.retrieve_by_parent(exhibition[:id])
+    sorted_children = Exhibitions::Service.sort_list(children)
 
-    expect((exhibition_list[:children][0][:children]).first).to include({:number => '1.1.0'})
+    expect(sorted_children.first[:children].first).to include({:number => '1.1.0'})
   end
 
   it 'retrieves all exhibitions' do

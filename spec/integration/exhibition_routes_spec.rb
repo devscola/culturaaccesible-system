@@ -57,7 +57,7 @@ describe 'Exhibition controller' do
     expect(result.any?).to be true
   end
 
-  it 'retrieves an exhibition for sidebar', :wip do
+  it 'retrieves an exhibition and children for sidebar' do
     add_exhibition
     exhibition_id = parse_response['id']
     payload = { id: exhibition_id }.to_json
