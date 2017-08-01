@@ -540,4 +540,21 @@ feature 'Item' do
     expect(current.content?('2.1.0')).to be true
   end
 
+  scenario 'avoid create rooms in subscenes', :wip do
+    Fixture::Item.from_exhibition_to_new_item
+    Fixture::Item.room_saved_with_automatic_number
+    Fixture::Item.scene_saved_in_room_with_automatic_number
+    current = Page::Exhibitions.new
+
+    current.toggle_list
+
+    current.click_item_plus_button
+
+    current = Page::Item.new
+
+    expect(current.room_check_disabled?).to be true
+  end
+
+
+
 end
