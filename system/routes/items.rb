@@ -18,6 +18,8 @@ class App < Sinatra::Base
         result = ArgumentError
       end
     end
+    item_id = result[:id]
+    Exhibitions::Service.register_order(data['exhibition_id'], item_id, data['number'])
     result.to_json
   end
 

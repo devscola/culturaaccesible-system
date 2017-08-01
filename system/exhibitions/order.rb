@@ -1,14 +1,8 @@
 class Order
 
   def initialize
-    @elements = []
+    @index = {}
     @separator = '.'
-  end
-
-
-  def add_element (el)
-    parts = el.to_s.split(@separator)
-    @elements << parts.map!{|e| e.to_i}
   end
 
   def next_child (parent)
@@ -16,14 +10,23 @@ class Order
 
     m = self.method('next_child_for_' + level(parent).to_s)
     next_child = m.call(parent)
-    add_element(next_child)
+
     next_child
+  end
+
+  def register(ordinal, item_id)
+    ordinal = ordinal.split(@separator).map! {|element| element.to_i}
+    @index[ordinal] = item_id
   end
 
   private
 
+  def get_elements
+    @index.keys
+  end
+
   def elements
-    @elements.sort
+    get_elements.sort
   end
 
   def to_array(string)
