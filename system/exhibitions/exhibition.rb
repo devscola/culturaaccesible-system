@@ -36,6 +36,10 @@ module Exhibitions
       }
     end
 
+    def self.from_bson(bson, id)
+      Exhibitions::Exhibition.new(bson, id)
+    end
+
     def get_numbers
       @numbers
     end

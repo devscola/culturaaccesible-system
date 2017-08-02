@@ -2,7 +2,7 @@ require 'spec_helper_tdd'
 require_relative '../../system/items/service'
 require_relative '../../system/exhibitions/service'
 
-describe Items::Service , :testIC do
+describe Items::Service do
   before(:each) do
     Items::Repository.flush
 		exhibition = add_exhibition

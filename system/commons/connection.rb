@@ -19,6 +19,10 @@ module Database
       @connection[:museums]
     end
 
+    def exhibitions
+      @connection[:exhibitions]
+    end
+
     private
 
     def host

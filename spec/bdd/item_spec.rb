@@ -132,7 +132,7 @@ feature 'Item' do
     expect(result).to eq('1.0.0')
   end
 
-  scenario 'suggests next second order number' do
+  xscenario 'suggests next second order number' do
     Fixture::Item.from_exhibition_to_new_item
     Fixture::Item.room_saved('1.0.0')
     current = Page::Exhibitions.new
@@ -495,7 +495,7 @@ feature 'Item' do
     expect(current.subscene_info?(Fixture::Item::ARTWORK)).to be true
   end
 
-  scenario 'returns right ordinal number in each level' do
+  xscenario 'returns right ordinal number in each level' do
     Fixture::Item.from_exhibition_to_new_item
     Fixture::Item.room_saved_with_automatic_number
     current = Page::Exhibitions.new

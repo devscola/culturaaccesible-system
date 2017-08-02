@@ -1,8 +1,15 @@
+require 'mongo'
+require_relative '../commons/connection'
+
 module Exhibitions
   class Repository
-    @content = []
 
     class << self
+
+      def connection
+          Database::Connection.new
+      end
+
       def choose_action(exhibition_data)
         id = exhibition_data['id']
         if (id)
@@ -13,19 +20,15 @@ module Exhibitions
       end
 
       def retrieve(id)
-        @content ||= []
-        result = @content.find { |exhibition| exhibition.id == id }
-        result
+        data = connection.exhibitions.find({ id: id }).first
+        exhibition = Exhibitions::Exhibition.from_bson(data, data['id'])
+        connection.close
+        exhibition
       end
 
       def all
-        @content.map do |exhibition|
-          {
-            "id": exhibition.id,
-            "name": exhibition.name,
-            "show": exhibition.show
-          }
-        end
+        exhibitions_data = connection.exhibitions.find({}, :fields => ['id', 'name', 'show'])
+        exhibitions_data.map{ |data| Exhibitions::Exhibition.from_bson(data, data['id']).serialize}
       end
 
       def retrieve_next_ordinal(exhibition_id, ordinal)
@@ -34,7 +37,7 @@ module Exhibitions
       end
 
       def flush
-        @content = []
+        connection.exhibitions.delete_many
       end
 
       def add_number(exhibition_id, number, last_number)
@@ -44,24 +47,32 @@ module Exhibitions
         if last_number != ''
           exhibition.remove_number(last_number)
         end
+
+        update_exhibition(exhibition)
+
       end
 
       private
+
+      def update_exhibition(exhibition)
+        document = exhibition.serialize
+        updated_exhibition = connection.exhibitions.find_one_and_update({ id: document[:id] }, document, {:return_document => :after })
+        updated_exhibition
+      end
+
 
       def update(exhibition_data)
         id =  exhibition_data['id']
         exhibition = Exhibitions::Exhibition.new(exhibition_data, id)
 
-        current_exhibition = @content.find { |element| element.id == exhibition.id }
-        index = @content.index(current_exhibition)
-        @content[index] = exhibition
-        @content[index]
+        updated_exhibition_data = update_exhibition(exhibition)
+        Exhibitions::Exhibition.from_bson(updated_exhibition_data, updated_exhibition_data['id'])
       end
 
       def store(exhibition_data)
         exhibition = Exhibitions::Exhibition.new(exhibition_data)
-
-        @content << exhibition
+        connection.exhibitions.insert_one(exhibition.serialize)
+        connection.close
         exhibition
       end
     end

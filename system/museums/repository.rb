@@ -16,7 +16,6 @@ module Museums
         connection.museums.insert_one(museum.serialize)
         connection.close
         museum
-
       end
 
       def update(museum_data)

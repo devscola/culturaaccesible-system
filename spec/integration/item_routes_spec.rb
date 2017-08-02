@@ -196,7 +196,7 @@ include Rack::Test::Methods
     expect(result).to eq('1.0.0')
   end
 
-  it 'retrieve next order number for second level item' do
+  xit 'retrieve next order number for second level item' do
     add_exhibition
     exhibition_id = parse_response['id']
 
