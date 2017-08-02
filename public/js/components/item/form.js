@@ -65,11 +65,15 @@ Class('Item.Form', {
         if (this.isEditable()) {
             this.loadEditables(parentClass, parentId);
         } else if (parentClass == 'room') {
-            this.element.disableCheckBox = true;
             this.retrieveNextNumber(exhibitionId, parentClass, parentId);
         } else {
             this.retrieveNextNumber(exhibitionId, parentClass, parentId);
         }
+        this.checkForDisableRoomCheckbox(parentClass);
+    },
+
+    checkForDisableRoomCheckbox: function(parentClass) {
+        if(parentClass != 'exhibition') this.element.disableCheckBox = true;
     },
 
     retrieveExhibition: function(id) {
