@@ -35,6 +35,13 @@ end
 task :test => [:bdd, :tdd, :integration] do
 end
 
+task :build do
+  sh "docker build -f Dockerfile.build -t culturaaccesible-system ."
+  sh "docker tag culturaaccesible-system devscola/culturaaccesible-system:build"
+  sh "docker login"
+  sh "docker push devscola/culturaaccesible-system:build"
+end
+
 task :tag, [:tag] do |t, arg|
   sh "rspec --tag #{arg.tag}"
 end
