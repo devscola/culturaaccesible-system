@@ -1,11 +1,10 @@
 module Items
   class Room
-    attr_reader :name, :id, :parent_id, :type, :description, :number
+    attr_reader :name, :id, :parent_id, :type, :description
 
     def initialize(data, id=nil)
       @creation_date = Time.now.utc
       @name = null_defense(data['name'])
-      @number = null_defense(data['number'])
       @beacon = null_defense(data['beacon'])
       @description = null_defense(data['description'])
       @parent_id = null_defense(data['parent_id'])
@@ -17,7 +16,6 @@ module Items
     def serialize
       {
         name: @name,
-        number: @number,
         beacon: @beacon,
         description: @description,
         parent_id: @parent_id,

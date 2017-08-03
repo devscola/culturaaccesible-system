@@ -22,9 +22,7 @@ class App < Sinatra::Base
   post '/api/exhibition/retrieve-for-list' do
     body = JSON.parse(request.body.read)
     exhibition = Exhibitions::Service.retrieve(body['id'])
-
     result = Actions::Exhibition.retrieve_for_list(exhibition)
-
     result.to_json
   end
 
@@ -50,7 +48,8 @@ class App < Sinatra::Base
     number = '0.0.0'
     if(data['parent_class'] != 'exhibition')
       item = Items::Repository.retrieve(data['parent_id'])
-      number = item.number
+      exhibition = Exhibitions::Repository.retrieve(data['exhibition_id'])
+      number = exhibition.order.retrieve_ordinal(item.id)
     end
     result = Exhibitions::Service.retrieve_next_ordinal(data['exhibition_id'], number)
 

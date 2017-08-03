@@ -48,7 +48,7 @@ describe 'Exhibition controller' do
     exhibition_id = parse_response['id']
     payload = { exhibition_id: exhibition_id }.to_json
 
-    add_item(exhibition_id)
+    add_scene(exhibition_id)
 
     post '/api/exhibition/items', payload
 
@@ -62,7 +62,7 @@ describe 'Exhibition controller' do
     exhibition_id = parse_response['id']
     payload = { id: exhibition_id }.to_json
 
-    add_item(exhibition_id)
+    add_scene(exhibition_id)
 
     post '/api/exhibition/retrieve-for-list', payload
 
@@ -89,13 +89,71 @@ describe 'Exhibition controller' do
     expect(result).to eq 'some other name'
   end
 
+  it 'retrieve ordered major level list of an exhibition' do
+    add_exhibition
+    exhibition = parse_response
+    scene = add_scene('2.0.0', exhibition['id'])
+    other_scene = add_scene('1.0.0', exhibition['id'])
+
+    retrieve_for_list(exhibition['id'])
+    first_children = parse_response['children'].first
+
+    expect(first_children).to include({'number' => '1.0.0'})
+  end
+
+  it 'retrieve ordered minor level list of an exhibition' do
+    add_exhibition
+    exhibition = parse_response
+    add_scene('1.0.0', exhibition['id'])
+    scene = parse_response
+    subscene_into_scene = add_subitem('1.2.0', exhibition['id'], 'scene', scene['id'])
+    other_subscene_into_scene = add_subitem('1.1.0', exhibition['id'], 'scene', scene['id'])
+
+    retrieve_for_list(exhibition['id'])
+    first_item_children = parse_response['children'].first['children'].first
+
+    expect(first_item_children).to include({'number' => '1.1.0'})
+  end
+
+  it 'retrieve ordered detail level list of an exhibition' do
+    add_exhibition
+    exhibition = parse_response
+    add_room('1.0.0', exhibition['id'])
+    room = parse_response
+    add_subitem('1.1.0', exhibition['id'], 'room', room['id'])
+    scene = parse_response
+    add_subitem('1.1.2', exhibition['id'], 'scene', scene['id'])
+    add_subitem('1.1.1', exhibition['id'], 'scene', scene['id'])
+
+    retrieve_for_list(exhibition['id'])
+    puts parse_response
+    first_subitem_children = parse_response['children'].first['children'].first['children'].first
+
+    expect(first_subitem_children).to include({'number' => '1.1.1'})
+  end
+
+  def retrieve_for_list(exhibition_id)
+    payload = { id: exhibition_id }.to_json
+    post 'api/exhibition/retrieve-for-list', payload
+  end
+
   def add_exhibition
     exhibition = { name: 'some name', location: 'some location' }.to_json
     post '/api/exhibition/add', exhibition
   end
 
-  def add_item(exhibition_id)
-    scene = { id: '', name: 'name', room: false, parent_id: exhibition_id, exhibition_id: exhibition_id, parent_class: "exhibition", type: 'scene' }.to_json
+  def add_room(number='', exhibition_id)
+    room = { id: '', name: 'name', number: number, room: true, parent_id: exhibition_id, exhibition_id: exhibition_id, parent_class: "exhibition", type: 'room' }.to_json
+    post '/api/item/add', room
+  end
+
+  def add_scene(number='', exhibition_id)
+    scene = { id: '', name: 'name', number: number, room: false, parent_id: exhibition_id, exhibition_id: exhibition_id, parent_class: "exhibition", type: 'scene' }.to_json
+    post '/api/item/add', scene
+  end
+
+  def add_subitem(number='', exhibition_id, parent_class, parent_id)
+    scene = { id: '', name: 'name', number: number, room: false, parent_id: parent_id, exhibition_id: exhibition_id, parent_class: parent_class, type: 'scene' }.to_json
     post '/api/item/add', scene
   end
 
