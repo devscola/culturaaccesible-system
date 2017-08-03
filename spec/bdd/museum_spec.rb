@@ -17,7 +17,7 @@ feature 'Museum' do
     expect(current.save_enabled?).to be true
   end
 
-  scenario 'shows info when submitted', :wip do
+  scenario 'shows info when submitted' do
     current = Fixture::Museum.fill_mandatory_content
 
     current.submit

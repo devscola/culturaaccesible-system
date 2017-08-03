@@ -23,11 +23,12 @@ module Page
     end
 
     def has_edit_button?
-      has_css?('.edit-button')
+      has_css?('.edit-button', wait: 4)
     end
 
     def click_edit
-      find('.edit-button', wait: 4).click
+      has_edit_button?
+      find('.edit-button').click
     end
 
     def form_visible?
