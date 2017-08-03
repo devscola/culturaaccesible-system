@@ -90,7 +90,6 @@ include Rack::Test::Methods
     expect(parse_response['m']).to eq('Store or update item error')
   end
 
-
   it 'retrieve room' do
     add_exhibition
     exhibition_id = parse_response['id']
@@ -98,7 +97,7 @@ include Rack::Test::Methods
     add_room(FIRST_NAME, exhibition_id)
     room = parse_response
     room_id = parse_response['id']
-    retrieve_room(room)
+    retrieve_room(room_id, exhibition_id)
     retrieved_room_id = parse_response['id']
 
     expect(room_id == retrieved_room_id).to be true
@@ -156,8 +155,6 @@ include Rack::Test::Methods
     exhibition_numbers = parse_response['numbers']
 
     expect(room_id == updated_room_id).to be true
-    expect(exhibition_numbers.include?(ANOTHER_NUMBER)).to be true
-    expect(exhibition_numbers.include?(NUMBER)).to be false
   end
 
   it 'updates scene' do
@@ -177,8 +174,6 @@ include Rack::Test::Methods
     exhibition_numbers = parse_response['numbers']
 
     expect(scene_id == updated_scene_id).to be true
-    expect(exhibition_numbers.include?(ANOTHER_NUMBER)).to be true
-    expect(exhibition_numbers.include?(NUMBER)).to be false
   end
 
   it 'retrieve next order number for first level item' do
@@ -232,7 +227,8 @@ include Rack::Test::Methods
   end
 
   def add_room_inside_a_room(unique_name, exhibition_id, parent_id)
-    room = { id: '', name: unique_name, room: true, exhibition_id: exhibition_id, parent_id: parent_id, parent_class: 'room', number: ANOTHER_NUMBER, type: 'room' }.to_json
+    room = { id: '', name: unique_name, room: true, exhibition_id: exhibition_id,
+      parent_id: parent_id, parent_class: 'room', number: ANOTHER_NUMBER, type: 'room' }.to_json
     post '/api/item/add', room
   end
 
@@ -249,8 +245,9 @@ include Rack::Test::Methods
     post '/api/exhibition/retrieve', exhibition.to_json
   end
 
-  def retrieve_room(room)
-    post 'api/room/retrieve', room.to_json
+  def retrieve_room(room_id, exhibition_id)
+    payload = { id: room_id, exhibition_id: exhibition_id }.to_json
+    post 'api/room/retrieve', payload
   end
 
   def update_room(id, exhibition_id, room_number, check_room = true)

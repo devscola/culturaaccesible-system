@@ -8,18 +8,20 @@ class App < Sinatra::Base
     data = JSON.parse(request.body.read)
     if (data['room'] == false)
       result = Items::Service.store_scene(data)
+      item_id = result[:id]
+      Exhibitions::Service.register_order(data['exhibition_id'], item_id, data['number'])
     else
       message_exception = 'Store or update item error'
       begin
         result = Items::Service.store_room(data)
+        item_id = result[:id]
+        Exhibitions::Service.register_order(data['exhibition_id'], item_id, data['number'])
       rescue => ArgumentError
         status 503
         body message_exception
         result = ArgumentError
       end
     end
-    item_id = result[:id]
-    Exhibitions::Service.register_order(data['exhibition_id'], item_id, data['number'])
     result.to_json
   end
 
@@ -49,13 +51,24 @@ class App < Sinatra::Base
 
   post '/api/scene/retrieve' do
     scene = JSON.parse(request.body.read)
+    exhibition_id = scene['exhibition_id']
+    item_id = scene['id']
+
     result = Items::Service.retrieve(scene['id'])
+    ordinal = Exhibitions::Service.retrieve_ordinal(exhibition_id, item_id)
+    result['number'] = ordinal
+
     result.to_json
   end
 
   post '/api/room/retrieve' do
     room = JSON.parse(request.body.read)
-    result = Items::Service.retrieve(room['id'])
+    exhibition_id = room['exhibition_id']
+    item_id = room['id']
+
+    result = Items::Service.retrieve(item_id)
+    ordinal = Exhibitions::Service.retrieve_ordinal(exhibition_id, item_id)
+    result['number'] = ordinal
     result.to_json
   end
 

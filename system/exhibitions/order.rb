@@ -15,8 +15,12 @@ class Order
   end
 
   def register(ordinal, item_id)
-    ordinal = ordinal.split(@separator).map! {|element| element.to_i}
+    ordinal = ordinal
     @index[ordinal] = item_id
+  end
+
+  def retrieve_ordinal(item_id)
+    @index.index(item_id)
   end
 
   private
@@ -26,7 +30,7 @@ class Order
   end
 
   def elements
-    get_elements.sort
+    get_elements.map!{|element| to_array(element) }
   end
 
   def to_array(string)
@@ -40,7 +44,7 @@ class Order
   def parent_exists?(parent)
     return true if parent == '0.0.0'
     parent = to_array(parent)
-    elements.find{ |e| e == parent}
+    elements.find{ |element| element == parent}
   end
 
   def next_child_for_exhibition(parent=nil)

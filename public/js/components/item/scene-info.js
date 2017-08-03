@@ -14,7 +14,10 @@ Class('Scene.Info', {
 
     loadScene: function() {
       var id = this.getSceneId();
-      var payload = { 'id': id };
+      var exhibitionId = this.loadShortUrlData(3);
+
+      var payload = { 'id': id, 'exhibition_id': exhibitionId };
+
       Bus.publish('item.retrieve', payload);
     },
 
