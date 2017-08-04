@@ -14,10 +14,7 @@ Class('Scene.Info', {
 
     loadScene: function() {
       var id = this.getSceneId();
-      var exhibitionId = this.loadShortUrlData(3);
-
-      var payload = { 'id': id, 'exhibition_id': exhibitionId };
-
+      var payload = { 'id': id };
       Bus.publish('item.retrieve', payload);
     },
 

@@ -36,6 +36,7 @@ module Items
             id: item.id,
             name: item.name,
             type: item.type,
+            number: item.number,
             author: item.author || '',
             date: item.date || '',
             media_file: 'https://s3.amazonaws.com/pruebas-cova/3minutes.mp4',

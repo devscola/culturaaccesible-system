@@ -15,17 +15,12 @@ Class('Room.Info', {
 
     loadRoom: function() {
       var id = this.getRoomId();
-      var exhibitionId = this.getExhibitionId();
-      var payload = { 'id': id, 'exhibition_id': exhibitionId };
+      var payload = { 'id': id };
       Bus.publish('room.retrieve', payload);
     },
 
     getRoomId: function() {
       return this.loadShortUrlData(7);
-    },
-
-    getExhibitionId: function() {
-      return this.loadShortUrlData(3);
     },
 
     goToEditForm: function() {
