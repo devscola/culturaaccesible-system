@@ -58,9 +58,9 @@ Class('Item.Form', {
     },
 
     loadFormInfo: function() {
-        var parentId = this.loadUrlData(7);
-        var parentClass = this.loadUrlData(5);
-        var exhibitionId = this.loadUrlData(3);
+        var parentId = this.getParentId();
+        var parentClass = this.getParentClass();
+        var exhibitionId = this.getExhibitionId();
         this.retrieveExhibition(exhibitionId);
         if (this.isEditable()) {
             this.loadEditables(parentClass, parentId);
@@ -82,11 +82,12 @@ Class('Item.Form', {
     },
 
     loadEditables: function(parentClass, parentId) {
+        var exhibitionId = this.getExhibitionId()
         if(parentClass == 'scene' ) {
-            var payload = { 'id': parentId };
+            var payload = { 'id': parentId, 'exhibition_id': exhibitionId };
             Bus.publish('item.retrieve.editable', payload);
         } else{
-            var payload = { 'id': parentId };
+            var payload = { 'id': parentId, 'exhibition_id': exhibitionId };
             Bus.publish('room.retrieve.editable', payload);
         }
     },
@@ -102,6 +103,18 @@ Class('Item.Form', {
         var regexp = /\/(exhibition)(\/)(.*)(\/)(exhibition|room|scene)(\/)(.*)(\/)(.*)/;
         var data = regexp.exec(urlString)[index];
         return data;
+    },
+
+    getExhibitionId: function() {
+      return this.loadUrlData(3);
+    },
+
+    getParentClass: function() {
+      return this.loadUrlData(5);
+    },
+
+    getParentId: function() {
+      return this.loadUrlData(7);
     },
 
     isEditable: function() {
@@ -131,7 +144,9 @@ Class('Item.Form', {
     },
 
     retrieveSubsceneParentId: function() {
-        var payload = { id: this.loadUrlData(7) };
+        var id = this.loadUrlData(7)
+        var exhibitionId = this.getExhibitionId()
+        var payload = { 'id': id, 'exhibition_id': exhibitionId};
         Bus.publish('subscene.scene.retrieve', payload)
     },
 

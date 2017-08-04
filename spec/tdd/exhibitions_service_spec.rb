@@ -17,33 +17,6 @@ describe Exhibitions::Service do
     expect(exhibition.include?(:creation_date)).to be true
   end
 
-  it 'retrieve ordered major level list of an exhibition' do
-    name = 'some name'
-    location = 'some location'
-    exhibition = add_exhibition(name, location)
-    scene = add_scene('scene name', '2.0.0', exhibition[:id])
-    room = add_room('room name', '1.0.0', exhibition[:id])
-
-    children = Items::Service.retrieve_by_parent(exhibition[:id])
-    sorted_children = Exhibitions::Service.sort_list(children)
-
-    expect(sorted_children.first).to include({:number => '1.0.0'})
-  end
-
-  it 'retrieve ordered minor level list of an exhibition' do
-    name = 'some name'
-    location = 'some location'
-    exhibition = add_exhibition(name, location)
-    room = add_room('room name', '1.0.0', exhibition[:id])
-    scene_into_room = add_scene_into_room('scene name', '1.2.0', exhibition[:id], room[:id])
-    other_scene_into_room = add_scene_into_room('scene name', '1.1.0', exhibition[:id], room[:id])
-
-    children = Items::Service.retrieve_by_parent(exhibition[:id])
-    sorted_children = Exhibitions::Service.sort_list(children)
-
-    expect(sorted_children.first[:children].first).to include({:number => '1.1.0'})
-  end
-
   it 'retrieves all exhibitions' do
     name = 'some name'
     location = 'some location'

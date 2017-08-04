@@ -1,13 +1,12 @@
 module Items
   class Scene
-    attr_reader :name, :id, :parent_id, :type, :description, :number, :author, :date
+    attr_reader :name, :id, :parent_id, :type, :description, :author, :date
 
     def initialize(data, id=nil)
       @creation_date = Time.now.utc
       @name = null_defense(data['name'])
       @author = null_defense(data['author'])
       @date = null_defense(data['date'])
-      @number = null_defense(data['number'])
       @beacon = null_defense(data['beacon'])
       @description = null_defense(data['description'])
       @parent_id = null_defense(data['parent_id'])
@@ -21,7 +20,6 @@ module Items
         name: @name,
         author: @author,
         date: @date,
-        number: @number,
         beacon: @beacon,
         description: @description,
         parent_id: @parent_id,
