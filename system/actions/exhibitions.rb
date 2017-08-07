@@ -22,11 +22,11 @@ module Actions
         children = Items::Repository.retrieve_by_parent(item_id)
         children.map! do |item|
           {
-            id: item.id,
-            name: item.name,
-            type: item.type,
-            number: order.retrieve_ordinal(item.id),
-            children: sorted_subitems(order, item.id)
+            id: item[:id],
+            name: item[:name],
+            type: item[:type],
+            number: order.retrieve_ordinal(item[:id]),
+            children: sorted_subitems(order, item[:id])
           }
         end
         sorted_children = Exhibitions::Service.sort_list(children)
@@ -37,10 +37,10 @@ module Actions
         subitems = Items::Repository.retrieve_by_parent(item_id)
         subitems.map! do |subitem|
           {
-            id: subitem.id,
-            name: subitem.name,
-            type: subitem.type,
-            number: order.retrieve_ordinal(subitem.id)
+            id: subitem[:id],
+            name: subitem[:name],
+            type: subitem[:type],
+            number: order.retrieve_ordinal(subitem[:id])
           }
         end
         Exhibitions::Service.sort_list(subitems)

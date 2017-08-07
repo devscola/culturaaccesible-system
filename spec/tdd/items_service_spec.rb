@@ -26,7 +26,7 @@ describe Items::Service do
     sub_item_number = '1.2.2'
 
     item = add_scene(item_name, item_number, exhibition[:id], exhibition[:id])
-    sub_item = add_scene(sub_item_name, sub_item_number, item[:id], exhibition[:id])
+    add_scene(sub_item_name, sub_item_number, item[:id], exhibition[:id])
     children = Items::Service.retrieve_by_parent(item[:id])
 
     expect(children.first[:name]).to eq sub_item_name

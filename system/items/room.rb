@@ -25,6 +25,10 @@ module Items
       }
     end
 
+    def self.from_bson(bson, id)
+      Items::Room.new(bson, id)
+    end
+
     def author
       nil
     end

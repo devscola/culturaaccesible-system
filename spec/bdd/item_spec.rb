@@ -374,19 +374,6 @@ feature 'Item' do
     expect(has_content?(breadcrumb)).to be true
   end
 
-  scenario 'updates item info' do
-    current = Fixture::Item.from_exhibition_to_new_item
-    current.fill('name',Fixture::Item::ARTWORK)
-    current.fill('number',Fixture::Item::FIRST_NUMBER)
-    current.submit
-
-    current.click_edit
-    current.fill('name',Fixture::Item::OTHER_ARTWORK)
-    current.submit
-
-    expect(current.other_name?).to be true
-  end
-
   scenario 'room info is editable when edit button is clicked' do
     Fixture::Item.from_exhibition_to_new_item
     Fixture::Item.room_saved

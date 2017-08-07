@@ -23,6 +23,10 @@ module Database
       @connection[:exhibitions]
     end
 
+    def items
+      @connection[:items]
+    end
+
     private
 
     def host

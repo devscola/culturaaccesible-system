@@ -29,6 +29,10 @@ module Items
       }
     end
 
+    def self.from_bson(bson, id)
+      Items::Scene.new(bson, id)
+    end
+
     private
 
     def null_defense(value)
