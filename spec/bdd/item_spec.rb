@@ -331,7 +331,7 @@ feature 'Item' do
     expect(current.scene_has_children?).to be true
   end
 
-  scenario 'check if item name is in breadcrumb when it is saved' do
+  xscenario 'check if item name is in breadcrumb when it is saved' do
     current = Fixture::Exhibitions.pristine.exhibition_saved
     exhibition_name = current.first_exhibition_name
     breadcrumb =  exhibition_name + ' > ' + Fixture::Item::ARTWORK

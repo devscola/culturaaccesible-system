@@ -28,6 +28,7 @@ module Page
 
     def toggle_list
       has_css?('.toggle-exhibition-list', wait: 2)
+      sleep 0.5
       find('.toggle-exhibition-list').click
     end
 
@@ -117,7 +118,7 @@ module Page
 
     def click_plus_button
       has_css?('.plus-button', wait: 4, text: '+')
-      sleep 0.5
+      sleep 1
       first('.plus-button').click
     end
 
