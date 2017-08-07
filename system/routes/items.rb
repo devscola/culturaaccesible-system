@@ -9,13 +9,16 @@ class App < Sinatra::Base
     if (data['room'] == false)
       result = Items::Service.store_scene(data)
       item_id = result[:id]
-      Exhibitions::Service.register_order(data['exhibition_id'], item_id, data['number'])
+      number = data['number']
+      Exhibitions::Service.register_order(data['exhibition_id'], item_id, number)
+      exhibition = Exhibitions::Service.retrieve(data['exhibition_id'])
     else
       message_exception = 'Store or update item error'
       begin
         result = Items::Service.store_room(data)
         item_id = result[:id]
-        Exhibitions::Service.register_order(data['exhibition_id'], item_id, data['number'])
+        number = data['number']
+        Exhibitions::Service.register_order(data['exhibition_id'], item_id, number)
       rescue => ArgumentError
         status 503
         body message_exception

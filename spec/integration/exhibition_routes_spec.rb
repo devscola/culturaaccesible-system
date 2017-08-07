@@ -92,44 +92,44 @@ describe 'Exhibition controller' do
   it 'retrieve ordered major level list of an exhibition' do
     add_exhibition
     exhibition = parse_response
-    scene = add_scene('2.0.0', exhibition['id'])
-    other_scene = add_scene('1.0.0', exhibition['id'])
+    scene = add_scene('2-0-0', exhibition['id'])
+    other_scene = add_scene('1-0-0', exhibition['id'])
 
     retrieve_for_list(exhibition['id'])
     first_children = parse_response['children'].first
 
-    expect(first_children).to include({'number' => '1.0.0'})
+    expect(first_children).to include({'number' => '1-0-0'})
   end
 
   it 'retrieve ordered minor level list of an exhibition' do
     add_exhibition
     exhibition = parse_response
-    add_scene('1.0.0', exhibition['id'])
+    add_scene('1-0-0', exhibition['id'])
     scene = parse_response
-    subscene_into_scene = add_subitem('1.2.0', exhibition['id'], 'scene', scene['id'])
-    other_subscene_into_scene = add_subitem('1.1.0', exhibition['id'], 'scene', scene['id'])
+    subscene_into_scene = add_subitem('1-2-0', exhibition['id'], 'scene', scene['id'])
+    other_subscene_into_scene = add_subitem('1-1-0', exhibition['id'], 'scene', scene['id'])
 
     retrieve_for_list(exhibition['id'])
     first_item_children = parse_response['children'].first['children'].first
 
-    expect(first_item_children).to include({'number' => '1.1.0'})
+    expect(first_item_children).to include({'number' => '1-1-0'})
   end
 
   it 'retrieve ordered detail level list of an exhibition' do
     add_exhibition
     exhibition = parse_response
-    add_room('1.0.0', exhibition['id'])
+    add_room('1-0-0', exhibition['id'])
     room = parse_response
-    add_subitem('1.1.0', exhibition['id'], 'room', room['id'])
+    add_subitem('1-1-0', exhibition['id'], 'room', room['id'])
     scene = parse_response
-    add_subitem('1.1.2', exhibition['id'], 'scene', scene['id'])
-    add_subitem('1.1.1', exhibition['id'], 'scene', scene['id'])
+    add_subitem('1-1-2', exhibition['id'], 'scene', scene['id'])
+    add_subitem('1-1-1', exhibition['id'], 'scene', scene['id'])
 
     retrieve_for_list(exhibition['id'])
     puts parse_response
     first_subitem_children = parse_response['children'].first['children'].first['children'].first
 
-    expect(first_subitem_children).to include({'number' => '1.1.1'})
+    expect(first_subitem_children).to include({'number' => '1-1-1'})
   end
 
   def retrieve_for_list(exhibition_id)

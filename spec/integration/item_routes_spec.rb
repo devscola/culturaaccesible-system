@@ -188,10 +188,10 @@ include Rack::Test::Methods
     post '/api/exhibition/retrieve-next-ordinal', request_body
 
     result = parse_response['next_child']
-    expect(result).to eq('1.0.0')
+    expect(result).to eq('1-0-0')
   end
 
-  xit 'retrieve next order number for second level item' do
+  it 'retrieve next order number for second level item' do
     add_exhibition
     exhibition_id = parse_response['id']
 
@@ -203,7 +203,7 @@ include Rack::Test::Methods
     post '/api/exhibition/retrieve-next-ordinal', request_body
     result = parse_response['next_child']
 
-    add_room(FIRST_NAME, exhibition_id, '1.0.0')
+    add_room(FIRST_NAME, exhibition_id, '1-0-0')
     room_id = parse_response['id']
     request_body = {
       exhibition_id: exhibition_id,
@@ -213,7 +213,7 @@ include Rack::Test::Methods
     post '/api/exhibition/retrieve-next-ordinal', request_body
     result = parse_response['next_child']
 
-    expect(result).to eq('1.1.0')
+    expect(result).to eq('1-1-0')
   end
 
   def add_scene(unique_name, exhibition_id, number=ITEM_NUMBER_VALID)

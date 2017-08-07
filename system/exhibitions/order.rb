@@ -1,8 +1,12 @@
 class Order
 
-  def initialize
-    @index = {}
-    @separator = '.'
+  def initialize(data={})
+    @index = data['index'] || {}
+    @separator = '-'
+  end
+
+  def index
+    @index
   end
 
   def next_child (parent)
@@ -15,12 +19,17 @@ class Order
   end
 
   def register(ordinal, item_id)
-    ordinal = ordinal
     @index[ordinal] = item_id
   end
 
   def retrieve_ordinal(item_id)
     @index.index(item_id)
+  end
+
+  def serialize
+    {
+      index: @index
+    }
   end
 
   private
@@ -42,7 +51,7 @@ class Order
   end
 
   def parent_exists?(parent)
-    return true if parent == '0.0.0'
+    return true if parent == '0-0-0'
     parent = to_array(parent)
     elements.find{ |element| element == parent}
   end

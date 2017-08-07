@@ -21,14 +21,14 @@ module Exhibitions
 
       def retrieve(id)
         data = connection.exhibitions.find({ id: id }).first
-        exhibition = Exhibitions::Exhibition.from_bson(data, data['id'])
+        exhibition = Exhibitions::Exhibition.from_bson(data, data['id'], data['order'])
         connection.close
         exhibition
       end
 
       def all
         exhibitions_data = connection.exhibitions.find({}, :fields => ['id', 'name', 'show'])
-        exhibitions_data.map{ |data| Exhibitions::Exhibition.from_bson(data, data['id']).serialize}
+        exhibitions_data.map{ |data| Exhibitions::Exhibition.from_bson(data, data['id'], data['order']).serialize}
       end
 
       def retrieve_next_ordinal(exhibition_id, ordinal)
@@ -52,21 +52,22 @@ module Exhibitions
 
       end
 
-      private
-
       def update_exhibition(exhibition)
         document = exhibition.serialize
         updated_exhibition = connection.exhibitions.find_one_and_update({ id: document[:id] }, document, {:return_document => :after })
-        updated_exhibition
+
+        Exhibitions::Exhibition.from_bson(updated_exhibition, updated_exhibition['id'], exhibition.order.serialize)
       end
 
+      private
 
       def update(exhibition_data)
         id =  exhibition_data['id']
+
         exhibition = Exhibitions::Exhibition.new(exhibition_data, id)
 
         updated_exhibition_data = update_exhibition(exhibition)
-        Exhibitions::Exhibition.from_bson(updated_exhibition_data, updated_exhibition_data['id'])
+
       end
 
       def store(exhibition_data)

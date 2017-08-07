@@ -45,7 +45,7 @@ class App < Sinatra::Base
 
   post '/api/exhibition/retrieve-next-ordinal' do
     data = JSON.parse(request.body.read)
-    number = '0.0.0'
+    number = '0-0-0'
     if(data['parent_class'] != 'exhibition')
       item = Items::Repository.retrieve(data['parent_id'])
       exhibition = Exhibitions::Repository.retrieve(data['exhibition_id'])

@@ -129,12 +129,12 @@ feature 'Item' do
     current.fill('name',Fixture::Item::ARTWORK)
     result = current.find_suggested_number
 
-    expect(result).to eq('1.0.0')
+    expect(result).to eq('1-0-0')
   end
 
-  xscenario 'suggests next second order number' do
+  scenario 'suggests next second order number' do
     Fixture::Item.from_exhibition_to_new_item
-    Fixture::Item.room_saved('1.0.0')
+    Fixture::Item.room_saved('1-0-0')
     current = Page::Exhibitions.new
     current.toggle_list
     current.click_room_plus_button
@@ -143,7 +143,7 @@ feature 'Item' do
     current.fill('name',Fixture::Item::OTHER_ARTWORK)
     result = current.find_suggested_number
 
-    expect(result).to eq('1.1.0')
+    expect(result).to eq('1-1-0')
   end
 
   scenario 'save room when submit' do
@@ -302,9 +302,9 @@ feature 'Item' do
   end
 
   scenario 'shows number of items in exhibition list' do
-    room_number = '1.0.0'
-    scene_number = '1.1.0'
-    subscene_number = '1.1.1'
+    room_number = '1-0-0'
+    scene_number = '1-1-0'
+    subscene_number = '1-1-1'
     Fixture::Item.from_exhibition_to_new_item
     Fixture::Item.room_saved(room_number)
     Fixture::Item.item_saved_in_room(scene_number)
@@ -495,7 +495,7 @@ feature 'Item' do
     expect(current.subscene_info?(Fixture::Item::ARTWORK)).to be true
   end
 
-  xscenario 'returns right ordinal number in each level' do
+  scenario 'returns right ordinal number in each level' do
     Fixture::Item.from_exhibition_to_new_item
     Fixture::Item.room_saved_with_automatic_number
     current = Page::Exhibitions.new
@@ -503,7 +503,7 @@ feature 'Item' do
     current.go_to_room_info
     current = Page::RoomInfo.new
 
-    expect(current.content?('1.0.0')).to be true
+    expect(current.content?('1-0-0')).to be true
 
     Fixture::Item.scene_saved_in_room_with_automatic_number
     current = Page::Exhibitions.new
@@ -511,7 +511,7 @@ feature 'Item' do
     current.go_to_scene_inside_room_info
     current = Page::SceneInfo.new
 
-    expect(current.content?('1.1.0')).to be true
+    expect(current.content?('1-1-0')).to be true
 
     Fixture::Item.subscene_saved_in_scene_with_automatic_number
     current = Page::Exhibitions.new
@@ -519,7 +519,7 @@ feature 'Item' do
     current.go_to_subscene_info_into_room
     current = Page::SceneInfo.new
 
-    expect(current.content?('1.1.1')).to be true
+    expect(current.content?('1-1-1')).to be true
 
     current = Page::Exhibitions.new
     current.click_plus_button
@@ -529,7 +529,7 @@ feature 'Item' do
     current.go_to_scene_info
     current = Page::SceneInfo.new
 
-    expect(current.content?('2.0.0')).to be true
+    expect(current.content?('2-0-0')).to be true
 
     Fixture::Item.subscene_saved_in_second_scene_with_automatic_number
     current = Page::Exhibitions.new
@@ -537,7 +537,7 @@ feature 'Item' do
     current.go_to_last_subscene_info
     current = Page::SceneInfo.new
 
-    expect(current.content?('2.1.0')).to be true
+    expect(current.content?('2-1-0')).to be true
   end
 
   scenario 'avoid create rooms in subscenes' do

@@ -3,7 +3,7 @@ module Exhibitions
     attr_reader :id, :name, :order, :show
     attr_accessor :numbers
 
-    def initialize(data, id=nil)
+    def initialize(data, id=nil, order=nil)
       @creation_date = Time.now.utc
       @show = Defense.string_null_defense(data['show'])
       @name = Defense.string_null_defense(data['name'])
@@ -16,7 +16,7 @@ module Exhibitions
       @beacon = Defense.string_null_defense(data['beacon'])
       @description = Defense.string_null_defense(data['description'])
       @id = id || generate_id
-      @order = Order.new
+      @order = order || Order.new
     end
 
     def serialize
@@ -32,12 +32,15 @@ module Exhibitions
         type: @type,
         numbers: @numbers,
         beacon: @beacon,
-        description: @description
+        description: @description,
+        order: @order.serialize
       }
     end
 
-    def self.from_bson(bson, id)
-      Exhibitions::Exhibition.new(bson, id)
+    def self.from_bson(bson, id, order)
+      order = Order.new(order)
+      exhibition = Exhibitions::Exhibition.new(bson, id, order)
+      exhibition
     end
 
     def get_numbers

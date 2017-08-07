@@ -30,6 +30,7 @@ module Exhibitions
         exhibition = Exhibitions::Repository.retrieve(exhibition_id)
         order = exhibition.order
         order.register(ordinal, item_id)
+        Exhibitions::Repository.update_exhibition(exhibition)
       end
 
       def retrieve_ordinal(exhibition_id, item_id)
