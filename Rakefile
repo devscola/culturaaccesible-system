@@ -38,7 +38,6 @@ end
 task :build do
   sh "docker build -f Dockerfile.build -t culturaaccesible-system ."
   sh "docker tag culturaaccesible-system devscola/culturaaccesible-system:build"
-  sh "docker login"
   sh "docker push devscola/culturaaccesible-system:build"
 end
 
