@@ -27,13 +27,13 @@ module Page
     end
 
     def toggle_list
-      has_css?('.toggle-exhibition-list', wait: 2)
+      has_css?('.toggle-exhibition-list', wait: 4)
       sleep 0.5
-      find('.toggle-exhibition-list').click
+      first(:css, '.toggle-exhibition-list').click
     end
 
     def first_exhibition_name
-      has_css?('.list-item', wait: 2)
+      has_css?('.list-item', wait: 4)
       first('.exhibition-name').text
     end
 
