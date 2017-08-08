@@ -15,6 +15,7 @@ module Exhibitions
       @numbers = Defense.array_null_defense(data['numbers'])
       @beacon = Defense.string_null_defense(data['beacon'])
       @description = Defense.string_null_defense(data['description'])
+      @media = Defense.string_null_defense(data['media'])
       @id = id || generate_id
       @order = order || Order.new
     end
@@ -33,6 +34,7 @@ module Exhibitions
         numbers: @numbers,
         beacon: @beacon,
         description: @description,
+        media: @media,
         order: @order.serialize
       }
     end

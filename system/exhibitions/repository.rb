@@ -66,7 +66,7 @@ module Exhibitions
 
         exhibition = Exhibitions::Exhibition.new(exhibition_data, id)
 
-        updated_exhibition_data = update_exhibition(exhibition)
+        update_exhibition(exhibition)
 
       end
 

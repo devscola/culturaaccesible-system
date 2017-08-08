@@ -64,6 +64,10 @@
                 <label for="description">Extended description</label>
                 <textarea class="form-control" name="description" value="{{description::input}}"></textarea>
             </div>
+            <div class="form-group">
+                <label for="media">Media link</label>
+                <input class="form-control" name="media" value="{{media::input}}">
+            </div>
             <div>
                 <button class="btn btn-primary submit" on-click="submitClicked" disabled$="{{submitDisabled}}">Save</button>
             </div>
@@ -86,6 +90,8 @@
                 exhibition: {type: Object, observer: 'storeId'},
 
                 exhibitionId: {type: String},
+
+                media: {type: String},
 
                 name: {observer: 'isSubmittable'},
 
@@ -161,7 +167,8 @@
                     date_start: this.formatDate(this.dateStart),
                     date_finish: this.formatDate(this.dateFinish),
                     beacon: this.beacon,
-                    description: this.description
+                    description: this.description,
+                    media: this.media
                 };
                 return data;
             },

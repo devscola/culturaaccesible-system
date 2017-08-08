@@ -126,4 +126,16 @@ feature 'Exhibitions' do
     is_toggle = current.has_css?('.toggle-exhibition-list', wait: 2)
     expect(is_toggle).to be true
   end
+
+  scenario 'added link is saved' do
+    current = Fixture::Exhibitions.pristine.fill_form
+
+    current.fill('media', Fixture::Exhibitions::LINK)
+    current.save
+    saved_result = 'Media: '+ Fixture::Exhibitions::LINK
+    current.go_to_exhibition_info
+    current = Page::ExhibitionInfo.new
+
+    expect(current.content?(saved_result)).to be true
+  end
 end

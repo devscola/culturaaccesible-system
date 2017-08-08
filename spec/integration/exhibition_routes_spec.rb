@@ -24,14 +24,17 @@ describe 'Exhibition controller' do
     expect(first_exhibition_id == second_exhibition_id).to be false
   end
 
-  it 'retrieves required exhibition' do
-    add_exhibition
+  it 'retrieves required exhibition with media link' do
+    media = 'https://s3.amazonaws.com/pruebas-cova/girasoles.jpg'
+    add_exhibition(media)
     exhibition_id = parse_response['id']
     payload = { id: exhibition_id }.to_json
     post '/api/exhibition/retrieve', payload
-
     retrieved_exhibition_id = parse_response['id']
+    exhibition_media = parse_response['media']
+
     expect(retrieved_exhibition_id).to eq(exhibition_id)
+    expect(exhibition_media).to eq(media)
   end
 
   it 'retrieves all exhibitions' do
@@ -137,8 +140,8 @@ describe 'Exhibition controller' do
     post 'api/exhibition/retrieve-for-list', payload
   end
 
-  def add_exhibition
-    exhibition = { name: 'some name', location: 'some location' }.to_json
+  def add_exhibition(media = '')
+    exhibition = { name: 'some name', location: 'some location', media: media }.to_json
     post '/api/exhibition/add', exhibition
   end
 
