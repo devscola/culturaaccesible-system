@@ -542,6 +542,50 @@ feature 'Item' do
     expect(current.room_check_disabled?).to be true
   end
 
+  scenario 'shows sidebar in all room pages' do
 
+    current = Fixture::Item.from_exhibition_to_new_item
+    is_toggle = current.has_css?('.toggle-exhibition-list', wait: 2)
+    expect(is_toggle).to be true
+
+    Fixture::Item.room_saved
+    current = Page::Exhibitions.new
+    current.toggle_list
+
+    current.go_to_room_info
+    current = Page::RoomInfo.new
+    is_toggle = current.has_css?('.toggle-exhibition-list', wait: 2)
+    expect(is_toggle).to be true
+
+    current = Page::RoomInfo.new
+    current.click_edit
+    current = Page::Item.new
+    is_toggle = current.has_css?('.toggle-exhibition-list', wait: 2)
+    expect(is_toggle).to be true
+
+  end
+
+  scenario 'shows sidebar in all scene pages' do
+
+    current = Fixture::Item.from_exhibition_to_new_item
+    is_toggle = current.has_css?('.toggle-exhibition-list', wait: 2)
+    expect(is_toggle).to be true
+
+    Fixture::Item.item_saved
+    current = Page::Exhibitions.new
+    current.toggle_list
+
+    current.go_to_scene_info
+    current = Page::SceneInfo.new
+    is_toggle = current.has_css?('.toggle-exhibition-list', wait: 2)
+    expect(is_toggle).to be true
+
+    current = Page::SceneInfo.new
+    current.click_edit
+    current = Page::Item.new
+    is_toggle = current.has_css?('.toggle-exhibition-list', wait: 2)
+    expect(is_toggle).to be true
+
+  end
 
 end

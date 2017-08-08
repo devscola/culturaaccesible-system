@@ -115,4 +115,15 @@ feature 'Exhibitions' do
 
     expect(current.content?(Fixture::Exhibitions::EXHIBITION_NAME)).to be true
   end
+
+  scenario 'shows sidebar in all exhibitions pages' do
+    current = Fixture::Exhibitions.exhibition_saved
+    is_toggle = current.has_css?('.toggle-exhibition-list', wait: 2)
+    expect(is_toggle).to be true
+
+    current.go_to_exhibition_info
+    current = Page::ExhibitionInfo.new
+    is_toggle = current.has_css?('.toggle-exhibition-list', wait: 2)
+    expect(is_toggle).to be true
+  end
 end

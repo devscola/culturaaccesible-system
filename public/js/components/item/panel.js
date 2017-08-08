@@ -12,6 +12,7 @@ Class('Item.View', {
     render: function(item) {
         this.element.item = item;
         this.show();
+        Bus.publish('exhibitions.list.retrieve');
     },
 
     show: function() {
