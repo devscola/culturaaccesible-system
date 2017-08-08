@@ -6,7 +6,7 @@ require_relative 'test_support/fixture_exhibitions'
 require_relative 'test_support/room_info'
 require_relative 'test_support/scene_info'
 
-feature 'Item', :wip do
+feature 'Item' do
   scenario 'allows submit when fill required name' do
     current = Fixture::Item.from_exhibition_to_new_item
     expect(current.submit_disabled?).to be true
@@ -41,7 +41,6 @@ feature 'Item', :wip do
 
   scenario 'disallows to fill author and date when alert is accepted' do
     current = Fixture::Item.shows_room_alert
-
 
     current.accept_alert
 
@@ -542,6 +541,47 @@ feature 'Item', :wip do
     expect(current.room_check_disabled?).to be true
   end
 
+  scenario 'shows sidebar in all room pages' do
+    current = Fixture::Item.from_exhibition_to_new_item
+    is_toggle = current.has_css?('.toggle-exhibition-list', wait: 2)
+    expect(is_toggle).to be true
 
+    Fixture::Item.room_saved
+    current = Page::Exhibitions.new
+    current.toggle_list
+
+    current.go_to_room_info
+    current = Page::RoomInfo.new
+    is_toggle = current.has_css?('.toggle-exhibition-list', wait: 2)
+    expect(is_toggle).to be true
+
+    current = Page::RoomInfo.new
+    current.click_edit
+    current = Page::Item.new
+    is_toggle = current.has_css?('.toggle-exhibition-list', wait: 2)
+    expect(is_toggle).to be true
+
+  end
+
+  scenario 'shows sidebar in all scene pages' do
+    current = Fixture::Item.from_exhibition_to_new_item
+    is_toggle = current.has_css?('.toggle-exhibition-list', wait: 2)
+    expect(is_toggle).to be true
+
+    Fixture::Item.item_saved
+    current = Page::Exhibitions.new
+    current.toggle_list
+
+    current.go_to_scene_info
+    current = Page::SceneInfo.new
+    is_toggle = current.has_css?('.toggle-exhibition-list', wait: 2)
+    expect(is_toggle).to be true
+
+    current = Page::SceneInfo.new
+    current.click_edit
+    current = Page::Item.new
+    is_toggle = current.has_css?('.toggle-exhibition-list', wait: 2)
+    expect(is_toggle).to be true
+  end
 
 end

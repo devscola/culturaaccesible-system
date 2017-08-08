@@ -5,6 +5,10 @@
         <title>Item</title>
         <link rel="stylesheet" href="/vendor/bootstrap/bootstrap.min.css">
         <link rel="stylesheet" href="/vendor/bootstrap/bootstrap-theme.min.css">
+        <link rel="import" href="/web-components/exhibitions/cuac-exhibition-list.html">
+        <link rel="import" href="/web-components/commons/cuac-sidebar-plus-button.html">
+        <link rel="import" href="/web-components/exhibitions/cuac-item-list.html">
+        <link rel="import" href="/web-components/exhibitions/cuac-exhibition-detail.html">
         <link rel="import" href="/web-components/item/cuac-item-form.html">
         <link rel="import" href="/web-components/item/cuac-item-edit-button.html">
         <link rel="import" href="/web-components/item/cuac-item-view.html">
@@ -13,8 +17,13 @@
     </head>
     <body>
         <div class="container">
-            <cuac-item-form id="formulary"></cuac-item-form>
-            <cuac-item-view id="result"></cuac-item-view>
+          <div class="col-md-4">
+              <cuac-exhibition-list id="listing"></cuac-exhibition-list>
+          </div>
+          <div class="col-md-8">
+              <cuac-item-form id="formulary"></cuac-item-form>
+              <cuac-item-view id="result"></cuac-item-view>
+          </div>
         </div>
         <script src="/vendor/polymer/webcomponents-lite.min.js"></script>
         <script src="/vendor/classjs/class.min.js"></script>
@@ -26,6 +35,7 @@
 
         <script src="/js/components/item/form.js"></script>
         <script src="/js/components/item/panel.js"></script>
+        <script src="/js/components/exhibitions/list.js"></script>
 
         <script src="/js/pages/item.js"></script>
 

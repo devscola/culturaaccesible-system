@@ -5,11 +5,22 @@
         <title>Exhibition Info</title>
         <link rel="stylesheet" href="/vendor/bootstrap/bootstrap.min.css">
         <link rel="stylesheet" href="/vendor/bootstrap/bootstrap-theme.min.css">
+        <link rel="import" href="/web-components/exhibitions/cuac-exhibition-list.html">
+        <link rel="import" href="/web-components/commons/cuac-sidebar-plus-button.html">
+        <link rel="import" href="/web-components/exhibitions/cuac-item-list.html">
+        <link rel="import" href="/web-components/exhibitions/cuac-exhibition-detail.html">
+
         <link rel="import" href="/web-components/exhibitions/cuac-exhibition-info.html">
+
     </head>
     <body>
         <div class="container">
-          <cuac-exhibition-info id="info"></cuac-exhibition-info>
+          <div class="col-md-4">
+              <cuac-exhibition-list id="listing"></cuac-exhibition-list>
+          </div>
+          <div class="col-md-8">
+              <cuac-exhibition-info id="info"></cuac-exhibition-info>
+          </div>
         </div>
 
         <script src="/vendor/polymer/webcomponents-lite.min.js"></script>
@@ -20,6 +31,7 @@
 
         <script src="/js/services/exhibitions.js"></script>
 
+        <script src="/js/components/exhibitions/list.js"></script>
         <script src="/js/components/exhibitions/info.js"></script>
 
         <script src="/js/pages/exhibition-info.js"></script>
