@@ -75,7 +75,7 @@ module Page
     end
 
     def submit_disabled?
-      has_css?('.submit:disabled')
+      has_css?('.submit:disabled', wait: 2, exact_text: 'Save')
     end
 
     def input_blank?(field)

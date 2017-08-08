@@ -27,9 +27,9 @@ module Page
     end
 
     def toggle_list
-      has_css?('.toggle-exhibition-list', wait: 4)
+      has_css?('.glyphicon.glyphicon-list.toggle-exhibition-list', wait: 4)
       sleep 0.5
-      first('.toggle-exhibition-list', wait: 4).click
+      first('.glyphicon.glyphicon-list.toggle-exhibition-list', wait: 4).click
     end
 
     def first_exhibition_name
@@ -61,7 +61,7 @@ module Page
     end
 
     def click_edit
-      has_css?('.edit-button',  text: 'Edit', wait: 4)
+      has_css?('.edit-button',  exact_text: 'Edit', wait: 4)
       find('.edit-button').click
     end
 
@@ -101,7 +101,7 @@ module Page
     end
 
     def room_have_plus_button?
-      has_css?('.exhibition-room .plus-button', wait: 4, text: '+')
+      has_css?('.exhibition-room .plus-button', wait: 4, exact_text: '+')
     end
 
     def subscene_has_plus_button?
@@ -113,58 +113,58 @@ module Page
     end
 
     def other_name?
-      has_css?('.exhibition-name', text: 'some other name', wait: 2)
+      has_css?('.exhibition-name', exact_text: 'some other name', wait: 2)
     end
 
     def click_plus_button
-      has_css?('.plus-button', wait: 4, text: '+')
       sleep 1
-      first('.plus-button', wait: 4, text: '+').click
+      has_css?('.plus-button', wait: 4, exact_text: '+')
+      first('.plus-button', wait: 4, exact_text: '+').click
     end
 
     def click_room_plus_button
-      has_css?('.exhibition-room .plus-button', wait: 4, text: '+')
-      first('.exhibition-room .plus-button', wait: 4, text: '+').click
+      has_css?('.exhibition-room .plus-button', wait: 4, exact_text: '+')
+      first('.exhibition-room .plus-button', wait: 4, exact_text: '+').click
     end
 
     def click_item_plus_button
-      has_css?('.exhibition-scene .plus-button', wait: 4, text: '+')
-      first('.exhibition-scene .plus-button').click
+      has_css?('.exhibition-scene .plus-button', wait: 4, exact_text: '+')
+      first('.exhibition-scene .plus-button', wait: 4, exact_text: '+').click
     end
 
     def click_last_item_plus_button
-      has_css?('.plus-button', wait: 4, text: '+')
-      all('.plus-button', wait: 4, text: '+').last.click
+      has_css?('.plus-button', wait: 4, exact_text: '+')
+      all('.plus-button', wait: 4, exact_text: '+').last.click
     end
 
     def go_to_exhibition_info
       has_css?('.exhibition-name', wait: 4)
-      first('.exhibition-name').click
+      first('.exhibition-name', wait: 4).click
     end
 
     def go_to_room_info
       has_css?('.room-name', wait: 4)
-      first('.room-name').click
+      first('.room-name', wait: 4).click
     end
 
     def go_to_scene_info
       has_css?('.scene-name', wait: 4)
-      first('.scene-name').click
+      first('.scene-name', wait: 4).click
     end
 
     def go_to_scene_inside_room_info
       has_css?('.item-name', wait: 4)
-      first('.item-name').click
+      first('.item-name', wait: 4).click
     end
 
     def go_to_subscene_info
       has_css?('.item-name', wait: 4)
-      first('.item-name').click
+      first('.item-name', wait: 4).click
     end
 
     def go_to_last_subscene_info
       has_css?('.item-name', wait: 4)
-      all('.item-name').last.click
+      all('.item-name', wait: 4).last.click
     end
 
     def go_to_subscene_info_into_room
@@ -193,7 +193,7 @@ module Page
     end
 
     def has_edit_button?
-      has_css?('.edit-button', wait: 4, text: 'Edit')
+      has_css?('.edit-button', wait: 4, exact_text: 'Edit')
     end
 
     private

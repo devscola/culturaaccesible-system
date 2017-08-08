@@ -11,7 +11,7 @@ module Page
     end
 
     def click_edit
-      find('.edit-button').click
+      find('.edit-button', wait: 2, exact_text: 'Edit').click
     end
 
     private
