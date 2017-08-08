@@ -27,12 +27,13 @@ module Page
     end
 
     def toggle_list
-      has_css?('.toggle-exhibition-list', wait: 2)
-      find('.toggle-exhibition-list').click
+      has_css?('.toggle-exhibition-list', wait: 4)
+      sleep 0.5
+      first('.toggle-exhibition-list', wait: 4).click
     end
 
     def first_exhibition_name
-      has_css?('.list-item', wait: 2)
+      has_css?('.list-item', wait: 4)
       first('.exhibition-name').text
     end
 
@@ -60,7 +61,7 @@ module Page
     end
 
     def click_edit
-      has_css?('.edit-button', wait: 4)
+      has_css?('.edit-button',  text: 'Edit', wait: 4)
       find('.edit-button').click
     end
 
@@ -100,7 +101,7 @@ module Page
     end
 
     def room_have_plus_button?
-      has_css?('.exhibition-room .plus-button', wait: 4)
+      has_css?('.exhibition-room .plus-button', wait: 4, text: '+')
     end
 
     def subscene_has_plus_button?
@@ -117,23 +118,23 @@ module Page
 
     def click_plus_button
       has_css?('.plus-button', wait: 4, text: '+')
-      sleep 0.5
-      first('.plus-button').click
+      sleep 1
+      first('.plus-button', wait: 4, text: '+').click
     end
 
     def click_room_plus_button
-      has_css?('.exhibition-room .plus-button', wait: 4)
-      first('.exhibition-room .plus-button').click
+      has_css?('.exhibition-room .plus-button', wait: 4, text: '+')
+      first('.exhibition-room .plus-button', wait: 4, text: '+').click
     end
 
     def click_item_plus_button
-      has_css?('.exhibition-scene .plus-button', wait: 4)
+      has_css?('.exhibition-scene .plus-button', wait: 4, text: '+')
       first('.exhibition-scene .plus-button').click
     end
 
     def click_last_item_plus_button
-      has_css?('.plus-button', wait: 4)
-      all('.plus-button').last.click
+      has_css?('.plus-button', wait: 4, text: '+')
+      all('.plus-button', wait: 4, text: '+').last.click
     end
 
     def go_to_exhibition_info
@@ -192,7 +193,7 @@ module Page
     end
 
     def has_edit_button?
-      has_css?('.edit-button')
+      has_css?('.edit-button', wait: 4, text: 'Edit')
     end
 
     private

@@ -11,7 +11,7 @@ module Page
     end
 
     def content?(content)
-      has_content?(content)
+      has_content?(content, wait: 4)
     end
 
     def input_value?(field)
@@ -54,6 +54,7 @@ module Page
     end
 
     def room_check_disabled?
+      has_css?('.room', wait: 2)
       input_disabled?('room')
     end
 

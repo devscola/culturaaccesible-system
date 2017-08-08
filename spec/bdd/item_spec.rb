@@ -6,7 +6,7 @@ require_relative 'test_support/fixture_exhibitions'
 require_relative 'test_support/room_info'
 require_relative 'test_support/scene_info'
 
-feature 'Item' do
+feature 'Item', :wip do
   scenario 'allows submit when fill required name' do
     current = Fixture::Item.from_exhibition_to_new_item
     expect(current.submit_disabled?).to be true
@@ -331,7 +331,7 @@ feature 'Item' do
     expect(current.scene_has_children?).to be true
   end
 
-  scenario 'check if item name is in breadcrumb when it is saved' do
+  xscenario 'check if item name is in breadcrumb when it is saved' do
     current = Fixture::Exhibitions.pristine.exhibition_saved
     exhibition_name = current.first_exhibition_name
     breadcrumb =  exhibition_name + ' > ' + Fixture::Item::ARTWORK
