@@ -54,6 +54,7 @@ module Page
     end
 
     def room_check_disabled?
+      has_css?('.room', wait: 2)
       input_disabled?('room')
     end
 
