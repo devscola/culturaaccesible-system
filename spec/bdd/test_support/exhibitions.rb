@@ -125,18 +125,21 @@ module Page
     end
 
     def click_room_plus_button
-      has_css?('.exhibition-room .plus-button', wait: 4, exact_text: '+')
-      first('.exhibition-room .plus-button', wait: 4, exact_text: '+').click
+      if(!has_css?('.exhibition-room .plus-button', wait: 4, exact_text: '+').nil?)
+        first('.exhibition-room .plus-button', wait: 4, exact_text: '+').click
+      end
     end
 
     def click_item_plus_button
-      has_css?('.exhibition-scene .plus-button', wait: 4, exact_text: '+')
-      first('.exhibition-scene .plus-button', wait: 4, exact_text: '+').click
+      if(!has_css?('.exhibition-scene .plus-button', wait: 4, exact_text: '+').nil?)
+        first('.exhibition-scene .plus-button', wait: 4, exact_text: '+').click
+      end
     end
 
     def click_last_item_plus_button
-      has_css?('.plus-button', wait: 4, exact_text: '+')
-      all('.plus-button', wait: 4, exact_text: '+').last.click
+      if(!has_css?('.plus-button', wait: 4, exact_text: '+').nil?)
+        all('.plus-button', wait: 4, exact_text: '+').last.click
+      end  
     end
 
     def go_to_exhibition_info
