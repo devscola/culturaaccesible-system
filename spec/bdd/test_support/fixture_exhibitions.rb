@@ -18,6 +18,11 @@ module Fixture
         self
       end
 
+      def up
+        visit('/api/exhibition/flush')
+        visit('/api/fixtures/exhibition')
+      end
+
       def show_exhibition_form
         current = Page::Exhibitions.new
         current.show

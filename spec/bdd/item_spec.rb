@@ -7,30 +7,36 @@ require_relative 'test_support/room_info'
 require_relative 'test_support/scene_info'
 
 feature 'Item' do
-  scenario 'allows submit when fill required name' do
-    current = Fixture::Item.from_exhibition_to_new_item
-    expect(current.submit_disabled?).to be true
+  feature 'creating an item', :wip do
+    before :all do
+      Fixture::Exhibitions.up
+    end
 
-    current.fill('name',Fixture::Item::ARTWORK)
+    scenario 'date must be four characters long' do
+      current=get_an_item_form
+      current.fill('date',Fixture::Item::ERROR_LENGTH_DATE)
 
-    expect(current.submit_disabled?).to be false
-  end
+      expect(current.type_max_four_characters).to be true
+    end
 
-  scenario 'allows type only four character on date' do
-    current = Fixture::Item.from_exhibition_to_new_item
+    scenario 'requires name' do
+      current=get_an_item_form
+      current.fill('name',Fixture::Item::ARTWORK)
 
-    current.fill('date',Fixture::Item::ERROR_LENGTH_DATE)
+      expect(current.submit_disabled?).to be false
+    end
 
-    expect(current.type_max_four_characters).to be true
-  end
+    scenario 'shows data inserted' do
+      current=get_an_item_form
+      current.fill('name',Fixture::Item::ARTWORK)
+      current.submit
 
-  scenario 'shows data inserted' do
-    current = Fixture::Item.from_exhibition_to_new_item
+      expect(current.content?(Fixture::Item::VISIBLE_ARTWORK)).to be true
+    end
 
-    current.fill('name',Fixture::Item::ARTWORK)
-    current.submit
-
-    expect(current.content?(Fixture::Item::VISIBLE_ARTWORK)).to be true
+    def get_an_item_form
+      Fixture::Item.get_an_item_form
+    end
   end
 
   scenario 'displays an alert when author or date are filled and room checkbox is typed' do
