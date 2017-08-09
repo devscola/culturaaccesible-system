@@ -10,6 +10,7 @@ module Fixture
     REDIRECTED_PAGE_TITLE = 'Item'
     EXHIBITION_NAME = 'Name: some name'
     LINK = 'https://s3.amazonaws.com/pruebas-cova/girasoles.jpg'
+    ERROR_LINK = 'https://s3.amazonaws.com/pruebas-cova/girasles.jpg'
 
     class << self
 

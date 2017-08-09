@@ -11,7 +11,9 @@ module Page
     end
 
     def content?(content)
-      has_content?(content, wait: 4)
+      if has_content?(content, wait: 1)
+        return true
+      end
     end
 
     def input_value?(field)

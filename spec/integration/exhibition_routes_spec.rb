@@ -129,7 +129,7 @@ describe 'Exhibition controller' do
     add_subitem('1-1-1', exhibition['id'], 'scene', scene['id'])
 
     retrieve_for_list(exhibition['id'])
-    puts parse_response
+
     first_subitem_children = parse_response['children'].first['children'].first['children'].first
 
     expect(first_subitem_children).to include({'number' => '1-1-1'})

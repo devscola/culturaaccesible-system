@@ -23,13 +23,15 @@ module Page
     end
 
     def content?(content)
-      has_content?(content)
+      if has_content?(content, wait: 1)
+        return true
+      end
     end
 
     def toggle_list
-      has_css?('.glyphicon.glyphicon-list.toggle-exhibition-list', wait: 4)
-      sleep 0.5
-      first('.glyphicon.glyphicon-list.toggle-exhibition-list', wait: 4).click
+      if(!has_css?('.glyphicon.glyphicon-list.toggle-exhibition-list', wait: 4).nil?)
+        first('.glyphicon.glyphicon-list.toggle-exhibition-list', wait: 4).click
+      end
     end
 
     def first_exhibition_name
@@ -117,9 +119,9 @@ module Page
     end
 
     def click_plus_button
-      sleep 1
-      has_css?('.plus-button', wait: 4, exact_text: '+')
-      first('.plus-button', wait: 4, exact_text: '+').click
+      if(!has_css?('.plus-button', wait: 4, exact_text: '+').nil?)
+        first('.plus-button', wait: 4, exact_text: '+').click
+      end
     end
 
     def click_room_plus_button
@@ -194,6 +196,14 @@ module Page
 
     def has_edit_button?
       has_css?('.edit-button', wait: 4, exact_text: 'Edit')
+    end
+
+    def is_valid_media?
+      has_css?('.has-success', wait: 2)
+    end
+
+    def is_not_valid_media?
+      has_css?('.has-error', wait: 2)
     end
 
     private
