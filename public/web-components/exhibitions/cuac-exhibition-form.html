@@ -67,6 +67,10 @@
             <div class$="form-group {{isValidMedia}}">
                 <label for="media">Media link</label>
                 <input class="form-control" name="media" on-input="validateLink" value="{{media::input}}">
+
+                <div class="media">
+                  <img class="img-responsive img-thumbnail" src="{{mediaSource}}" alt="media">
+                </div>
             </div>
             <div>
                 <button class="btn btn-primary submit" on-click="submitClicked" disabled$="{{submitDisabled}}">Save</button>
@@ -91,7 +95,9 @@
 
                 exhibitionId: {type: String},
 
-                media: {type: String},
+                media: {type: String, observer: 'updateMedia'},
+
+                mediaSource: {type: String},
 
                 name: {observer: 'isSubmittable'},
 
@@ -159,6 +165,10 @@
 
             deactivateSubmit: function() {
                 this.submitDisabled = true;
+            },
+
+            updateMedia: function() {
+                this.mediaSource = this.media;
             },
 
             collectData: function() {
