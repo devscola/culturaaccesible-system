@@ -130,18 +130,18 @@ feature 'Exhibitions' do
   scenario 'added link is saved' do
     current = Fixture::Exhibitions.pristine.fill_form
 
-    current.fill('media', Fixture::Exhibitions::LINK)
+    current.fill('image', Fixture::Exhibitions::LINK)
     current.save
-    saved_result = 'Media: '+ Fixture::Exhibitions::LINK
+    saved_result = 'Image: '+ Fixture::Exhibitions::LINK
     current.go_to_exhibition_info
     current = Page::ExhibitionInfo.new
 
     expect(current.content?(saved_result)).to be true
   end
-  
+
   scenario 'added link shows an image' do
     current = Fixture::Exhibitions.pristine.fill_form
-    current.fill('media', Fixture::Exhibitions::LINK)
+    current.fill('image', Fixture::Exhibitions::LINK)
 
     expect(page).to have_xpath("//img[contains(@src,'https://s3.amazonaws.com/pruebas-cova/girasoles.jpg')]" )
 

@@ -53,11 +53,11 @@
                             <textarea class="form-control" name="description" value="{{description::input}}"></textarea>
                         </div>
                         <div class="form-group">
-                            <label for="media">Media link</label>
-                            <input class="form-control" name="media" value="{{media::input}}">
+                            <label for="image">Image link</label>
+                            <input class="form-control" name="image" value="{{image::input}}">
                         </div>
-                        <div class="media">
-                            <img class="img-responsive img-thumbnail" src="{{mediaSource}}" alt="media">
+                        <div class="image">
+                            <img class="img-responsive img-thumbnail" src="{{imageSource}}" alt="image">
                         </div>
                     </div>
                 </div>
@@ -97,12 +97,12 @@
 
                 description: { type: String },
 
-                media: {
+                image: {
                   type: String,
-                  observer: 'previewMedia'
+                  observer: 'previewImage'
                 },
 
-                mediaSource: {type: String},
+                imageSource: {type: String},
 
                 exhibition: { type: Object },
 
@@ -148,8 +148,8 @@
                 this.fire('submitted', this.collectData());
             },
 
-            previewMedia: function() {
-              this.mediaSource = this.media
+            previewImage: function() {
+              this.imageSource = this.image
             },
 
             collectData: function() {
@@ -162,7 +162,7 @@
                     last_number: this.lastNumber || '',
                     beacon: this.beacon,
                     description: this.description,
-                    media: this.media,
+                    image: this.image,
                     parent_id: this.parentId,
                     parent_class: this.parentClass,
                     exhibition_id: this.exhibition.id,

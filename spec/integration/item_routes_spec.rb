@@ -18,7 +18,7 @@ describe 'Item controller' do
   NUMBER = 10
   ANOTHER_NUMBER = 11
   AUTHOR = 'author name'
-  MEDIA = "https://s3.amazonaws.com/pruebas-cova/girasoles.jpg"
+  IMAGE = "https://s3.amazonaws.com/pruebas-cova/girasoles.jpg"
   DATE = '2017'
 
   it 'stores scene with same exhibition id with unique scene name' do
@@ -110,10 +110,10 @@ describe 'Item controller' do
 
     add_scene(FIRST_NAME, exhibition_id)
     scene_parent_class = parse_response['parent_class']
-    media = parse_response['media']
+    image = parse_response['image']
 
     expect(scene_parent_class == "exhibition").to be true
-    expect(media == MEDIA).to be true
+    expect(image == IMAGE).to be true
   end
 
   it 'validate if scene number exists' do
@@ -227,7 +227,7 @@ describe 'Item controller' do
       parent_id: exhibition_id,
       exhibition_id: exhibition_id,
       number: number,
-      media: MEDIA,
+      image: IMAGE,
       parent_class: "exhibition",
       type: 'scene',
       author: AUTHOR,
