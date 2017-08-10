@@ -38,7 +38,8 @@ module Items
             type: item[:type],
             author: item[:author] || '',
             date: item[:date] || '',
-            media_file: 'https://s3.amazonaws.com/pruebas-cova/3minutes.mp4',
+            image: item[:image] || '',
+            video: item[:video] || '',
             description: item[:description],
             children: Items::Service.retrieve_by_parent(item[:id])
           }
