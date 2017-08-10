@@ -27,8 +27,8 @@ Class('Item.Form', {
             this.element.name = room.name;
             this.element.number = room.number;
             this.element.description = room.description;
-            this.element.image = scene.image;
-            this.element.video = scene.video;
+            this.element.image = room.image;
+            this.element.video = room.video;
             this.element.beacon = room.beacon;
             document.getElementsByClassName("room")[0].checked = true;
             this.element.room = true;
