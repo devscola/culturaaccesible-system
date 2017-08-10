@@ -72,6 +72,14 @@
                   <img class="img-responsive img-thumbnail" src="{{imageSource}}" alt="image">
                 </div>
             </div>
+            <div class$="form-group">
+                <label for="video">Video link</label>
+                <input class="form-control" name="video" value="{{video::input}}">
+
+                <div class="video">
+                    <video class="img-responsive img-thumbnail" src="{{videoSource}}" alt="video"></video>
+                </div>
+            </div>
             <div>
                 <button class="btn btn-primary submit" on-click="submitClicked" disabled$="{{submitDisabled}}">Save</button>
             </div>
@@ -95,9 +103,19 @@
 
                 exhibitionId: {type: String},
 
-                image: {type: String, observer: 'previewImage'},
+                image: {
+                  type: String,
+                  observer: 'previewImage'
+                },
 
                 imageSource: {type: String},
+
+                video: {
+                  type: String,
+                  observer: 'previewVideo'
+                },
+
+                videoSource: {type: String},
 
                 name: {observer: 'isSubmittable'},
 
@@ -166,6 +184,10 @@
                 this.imageSource = this.image;
             },
 
+            previewVideo: function() {
+                this.videoSource = this.video;
+            },
+
             collectData: function() {
                 data = {
                     id: this.exhibitionId,
@@ -178,7 +200,8 @@
                     date_finish: this.formatDate(this.dateFinish),
                     beacon: this.beacon,
                     description: this.description,
-                    image: this.image
+                    image: this.image,
+                    video: this.video
                 };
                 return data;
             },

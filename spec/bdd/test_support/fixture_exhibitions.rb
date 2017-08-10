@@ -9,7 +9,8 @@ module Fixture
     LOCATION = 'some location'
     REDIRECTED_PAGE_TITLE = 'Item'
     EXHIBITION_NAME = 'Name: some name'
-    LINK = 'https://s3.amazonaws.com/pruebas-cova/girasoles.jpg'
+    IMAGE = 'https://s3.amazonaws.com/pruebas-cova/girasoles.jpg'
+    VIDEO = 'https://s3.amazonaws.com/pruebas-cova/3minutes.mp4'
 
     class << self
 
