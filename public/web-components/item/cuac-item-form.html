@@ -59,6 +59,13 @@
                         <div class="image">
                             <img class="img-responsive img-thumbnail" src="{{imageSource}}" alt="image">
                         </div>
+                        <div class="form-group">
+                            <label for="video">Video link</label>
+                            <input class="form-control" name="video" value="{{video::input}}">
+                        </div>
+                        <div class="video">
+                            <video class="img-responsive img-thumbnail" src="{{videoSource}}" alt="video"></video>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -102,7 +109,14 @@
                   observer: 'previewImage'
                 },
 
-                imageSource: {type: String},
+                imageSource: { type: String },
+
+                video: {
+                  type: String,
+                  observer: 'previewVideo'
+                },
+
+                videoSource: { type: String },
 
                 exhibition: { type: Object },
 
@@ -152,6 +166,10 @@
               this.imageSource = this.image
             },
 
+            previewVideo: function() {
+              this.videoSource = this.video
+            },
+
             collectData: function() {
                 data = {
                     room: this.room,
@@ -163,6 +181,7 @@
                     beacon: this.beacon,
                     description: this.description,
                     image: this.image,
+                    video: this.video,
                     parent_id: this.parentId,
                     parent_class: this.parentClass,
                     exhibition_id: this.exhibition.id,

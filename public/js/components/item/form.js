@@ -27,6 +27,8 @@ Class('Item.Form', {
             this.element.name = room.name;
             this.element.number = room.number;
             this.element.description = room.description;
+            this.element.image = scene.image;
+            this.element.video = scene.video;
             this.element.beacon = room.beacon;
             document.getElementsByClassName("room")[0].checked = true;
             this.element.room = true;
@@ -46,6 +48,8 @@ Class('Item.Form', {
             this.element.author = scene.author;
             this.element.date = scene.date;
             this.element.description = scene.description;
+            this.element.image = scene.image;
+            this.element.video = scene.video;
             this.element.beacon = scene.beacon;
             document.getElementsByClassName("room")[0].checked = false;
             this.element.room = false;

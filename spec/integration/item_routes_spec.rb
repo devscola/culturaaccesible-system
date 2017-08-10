@@ -19,6 +19,7 @@ describe 'Item controller' do
   ANOTHER_NUMBER = 11
   AUTHOR = 'author name'
   IMAGE = "https://s3.amazonaws.com/pruebas-cova/girasoles.jpg"
+  VIDEO = 'https://s3.amazonaws.com/pruebas-cova/3minutes.mp4'
   DATE = '2017'
 
   it 'stores scene with same exhibition id with unique scene name' do
@@ -43,8 +44,12 @@ describe 'Item controller' do
 
     add_room(FIRST_NAME, exhibition_id)
     room_name = parse_response['name']
+    image = parse_response['image']
+    video = parse_response['video']
 
     expect(room_name == FIRST_NAME).to be true
+    expect(image == IMAGE).to be true
+    expect(video == VIDEO).to be true
   end
 
   it 'cant store a room inside another room' do
@@ -111,9 +116,11 @@ describe 'Item controller' do
     add_scene(FIRST_NAME, exhibition_id)
     scene_parent_class = parse_response['parent_class']
     image = parse_response['image']
+    video = parse_response['video']
 
     expect(scene_parent_class == "exhibition").to be true
     expect(image == IMAGE).to be true
+    expect(video == VIDEO).to be true
   end
 
   it 'validate if scene number exists' do
@@ -228,6 +235,7 @@ describe 'Item controller' do
       exhibition_id: exhibition_id,
       number: number,
       image: IMAGE,
+      video: VIDEO,
       parent_class: "exhibition",
       type: 'scene',
       author: AUTHOR,
@@ -238,7 +246,19 @@ describe 'Item controller' do
   end
 
   def add_room(unique_name, exhibition_id, number = NUMBER)
-    room = { id: '', name: unique_name, room: true, exhibition_id: exhibition_id, parent_id: exhibition_id, parent_class: 'exhibition', number: number, type: 'room' }.to_json
+    room = {
+      id: '',
+      name: unique_name,
+      room: true,
+      image: IMAGE,
+      video: VIDEO,
+      exhibition_id: exhibition_id,
+      parent_id: exhibition_id,
+      parent_class: 'exhibition',
+      number: number,
+      type: 'room'
+    }.to_json
+
     post '/api/item/add', room
   end
 

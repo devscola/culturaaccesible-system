@@ -8,6 +8,7 @@ module Items
       @beacon = null_defense(data['beacon'])
       @description = null_defense(data['description'])
       @image = null_defense(data['image'])
+      @video = null_defense(data['video'])
       @parent_id = null_defense(data['parent_id'])
       @parent_class = null_defense(data['parent_class'])
       @type = 'room'
@@ -20,6 +21,7 @@ module Items
         beacon: @beacon,
         description: @description,
         image: @image,
+        video: @video,
         parent_id: @parent_id,
         parent_class: @parent_class,
         id: @id,
