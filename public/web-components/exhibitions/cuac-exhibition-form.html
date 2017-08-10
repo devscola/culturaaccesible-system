@@ -64,9 +64,9 @@
                 <label for="description">Extended description</label>
                 <textarea class="form-control" name="description" value="{{description::input}}"></textarea>
             </div>
-            <div class$="form-group {{isValidMedia}}">
+            <div class$="form-group">
                 <label for="media">Media link</label>
-                <input class="form-control" name="media" on-input="validateLink" value="{{media::input}}">
+                <input class="form-control" name="media" value="{{media::input}}">
 
                 <div class="media">
                   <img class="img-responsive img-thumbnail" src="{{mediaSource}}" alt="media">
@@ -113,12 +113,7 @@
 
                 beacon: {},
 
-                description: {},
-
-                isValidMedia: {type: String, value: ''},
-
-                validMedia: {type: Boolean, observer: 'validLink'},
-
+                description: {}
             },
 
             storeId: function() {
@@ -206,21 +201,8 @@
 
                 formattedDate = day + '/' + month + '/' + year;
                 return formattedDate;
-            },
+            }
 
-            validLink: function() {
-
-                if(this.validMedia){
-                    this.isValidMedia = 'has-success';
-                }else{
-                    this.isValidMedia = 'has-error';
-                }
-            },
-
-            validateLink: function(event) {
-                this.media = event.target.value;
-                this.fire('validate', this.media);
-            },
 
         });
     </script>

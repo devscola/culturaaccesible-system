@@ -22,39 +22,8 @@ Class('Service', {
         request.send(JSON.stringify(data));
     },
 
-    linkValidate: function(endpoint) {
-        var request = new XMLHttpRequest();
-        var OK = 200;
-        var valid = false;
-
-        request.open('GET', endpoint);
-        request.onreadystatechange = function() {
-            if (request.readyState === XMLHttpRequest.DONE) {
-                if (request.status === OK) {
-                    valid = true;
-                    Bus.publish('link.validation', valid);
-                    return;
-                }
-            }
-            //Bus.publish('link.validation', valid);
-        };
-        try {
-            request.send();
-        } catch (e) {
-            Bus.publish('link.validation', valid);
-        } finally {
-            if(request.status == 0){
-                if(endpoint == 'https://s3.amazonaws.com/pruebas-cova/girasoles.jpg'){
-                    Bus.publish('link.validation', true);
-                }else {
-                    Bus.publish('link.validation', valid);
-                }
-            }
-        }
-    },
-
     subscribe: function() {
-        Bus.subscribe('link.validate', this.linkValidate.bind(this));
+        console.error(this.toString() + ' not subscribed!, implement subscribe method' );
     }
 
 });

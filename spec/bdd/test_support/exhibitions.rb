@@ -201,14 +201,6 @@ module Page
       has_css?('.edit-button', wait: 4, exact_text: 'Edit')
     end
 
-    def is_valid_media?
-      has_css?('.has-success', wait: 2)
-    end
-
-    def is_not_valid_media?
-      has_css?('.has-error', wait: 2)
-    end
-
     private
 
     def validate!

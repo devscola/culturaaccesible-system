@@ -1,7 +1,6 @@
 Class('Page.Exhibitions', {
 
     initialize: function() {
-        new Service();
         new Services.Exhibitions();
         new Exhibitions.List();
         new Exhibitions.Form();
