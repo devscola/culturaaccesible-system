@@ -52,6 +52,13 @@
                             <label for="description">Description</label>
                             <textarea class="form-control" name="description" value="{{description::input}}"></textarea>
                         </div>
+                        <div class="form-group">
+                            <label for="media">Media link</label>
+                            <input class="form-control" name="media" value="{{media::input}}">
+                        </div>
+                        <div class="media">
+                            <img class="img-responsive img-thumbnail" src="{{mediaSource}}" alt="media">
+                        </div>
                     </div>
                 </div>
             </div>
@@ -89,6 +96,13 @@
                 beacon: { type: String },
 
                 description: { type: String },
+
+                media: {
+                  type: String,
+                  observer: 'previewMedia'
+                },
+
+                mediaSource: {type: String},
 
                 exhibition: { type: Object },
 
@@ -134,6 +148,10 @@
                 this.fire('submitted', this.collectData());
             },
 
+            previewMedia: function() {
+              this.mediaSource = this.media
+            },
+
             collectData: function() {
                 data = {
                     room: this.room,
@@ -144,6 +162,7 @@
                     last_number: this.lastNumber || '',
                     beacon: this.beacon,
                     description: this.description,
+                    media: this.media,
                     parent_id: this.parentId,
                     parent_class: this.parentClass,
                     exhibition_id: this.exhibition.id,
