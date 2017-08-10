@@ -4,7 +4,7 @@ require_relative '../../system/routes/exhibitions'
 require_relative '../../system/routes/items'
 
 describe 'Item controller' do
-include Rack::Test::Methods
+  include Rack::Test::Methods
 
   def app
     App.new
@@ -18,6 +18,7 @@ include Rack::Test::Methods
   NUMBER = 10
   ANOTHER_NUMBER = 11
   AUTHOR = 'author name'
+  MEDIA = "https://s3.amazonaws.com/pruebas-cova/girasoles.jpg"
   DATE = '2017'
 
   it 'stores scene with same exhibition id with unique scene name' do
@@ -109,8 +110,10 @@ include Rack::Test::Methods
 
     add_scene(FIRST_NAME, exhibition_id)
     scene_parent_class = parse_response['parent_class']
+    media = parse_response['media']
 
     expect(scene_parent_class == "exhibition").to be true
+    expect(media == MEDIA).to be true
   end
 
   it 'validate if scene number exists' do
@@ -217,7 +220,20 @@ include Rack::Test::Methods
   end
 
   def add_scene(unique_name, exhibition_id, number=ITEM_NUMBER_VALID)
-    scene = { id: '', name: unique_name, room: false, parent_id: exhibition_id, exhibition_id: exhibition_id, number: number, parent_class: "exhibition", type: 'scene', author: AUTHOR, date: DATE }.to_json
+    scene = {
+      id: '',
+      name: unique_name,
+      room: false,
+      parent_id: exhibition_id,
+      exhibition_id: exhibition_id,
+      number: number,
+      media: MEDIA,
+      parent_class: "exhibition",
+      type: 'scene',
+      author: AUTHOR,
+      date: DATE
+    }.to_json
+
     post '/api/item/add', scene
   end
 
