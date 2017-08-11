@@ -10,6 +10,8 @@ describe 'Exhibition controller' do
     App.new
   end
 
+  IMAGE = 'https://s3.amazonaws.com/pruebas-cova/girasoles.jpg'
+
   before(:each) do
     Exhibitions::Repository.flush
   end
@@ -24,18 +26,16 @@ describe 'Exhibition controller' do
     expect(first_exhibition_id == second_exhibition_id).to be false
   end
 
-  it 'retrieves required exhibition with image and video link', :wip do
+  it 'retrieves required exhibition with image and video link' do
     add_exhibition
     exhibition_id = parse_response['id']
     payload = { id: exhibition_id }.to_json
     post '/api/exhibition/retrieve', payload
     retrieved_exhibition_id = parse_response['id']
     exhibition_image = parse_response['image']
-    exhibition_video = parse_response['video']
 
     expect(retrieved_exhibition_id).to eq(exhibition_id)
-    expect(exhibition_image).to eq(Fixture::Exhibitions::IMAGE)
-    expect(exhibition_video).to eq(Fixture::Exhibitions::VIDEO)
+    expect(exhibition_image).to eq(IMAGE)
   end
 
   it 'retrieves all exhibitions' do
@@ -145,8 +145,7 @@ describe 'Exhibition controller' do
     exhibition = {
       name: 'some name',
       location: 'some location',
-      image: Fixture::Exhibitions::IMAGE,
-      video: Fixture::Exhibitions::VIDEO
+      image: IMAGE
     }.to_json
     post '/api/exhibition/add', exhibition
   end
