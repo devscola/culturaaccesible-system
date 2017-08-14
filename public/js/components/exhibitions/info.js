@@ -5,6 +5,7 @@ Class('Exhibition.Info', {
     initialize: function() {
         Exhibition.Info.Super.call(this, 'info');
         this.loadExhibition();
+        this.element.addEventListener('edit', this.goToEditForm.bind(this));
     },
 
     render: function(exhibition) {
@@ -19,7 +20,19 @@ Class('Exhibition.Info', {
 
     getExhibitionId: function() {
       var url = window.location.href;
-      return url.split('/exhibition/')[1];
+      return this.loadShortUrlData(3);
+    },
+
+    goToEditForm: function() {
+      var exhibitionId = this.loadShortUrlData(3);
+      window.location = '/exhibition/' + exhibitionId + '/edit';
+    },
+
+    loadShortUrlData: function(index) {
+        var urlString = window.location.href;
+        var regexp = /\/(exhibition)(\/)(.*)(\/)(exhibition)(\/)(.*)(|\/)(|.*)/;
+        var data = regexp.exec(urlString)[index];
+        return data;
     },
 
     subscribe: function() {

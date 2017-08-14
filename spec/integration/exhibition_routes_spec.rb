@@ -6,6 +6,9 @@ require_relative '../../system/exhibitions/repository'
 describe 'Exhibition controller' do
   include Rack::Test::Methods
 
+  IMAGE = 'https://s3.amazonaws.com/pruebas-cova/girasoles.jpg'
+
+
   def app
     App.new
   end
@@ -26,7 +29,7 @@ describe 'Exhibition controller' do
     expect(first_exhibition_id == second_exhibition_id).to be false
   end
 
-  it 'retrieves required exhibition with image and video link' do
+  it 'retrieves required exhibition with image link' do
     add_exhibition
     exhibition_id = parse_response['id']
     payload = { id: exhibition_id }.to_json

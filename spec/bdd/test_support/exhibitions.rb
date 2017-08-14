@@ -23,9 +23,7 @@ module Page
     end
 
     def content?(content)
-      if has_content?(content, wait: 1)
-        return true
-      end
+      has_content?(content, wait: 1)
     end
 
     def toggle_list
@@ -139,7 +137,7 @@ module Page
     def click_last_item_plus_button
       if(!has_css?('.plus-button', wait: 4, exact_text: '+').nil?)
         all('.plus-button', wait: 4, exact_text: '+').last.click
-      end  
+      end
     end
 
     def go_to_exhibition_info
