@@ -225,27 +225,44 @@ describe 'Item controller' do
     expect(result).to eq('1-1-0')
   end
 
-  it 'deletes a scene without children' do
+  it 'deletes a room and its children' do
     add_exhibition
     exhibition_id = parse_response['id']
 
-    add_scene(FIRST_NAME, exhibition_id)
+    add_room(FIRST_NAME, exhibition_id, '1-0-0')
+    room_id = parse_response['id']
+
+    add_scene(SECOND_NAME, exhibition_id, '1-1-0', room_id)
     scene_id = parse_response['id']
 
-    delete_scene(scene_id, exhibition_id)
+    add_scene(SECOND_NAME, exhibition_id, '1-1-1', scene_id)
+    subscene_id = parse_response['id']
+
+    delete_item(room_id, exhibition_id)
+
+    retrieve_room(room_id, exhibition_id)
+    retrieved_id = parse_response['id']
+
+    expect(retrieved_id).to eq nil
 
     retrieve_scene(scene_id, exhibition_id)
     retrieved_id = parse_response['id']
 
     expect(retrieved_id).to eq nil
+
+    retrieve_scene(subscene_id, exhibition_id)
+    retrieved_id = parse_response['id']
+
+    expect(retrieved_id).to eq nil
   end
 
-  def add_scene(unique_name, exhibition_id, number=ITEM_NUMBER_VALID)
+  def add_scene(unique_name, exhibition_id, number=ITEM_NUMBER_VALID, parent_id=exhibition_id)
+
     scene = {
       id: '',
       name: unique_name,
       room: false,
-      parent_id: exhibition_id,
+      parent_id: parent_id,
       exhibition_id: exhibition_id,
       number: number,
       image: IMAGE,
@@ -315,7 +332,7 @@ describe 'Item controller' do
     post '/api/item/update', scene
   end
 
-  def delete_scene(id, exhibition_id)
+  def delete_item(id, exhibition_id)
     payload = { id: id, exhibition_id: exhibition_id }.to_json
     post '/api/item/delete', payload
   end

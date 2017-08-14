@@ -65,7 +65,7 @@ class App < Sinatra::Base
     exhibition_id = scene['exhibition_id']
     item_id = scene['id']
 
-    result = Items::Service.retrieve(scene['id'])
+    result = Items::Service.retrieve(item_id)
     begin
       ordinal = Exhibitions::Service.retrieve_ordinal(exhibition_id, item_id)
       result['number'] = ordinal
@@ -82,8 +82,13 @@ class App < Sinatra::Base
     item_id = room['id']
 
     result = Items::Service.retrieve(item_id)
-    ordinal = Exhibitions::Service.retrieve_ordinal(exhibition_id, item_id)
-    result['number'] = ordinal
+    begin
+      ordinal = Exhibitions::Service.retrieve_ordinal(exhibition_id, item_id)
+      result['number'] = ordinal
+    rescue => ArgumentError
+      status 400
+      result = ArgumentError
+    end
     result.to_json
   end
 

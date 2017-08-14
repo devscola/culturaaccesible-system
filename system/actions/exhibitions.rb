@@ -35,8 +35,21 @@ module Actions
 
       def delete_item(item_id, exhibition_id)
         exhibition = Exhibitions::Repository.retrieve(exhibition_id)
+
         order = exhibition.order
         order.delete(item_id)
+
+        children = Items::Repository.retrieve_by_parent(item_id)
+
+        children.each do |child|
+          order.delete(child[:id])
+
+          subchildren = Items::Repository.retrieve_by_parent(child[:id])
+          subchildren.each do |subchild|
+            order.delete(subchild[:id])
+          end
+        end
+
         Exhibitions::Repository.update_exhibition(exhibition)
       end
 
