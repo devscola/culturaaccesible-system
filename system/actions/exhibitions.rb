@@ -33,6 +33,13 @@ module Actions
         sorted_children
       end
 
+      def delete_item(item_id, exhibition_id)
+        exhibition = Exhibitions::Repository.retrieve(exhibition_id)
+        order = exhibition.order
+        order.delete(item_id)
+        Exhibitions::Repository.update_exhibition(exhibition)
+      end
+
       def sorted_subitems(order, item_id)
         subitems = Items::Repository.retrieve_by_parent(item_id)
         subitems.map! do |subitem|

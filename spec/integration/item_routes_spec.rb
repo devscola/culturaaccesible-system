@@ -154,7 +154,6 @@ describe 'Item controller' do
     exhibition = parse_response
     exhibition_id = parse_response['id']
 
-
     add_room(FIRST_NAME, exhibition_id)
     room_id = parse_response['id']
     room_number = parse_response['number']
@@ -226,6 +225,21 @@ describe 'Item controller' do
     expect(result).to eq('1-1-0')
   end
 
+  it 'deletes a scene without children' do
+    add_exhibition
+    exhibition_id = parse_response['id']
+
+    add_scene(FIRST_NAME, exhibition_id)
+    scene_id = parse_response['id']
+
+    delete_scene(scene_id, exhibition_id)
+
+    retrieve_scene(scene_id, exhibition_id)
+    retrieved_id = parse_response['id']
+
+    expect(retrieved_id).to eq nil
+  end
+
   def add_scene(unique_name, exhibition_id, number=ITEM_NUMBER_VALID)
     scene = {
       id: '',
@@ -286,6 +300,11 @@ describe 'Item controller' do
     post 'api/room/retrieve', payload
   end
 
+  def retrieve_scene(id, exhibition_id)
+    payload = { id: id, exhibition_id: exhibition_id }.to_json
+    post 'api/scene/retrieve', payload
+  end
+
   def update_room(id, exhibition_id, room_number, check_room = true)
     room = { id: id, name: FIRST_NAME, room: check_room, exhibition_id: exhibition_id, parent_id: exhibition_id, parent_class: 'exhibition', number: ANOTHER_NUMBER, last_number: room_number, type: 'room' }.to_json
     post '/api/item/update', room
@@ -294,6 +313,11 @@ describe 'Item controller' do
   def update_scene(id, exhibition_id, scene_number, check_room = false)
     scene = { id: id, name: FIRST_NAME, room: check_room, exhibition_id: exhibition_id, parent_id: exhibition_id, parent_class: 'exhibition', number: ANOTHER_NUMBER, last_number: scene_number, type: 'scene' }.to_json
     post '/api/item/update', scene
+  end
+
+  def delete_scene(id, exhibition_id)
+    payload = { id: id, exhibition_id: exhibition_id }.to_json
+    post '/api/item/delete', payload
   end
 
 end
