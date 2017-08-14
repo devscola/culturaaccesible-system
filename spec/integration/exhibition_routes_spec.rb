@@ -6,6 +6,9 @@ require_relative '../../system/exhibitions/repository'
 describe 'Exhibition controller' do
   include Rack::Test::Methods
 
+  IMAGE = 'https://s3.amazonaws.com/pruebas-cova/girasoles.jpg'
+  VIDEO = 'https://s3.amazonaws.com/pruebas-cova/3minutes.mp4'
+
   def app
     App.new
   end
@@ -24,7 +27,7 @@ describe 'Exhibition controller' do
     expect(first_exhibition_id == second_exhibition_id).to be false
   end
 
-  it 'retrieves required exhibition with image and video link', :wip do
+  it 'retrieves required exhibition with image and video link' do
     add_exhibition
     exhibition_id = parse_response['id']
     payload = { id: exhibition_id }.to_json
@@ -34,8 +37,8 @@ describe 'Exhibition controller' do
     exhibition_video = parse_response['video']
 
     expect(retrieved_exhibition_id).to eq(exhibition_id)
-    expect(exhibition_image).to eq(Fixture::Exhibitions::IMAGE)
-    expect(exhibition_video).to eq(Fixture::Exhibitions::VIDEO)
+    expect(exhibition_image).to eq(IMAGE)
+    expect(exhibition_video).to eq(VIDEO)
   end
 
   it 'retrieves all exhibitions' do
@@ -145,8 +148,8 @@ describe 'Exhibition controller' do
     exhibition = {
       name: 'some name',
       location: 'some location',
-      image: Fixture::Exhibitions::IMAGE,
-      video: Fixture::Exhibitions::VIDEO
+      image: IMAGE,
+      video: VIDEO
     }.to_json
     post '/api/exhibition/add', exhibition
   end

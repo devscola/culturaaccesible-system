@@ -116,6 +116,18 @@ feature 'Exhibitions' do
     expect(current.content?(Fixture::Exhibitions::EXHIBITION_NAME)).to be true
   end
 
+  scenario 'edits exhibition info when edit button is clicked' do
+    current = Fixture::Exhibitions.pristine.exhibition_saved
+    current.go_to_exhibition_info
+
+    current = Page::ExhibitionInfo.new
+    current.click_edit
+    current.fill('name', Fixture::Exhibitions::OTHER_NAME)
+    current.save
+
+    expect(current.first_exhibition_name).to eq(Fixture::Exhibitions::OTHER_NAME)
+  end
+
   scenario 'shows sidebar in all exhibitions pages' do
     current = Fixture::Exhibitions.exhibition_saved
     is_toggle = current.has_css?('.toggle-exhibition-list', wait: 2)

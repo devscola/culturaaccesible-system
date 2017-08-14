@@ -23,6 +23,10 @@ class App < Sinatra::Base
     File.read(File.join('public', 'exhibition-info.html'))
   end
 
+  get '/exhibition/:id/exhibition/:exhibition_id/edit' do
+    File.read(File.join('public', 'item.html'))
+  end
+
   get '/exhibition/:id/room/:room_id' do
     File.read(File.join('public', 'room-info.html'))
   end
@@ -43,9 +47,8 @@ class App < Sinatra::Base
     File.read(File.join('public', 'item.html'))
   end
 
-
-  get '/exhibition/:id/exhibition/:exhibition_id/edit' do
-      File.read(File.join('public', 'item.html'))
+  get '/exhibition/:id/edit' do
+      File.read(File.join('public', 'exhibitions.html'))
   end
 
   get '/exhibition/:id/room/:room_id/edit' do
