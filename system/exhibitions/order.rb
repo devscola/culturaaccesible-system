@@ -22,8 +22,14 @@ class Order
     @index[ordinal] = item_id
   end
 
+  def delete(item_id)
+    @index.delete_if { |key, value| value == item_id }
+  end
+
   def retrieve_ordinal(item_id)
-    @index.index(item_id)
+    ordinal = @index.index(item_id)
+    raise ArgumentError, 'Item not found' unless ordinal
+    ordinal
   end
 
   def serialize

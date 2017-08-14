@@ -16,7 +16,6 @@ module Exhibitions
       @beacon = Defense.string_null_defense(data['beacon'])
       @description = Defense.string_null_defense(data['description'])
       @image = Defense.string_null_defense(data['image'])
-      @video = Defense.string_null_defense(data['video'])
       @id = id || generate_id
       @order = order || Order.new
     end
@@ -36,7 +35,6 @@ module Exhibitions
         beacon: @beacon,
         description: @description,
         image: @image,
-        video: @video,
         order: @order.serialize
       }
     end

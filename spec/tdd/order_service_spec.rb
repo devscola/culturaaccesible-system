@@ -80,4 +80,14 @@ describe Order do
 
     expect(result).to eq(:error)
   end
+
+  it 'deletes item from index' do
+    order = Order.new
+
+    order.register('1-0-0', 'fakeItemId')
+
+    order.delete('fakeItemId')
+
+    expect{ order.retrieve_ordinal('fakeItemId') }.to raise_error(ArgumentError)
+  end
 end

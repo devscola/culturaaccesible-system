@@ -52,15 +52,27 @@ class App < Sinatra::Base
     result.to_json
   end
 
+  post '/api/item/delete' do
+    data = JSON.parse(request.body.read)
+    id = data['id']
+    exhibition_id = data['exhibition_id']
+
+    Actions::Exhibition.delete_item(id, exhibition_id)
+  end
+
   post '/api/scene/retrieve' do
     scene = JSON.parse(request.body.read)
     exhibition_id = scene['exhibition_id']
     item_id = scene['id']
 
     result = Items::Service.retrieve(scene['id'])
-    ordinal = Exhibitions::Service.retrieve_ordinal(exhibition_id, item_id)
-    result['number'] = ordinal
-
+    begin
+      ordinal = Exhibitions::Service.retrieve_ordinal(exhibition_id, item_id)
+      result['number'] = ordinal
+    rescue => ArgumentError
+      status 400
+      result = ArgumentError
+    end
     result.to_json
   end
 
