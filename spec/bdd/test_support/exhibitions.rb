@@ -32,6 +32,10 @@ module Page
       end
     end
 
+    def has_toggle?
+      has_css?('.toggle-exhibition-list', wait: 2)
+    end
+
     def first_exhibition_name
       has_css?('.list-item', wait: 4)
       first('.exhibition-name').text

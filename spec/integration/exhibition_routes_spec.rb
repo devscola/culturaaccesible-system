@@ -139,6 +139,27 @@ describe 'Exhibition controller' do
     expect(first_subitem_children).to include({'number' => '1-1-1'})
   end
 
+  it 'retrieve an updated exhibition with item' do
+    add_exhibition
+    exhibition = parse_response
+    add_scene('1-0-0', exhibition['id'])
+
+    exhibition_updated = {
+      id: exhibition['id'],
+      name: 'some other name',
+      location: 'some location',
+      image: 'fake-image.jpg'
+    }.to_json
+    post '/api/exhibition/add', exhibition_updated
+    updated_exhibition = parse_response
+
+    retrieve_for_list(exhibition['id'])
+    first_children = parse_response['children'].first
+
+    expect(exhibition['id'] == updated_exhibition['id']).to be true
+    expect(first_children).to include({'number' => '1-0-0'})
+  end
+
   def retrieve_for_list(exhibition_id)
     payload = { id: exhibition_id }.to_json
     post 'api/exhibition/retrieve-for-list', payload

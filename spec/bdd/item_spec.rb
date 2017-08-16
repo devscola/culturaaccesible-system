@@ -584,4 +584,24 @@ feature 'Item' do
     expect(is_toggle).to be true
   end
 
+  scenario 'fix exhibitions edition when it has items' do
+    Fixture::Item.from_exhibition_to_new_item
+    Fixture::Item.item_saved
+
+    current = Page::Exhibitions.new
+    current.go_to_exhibition_info
+    current = Page::ExhibitionInfo.new
+    current.click_edit
+    current.fill('name', Fixture::Exhibitions::OTHER_NAME)
+    current.save
+    current = Page::Exhibitions.new
+
+    expect(current.has_toggle?).to be true
+
+    current.toggle_list
+
+    expect(current.first_exhibition_name).to eq(Fixture::Exhibitions::OTHER_NAME)
+    expect(current.content?(Fixture::Item::ARTWORK)).to be true
+  end
+
 end
