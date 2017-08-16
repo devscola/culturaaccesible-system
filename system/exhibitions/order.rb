@@ -5,10 +5,6 @@ class Order
     @separator = '-'
   end
 
-  def index
-    @index
-  end
-
   def next_child (parent)
     return :error unless parent_exists?(parent)
 

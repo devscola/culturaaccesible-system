@@ -51,11 +51,9 @@ module Exhibitions
 
       def update(exhibition_data)
         id =  exhibition_data['id']
-
-        exhibition = Exhibitions::Exhibition.new(exhibition_data, id)
-
-        update_exhibition(exhibition)
-
+        exhibition = retrieve(id)
+        updated_exhibition = Exhibitions::Exhibition.new(exhibition_data, id, exhibition.order)
+        update_exhibition(updated_exhibition)
       end
 
       def store(exhibition_data)

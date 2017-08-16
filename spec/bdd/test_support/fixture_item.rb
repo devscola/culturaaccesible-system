@@ -26,14 +26,12 @@ module Fixture
 
       def from_exhibition_to_new_item
         current = Fixture::Exhibitions.pristine.exhibition_saved
-        current.exhibition_list?
         current.click_plus_button
         initial_state
       end
 
       def from_exhibition_to_second_item
         current = Fixture::Exhibitions.exhibition_saved
-        current.exhibition_list?
         current.click_plus_button
         initial_state
       end
