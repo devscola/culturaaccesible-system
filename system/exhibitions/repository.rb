@@ -40,18 +40,6 @@ module Exhibitions
         connection.exhibitions.delete_many
       end
 
-      def add_number(exhibition_id, number, last_number)
-        exhibition = retrieve(exhibition_id)
-        exhibition.set_numbers(number)
-
-        if last_number != ''
-          exhibition.remove_number(last_number)
-        end
-
-        update_exhibition(exhibition)
-
-      end
-
       def update_exhibition(exhibition)
         document = exhibition.serialize
         updated_exhibition = connection.exhibitions.find_one_and_update({ id: document[:id] }, document, {:return_document => :after })

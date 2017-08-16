@@ -1,7 +1,6 @@
 module Exhibitions
   class Exhibition
     attr_reader :id, :name, :order, :show
-    attr_accessor :numbers
 
     def initialize(data, id=nil, order=nil)
       @creation_date = Time.now.utc
@@ -12,7 +11,6 @@ module Exhibitions
       @date_start = Defense.string_null_defense(data['date_start'])
       @date_finish = Defense.string_null_defense(data['date_finish'])
       @type = Defense.string_null_defense(data['type'])
-      @numbers = Defense.array_null_defense(data['numbers'])
       @beacon = Defense.string_null_defense(data['beacon'])
       @description = Defense.string_null_defense(data['description'])
       @image = Defense.string_null_defense(data['image'])
@@ -31,7 +29,6 @@ module Exhibitions
         date_start: @date_start,
         date_finish: @date_finish,
         type: @type,
-        numbers: @numbers,
         beacon: @beacon,
         description: @description,
         image: @image,
@@ -43,18 +40,6 @@ module Exhibitions
       order = Order.new(order)
       exhibition = Exhibitions::Exhibition.new(bson, id, order)
       exhibition
-    end
-
-    def get_numbers
-      @numbers
-    end
-
-    def set_numbers(number)
-      @numbers << number
-    end
-
-    def remove_number(number)
-      @numbers.delete(number)
     end
 
     private
