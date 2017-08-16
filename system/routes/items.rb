@@ -58,6 +58,7 @@ class App < Sinatra::Base
     exhibition_id = data['exhibition_id']
 
     Actions::Exhibition.delete_item(id, exhibition_id)
+    {message: 'item has been deleted'}.to_json
   end
 
   post '/api/scene/retrieve' do

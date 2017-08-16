@@ -6,7 +6,7 @@ Class('Room.Info', {
         Room.Info.Super.call(this, 'roomInfo');
         this.loadRoom();
         this.element.addEventListener('edit', this.goToEditForm.bind(this));
-
+        this.element.addEventListener('delete', this.delete.bind(this))
     },
 
     render: function(room) {
@@ -32,6 +32,11 @@ Class('Room.Info', {
       var parentId = this.loadShortUrlData(7);
       var exhibitionId = this.loadShortUrlData(3);
       window.location = '/exhibition/' + exhibitionId + '/exhibition/' + parentId + '/edit';
+    },
+
+    delete: function(item) {
+      var payload = {'id': item.detail.id, 'exhibition_id': this.loadShortUrlData(3)}
+      Bus.publish('item.delete', payload)
     },
 
     loadShortUrlData: function(index) {

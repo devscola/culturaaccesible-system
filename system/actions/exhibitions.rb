@@ -5,14 +5,19 @@ module Actions
         order = Exhibitions::Repository.retrieve(exhibition[:id]).order
         children = Items::Service.retrieve_by_parent(exhibition[:id])
         children.map! do |item|
-          {
-            id: item[:id],
-            name: item[:name],
-            number: order.retrieve_ordinal(item[:id]),
-            type: item[:type],
-            children: retrieve_subitems_by_parent(exhibition[:id], item[:id])
-          }
+          begin
+            {
+              id: item[:id],
+              name: item[:name],
+              number: order.retrieve_ordinal(item[:id]),
+              type: item[:type],
+              children: retrieve_subitems_by_parent(exhibition[:id], item[:id])
+            }
+          rescue
+            next
+          end
         end
+        children.reject!{ |child| child == nil }
         sorted_children = Exhibitions::Service.sort_list(children)
         { id: exhibition[:id], name: exhibition[:name], :children => sorted_children }
       end
