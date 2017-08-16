@@ -46,8 +46,13 @@ Class('Room.Info', {
         return data;
     },
 
+    goToExhibitionPage: function() {
+        window.location = '/'
+    },
+
     subscribe: function() {
         Bus.subscribe('room.retrieved', this.render.bind(this));
+        Bus.subscribe('item.deleted', this.goToExhibitionPage.bind(this))
     }
 
 });
