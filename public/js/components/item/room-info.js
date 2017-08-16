@@ -6,7 +6,7 @@ Class('Room.Info', {
         Room.Info.Super.call(this, 'roomInfo');
         this.loadRoom();
         this.element.addEventListener('edit', this.goToEditForm.bind(this));
-
+        this.element.addEventListener('delete', this.delete.bind(this))
     },
 
     render: function(room) {
@@ -34,6 +34,11 @@ Class('Room.Info', {
       window.location = '/exhibition/' + exhibitionId + '/exhibition/' + parentId + '/edit';
     },
 
+    delete: function(item) {
+      var payload = {'id': item.detail.id, 'exhibition_id': this.loadShortUrlData(3)}
+      Bus.publish('item.delete', payload)
+    },
+
     loadShortUrlData: function(index) {
         var urlString = window.location.href;
         var regexp = /\/(exhibition)(\/)(.*)(\/)(exhibition|room|scene)(\/)(.*)(|\/)(|.*)/;
@@ -41,8 +46,13 @@ Class('Room.Info', {
         return data;
     },
 
+    goToExhibitionPage: function() {
+        window.location = '/'
+    },
+
     subscribe: function() {
         Bus.subscribe('room.retrieved', this.render.bind(this));
+        Bus.subscribe('item.deleted', this.goToExhibitionPage.bind(this))
     }
 
 });

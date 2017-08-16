@@ -5,6 +5,7 @@ Class('Scene.Info', {
     initialize: function() {
         Scene.Info.Super.call(this, 'sceneInfo');
         this.element.addEventListener('edit', this.goToEditForm.bind(this));
+        this.element.addEventListener('delete', this.delete.bind(this));
         this.loadScene();
     },
 
@@ -32,6 +33,11 @@ Class('Scene.Info', {
       window.location = '/exhibition/' + exhibitionId + '/' + parentClass + '/' + parentId + '/edit';
     },
 
+    delete: function(item) {
+      var payload = {'id': item.detail.id, 'exhibition_id': this.loadShortUrlData(3)}
+      Bus.publish('item.delete', payload)
+    },
+
     loadShortUrlData: function(index) {
         var urlString = window.location.href;
         var regexp = /\/(exhibition)(\/)(.*)(\/)(exhibition|room|scene)(\/)(.*)(|\/)(|.*)/;
@@ -39,8 +45,13 @@ Class('Scene.Info', {
         return data;
     },
 
+    goToExhibitionPage: function() {
+        window.location = '/'
+    },
+
     subscribe: function() {
         Bus.subscribe('item.retrieved', this.render.bind(this));
+        Bus.subscribe('item.deleted', this.goToExhibitionPage.bind(this))
     }
 
 });

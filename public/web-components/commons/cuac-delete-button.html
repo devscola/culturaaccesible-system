@@ -1,0 +1,23 @@
+<link rel="import" href="/vendor/polymer/polymer.html">
+
+<dom-module id="cuac-delete-button">
+    <template>
+        <button class="btn btn-danger delete-button" on-click="delete">Delete</button>
+    </template>
+
+    <script>
+        Polymer({
+            is: 'cuac-delete-button',
+
+            properties: {
+                item: {
+                    type: Object
+                }
+            },
+
+            delete: function() {
+                this.fire('delete', this.item);
+            }
+        });
+    </script>
+</dom-module>

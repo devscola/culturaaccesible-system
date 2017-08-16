@@ -60,9 +60,17 @@ Class('Services.Items', {
         });
     },
 
+    deleteItem: function(item) {
+        this.doRequest('/item/delete', item, function(result) {
+            Bus.publish('item.deleted', result);
+            console.log(result)
+        });
+    },
+
     subscribe: function() {
         Bus.subscribe('item.save', this.saveItem.bind(this));
         Bus.subscribe('item.update', this.updateItem.bind(this));
+        Bus.subscribe('item.delete', this.deleteItem.bind(this));
         Bus.subscribe('item.retrieve', this.retrieveItem.bind(this));
         Bus.subscribe('subscene.scene.retrieve', this.retrieveItemFromSubscene.bind(this));
         Bus.subscribe('subscene.retrieve', this.retrieveScene.bind(this));
