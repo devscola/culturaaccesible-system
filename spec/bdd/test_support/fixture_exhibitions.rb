@@ -67,6 +67,23 @@ module Fixture
         Page::Exhibitions.new
       end
 
+      def put_a_fucking_item
+
+      end
+
+      def complete_exhibition
+        current = exhibition_saved
+        current.add_room
+        current = Page::Exhibitions.new
+        current.click_plus_button
+        Page::Item.new
+
+        Fixture::Item.item_saved
+        Fixture::Item.item_saved_in_item
+
+        Page::Exhibitions.new
+      end
+
       def exhibition_edited
         current = exhibition_saved
         current.click_edit

@@ -3,41 +3,32 @@ require_relative 'test_support/exhibitions'
 require_relative 'test_support/fixture_exhibitions'
 require_relative 'test_support/exhibition_info'
 
-
-feature 'Exhibitions' do
-  before(:each) do
-    Fixture::Exhibitions.pristine
-  end
-
-  scenario 'has items' do
-    current = Fixture::Exhibitions.exhibition_saved
-
-    expect(current.exhibition_list?).to be true
-  end
-
-  scenario 'has a toggle list of children' do
-    current = Fixture::Exhibitions.exhibition_saved_with_room
-
-    expect(current.list_has_rooms?).to be false
-
-    current.toggle_list
-
-    expect(current.list_has_rooms?).to be true
+feature 'item list', :wep do
+  before(:all) do
+    Fixture::Exhibitions.pristine.complete_exhibition
   end
 
   scenario 'shows each room with + button' do
-    current = Fixture::Exhibitions.exhibition_saved_with_room
+    current = Page::Exhibitions.new
     current.toggle_list
 
     expect(current.room_have_plus_button?).to be true
   end
 
   scenario 'shows each sub-scene without + button' do
-    current = Fixture::Exhibitions.exhibition_saved_with_subscenes
+    current = Page::Exhibitions.new
     current.toggle_list
 
     expect(current.subscene_has_plus_button?).to be false
   end
+
+end
+
+feature 'Exhibitions', :wip do
+  before(:each) do
+    Fixture::Exhibitions.pristine
+  end
+
 
   scenario 'shows exhibition form' do
     current = Fixture::Exhibitions.show_exhibition_form

@@ -28,7 +28,7 @@ module Fixture
         Page::Exhibitions.new.click_plus_button
         Page::Item.new
       end
-      
+
       def from_exhibition_to_new_item
         current = Fixture::Exhibitions.pristine.exhibition_saved
         current.click_plus_button

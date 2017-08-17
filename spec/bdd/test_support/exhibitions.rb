@@ -27,9 +27,8 @@ module Page
     end
 
     def toggle_list
-      has_css?('.glyphicon.glyphicon-list.toggle-exhibition-list', wait: 4)
-      sleep 0.5
-      first('.glyphicon.glyphicon-list.toggle-exhibition-list', wait: 4).click
+      has_css?('.toggle-exhibition-list', wait: 4)
+      first('.toggle-exhibition-list').click
     end
 
     def first_exhibition_name
