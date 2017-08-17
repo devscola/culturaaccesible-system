@@ -160,6 +160,18 @@ describe 'Exhibition controller' do
     expect(first_children).to include({'number' => '1-0-0'})
   end
 
+  it 'deletes an exhibition' do
+    add_exhibition
+    exhibition_id = parse_response['id']
+
+    delete_exhibition(exhibition_id)
+    result = parse_response
+
+    result = retrieve_for_list(exhibition_id)
+
+    expect(result['id']).to eq nil
+  end
+
   def retrieve_for_list(exhibition_id)
     payload = { id: exhibition_id }.to_json
     post 'api/exhibition/retrieve-for-list', payload
@@ -172,6 +184,11 @@ describe 'Exhibition controller' do
       image: IMAGE
     }.to_json
     post '/api/exhibition/add', exhibition
+  end
+
+  def delete_exhibition(exhibition_id)
+    payload = { id: exhibition_id }.to_json
+    post '/api/exhibition/delete', payload
   end
 
   def add_room(number='', exhibition_id)
