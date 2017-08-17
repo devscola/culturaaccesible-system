@@ -542,46 +542,42 @@ feature 'Item' do
   end
 
   scenario 'shows sidebar in all room pages' do
-    current = Fixture::Item.from_exhibition_to_new_item
-    is_toggle = current.has_css?('.toggle-exhibition-list', wait: 2)
-    expect(is_toggle).to be true
+    current_exhibition = Page::Exhibitions.new
+    Fixture::Item.from_exhibition_to_new_item
+    expect(current_exhibition.has_toggle?).to be true
 
     Fixture::Item.room_saved
     current = Page::Exhibitions.new
     current.toggle_list
 
     current.go_to_room_info
-    current = Page::RoomInfo.new
-    is_toggle = current.has_css?('.toggle-exhibition-list', wait: 2)
-    expect(is_toggle).to be true
+    Page::RoomInfo.new
+    expect(current_exhibition.has_toggle?).to be true
 
     current = Page::RoomInfo.new
     current.click_edit
-    current = Page::Item.new
-    is_toggle = current.has_css?('.toggle-exhibition-list', wait: 2)
-    expect(is_toggle).to be true
+    Page::Item.new
+    expect(current_exhibition.has_toggle?).to be true
 
   end
 
   scenario 'shows sidebar in all scene pages' do
-    current = Fixture::Item.from_exhibition_to_new_item
-    is_toggle = current.has_css?('.toggle-exhibition-list', wait: 2)
-    expect(is_toggle).to be true
+    current_exhibition = Page::Exhibitions.new
+    Fixture::Item.from_exhibition_to_new_item
+    expect(current_exhibition.has_toggle?).to be true
 
     Fixture::Item.item_saved
     current = Page::Exhibitions.new
     current.toggle_list
 
     current.go_to_scene_info
-    current = Page::SceneInfo.new
-    is_toggle = current.has_css?('.toggle-exhibition-list', wait: 2)
-    expect(is_toggle).to be true
+    Page::SceneInfo.new
+    expect(current_exhibition.has_toggle?).to be true
 
     current = Page::SceneInfo.new
     current.click_edit
-    current = Page::Item.new
-    is_toggle = current.has_css?('.toggle-exhibition-list', wait: 2)
-    expect(is_toggle).to be true
+    Page::Item.new
+    expect(current_exhibition.has_toggle?).to be true
   end
 
   scenario 'fix exhibitions edition when it has items' do
