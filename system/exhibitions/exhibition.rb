@@ -1,6 +1,7 @@
 module Exhibitions
   class Exhibition
     attr_reader :id, :name, :order, :show
+    attr_writer :deleted
 
     def initialize(data, id=nil, order=nil)
       @creation_date = Time.now.utc
@@ -16,6 +17,7 @@ module Exhibitions
       @image = Defense.string_null_defense(data['image'])
       @id = id || generate_id
       @order = order || Order.new
+      @deleted = data['deleted'] || false
     end
 
     def serialize
@@ -32,7 +34,8 @@ module Exhibitions
         beacon: @beacon,
         description: @description,
         image: @image,
-        order: @order.serialize
+        order: @order.serialize,
+        deleted: @deleted
       }
     end
 

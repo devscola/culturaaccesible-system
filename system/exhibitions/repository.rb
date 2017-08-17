@@ -26,6 +26,12 @@ module Exhibitions
         exhibition
       end
 
+      def delete(id)
+        exhibition = retrieve(id)
+        exhibition.deleted = true
+        exhibition = update_exhibition(exhibition)
+      end
+
       def all
         exhibitions_data = connection.exhibitions.find({}, :fields => ['id', 'name', 'show'])
         exhibitions_data.map{ |data| Exhibitions::Exhibition.from_bson(data, data['id'], data['order']).serialize}
@@ -43,7 +49,6 @@ module Exhibitions
       def update_exhibition(exhibition)
         document = exhibition.serialize
         updated_exhibition = connection.exhibitions.find_one_and_update({ id: document[:id] }, document, {:return_document => :after })
-
         Exhibitions::Exhibition.from_bson(updated_exhibition, updated_exhibition['id'], exhibition.order.serialize)
       end
 

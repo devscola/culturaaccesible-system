@@ -13,6 +13,12 @@ class App < Sinatra::Base
     result.to_json
   end
 
+  post '/api/exhibition/delete' do
+    exhibition = JSON.parse(request.body.read)
+    Exhibitions::Service.delete(exhibition['id'])
+    { message: 'Exhibition has been deleted' }.to_json
+  end
+
   post '/api/exhibition/retrieve' do
     exhibition = JSON.parse(request.body.read)
     result = Exhibitions::Service.retrieve(exhibition['id'])

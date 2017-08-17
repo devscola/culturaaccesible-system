@@ -38,6 +38,16 @@ describe Exhibitions::Service do
     expect(exhibition[:location]).to eq('')
   end
 
+  it 'deletes an exhibition' do
+    name = 'some name'
+    location = 'some location'
+    exhibition = add_exhibition(name, location)
+
+    exhibition = Exhibitions::Service.delete(exhibition[:id])
+
+    expect(exhibition[:deleted]).to be true
+  end
+
   def add_exhibition(name, location)
     exhibition = { 'name' => name, 'location' => location }
     Exhibitions::Service.store(exhibition)

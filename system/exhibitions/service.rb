@@ -12,6 +12,11 @@ module Exhibitions
         exhibition.serialize
       end
 
+      def delete(id)
+        exhibition = Exhibitions::Repository.delete(id)
+        exhibition.serialize
+      end
+
       def retrieve(id)
         exhibition = Exhibitions::Repository.retrieve(id)
         exhibition.serialize
