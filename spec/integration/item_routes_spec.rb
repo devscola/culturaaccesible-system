@@ -123,17 +123,6 @@ describe 'Item controller' do
     expect(video == VIDEO).to be true
   end
 
-  it 'validate if scene number exists' do
-    add_exhibition
-
-    exhibition = parse_response
-    retrieve_exhibition(exhibition)
-    exhibition_numbers = parse_response['numbers']
-
-    expect(exhibition_numbers.include?(ITEM_NUMBER_NOT_VALID)).to be true
-    expect(exhibition_numbers.include?(ITEM_NUMBER_VALID)).to be false
-  end
-
   it 'creates a scene with author and date' do
     add_exhibition
 
@@ -300,7 +289,7 @@ describe 'Item controller' do
   end
 
   def add_exhibition
-    exhibition = { name: 'some name', location: 'some location', numbers: ITEM_NUMBERS }.to_json
+    exhibition = { name: 'some name', location: 'some location' }.to_json
     post '/api/exhibition/add', exhibition
   end
 

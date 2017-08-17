@@ -44,7 +44,6 @@ module Items
       private
 
       def update(item_data, type)
-        Exhibitions::Service.add_number(item_data['exhibition_id'], item_data['number'], item_data['last_number'])
         updated_item = connection.items.find_one_and_update({ id: item_data['id'] }, item_data, {:return_document => :after })
         connection.close
         item = type == 'scene' ? Items::Scene.new(updated_item, updated_item['id']) : Items::Room.new(updated_item, updated_item['id'])
@@ -52,7 +51,6 @@ module Items
       end
 
       def store(item_data, type)
-        Exhibitions::Service.add_number(item_data['exhibition_id'], item_data['number'])
         item = type == 'scene' ? Items::Scene.new(item_data) : Items::Room.new(item_data)
         connection.items.insert_one(item.serialize)
         connection.close

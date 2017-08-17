@@ -16,6 +16,7 @@ class App < Sinatra::Base
   post '/api/exhibition/retrieve' do
     exhibition = JSON.parse(request.body.read)
     result = Exhibitions::Service.retrieve(exhibition['id'])
+    result['numbers'] = result[:order][:index].keys()
     result.to_json
   end
 
