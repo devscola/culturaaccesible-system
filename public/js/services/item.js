@@ -63,7 +63,6 @@ Class('Services.Items', {
     deleteItem: function(item) {
         this.doRequest('/item/delete', item, function(result) {
             Bus.publish('item.deleted', result);
-            console.log(result)
         });
     },
 
