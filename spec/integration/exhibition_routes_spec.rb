@@ -165,16 +165,22 @@ describe 'Exhibition controller' do
     exhibition_id = parse_response['id']
 
     delete_exhibition(exhibition_id)
+
+    retrieve_list
     result = parse_response
 
-    result = retrieve_for_list(exhibition_id)
+    exhibition_deleted = result.select { |exhibition| exhibition['id'] == exhibition_id }.length == 0
 
-    expect(result['id']).to eq nil
+    expect(exhibition_deleted).to eq true
   end
 
   def retrieve_for_list(exhibition_id)
     payload = { id: exhibition_id }.to_json
     post 'api/exhibition/retrieve-for-list', payload
+  end
+
+  def retrieve_list
+    post 'api/exhibition/list'
   end
 
   def add_exhibition

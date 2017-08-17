@@ -35,6 +35,7 @@ module Exhibitions
       def all
         exhibitions_data = connection.exhibitions.find({}, :fields => ['id', 'name', 'show'])
         exhibitions_data.map{ |data| Exhibitions::Exhibition.from_bson(data, data['id'], data['order']).serialize}
+        exhibitions_data.select { |exhibition| exhibition[:deleted] == false }
       end
 
       def retrieve_next_ordinal(exhibition_id, ordinal)

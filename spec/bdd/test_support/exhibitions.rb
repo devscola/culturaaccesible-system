@@ -69,6 +69,11 @@ module Page
       find('.edit-button').click
     end
 
+    def click_delete
+      has_css?('.delete-button',  exact_text: 'Delete', wait: 4)
+      find('.delete-button').click
+    end
+
     def view_visible?
       has_css?('.view', wait: 2, visible: false)
       view = find('.view', visible: false)
