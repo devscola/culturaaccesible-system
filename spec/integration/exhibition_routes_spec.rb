@@ -13,8 +13,6 @@ describe 'Exhibition controller' do
     App.new
   end
 
-  IMAGE = 'https://s3.amazonaws.com/pruebas-cova/girasoles.jpg'
-
   before(:each) do
     Exhibitions::Repository.flush
   end
