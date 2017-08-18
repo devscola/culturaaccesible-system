@@ -36,9 +36,9 @@ task :test => [:bdd, :tdd, :integration] do
 end
 
 task :build do
-  sh "sudo docker build -f Dockerfile.build -t culturaaccesible-system ."
-  sh "sudo docker tag culturaaccesible-system devscola/culturaaccesible-system:build"
-  sh "sudo docker push devscola/culturaaccesible-system:build"
+  sh "docker build -f Dockerfile.build -t culturaaccesible-system ."
+  sh "docker tag culturaaccesible-system devscola/culturaaccesible-system:build"
+  sh "docker push devscola/culturaaccesible-system:build"
 end
 
 task :tag, [:tag] do |t, arg|
