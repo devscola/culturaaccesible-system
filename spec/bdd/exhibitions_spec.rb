@@ -72,6 +72,14 @@ feature 'Exhibitions' do
     expect(current.title(Fixture::Exhibitions::REDIRECTED_PAGE_TITLE)).to be true
   end
 
+  scenario 'doesnt show exhibition name in sidebar when is deleted', :wip do
+    current = Fixture::Exhibitions.exhibition_saved
+
+    current.click_delete
+
+    expect(current.content?(Fixture::Exhibitions::NAME)).to be false
+  end
+
   scenario 'hide exhibition form' do
     current = Fixture::Exhibitions.exhibition_saved
 

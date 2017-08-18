@@ -1,0 +1,26 @@
+FROM ruby:2.4.0
+
+# Let's start with some basic stuff.
+RUN apt-get update && apt-get install -qqy \
+    apt-transport-https \
+    ca-certificates \
+    curl \
+    lxc \
+    iptables
+
+# Install Docker from Docker Inc. repositories.
+RUN curl -sSL https://get.docker.com/ | sh
+
+# Install the magic wrapper.
+ADD ./wrapdocker /usr/local/bin/wrapdocker
+RUN chmod +x /usr/local/bin/wrapdocker
+
+# Define additional metadata for our image.
+ENV SYSTEM_MODE development
+ENV HOME=/opt/app/culturaaccesible-system
+
+RUN mkdir -p $HOME
+ADD . $HOME
+WORKDIR $HOME
+RUN gem install bundler -v 1.14.6
+RUN bundle install

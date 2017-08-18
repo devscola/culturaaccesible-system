@@ -30,10 +30,17 @@ Class('Services.Exhibitions', {
         });
     },
 
+    deleteExhibition: function(exhibition) {
+        this.doRequest('/exhibition/delete', exhibition, function(result) {
+            Bus.publish('exhibition.deleted', result);
+        });
+    },
+
     subscribe: function() {
         Bus.subscribe('exhibition.retrieve', this.retrieveExhibition.bind(this));
         Bus.subscribe('exhibitions.list.retrieve', this.retrieveList.bind(this));
         Bus.subscribe('exhibition.for.list.retrieve', this.retrieveExhibitionForSidebar.bind(this));
         Bus.subscribe('exhibition.save', this.saveExhibition.bind(this));
+        Bus.subscribe('exhibition.delete', this.deleteExhibition.bind(this));
     }
 });
