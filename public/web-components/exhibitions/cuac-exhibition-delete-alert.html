@@ -1,0 +1,54 @@
+<link rel="import" href="/vendor/polymer/polymer.html">
+
+<dom-module id="cuac-exhibition-delete-alert">
+    <template>
+        <style>
+            .show {
+                display: block;
+            }
+
+            .hide {
+                display: none;
+            }
+        </style>
+        <div class$="{{visibility}} room-alert">
+            <p>This action will permanently delete the exhibition and all its pertaining items (if there are any). Are you sure you want to continue?</p>
+            <div>
+                <button class="accept-alert" on-click="deleteExhibition">OK</button>
+                <button class="cancel-alert" on-click="cancelAlert">CANCEL</button>
+            </div>
+        </div>
+    </template>
+
+    <script>
+        Polymer({
+            is: 'cuac-exhibition-delete-alert',
+
+            properties: {
+
+                visibility: {
+                    type: String
+                },
+
+                exhibition: {
+                    type: Object
+                }
+
+            },
+
+            ready: function() {
+                this.visibility = 'hide';
+            },
+
+            deleteExhibition: function() {
+                this.visibility = 'hide'
+                this.fire('delete.confirmation', this.exhibition);
+            },
+
+            cancelAlert: function() {
+                this.visibility = 'hide';
+            },
+
+        });
+    </script>
+</dom-module>

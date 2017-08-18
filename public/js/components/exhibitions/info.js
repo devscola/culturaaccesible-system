@@ -5,8 +5,10 @@ Class('Exhibition.Info', {
     initialize: function() {
         Exhibition.Info.Super.call(this, 'info');
         this.loadExhibition();
+        this.alert = document.getElementById('alert');
         this.element.addEventListener('edit', this.goToEditForm.bind(this));
-        this.element.addEventListener('delete', this.delete.bind(this));
+        this.element.addEventListener('delete', this.showDeleteAlert.bind(this));
+        this.element.addEventListener('delete.confirmation', this.delete.bind(this));
     },
 
     render: function(exhibition) {
@@ -33,6 +35,10 @@ Class('Exhibition.Info', {
         var exhibition = event.detail
         var payload = { 'id': exhibition.id }
         Bus.publish('exhibition.delete', payload)
+    },
+
+    showDeleteAlert: function() {
+      this.alert.visibility = 'show'
     },
 
     loadShortUrlData: function(index) {
