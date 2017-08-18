@@ -1,6 +1,7 @@
 require 'spec_helper_bdd'
 require_relative 'test_support/exhibitions'
 require_relative 'test_support/fixture_exhibitions'
+require_relative 'test_support/fixture_museum'
 require_relative 'test_support/exhibition_info'
 
 
@@ -162,5 +163,16 @@ feature 'Exhibitions' do
     Page::ExhibitionInfo.new
 
     expect(page).to have_xpath("//img[contains(@src,'https://s3.amazonaws.com/pruebas-cova/girasoles.jpg')]" )
+  end
+
+  scenario 'shows all museums in museums select field' do
+    Fixture::Museum.fill_with_extra_content
+    Fixture::Museum.fill_other_museum
+    current = Fixture::Exhibitions.pristine.show_exhibition_form
+
+    current.display_museums
+
+    expect(current.content?(Fixture::Museum::MANDATORY_DATA['name'])).to be true
+    expect(current.content?('Other museum')).to be true
   end
 end

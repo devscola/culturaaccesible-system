@@ -32,6 +32,15 @@
                 <input class="form-control" name="location" value="{{location::input}}">
             </div>
             <div class="form-group">
+                <label for="museums">Museum *</label>
+                <select class="form-control" id="#museums" name="museums" value="[[museumValue::input]]">
+                    <option selected disabled>Select a museum</option>
+                    <template is="dom-repeat" items="[[museums]]" as="museum">
+                        <option value="[[museum.id]]">[[museum.info.name]]</option>
+                    </template>
+                </select>
+            </div>
+            <div class="form-group">
                 <label for="shortDescription">General description</label>
                 <input class="form-control" name="shortDescription" value="{{shortDescription::input}}">
             </div>
@@ -106,6 +115,10 @@
 
                 location: {observer: 'isSubmittable'},
 
+                museums: {type: Array},
+
+                museumValue: {type: String},
+
                 shortDescription: {},
 
                 typeValue: {},
@@ -175,6 +188,7 @@
                     show: this.checkShow,
                     name: this.name,
                     location: this.location,
+                    museum_id: this.museumValue,
                     short_description: this.shortDescription,
                     type: this.typeValue,
                     date_start: this.formatDate(this.dateStart),

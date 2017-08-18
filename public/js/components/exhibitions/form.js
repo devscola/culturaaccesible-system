@@ -10,6 +10,7 @@ Class('Exhibitions.Form', {
         this.exhibitionForm.addEventListener('submitted', this.save.bind(this));
         this.exhibitionButton.addEventListener('started', this.show.bind(this));
         this.loadEditInfo();
+        this.retrieveAllMuseums();
     },
 
     show: function(event) {
@@ -74,9 +75,18 @@ Class('Exhibitions.Form', {
         return data;
     },
 
+    retrieveAllMuseums: function() {
+        Bus.publish('museums.retrieve');
+    },
+
+    addMuseumsList: function(museums) {
+        this.exhibitionForm.museums = museums;
+    },
+
     subscribe: function() {
         Bus.subscribe('exhibition.retrieved', this.editExhibition.bind(this));
         Bus.subscribe('exhibition.edit', this.show.bind(this));
+        Bus.subscribe('museums.retrieved', this.addMuseumsList.bind(this));
     }
 
 });
