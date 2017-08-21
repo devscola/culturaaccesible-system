@@ -212,6 +212,10 @@ module Page
       has_css?('.edit-button', wait: 4, exact_text: 'Edit')
     end
 
+    def display_museums 
+      find_field('museums').click
+    end
+
     private
 
     def validate!

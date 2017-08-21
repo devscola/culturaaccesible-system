@@ -59,6 +59,13 @@ module Fixture
         current
       end
 
+      def fill_other_museum
+        current = showing_form
+        current.fill_input('name', 'Other museum')
+        current.fill_input('street', 'Other street')
+        current.submit
+      end
+
       def contact_section_with_an_extra_input
         current = fill_mandatory_content
         current.fill_input('phone1', PHONE)
