@@ -7,7 +7,7 @@ require_relative 'test_support/room_info'
 require_relative 'test_support/scene_info'
 
 feature 'Item' do
-  feature 'creating an item', :wip do
+  feature 'creating an item' do
     before :all do
       Fixture::Exhibitions.up
     end

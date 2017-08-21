@@ -58,5 +58,6 @@ class App < Sinatra::Base
 
   get '/api/exhibition/flush' do
     Exhibitions::Service.flush
+    {}
   end
 end

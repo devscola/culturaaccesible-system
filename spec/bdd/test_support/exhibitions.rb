@@ -12,6 +12,32 @@ module Page
       fill_in(field, with: content, wait: 2)
     end
 
+    def fill_mandatory_fields
+      show
+      fill(Fixture::XExhibitions::NAME_FIELD, Fixture::XExhibitions::NAME)
+      fill(Fixture::XExhibitions::LOCATION_FIELD, Fixture::XExhibitions::LOCATION)
+    end
+
+    def fill_media
+      fill('media', Fixture::XExhibitions::LINK)
+    end
+
+    def create_one
+      fill_mandatory_fields
+      fill_media
+      save
+      self
+    end
+
+    def edit_exhibition
+      click_edit
+      fill(Fixture::XExhibitions::NAME_FIELD, Fixture::XExhibitions::OTHER_NAME)
+    end
+
+    def has_sidebar?
+      has_css?('.toggle-exhibition-list', wait: 2)
+    end
+
     def form_submit_deactivated?
       button = find('.submit')
       button.disabled?
@@ -39,6 +65,7 @@ module Page
     def save
       has_css?('.submit.cuac-exhibition-form', wait: 4)
       find('.submit.cuac-exhibition-form').click
+      self
     end
 
     def add_room
@@ -112,7 +139,11 @@ module Page
     end
 
     def other_name?
-      has_css?('.exhibition-name', exact_text: 'some other name', wait: 2)
+      has_css?('.exhibition-name', exact_text: Fixture::XExhibitions::OTHER_NAME, wait: 2)
+    end
+
+    def second_exhibition_shown?
+      has_css?('.exhibition-name', exact_text: Fixture::XExhibitions::SECOND_EXHIBITION, wait: 2)
     end
 
     def click_plus_button

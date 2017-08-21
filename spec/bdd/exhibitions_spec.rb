@@ -3,9 +3,9 @@ require_relative 'test_support/exhibitions'
 require_relative 'test_support/fixture_exhibitions'
 require_relative 'test_support/exhibition_info'
 
-feature 'item list', :wep do
+feature 'item list' do
   before(:all) do
-    Fixture::Exhibitions.pristine.complete_exhibition
+    Fixture::XExhibitions.pristine.complete_scenario
   end
 
   scenario 'shows each room with + button' do
@@ -22,124 +22,89 @@ feature 'item list', :wep do
     expect(current.subscene_has_plus_button?).to be false
   end
 
-end
+  scenario 'shows list sorted by creation date'  do
+    current = Page::Exhibitions.new
 
-feature 'Exhibitions', :wip do
-  before(:each) do
-    Fixture::Exhibitions.pristine
+    expect(current.second_exhibition_shown?).to be true
   end
 
+  scenario 'links to create item page' do
+    current = Page::Exhibitions.new
 
-  scenario 'shows exhibition form' do
-    current = Fixture::Exhibitions.show_exhibition_form
+    current.click_plus_button
 
-    expect(current.form_visible?). to be true
+    expect(current.title(Fixture::XExhibitions::REDIRECTED_PAGE_TITLE)).to be true
+  end
+
+  scenario 'shows sidebar in all exhibitions pages' do
+    current = Page::Exhibitions.new
+    expect(current.has_sidebar?).to be true
+
+    current.go_to_exhibition_info
+
+    expect(current.has_sidebar?).to be true
+  end
+end
+
+feature 'create exhibitions' do
+  before(:all) do
+    Fixture::XExhibitions.pristine
   end
 
   scenario 'allows submit when required fields filled' do
-    current = Fixture::Exhibitions.fill_form
+    current = Page::Exhibitions.new
+
+    current.fill_mandatory_fields
 
     expect(current.form_submit_deactivated?).to be false
   end
 
-  scenario 'displays when form is submited' do
-    current = Fixture::Exhibitions.exhibition_saved
+  context 'exhibition created' do
+    before(:all) do
+      Fixture::XExhibitions.pristine
+    end
 
-    expect(current.view_visible?).to be true
+    let(:current) { Page::Exhibitions.new.create_one }
+
+    scenario 'displays when form is submited' do
+      expect(current.view_visible?).to be true
+    end
+
+    scenario 'hide exhibition form' do
+      expect(current.form_visible?).to be false
+    end
+
+    scenario 'shows edit button' do
+      expect(current.has_edit_button?).to be true
+    end
+
+    scenario 'hides view when edit' do
+      current.click_edit
+      expect(current.view_visible?).to be false
+    end
+
+    scenario 'shows form when edit' do
+      current.click_edit
+      expect(current.form_visible?).to be true
+    end
+
+    scenario 'added link shows an image' do
+      current.go_to_exhibition_info
+      Page::ExhibitionInfo.new
+
+      expect(page).to have_xpath("//img[contains(@src,'https://s3.amazonaws.com/pruebas-cova/girasoles.jpg')]" )
+    end
   end
+end
 
-  scenario 'shows list sorted by creation date'  do
-    current = Fixture::Exhibitions.two_exhibitions_introduced
-
-    expect(current.other_name?).to be true
-  end
-
-  scenario 'shows link button' do
-    current = Fixture::Exhibitions.two_exhibitions_introduced
-
-    current.click_plus_button
-
-    expect(current.title(Fixture::Exhibitions::REDIRECTED_PAGE_TITLE)).to be true
-  end
-
-  scenario 'hide exhibition form' do
-    current = Fixture::Exhibitions.exhibition_saved
-
-    expect(current.form_visible?).to be false
-  end
-
-  scenario 'shows edit button' do
-    current = Fixture::Exhibitions.exhibition_saved
-
-    expect(current.has_edit_button?).to be true
-  end
-
-  scenario 'hides view when edit' do
-    current = Fixture::Exhibitions.exhibition_saved
-
-    current.click_edit
-
-    expect(current.view_visible?).to be false
-  end
-
-  scenario 'shows form when edit' do
-    current = Fixture::Exhibitions.exhibition_saved
-
-    current.click_edit
-
-    expect(current.form_visible?).to be true
-  end
-
-  scenario 'updates exhibition info' do
-    current = Fixture::Exhibitions.exhibition_edited
+feature 'updates' do
+  scenario 'exhibition info' do
+    current = Page::Exhibitions.new
+    current.create_one
+    current.edit_exhibition
 
     current.save
 
     expect(current.other_name?).to be true
-  end
-
-  scenario 'shows exhibition info when exhibition name is clicked' do
-    current = Fixture::Exhibitions.exhibition_saved
-    current.go_to_exhibition_info
-
-    current = Page::ExhibitionInfo.new
-
-    expect(current.content?(Fixture::Exhibitions::EXHIBITION_NAME)).to be true
-  end
-
-  scenario 'shows sidebar in all exhibitions pages' do
-    current = Fixture::Exhibitions.exhibition_saved
-    is_toggle = current.has_css?('.toggle-exhibition-list', wait: 2)
-    expect(is_toggle).to be true
-
-    current.go_to_exhibition_info
-    current = Page::ExhibitionInfo.new
-    is_toggle = current.has_css?('.toggle-exhibition-list', wait: 2)
-    expect(is_toggle).to be true
-  end
-
-  scenario 'added link is saved' do
-    current = Fixture::Exhibitions.pristine.fill_form
-
-    current.fill('media', Fixture::Exhibitions::LINK)
-    current.save
-    saved_result = 'Media: '+ Fixture::Exhibitions::LINK
-    current.go_to_exhibition_info
-    current = Page::ExhibitionInfo.new
-
-    expect(current.content?(saved_result)).to be true
-  end
-
-  scenario 'added link shows an image' do
-    current = Fixture::Exhibitions.pristine.fill_form
-    current.fill('media', Fixture::Exhibitions::LINK)
-
-    expect(page).to have_xpath("//img[contains(@src,'https://s3.amazonaws.com/pruebas-cova/girasoles.jpg')]" )
-
-    current.save
-    current.go_to_exhibition_info
-    Page::ExhibitionInfo.new
-
-    expect(page).to have_xpath("//img[contains(@src,'https://s3.amazonaws.com/pruebas-cova/girasoles.jpg')]" )
   end
 end
