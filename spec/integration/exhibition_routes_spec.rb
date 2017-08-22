@@ -1,6 +1,7 @@
 require 'rack/test'
 require 'json'
 require_relative '../../system/routes/exhibitions'
+require_relative '../../system/routes/museums'
 require_relative '../../system/exhibitions/repository'
 
 describe 'Exhibition controller' do
@@ -84,7 +85,7 @@ describe 'Exhibition controller' do
     exhibition_updated = {
       id: exhibition_id,
       name: 'some other name',
-      location: 'some location'
+      museum_id: '1'
     }.to_json
     post '/api/exhibition/add', exhibition_updated
     payload = { id: exhibition_id }.to_json
@@ -145,7 +146,7 @@ describe 'Exhibition controller' do
     exhibition_updated = {
       id: exhibition['id'],
       name: 'some other name',
-      location: 'some location',
+      museum_id: '1',
       image: 'fake-image.jpg'
     }.to_json
     post '/api/exhibition/add', exhibition_updated
@@ -172,6 +173,19 @@ describe 'Exhibition controller' do
     expect(exhibition_deleted).to eq true
   end
 
+  it 'saves exhibition with museum relationship' do
+    add_museum
+    museum_id = parse_response['id']
+    add_exhibition(museum_id)
+    exhibition = parse_response
+
+    payload = { id: exhibition['id'] }.to_json
+    post '/api/exhibition/retrieve', payload
+
+    retrieved_museum_id = parse_response['museum_id']
+    expect(retrieved_museum_id).to eq museum_id
+  end
+
   def retrieve_for_list(exhibition_id)
     payload = { id: exhibition_id }.to_json
     post 'api/exhibition/retrieve-for-list', payload
@@ -181,11 +195,11 @@ describe 'Exhibition controller' do
     post 'api/exhibition/list'
   end
 
-  def add_exhibition
+  def add_exhibition(museum_id = '')
     exhibition = {
       name: 'some name',
-      location: 'some location',
-      image: IMAGE
+      image: IMAGE,
+      museum_id: museum_id
     }.to_json
     post '/api/exhibition/add', exhibition
   end
@@ -208,6 +222,14 @@ describe 'Exhibition controller' do
   def add_subitem(number='', exhibition_id, parent_class, parent_id)
     scene = { id: '', name: 'name', number: number, room: false, parent_id: parent_id, exhibition_id: exhibition_id, parent_class: parent_class, type: 'scene' }.to_json
     post '/api/item/add', scene
+  end
+
+  def add_museum
+    museum = {
+        info: {name: 'some name', description: 'some description'},
+        location: {street: 'some street'}
+      }.to_json
+    post '/api/museum/add', museum
   end
 
   def parse_response

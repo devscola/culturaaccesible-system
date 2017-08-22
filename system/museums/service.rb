@@ -30,6 +30,10 @@ module Museums
         list = Museums::Repository.all
         list.map { |museum| museum.serialize }
       end
+
+      def flush
+        Museums::Repository.flush
+      end
     end
   end
 end

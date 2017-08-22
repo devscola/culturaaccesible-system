@@ -5,10 +5,15 @@ module Fixture
   class Museum
     extend Capybara::DSL
 
+    NAME = 'Some name'
+
     MANDATORY_DATA = {
-      'name' => 'Some name',
+      'name' => NAME,
       'street' => 'Some street'
     }
+
+    OTHER_NAME = 'Other museum'
+    OTHER_STREET = 'Other street'
 
     EXTRA_PHONE = '99999999'
     PHONE = '000000000'
@@ -29,6 +34,12 @@ module Fixture
     DUPLICATED_SCHEDULE_HOUR = 'MON 08:00-14:00 08:00-14:00'
 
     class << self
+
+      def pristine
+        visit('/api/museum/flush')
+        self
+      end
+
       def initial_state
         Page::Museum.new
       end
@@ -61,8 +72,8 @@ module Fixture
 
       def fill_other_museum
         current = showing_form
-        current.fill_input('name', 'Other museum')
-        current.fill_input('street', 'Other street')
+        current.fill_input('name', OTHER_NAME)
+        current.fill_input('street', OTHER_STREET)
         current.submit
       end
 
@@ -93,6 +104,12 @@ module Fixture
     SECOND_STREET = 'Madrid'
 
     class << self
+
+      def pristine
+        HTTParty.get('http://localhost:4567/api/museum/flush')
+        self
+      end
+
       def complete_scenario
         add_museum(FIRST_MUSEUM, FIRST_STREET)
         add_museum(SECOND_MUSEUM, SECOND_STREET)

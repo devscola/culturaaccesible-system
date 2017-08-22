@@ -27,12 +27,8 @@
                 <input class="form-control" name="name" value="{{name::input}}">
             </div>
             <div class="form-group">
-                <label for="location"><strong>Location*</strong></label>
-                <input class="form-control" name="location" value="{{location::input}}">
-            </div>
-            <div class="form-group">
-                <label for="museums">Museum *</label>
-                <select class="form-control" id="#museums" name="museums" value="[[museumValue::input]]">
+                <label for="museums"><strong>Museum*</strong></label>
+                <select class="form-control" id="museums" name="museums" value="{{museumValue::change}}">
                     <option selected disabled>Select a museum</option>
                     <template is="dom-repeat" items="[[museums]]" as="museum">
                         <option value="[[museum.id]]">[[museum.info.name]]</option>
@@ -45,7 +41,7 @@
             </div>
             <div class="form-group">
                 <label for="type">Type</label>
-                <select class="form-control" id="type" name="type" value="{{typeValue::input}}">
+                <select class="form-control" id="type" name="type" value="{{typeValue::change}}">
                     <option selected disabled>Select an option</option>
                     <option value="paint">Paint</option>
                     <option value="sculpture">Sculpture</option>
@@ -112,11 +108,9 @@
 
                 name: {observer: 'isSubmittable'},
 
-                location: {observer: 'isSubmittable'},
+                museumValue: {observer: 'isSubmittable'},
 
                 museums: {type: Array},
-
-                museumValue: {type: String},
 
                 shortDescription: {},
 
@@ -153,8 +147,8 @@
 
             isSubmittable: function() {
                 var nameLength = this.nameHasValue() ? 0 : this.name.length;
-                var locationLength = this.locationHasValue() ? 0 : this.location.length;
-                if (nameLength > 0 && locationLength > 0) {
+                var museumsLength = this.museumHasValue() ? 0 : this.museumValue.length;
+                if (nameLength > 0 && museumsLength > 0) {
                     this.activateSubmit();
                 } else {
                     this.deactivateSubmit();
@@ -165,8 +159,8 @@
                 return this.name === undefined;
             },
 
-            locationHasValue: function () {
-                return this.location === undefined;
+            museumHasValue: function () {
+                return this.museumValue === undefined;
             },
 
             activateSubmit: function() {

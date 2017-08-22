@@ -15,7 +15,6 @@ module Page
     def fill_mandatory_fields
       show
       fill(Fixture::XExhibitions::NAME_FIELD, Fixture::XExhibitions::NAME)
-      fill(Fixture::XExhibitions::LOCATION_FIELD, Fixture::XExhibitions::LOCATION)
     end
 
     def fill_media
@@ -24,6 +23,7 @@ module Page
 
     def create_one
       fill_mandatory_fields
+      select_museum(Fixture::XMuseum::FIRST_MUSEUM)
       fill_media
       save
       self
@@ -101,7 +101,7 @@ module Page
     end
 
     def view_visible?
-      has_css?('.view', wait: 2, visible: false)
+      has_css?('.view', wait: 6, visible: false)
       view = find('.view', visible: false)
       view.visible?
     end
@@ -242,8 +242,19 @@ module Page
       has_css?('.edit-button', wait: 4, exact_text: 'Edit')
     end
 
-    def display_museums
-      find_field('museums').click
+    def save_exhibition_with_museum(museum)
+      fill(Fixture::Exhibitions::NAME_FIELD, Fixture::Exhibitions::NAME)
+      select_museum(museum)
+      save
+    end
+
+    def view_has_museum?(museum)
+      has_css?('.museum', wait: 4, text: museum, visible: true)
+    end
+
+    def select_museum(name)
+      find('#museums').click
+      find('#museums option', text: name).click
     end
 
     private
@@ -254,7 +265,7 @@ module Page
       assert_selector('#listing', visible: false)
       assert_selector('#result', visible: false)
       assert_selector("input[name='name']", visible: false)
-      assert_selector("input[name='location']", visible: false)
+      assert_selector("select[name='museums']", visible: false)
     end
   end
 end

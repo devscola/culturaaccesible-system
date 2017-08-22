@@ -55,14 +55,6 @@ feature 'item list' do
 
     expect(current.has_sidebar?).to be true
   end
-
-  scenario 'doesnt show exhibition name in sidebar when is deleted' do
-    current = Fixture::Exhibitions.exhibition_saved
-
-    current.click_delete
-
-    expect(current.content?(Fixture::Exhibitions::NAME)).to be false
-  end
 end
 
 feature 'create exhibitions' do
@@ -73,6 +65,7 @@ feature 'create exhibitions' do
   context 'exhibition created' do
     before(:all) do
       Fixture::XExhibitions.pristine
+      Fixture::XMuseum.pristine.complete_scenario
     end
 
     let(:current) { Page::Exhibitions.new.create_one }
@@ -109,14 +102,19 @@ feature 'updates' do
     expect(current.other_name?).to be true
   end
 
-  scenario 'shows all museums in museums select field' do
-    Fixture::Museum.fill_with_extra_content
-    Fixture::Museum.fill_other_museum
-    current = Fixture::Exhibitions.pristine.show_exhibition_form
+  scenario 'shows museum name saved' do
+    current = Fixture::Exhibitions.pristine.exhibition_saved
 
-    current.display_museums
+    expect(current.view_has_museum?(Fixture::Museum::OTHER_NAME)).to be true
+  end
+end
 
-    expect(current.content?(Fixture::Museum::MANDATORY_DATA['name'])).to be true
-    expect(current.content?('Other museum')).to be true
+feature 'deletes' do
+  xscenario 'doesnt show exhibition name in sidebar when is deleted' do
+    current = Fixture::Exhibitions.exhibition_saved
+
+    current.click_delete
+
+    expect(current.content?(Fixture::Exhibitions::NAME)).to be false
   end
 end

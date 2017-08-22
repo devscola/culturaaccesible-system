@@ -1,5 +1,6 @@
 require 'httparty'
 require 'json'
+require_relative 'fixture_museum'
 
 module Fixture
   class Exhibitions
@@ -7,6 +8,7 @@ module Fixture
 
     NAME_FIELD = 'name'
     LOCATION_FIELD = 'location'
+    MUSEUM_FIELD = 'museums'
     NAME = 'some name'
     OTHER_NAME = 'some other name'
     LOCATION = 'some location'
@@ -38,12 +40,13 @@ module Fixture
         current.show
 
         current.fill(NAME_FIELD, NAME)
-        current.fill(LOCATION_FIELD, LOCATION)
+        current.select_museum(Fixture::Museum::OTHER_NAME)
+        current
       end
 
       def exhibition_saved
-        current = Page::Exhibitions.new
-        current.fill_mandatory_fields
+        create_museums
+        current = fill_form
         current.save
         current
       end
@@ -89,16 +92,22 @@ module Fixture
       end
 
       def two_exhibitions_introduced
+        create_museums
         current = show_exhibition_form
         current.fill(NAME_FIELD, NAME)
-        current.fill(LOCATION_FIELD, LOCATION)
+        current.select_museum(Fixture::Museum::NAME)
         current.save
 
         current.show
         current.fill(NAME_FIELD, OTHER_NAME)
-        current.fill(LOCATION_FIELD, LOCATION)
+        current.select_museum(Fixture::Museum::OTHER_NAME)
         current.save
         current
+      end
+
+      def create_museums
+        Fixture::Museum.pristine.fill_with_extra_content
+        Fixture::Museum.fill_other_museum
       end
     end
   end

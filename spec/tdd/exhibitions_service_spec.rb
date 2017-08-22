@@ -8,8 +8,7 @@ describe Exhibitions::Service do
 
   it 'retrieves an exhibition with date creation' do
     name = 'some name'
-    location = 'some location'
-    result = add_exhibition(name, location)
+    result = add_exhibition(name)
 
     exhibition = Exhibitions::Service.retrieve(result[:id])
 
@@ -19,8 +18,7 @@ describe Exhibitions::Service do
 
   it 'retrieves all exhibitions' do
     name = 'some name'
-    location = 'some location'
-    add_exhibition(name, location)
+    add_exhibition(name)
 
     result = Exhibitions::Service.list
 
@@ -29,27 +27,26 @@ describe Exhibitions::Service do
 
   it 'defense of nullable parameters' do
     name = 'some name'
-    location = nil
-    result = add_exhibition(name, location)
+    museum_id = nil
+    result = add_exhibition(name, museum_id)
 
     exhibition = Exhibitions::Service.retrieve(result[:id])
 
     expect(exhibition[:name]).to eq(name)
-    expect(exhibition[:location]).to eq('')
+    expect(exhibition[:museum_id]).to eq('')
   end
 
   it 'deletes an exhibition' do
     name = 'some name'
-    location = 'some location'
-    exhibition = add_exhibition(name, location)
+    exhibition = add_exhibition(name)
 
     exhibition = Exhibitions::Service.delete(exhibition[:id])
 
     expect(exhibition[:deleted]).to be true
   end
 
-  def add_exhibition(name, location)
-    exhibition = { 'name' => name, 'location' => location }
+  def add_exhibition(name, museum_id = 1)
+    exhibition = { 'name' => name, 'museum_id' => museum_id }
     Exhibitions::Service.store(exhibition)
   end
 

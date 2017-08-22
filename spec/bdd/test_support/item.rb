@@ -103,7 +103,6 @@ module Page
     def validate!
       assert_selector('#formulary')
       assert_selector("input[name='name']", visible: false)
-      assert_selector('.submit:disabled')
     end
   end
 end

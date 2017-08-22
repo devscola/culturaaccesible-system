@@ -1,4 +1,5 @@
 require 'spec_helper_bdd'
+require_relative 'test_support/museum'
 require_relative 'test_support/item'
 require_relative 'test_support/fixture_item'
 require_relative 'test_support/exhibitions'
@@ -189,10 +190,10 @@ feature 'Item' do
 
     current = Page::RoomInfo.new
     current.click_edit
+
     current = Page::Item.new
 
     expect(current.room_check_disabled?).to be true
-
   end
 
   scenario 'lock checkbox when scene is edited' do
@@ -207,7 +208,6 @@ feature 'Item' do
     current = Page::Item.new
 
     expect(current.room_check_disabled?).to be true
-
   end
 
   scenario 'fix add room when item fields are filled' do
