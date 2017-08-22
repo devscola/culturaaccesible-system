@@ -72,7 +72,7 @@ feature 'Exhibitions' do
     expect(current.title(Fixture::Exhibitions::REDIRECTED_PAGE_TITLE)).to be true
   end
 
-  scenario 'doesnt show exhibition name in sidebar when is deleted', :wip do
+  scenario 'doesnt show exhibition name in sidebar when is deleted' do
     current = Fixture::Exhibitions.exhibition_saved
 
     current.click_delete
@@ -173,14 +173,13 @@ feature 'Exhibitions' do
     expect(page).to have_xpath("//img[contains(@src,'https://s3.amazonaws.com/pruebas-cova/girasoles.jpg')]" )
   end
 
-  scenario 'shows all museums in museums select field' do
-    Fixture::Museum.fill_with_extra_content
+  scenario 'shows museum name saved' do
+    Fixture::Museum.pristine.fill_with_extra_content
     Fixture::Museum.fill_other_museum
     current = Fixture::Exhibitions.pristine.show_exhibition_form
 
-    current.display_museums
+    current.save_exhibition_with_museum(Fixture::Museum::OTHER_NAME)
 
-    expect(current.content?(Fixture::Museum::MANDATORY_DATA['name'])).to be true
-    expect(current.content?('Other museum')).to be true
+    expect(current.view_has_museum?(Fixture::Museum::OTHER_NAME)).to be true
   end
 end

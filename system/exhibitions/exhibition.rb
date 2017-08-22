@@ -8,6 +8,7 @@ module Exhibitions
       @show = Defense.string_null_defense(data['show'])
       @name = Defense.string_null_defense(data['name'])
       @location = Defense.string_null_defense(data['location'])
+      @museum_id = Defense.string_null_defense(data['museum_id'])
       @short_description = Defense.string_null_defense(data['short_description'])
       @date_start = Defense.string_null_defense(data['date_start'])
       @date_finish = Defense.string_null_defense(data['date_finish'])
@@ -27,6 +28,7 @@ module Exhibitions
         show: @show,
         name: @name,
         location: @location,
+        museum_id: @museum_id,
         short_description: @short_description,
         date_start: @date_start,
         date_finish: @date_finish,

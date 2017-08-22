@@ -10,8 +10,22 @@ Class('Exhibitions.Panel', {
         this.element.addEventListener('delete.confirmation', this.delete.bind(this));
     },
 
-    render: function(exhibition) {
+    setExhibition: function(exhibition) {
         this.element.exhibition = exhibition;
+        if(exhibition.museum_id == ''){
+            this.show();
+        }else{
+            this.loadMuseum(exhibition.museum_id);
+        }
+    },
+
+    loadMuseum: function(museum_id) {
+        var payload = { 'id': museum_id };
+        Bus.publish('museum.retrieve', payload);
+    },
+
+    render: function(museum) {
+        this.element.museum = museum.info.name;
         this.show();
     },
 
@@ -25,22 +39,23 @@ Class('Exhibitions.Panel', {
     },
 
     delete: function(event) {
-        var exhibition = event.detail
-        var payload = { 'id': exhibition.id }
-        Bus.publish('exhibition.delete', payload)
+        var exhibition = event.detail;
+        var payload = { 'id': exhibition.id };
+        Bus.publish('exhibition.delete', payload);
     },
 
     showDeleteAlert: function() {
-      this.alert.visibility = 'show'
+        this.alert.visibility = 'show';
     },
 
     goToHome: function() {
-        window.location = '/'
+        window.location = '/';
     },
 
     subscribe: function() {
-        Bus.subscribe('exhibition.saved', this.render.bind(this));
+        Bus.subscribe('exhibition.saved', this.setExhibition.bind(this));
         Bus.subscribe('exhibition.deleted', this.goToHome.bind(this));
+        Bus.subscribe('museum.retrieved', this.render.bind(this));
     }
 
 });

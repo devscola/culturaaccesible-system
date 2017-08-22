@@ -24,9 +24,16 @@ Class('Services.Museums', {
         });
     },
 
+    retrieve: function(museum_data) {
+        this.doRequest('/museum/retrieve', museum_data, function(museum) {
+            Bus.publish('museum.retrieved', museum);
+        });
+    },
+
     subscribe: function() {
         Bus.subscribe('museum.save', this.save.bind(this));
         Bus.subscribe('museum.update', this.update.bind(this));
+        Bus.subscribe('museum.retrieve', this.retrieve.bind(this));
         Bus.subscribe('museums.retrieve', this.retrieveAll.bind(this));
     }
 

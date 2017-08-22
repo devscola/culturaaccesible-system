@@ -21,6 +21,7 @@
                     <div>Show: {{exhibition.show}}</div>
                     <div>Name: {{exhibition.name}}</div>
                     <div>Location: {{exhibition.location}}</div>
+                    <div class="museum">Museum: {{museum}}</div>
                     <div>General description: {{exhibition.short_description}}</div>
                     <div>Type: {{exhibition.type}}</div>
                     <div>
@@ -49,6 +50,11 @@
 
                 exhibition: {
                     type: Object,
+                    reflectToAttribute: true
+                },
+
+                museum: {
+                    type: String,
                     reflectToAttribute: true
                 },
 

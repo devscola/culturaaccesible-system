@@ -4,6 +4,7 @@ module Fixture
 
     NAME_FIELD = 'name'
     LOCATION_FIELD = 'location'
+    MUSEUM_FIELD = 'museums'
     NAME = 'some name'
     OTHER_NAME = 'some other name'
     LOCATION = 'some location'

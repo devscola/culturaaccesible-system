@@ -25,11 +25,11 @@ module Museums
         Museums::Museum.from_bson(updated_museum_data, updated_museum_data['id'])
       end
 
-    def retrieve(id)
-        data = connection.museums.find({ id: id }).first
-        museum = Museums::Museum.from_bson(data, data['id'])
-        connection.close
-        museum
+      def retrieve(id)
+          data = connection.museums.find({ id: id }).first
+          museum = Museums::Museum.from_bson(data, data['id'])
+          connection.close
+          museum
       end
 
       def all

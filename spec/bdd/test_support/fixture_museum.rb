@@ -7,6 +7,9 @@ module Fixture
       'street' => 'Some street'
     }
 
+    OTHER_NAME = 'Other museum'
+    OTHER_STREET = 'Other street'
+
     EXTRA_PHONE = '99999999'
     PHONE = '000000000'
     OTHER_PHONE = '123456789'
@@ -26,6 +29,12 @@ module Fixture
     DUPLICATED_SCHEDULE_HOUR = 'MON 08:00-14:00 08:00-14:00'
 
     class << self
+
+      def pristine
+        visit('/api/museum/flush')
+        self
+      end
+
       def initial_state
         Page::Museum.new
       end
@@ -58,8 +67,8 @@ module Fixture
 
       def fill_other_museum
         current = showing_form
-        current.fill_input('name', 'Other museum')
-        current.fill_input('street', 'Other street')
+        current.fill_input('name', OTHER_NAME)
+        current.fill_input('street', OTHER_STREET)
         current.submit
       end
 

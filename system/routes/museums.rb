@@ -26,4 +26,8 @@ class App < Sinatra::Base
     result = Museums::Service.update(museum_data)
     result.to_json
   end
+
+  get '/api/museum/flush' do
+    Museums::Service.flush
+  end
 end
