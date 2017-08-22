@@ -59,32 +59,22 @@ feature 'create exhibitions' do
     expect(current.form_submit_deactivated?).to be false
   end
 
-  context 'exhibition created' do
+  context 'exhibition created', :woop do
     before(:all) do
       Fixture::XExhibitions.pristine
     end
 
     let(:current) { Page::Exhibitions.new.create_one }
 
-    scenario 'displays when form is submited' do
+    scenario 'displays editable info' do
       expect(current.view_visible?).to be true
-    end
-
-    scenario 'hide exhibition form' do
       expect(current.form_visible?).to be false
-    end
-
-    scenario 'shows edit button' do
       expect(current.has_edit_button?).to be true
     end
 
-    scenario 'hides view when edit' do
+    scenario 'displays form when edit' do
       current.click_edit
       expect(current.view_visible?).to be false
-    end
-
-    scenario 'shows form when edit' do
-      current.click_edit
       expect(current.form_visible?).to be true
     end
 
