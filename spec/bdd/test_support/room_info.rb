@@ -11,6 +11,7 @@ module Page
     end
 
     def click_edit
+      has_css?('.edit-button', wait: 2, exact_text: 'Edit')
       find('.edit-button', wait: 2, exact_text: 'Edit').click
     end
 
