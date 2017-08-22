@@ -18,9 +18,9 @@ Class('Services.Museums', {
         });
     },
 
-    retrieveAll: function() {
-        this.doRequest('/museum/list', '', function(museums) {
-            Bus.publish('museums.retrieved', museums);
+    retrieveList: function(result) {
+        this.doRequest('/museum/list', '', function(result) {
+            Bus.publish('museum.list.retrieved', result);
         });
     },
 
@@ -34,7 +34,7 @@ Class('Services.Museums', {
         Bus.subscribe('museum.save', this.save.bind(this));
         Bus.subscribe('museum.update', this.update.bind(this));
         Bus.subscribe('museum.retrieve', this.retrieve.bind(this));
-        Bus.subscribe('museums.retrieve', this.retrieveAll.bind(this));
+        Bus.subscribe('museum.list.retrieve', this.retrieveList.bind(this));
     }
 
 });

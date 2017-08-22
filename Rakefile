@@ -14,9 +14,9 @@ task :start do
     File.delete('travis.ci')
     sh "rerun --background -- rackup --port #{SINATRA_PORT} -o 0.0.0.0 &"
     sh "sleep 1"
-    sh 'rspec spec/bdd'
-    sh 'rspec spec/tdd'
     sh 'rspec spec/integration'
+    sh 'rspec spec/tdd'
+    sh 'rspec spec/bdd'
   end
 end
 

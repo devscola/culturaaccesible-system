@@ -76,7 +76,7 @@ Class('Exhibitions.Form', {
     },
 
     retrieveAllMuseums: function() {
-        Bus.publish('museums.retrieve');
+        Bus.publish('museum.list.retrieve');
     },
 
     addMuseumsList: function(museums) {
@@ -86,7 +86,7 @@ Class('Exhibitions.Form', {
     subscribe: function() {
         Bus.subscribe('exhibition.retrieved', this.editExhibition.bind(this));
         Bus.subscribe('exhibition.edit', this.show.bind(this));
-        Bus.subscribe('museums.retrieved', this.addMuseumsList.bind(this));
+        Bus.subscribe('museum.list.retrieved', this.addMuseumsList.bind(this));
     }
 
 });

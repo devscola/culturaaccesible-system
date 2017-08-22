@@ -89,6 +89,10 @@ module Page
       has_css?('.list-item.cuac-exhibition-detail', wait: 2)
     end
 
+    def sidebar_has_museums?
+      has_css?('.museum-name', wait: 4)
+    end
+
     def list_has_rooms?
       has_css?('.exhibition-room', wait: 2)
     end

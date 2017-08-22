@@ -5,6 +5,7 @@ Class('Exhibitions.List', {
     initialize: function() {
         Exhibitions.List.Super.call(this, 'listing');
         this.element.exhibitionsList = [];
+        this.element.museumList = [];
         this.retrieve();
     },
 
@@ -14,6 +15,10 @@ Class('Exhibitions.List', {
             var payload = {"id": exhibition.id};
             Bus.publish('exhibition.for.list.retrieve', payload);
         })
+    },
+
+    renderMuseums: function(museums) {
+      this.element.museumList = museums
     },
 
     addExhibitionChildren: function(exhibition){
@@ -33,11 +38,13 @@ Class('Exhibitions.List', {
 
     retrieve: function() {
         Bus.publish('exhibitions.list.retrieve');
+        Bus.publish('museum.list.retrieve')
     },
 
     subscribe: function() {
         Bus.subscribe('exhibitions.list.retrieved', this.render.bind(this));
         Bus.subscribe('exhibition.for.list.retrieved', this.addExhibitionChildren.bind(this));
+        Bus.subscribe('museum.list.retrieved', this.renderMuseums.bind(this));
         Bus.subscribe('exhibition.saved', this.refresh.bind(this));
     }
 });

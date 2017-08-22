@@ -18,4 +18,5 @@ group :test do
   gem 'rspec', '~> 3.5.0'
   gem 'selenium-webdriver', '~> 3.0.8'
   gem 'chromedriver-helper', '~> 1.0.0'
+  gem 'httparty', '~> 0.15.6'
 end

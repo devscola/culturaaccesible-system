@@ -8,6 +8,16 @@
                 <cuac-exhibition-detail exhibition="{{item}}"></cuac-exhibition-detail>
             </template>
         </ul>
+        <h3>MUSEUMS</h3>
+        <ul>
+            <template is="dom-repeat" items$="{{museumList}}">
+                <li>
+                    <span>
+                      <a class="museum-name">{{item.info.name}}</a>
+                    </span>
+                </li>
+            </template>
+        </ul>
     </template>
 
     <script>
@@ -16,6 +26,11 @@
 
             properties: {
                 exhibitionsList: {
+                    type: Array,
+                    reflectToAttribute: true
+                },
+
+                museumList: {
                     type: Array,
                     reflectToAttribute: true
                 }

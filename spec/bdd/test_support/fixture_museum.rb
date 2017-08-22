@@ -1,3 +1,6 @@
+require 'httparty'
+require 'json'
+
 module Fixture
   class Museum
     extend Capybara::DSL
@@ -88,6 +91,25 @@ module Fixture
         current.add_input('.general')
         current.fill_input('general2', OTHER_PRICE)
         current
+      end
+    end
+  end
+
+  class XMuseum
+    FIRST_MUSEUM = 'Muvim'
+    SECOND_MUSEUM = 'El Prado'
+    FIRST_STREET = 'Valencia'
+    SECOND_STREET = 'Madrid'
+
+    class << self
+      def complete_scenario
+        add_museum(FIRST_MUSEUM, FIRST_STREET)
+        add_museum(SECOND_MUSEUM, SECOND_STREET)
+      end
+
+      def add_museum(name, street)
+        museum = { info: { name: name }, location: { street: street } }.to_json
+        HTTParty.post('http://localhost:4567/api/museum/add', { body: museum })
       end
     end
   end
