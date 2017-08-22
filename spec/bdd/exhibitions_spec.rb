@@ -59,7 +59,7 @@ feature 'create exhibitions' do
     expect(current.form_submit_deactivated?).to be false
   end
 
-  context 'exhibition created', :woop do
+  context 'exhibition created' do
     before(:all) do
       Fixture::XExhibitions.pristine
     end
