@@ -85,7 +85,7 @@ describe 'Exhibition controller' do
     exhibition_updated = {
       id: exhibition_id,
       name: 'some other name',
-      location: 'some location'
+      museum_id: '1'
     }.to_json
     post '/api/exhibition/add', exhibition_updated
     payload = { id: exhibition_id }.to_json
@@ -146,7 +146,7 @@ describe 'Exhibition controller' do
     exhibition_updated = {
       id: exhibition['id'],
       name: 'some other name',
-      location: 'some location',
+      museum_id: '1',
       image: 'fake-image.jpg'
     }.to_json
     post '/api/exhibition/add', exhibition_updated
@@ -198,7 +198,6 @@ describe 'Exhibition controller' do
   def add_exhibition(museum_id = '')
     exhibition = {
       name: 'some name',
-      location: 'some location',
       image: IMAGE,
       museum_id: museum_id
     }.to_json

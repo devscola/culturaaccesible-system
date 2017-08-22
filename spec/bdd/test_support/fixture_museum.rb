@@ -5,8 +5,10 @@ module Fixture
   class Museum
     extend Capybara::DSL
 
+    NAME = 'Some name'
+
     MANDATORY_DATA = {
-      'name' => 'Some name',
+      'name' => NAME,
       'street' => 'Some street'
     }
 

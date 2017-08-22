@@ -1,3 +1,5 @@
+require_relative 'fixture_museum'
+
 module Fixture
   class Exhibitions
     extend Capybara::DSL
@@ -30,12 +32,12 @@ module Fixture
         current.show
 
         current.fill(NAME_FIELD, NAME)
-        current.fill(LOCATION_FIELD, LOCATION)
-
+        current.select_museum(Fixture::Museum::OTHER_NAME)
         current
       end
 
       def exhibition_saved
+        create_museums
         current = fill_form
         current.save
         current
@@ -71,16 +73,22 @@ module Fixture
       end
 
       def two_exhibitions_introduced
+        create_museums
         current = show_exhibition_form
         current.fill(NAME_FIELD, NAME)
-        current.fill(LOCATION_FIELD, LOCATION)
+        current.select_museum(Fixture::Museum::NAME)
         current.save
 
         current.show
         current.fill(NAME_FIELD, OTHER_NAME)
-        current.fill(LOCATION_FIELD, LOCATION)
+        current.select_museum(Fixture::Museum::OTHER_NAME)
         current.save
         current
+      end
+
+      def create_museums
+        Fixture::Museum.pristine.fill_with_extra_content
+        Fixture::Museum.fill_other_museum
       end
     end
   end

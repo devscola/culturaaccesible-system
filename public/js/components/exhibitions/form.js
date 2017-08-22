@@ -38,12 +38,18 @@ Class('Exhibitions.Form', {
         this.exhibitionForm.image = exhibition.image;
         this.exhibitionForm.beacon = exhibition.beacon;
         document.getElementsByClassName("show")[0].checked = exhibition.show;
-        this.exhibitionForm.location = exhibition.location;
+        this.exhibitionForm.museumValue = exhibition.museum_id;
         this.exhibitionForm.short_description = exhibition.short_description;
-        this.exhibitionForm.type = exhibition.type;
+        this.exhibitionForm.typeValue = exhibition.type;
         this.exhibitionForm.date_start = exhibition.date_start;
         this.exhibitionForm.date_finish = exhibition.date_finish;
         this.showForm();
+        selectSelectables();
+    },
+
+    selectSelectables: function(){
+        document.getElementById('museums').value = exhibition.museum_id;
+        document.getElementById('type').value = exhibition.type;
     },
 
     isEditable: function() {

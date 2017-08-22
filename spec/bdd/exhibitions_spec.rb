@@ -66,7 +66,7 @@ feature 'Exhibitions' do
     expect(current.view_visible?).to be true
   end
 
-  scenario 'shows list sorted by creation date'  do
+  scenario 'shows list sorted by creation date' do
     current = Fixture::Exhibitions.two_exhibitions_introduced
 
     expect(current.other_name?).to be true
@@ -182,11 +182,7 @@ feature 'Exhibitions' do
   end
 
   scenario 'shows museum name saved' do
-    Fixture::Museum.pristine.fill_with_extra_content
-    Fixture::Museum.fill_other_museum
-    current = Fixture::Exhibitions.pristine.show_exhibition_form
-
-    current.save_exhibition_with_museum(Fixture::Museum::OTHER_NAME)
+    current = Fixture::Exhibitions.pristine.exhibition_saved
 
     expect(current.view_has_museum?(Fixture::Museum::OTHER_NAME)).to be true
   end

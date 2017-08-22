@@ -214,7 +214,6 @@ module Page
 
     def save_exhibition_with_museum(museum)
       fill(Fixture::Exhibitions::NAME_FIELD, Fixture::Exhibitions::NAME)
-      fill(Fixture::Exhibitions::LOCATION_FIELD, Fixture::Exhibitions::LOCATION)
       select_museum(museum)
       save
     end
@@ -235,7 +234,7 @@ module Page
       assert_selector('#listing', visible: false)
       assert_selector('#result', visible: false)
       assert_selector("input[name='name']", visible: false)
-      assert_selector("input[name='location']", visible: false)
+      assert_selector("select[name='museums']", visible: false)
     end
   end
 end
