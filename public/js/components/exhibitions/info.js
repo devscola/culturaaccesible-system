@@ -11,8 +11,18 @@ Class('Exhibition.Info', {
         this.element.addEventListener('delete.confirmation', this.delete.bind(this));
     },
 
-    render: function(exhibition) {
+    setExhibition: function(exhibition) {
         this.element.exhibition = exhibition;
+        this.loadMuseum(exhibition.museum_id);
+    },
+
+    loadMuseum: function(museum_id) {
+        var payload = { 'id': museum_id };
+        Bus.publish('museum.retrieve', payload);
+    },
+
+    setMuseum: function(museum) {
+        this.element.museum = museum.info.name;
     },
 
     loadExhibition: function() {
@@ -32,13 +42,13 @@ Class('Exhibition.Info', {
     },
 
     delete: function(event) {
-        var exhibition = event.detail
-        var payload = { 'id': exhibition.id }
-        Bus.publish('exhibition.delete', payload)
+        var exhibition = event.detail;
+        var payload = { 'id': exhibition.id };
+        Bus.publish('exhibition.delete', payload);
     },
 
     showDeleteAlert: function() {
-      this.alert.visibility = 'show'
+        this.alert.visibility = 'show';
     },
 
     loadShortUrlData: function(index) {
@@ -49,12 +59,13 @@ Class('Exhibition.Info', {
     },
 
     goToHome: function() {
-        window.location = '/'
+        window.location = '/';
     },
 
     subscribe: function() {
-        Bus.subscribe('exhibition.retrieved', this.render.bind(this));
+        Bus.subscribe('exhibition.retrieved', this.setExhibition.bind(this));
         Bus.subscribe('exhibition.deleted', this.goToHome.bind(this));
+        Bus.subscribe('museum.retrieved', this.setMuseum.bind(this));
     }
 
 });

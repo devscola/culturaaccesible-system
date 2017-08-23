@@ -123,6 +123,9 @@ module Fixture
     REDIRECTED_PAGE_TITLE = 'Item'
     LINK = 'https://s3.amazonaws.com/pruebas-cova/girasoles.jpg'
 
+    MUSEUM = 'Muvim'
+    MUSEUM_STREET = 'Valencia'
+
     class << self
       def pristine
         HTTParty.get('http://localhost:4567/api/exhibition/flush')
@@ -130,15 +133,16 @@ module Fixture
       end
 
       def complete_scenario
-        exhibition_id = add_exhibition(NAME)
-        add_exhibition(SECOND_EXHIBITION)
+        museum_id = add_museum(MUSEUM, MUSEUM_STREET)
+        exhibition_id = add_exhibition(NAME, museum_id)
+        add_exhibition(SECOND_EXHIBITION, museum_id)
         add_room(exhibition_id)
         scene_id = add_scene(exhibition_id)
         add_subitem(exhibition_id, 'scene', scene_id)
       end
 
-      def add_exhibition(name, media = '')
-        exhibition = { name: name, location: 'some location', media: media }.to_json
+      def add_exhibition(name, museum_id)
+        exhibition = { name: name, museum_id: museum_id}.to_json
         response = HTTParty.post('http://localhost:4567/api/exhibition/add', { body: exhibition })
         JSON.parse(response.body)['id']
       end
@@ -156,7 +160,13 @@ module Fixture
 
       def add_subitem(exhibition_id, parent_class, parent_id)
         scene = { id: '', name: 'subscene', number: '2-1-0', room: false, parent_id: parent_id, exhibition_id: exhibition_id, parent_class: parent_class, type: 'scene' }.to_json
-        response = HTTParty.post('http://localhost:4567/api/item/add', { body: scene })
+        HTTParty.post('http://localhost:4567/api/item/add', { body: scene })
+      end
+
+      def add_museum(name, street)
+        museum = { info: { name: name }, location: { street: street } }.to_json
+        response = HTTParty.post('http://localhost:4567/api/museum/add', { body: museum })
+        JSON.parse(response.body)['id']
       end
     end
   end
