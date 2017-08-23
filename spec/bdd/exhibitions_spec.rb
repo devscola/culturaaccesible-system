@@ -113,10 +113,19 @@ feature 'updates' do
     expect(current.other_name?).to be true
   end
 
-  scenario 'shows museum name saved' do
+  scenario 'shows museum name saved in view' do
     current = Fixture::Exhibitions.pristine.exhibition_saved
 
     expect(current.view_has_museum?(Fixture::Museum::OTHER_NAME)).to be true
+  end
+
+  scenario 'shows museum name saved in edit view' do
+    Fixture::XExhibitions.pristine.complete_scenario
+
+    current = Page::Exhibitions.new
+    current.go_to_exhibition_info
+
+    expect(current.view_has_museum?(Fixture::XMuseum::FIRST_MUSEUM)).to be true
   end
 end
 
