@@ -79,13 +79,15 @@ describe 'Exhibition controller' do
   end
 
   it 'updates existing exhibition' do
-    add_exhibition
+    add_museum
+    museum_id = parse_response['id']
+    add_exhibition(museum_id)
     exhibition_id = parse_response['id']
 
     exhibition_updated = {
       id: exhibition_id,
       name: 'some other name',
-      museum_id: '1'
+      museum_id: museum_id
     }.to_json
     post '/api/exhibition/add', exhibition_updated
     payload = { id: exhibition_id }.to_json
@@ -139,14 +141,16 @@ describe 'Exhibition controller' do
   end
 
   it 'retrieve an updated exhibition with item' do
-    add_exhibition
+    add_museum
+    museum_id = parse_response['id']
+    add_exhibition(museum_id)
     exhibition = parse_response
     add_scene('1-0-0', exhibition['id'])
 
     exhibition_updated = {
       id: exhibition['id'],
       name: 'some other name',
-      museum_id: '1',
+      museum_id: museum_id,
       image: 'fake-image.jpg'
     }.to_json
     post '/api/exhibition/add', exhibition_updated
@@ -173,7 +177,7 @@ describe 'Exhibition controller' do
     expect(exhibition_deleted).to eq true
   end
 
-  it 'saves exhibition with museum relationship',:wop do
+  it 'saves exhibition with museum relationship' do
     add_museum
     museum_id = parse_response['id']
     add_exhibition(museum_id)
