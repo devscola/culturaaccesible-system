@@ -23,7 +23,7 @@ class Order
   end
 
   def retrieve_ordinal(item_id)
-    ordinal = @index.index(item_id)
+    ordinal = @index.key(item_id)
     raise ArgumentError, 'Item not found' unless ordinal
     ordinal
   end
