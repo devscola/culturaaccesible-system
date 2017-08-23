@@ -3,6 +3,7 @@ require 'json'
 require_relative '../exhibitions/service'
 require_relative '../actions/exhibitions'
 require_relative '../items/repository'
+require_relative '../museums/repository'
 require_relative '../items/scene'
 require_relative '../items/room'
 
@@ -10,6 +11,7 @@ class App < Sinatra::Base
   post '/api/exhibition/add' do
     exhibition_data = JSON.parse(request.body.read)
     result = Exhibitions::Service.store(exhibition_data)
+    result = Actions::Exhibition.add_museum_info(result) if result[:museum_id].size > 0
     result.to_json
   end
 
@@ -22,6 +24,7 @@ class App < Sinatra::Base
   post '/api/exhibition/retrieve' do
     exhibition = JSON.parse(request.body.read)
     result = Exhibitions::Service.retrieve(exhibition['id'])
+    result = Actions::Exhibition.add_museum_info(result) if result[:museum_id].size > 0
     result['numbers'] = result[:order][:index].keys()
     result.to_json
   end

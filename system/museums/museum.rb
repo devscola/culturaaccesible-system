@@ -1,5 +1,6 @@
 module Museums
   class Museum
+    attr_reader :name, :id
     def initialize(data, id=nil)
       @creation_date = Time.now.utc
       @info = Info.new(data['info'] || {})

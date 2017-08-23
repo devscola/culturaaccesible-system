@@ -1,6 +1,6 @@
 module Exhibitions
   class Exhibition
-    attr_reader :id, :name, :order, :show
+    attr_reader :id, :name, :order, :show, :museum_id
     attr_writer :deleted
 
     def initialize(data, id=nil, order=nil)
