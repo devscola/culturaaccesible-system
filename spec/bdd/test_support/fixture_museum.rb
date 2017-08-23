@@ -102,6 +102,7 @@ module Fixture
     SECOND_MUSEUM = 'El Prado'
     FIRST_STREET = 'Valencia'
     SECOND_STREET = 'Madrid'
+    PAGE_TITLE = 'Museum'
 
     class << self
 
