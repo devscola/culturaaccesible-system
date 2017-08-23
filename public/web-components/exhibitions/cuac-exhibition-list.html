@@ -10,10 +10,10 @@
         </ul>
         <h3>MUSEUMS</h3>
         <ul>
-            <template is="dom-repeat" items$="{{museumList}}">
+            <template is="dom-repeat" items$="{{museumList}}" as="museum">
                 <li>
                     <span>
-                      <a class="museum-name">{{item.info.name}}</a>
+                      <a href="/museum/{{museum.id}}" class="museum-name">{{museum.info.name}}</a>
                     </span>
                 </li>
             </template>

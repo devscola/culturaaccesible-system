@@ -6,11 +6,22 @@ require_relative 'test_support/fixture_museum'
 require_relative 'test_support/exhibition_info'
 
 feature 'Sidebar' do
-  scenario 'shows a list of museums' do
+  before(:all) do
     Fixture::XMuseum.complete_scenario
+  end
+
+  scenario 'shows a list of museums' do
     current = Page::Exhibitions.new
 
     expect(current.sidebar_has_museums?).to be true
+  end
+
+  scenario 'museum name links to museum detail' do
+    current = Page::Exhibitions.new
+
+    current.go_to_museum_info
+
+    expect(current.title(Fixture::XMuseum::PAGE_TITLE)).to be true
   end
 end
 
