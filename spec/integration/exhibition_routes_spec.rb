@@ -79,13 +79,15 @@ describe 'Exhibition controller' do
   end
 
   it 'updates existing exhibition' do
-    add_exhibition
+    add_museum
+    museum_id = parse_response['id']
+    add_exhibition(museum_id)
     exhibition_id = parse_response['id']
 
     exhibition_updated = {
       id: exhibition_id,
       name: 'some other name',
-      museum_id: '1'
+      museum_id: museum_id
     }.to_json
     post '/api/exhibition/add', exhibition_updated
     payload = { id: exhibition_id }.to_json
@@ -98,8 +100,8 @@ describe 'Exhibition controller' do
   it 'retrieve ordered major level list of an exhibition' do
     add_exhibition
     exhibition = parse_response
-    scene = add_scene('2-0-0', exhibition['id'])
-    other_scene = add_scene('1-0-0', exhibition['id'])
+    add_scene('2-0-0', exhibition['id'])
+    add_scene('1-0-0', exhibition['id'])
 
     retrieve_for_list(exhibition['id'])
     first_children = parse_response['children'].first
@@ -112,8 +114,8 @@ describe 'Exhibition controller' do
     exhibition = parse_response
     add_scene('1-0-0', exhibition['id'])
     scene = parse_response
-    subscene_into_scene = add_subitem('1-2-0', exhibition['id'], 'scene', scene['id'])
-    other_subscene_into_scene = add_subitem('1-1-0', exhibition['id'], 'scene', scene['id'])
+    add_subitem('1-2-0', exhibition['id'], 'scene', scene['id'])
+    add_subitem('1-1-0', exhibition['id'], 'scene', scene['id'])
 
     retrieve_for_list(exhibition['id'])
     first_item_children = parse_response['children'].first['children'].first
@@ -139,14 +141,16 @@ describe 'Exhibition controller' do
   end
 
   it 'retrieve an updated exhibition with item' do
-    add_exhibition
+    add_museum
+    museum_id = parse_response['id']
+    add_exhibition(museum_id)
     exhibition = parse_response
     add_scene('1-0-0', exhibition['id'])
 
     exhibition_updated = {
       id: exhibition['id'],
       name: 'some other name',
-      museum_id: '1',
+      museum_id: museum_id,
       image: 'fake-image.jpg'
     }.to_json
     post '/api/exhibition/add', exhibition_updated
@@ -182,8 +186,9 @@ describe 'Exhibition controller' do
     payload = { id: exhibition['id'] }.to_json
     post '/api/exhibition/retrieve', payload
 
-    retrieved_museum_id = parse_response['museum_id']
-    expect(retrieved_museum_id).to eq museum_id
+    retrieved_museum = parse_response['museum']
+    expect(retrieved_museum['id']).to eq museum_id
+    expect(retrieved_museum['name']).to eq 'some name'
   end
 
   def retrieve_for_list(exhibition_id)

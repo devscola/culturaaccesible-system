@@ -130,11 +130,13 @@ feature 'updates' do
 end
 
 feature 'deletes' do
-  xscenario 'doesnt show exhibition name in sidebar when is deleted' do
-    current = Fixture::Exhibitions.exhibition_saved
+  scenario 'doesnt show exhibition name in sidebar when is deleted',:wip do
+    Fixture::XExhibitions.pristine.complete_scenario
+    current = Page::Exhibitions.new
 
-    current.click_delete
+    current.delete_first_exhibition
 
-    expect(current.content?(Fixture::Exhibitions::NAME)).to be false
+    expect(current.content?(Fixture::XExhibitions::NAME)).to be true
+    expect(current.content?(Fixture::XExhibitions::SECOND_EXHIBITION)).to be false
   end
 end

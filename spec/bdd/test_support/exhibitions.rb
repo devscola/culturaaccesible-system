@@ -100,6 +100,12 @@ module Page
       find('.delete-button').click
     end
 
+    def delete_first_exhibition
+      go_to_exhibition_info
+      click_delete
+      accept_alert
+    end
+
     def view_visible?
       has_css?('.view', wait: 6, visible: false)
       view = find('.view', visible: false)
@@ -221,6 +227,10 @@ module Page
     def go_to_subscene_info_into_room
       has_css?('.subscene-name', wait: 4)
       first('.subscene-name').click
+    end
+
+    def accept_alert
+      find('.accept-alert').click
     end
 
     def subscene_info?(content)

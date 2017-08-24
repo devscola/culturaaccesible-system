@@ -11,18 +11,9 @@ Class('Exhibition.Info', {
         this.element.addEventListener('delete.confirmation', this.delete.bind(this));
     },
 
-    setExhibition: function(exhibition) {
+    render: function(exhibition) {
         this.element.exhibition = exhibition;
-        this.loadMuseum(exhibition.museum_id);
-    },
-
-    loadMuseum: function(museum_id) {
-        var payload = { 'id': museum_id };
-        Bus.publish('museum.retrieve', payload);
-    },
-
-    setMuseum: function(museum) {
-        this.element.museum = museum.info.name;
+        this.element.museum = exhibition.museum.name;
     },
 
     loadExhibition: function() {
@@ -63,9 +54,8 @@ Class('Exhibition.Info', {
     },
 
     subscribe: function() {
-        Bus.subscribe('exhibition.retrieved', this.setExhibition.bind(this));
+        Bus.subscribe('exhibition.retrieved', this.render.bind(this));
         Bus.subscribe('exhibition.deleted', this.goToHome.bind(this));
-        Bus.subscribe('museum.retrieved', this.setMuseum.bind(this));
     }
 
 });

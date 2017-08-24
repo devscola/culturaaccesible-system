@@ -75,6 +75,17 @@ module Actions
         end
         Exhibitions::Service.sort_list(subitems)
       end
+
+      def add_museum_info(exhibition)
+        museum = Museums::Repository.retrieve(exhibition[:museum_id]).serialize
+        data = {
+          id: museum[:id],
+          name: museum[:info][:name]
+        }
+        exhibition[:museum] = data
+        exhibition.delete(:museum_id)
+        exhibition
+      end
     end
   end
 end
