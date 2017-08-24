@@ -41,6 +41,14 @@
                 this.locationData.link = this.link;
             },
 
+            setData: function(data) {
+                this.street = data.street;
+                this.postal = data.postal;
+                this.city = data.city;
+                this.region = data.region;
+                this.link = data.link
+            },
+
             validateInfo: function() {
                 this.content = this.street + this.postal + this.city + this.region + this.link;
                 if (this.content.length > 0) {

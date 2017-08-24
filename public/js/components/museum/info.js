@@ -4,12 +4,18 @@ Class('Museum.Info', {
 
     initialize: function() {
         Museum.Info.Super.call(this, 'museum-info');
+        this.element.addEventListener('edit', this.edit.bind(this));
         this.getMuseum()
     },
 
     render: function(museum) {
         this.element.museumData = museum;
         this.element.visibility = 'show';
+    },
+
+    edit: function(event) {
+      let id = this.loadShortUrlData(3);
+      window.location = "/museum/" + id + "/edit";
     },
 
     getMuseum: function() {

@@ -28,6 +28,11 @@
                 this.infoData.description = this.descriptionValue;
             },
 
+            setData: function(data) {
+                this.nameValue = data.name;
+                this.descriptionValue = data.description
+            },
+
             validateInfo: function() {
                 if (this.nameValue !== '') {
                     this.fire('enoughInfo');

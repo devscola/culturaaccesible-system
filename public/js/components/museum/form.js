@@ -19,6 +19,7 @@ Class('Museum.Form', {
         this.contactForm = document.getElementById('contact');
         this.priceForm = document.getElementById('price');
         this.scheduleForm = document.getElementById('schedule');
+        this.contactPhoneForm = document.getElementById('contact-phone');
 
         this.scheduleForm.scheduleData = this.storage;
         this.contactForm.contactData = this.contactFields;
@@ -26,6 +27,30 @@ Class('Museum.Form', {
 
         this.addListeners();
         this.hide();
+
+        if(this.isEditable()){
+          this.getMuseum();
+        }
+    },
+
+    isEditable: function() {
+        var url = window.location.href;
+        return url.indexOf('edit') >= 0;
+    },
+
+    getMuseum: function() {
+        let id = this.loadShortUrlData(3);
+        let payload = {'id': id};
+        Bus.publish('museum.retrieve', payload);
+    },
+
+    render: function(museum) {
+      this.show();
+      this.element.editable = true;
+      this.infoForm.setData(museum.info);
+      this.locationForm.setData(museum.location);
+      console.log(museum.contact)
+      this.contactPhoneForm.setData(museum.contact.phone);
     },
 
     hide: function() {
@@ -104,6 +129,17 @@ Class('Museum.Form', {
 
     hasEnoughContent: function(){
         return (this.enoughInfo && this.enoughLocation);
+    },
+
+    loadShortUrlData: function(index) {
+        var urlString = window.location.href;
+        var regexp = /\/(museum)(\/)(.*)(\/edit)/;
+        var data = regexp.exec(urlString)[index];
+        return data;
+    },
+
+    subscribe: function() {
+        Bus.subscribe('museum.retrieved', this.render.bind(this))
     }
 
 });
