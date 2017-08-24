@@ -3,36 +3,37 @@ require_relative '../../support/configuration'
 
 module Database
   class Connection
+    class << self
 
-    def initialize
-      @connection ||= Mongo::Client.new(
-        ["#{host}:27017"],
-        :database => 'cuac-system_db'
-      )
+      def get_connection
+        @connection ||= Mongo::Client.new(
+          ["#{host}:27017"],
+          :database => 'cuac-system_db'
+        )
+        self
+      end
+
+      def close
+        # @connection.close
+      end
+
+      def museums
+        @connection[:museums]
+      end
+
+      def exhibitions
+        @connection[:exhibitions]
+      end
+
+      def items
+        @connection[:items]
+      end
+
+      private
+
+      def host
+        Support::Configuration.host
+      end
     end
-
-    def close
-      @connection.close
-    end
-
-    def museums
-      @connection[:museums]
-    end
-
-    def exhibitions
-      @connection[:exhibitions]
-    end
-
-    def items
-      @connection[:items]
-    end
-
-    private
-
-    def host
-      Support::Configuration.host
-    end
-
   end
-
 end

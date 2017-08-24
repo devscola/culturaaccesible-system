@@ -6,7 +6,7 @@ module Items
     class << self
 
       def connection
-          Database::Connection.new
+          Database::Connection.get_connection
       end
 
       def choose_action(item_data, type='scene')

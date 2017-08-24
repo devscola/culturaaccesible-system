@@ -8,7 +8,7 @@ module Museums
     class << self
 
       def connection
-          Database::Connection.new
+          Database::Connection.get_connection
       end
 
       def store(museum_data)

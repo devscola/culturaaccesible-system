@@ -7,7 +7,7 @@ module Exhibitions
     class << self
 
       def connection
-          Database::Connection.new
+          Database::Connection.get_connection
       end
 
       def choose_action(exhibition_data)
@@ -49,8 +49,13 @@ module Exhibitions
 
       def update_exhibition(exhibition)
         document = exhibition.serialize
-        updated_exhibition = connection.exhibitions.find_one_and_update({ id: document[:id] }, document, {:return_document => :after })
-        Exhibitions::Exhibition.from_bson(updated_exhibition, updated_exhibition['id'], exhibition.order.serialize)
+        begin
+          updated_exhibition = connection.exhibitions.find_one_and_update({ id: document[:id] }, document, {:return_document => :after })
+          Exhibitions::Exhibition.from_bson(updated_exhibition, updated_exhibition['id'], exhibition.order.serialize)
+        rescue => error
+          p error
+          p document
+        end
       end
 
       private
