@@ -102,6 +102,18 @@ feature 'create exhibitions' do
   end
 end
 
+feature 'Click plus button from sidebar to', :wop do
+  before(:all) do
+    Fixture::XExhibitions.pristine
+  end
+
+  scenario 'new exhibition' do
+    current = Page::Exhibitions.new
+    current.click_add_exhibition
+    expect(current.has_css?('.cuac-exhibition-form', wait: 2)).to be true
+  end
+end
+
 feature 'updates' do
   scenario 'exhibition info' do
     current = Page::Exhibitions.new

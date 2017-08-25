@@ -21,6 +21,11 @@ module Page
       fill('image', Fixture::XExhibitions::LINK)
     end
 
+    def click_add_exhibition
+      has_css?('.add-exhibition-button', wait: 4)
+      first('.add-exhibition-button', wait: 4).click
+    end
+    
     def create_one
       fill_mandatory_fields
       select_museum(Fixture::XMuseum::FIRST_MUSEUM)
