@@ -13,19 +13,26 @@ class App < Sinatra::Base
       Exhibitions::Service.register_order(data['exhibition_id'], item_id, number)
       exhibition = Exhibitions::Service.retrieve(data['exhibition_id'])
     else
-      message_exception = 'Store or update item error'
-      begin
+      result = manage_exception do
         result = Items::Service.store_room(data)
         item_id = result[:id]
         number = data['number']
         Exhibitions::Service.register_order(data['exhibition_id'], item_id, number)
-      rescue => ArgumentError
-        status 503
-        body message_exception
-        result = ArgumentError
+        result
       end
     end
     result.to_json
+  end
+
+  def manage_exception
+    message_exception = 'Store or update item error'
+    begin
+      yield
+    rescue ArgumentError => error
+      status 503
+      body message_exception
+      error
+    end
   end
 
   post '/api/item/update' do
@@ -92,5 +99,4 @@ class App < Sinatra::Base
     end
     result.to_json
   end
-
 end
