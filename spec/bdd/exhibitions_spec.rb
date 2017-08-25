@@ -62,7 +62,7 @@ feature 'item list' do
     current = Page::Exhibitions.new
     expect(current.has_sidebar?).to be true
 
-    current.go_to_exhibition_info
+    current.go_to_exhibition_info(Fixture::XExhibitions::NAME)
 
     expect(current.has_sidebar?).to be true
   end
@@ -94,7 +94,7 @@ feature 'create exhibitions' do
     end
 
     scenario 'added link shows an image' do
-      current.go_to_exhibition_info
+      current.go_to_exhibition_info(Fixture::XExhibitions::SECOND_EXHIBITION)
       Page::ExhibitionInfo.new
 
       expect(page).to have_xpath("//img[contains(@src,'https://s3.amazonaws.com/pruebas-cova/girasoles.jpg')]" )
@@ -102,7 +102,7 @@ feature 'create exhibitions' do
   end
 end
 
-feature 'Click plus button from sidebar to', :wop do
+feature 'Click plus button from sidebar to' do
   before(:all) do
     Fixture::XExhibitions.pristine
   end
@@ -135,18 +135,18 @@ feature 'updates' do
     Fixture::XExhibitions.pristine.complete_scenario
 
     current = Page::Exhibitions.new
-    current.go_to_exhibition_info
+    current.go_to_exhibition_info(Fixture::XExhibitions::NAME)
 
     expect(current.view_has_museum?(Fixture::XMuseum::FIRST_MUSEUM)).to be true
   end
 end
 
 feature 'deletes' do
-  scenario 'doesnt show exhibition name in sidebar when is deleted',:wip do
+  scenario 'doesnt show exhibition name in sidebar when is deleted' do
     Fixture::XExhibitions.pristine.complete_scenario
     current = Page::Exhibitions.new
 
-    current.delete_first_exhibition
+    current.delete_exhibition(Fixture::XExhibitions::SECOND_EXHIBITION)
 
     expect(current.content?(Fixture::XExhibitions::NAME)).to be true
     expect(current.content?(Fixture::XExhibitions::SECOND_EXHIBITION)).to be false
