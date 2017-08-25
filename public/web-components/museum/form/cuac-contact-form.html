@@ -57,6 +57,9 @@
             },
 
             removeInputData: function(input) {
+                if (this.contactData == undefined){
+                    this.contactData = '';
+                }
                 this.contactData[input.type].splice([input.index],1)
             }
         });
