@@ -1,4 +1,5 @@
 require 'spec_helper_bdd'
+require_relative 'test_support/fixture_museum'
 require_relative 'test_support/museum'
 require_relative 'test_support/item'
 require_relative 'test_support/fixture_item'
@@ -82,7 +83,7 @@ feature 'Item' do
 
   scenario 'check if an exhibition name is in breadcrumb' do
     current = Fixture::Exhibitions.pristine.exhibition_saved
-    exhibition_name = current.first_exhibition_name
+    exhibition_name = current.exhibition_name(Fixture::Exhibitions::NAME)
 
     current.click_plus_button
 
@@ -338,7 +339,7 @@ feature 'Item' do
 
   xscenario 'check if item name is in breadcrumb when it is saved' do
     current = Fixture::Exhibitions.pristine.exhibition_saved
-    exhibition_name = current.first_exhibition_name
+    exhibition_name = current.exhibition_name(Fixture::Exhibitions::NAME)
     breadcrumb =  exhibition_name + ' > ' + Fixture::Item::ARTWORK
 
     current.click_plus_button
@@ -352,7 +353,7 @@ feature 'Item' do
 
   scenario 'click edit button' do
     current = Fixture::Exhibitions.pristine.exhibition_saved
-    exhibition_name = current.first_exhibition_name
+    exhibition_name = current.exhibition_name(Fixture::Exhibitions::NAME)
     breadcrumb =  exhibition_name + ' > ' + Fixture::Item::ARTWORK
     current = Fixture::Item.from_exhibition_to_new_item
     current.fill('name',Fixture::Item::ARTWORK)
@@ -367,7 +368,7 @@ feature 'Item' do
 
   scenario 'show breadcrumb in edit' do
     current = Fixture::Exhibitions.pristine.exhibition_saved
-    exhibition_name = current.first_exhibition_name
+    exhibition_name = current.exhibition_name(Fixture::Exhibitions::NAME)
     breadcrumb =  exhibition_name + ' > ' + Fixture::Item::ARTWORK
     current = Fixture::Item.from_exhibition_to_new_item
     current.fill('name',Fixture::Item::ARTWORK)
@@ -586,22 +587,21 @@ feature 'Item' do
   end
 
   scenario 'fix exhibitions edition when it has items' do
-    Fixture::Item.from_exhibition_to_new_item
-    Fixture::Item.item_saved
+    Fixture::XExhibitions.pristine.complete_scenario
 
     current = Page::Exhibitions.new
-    current.go_to_exhibition_info
-    current = Page::ExhibitionInfo.new
+    current.go_to_exhibition_info(Fixture::XExhibitions::NAME)
     current.click_edit
-    current.fill('name', Fixture::Exhibitions::OTHER_NAME)
+    current.fill('name', Fixture::XExhibitions::OTHER_NAME)
+    current.select_museum(Fixture::XMuseum::FIRST_MUSEUM)
     current.save
     current = Page::Exhibitions.new
 
     expect(current.has_toggle?).to be true
 
-    current.toggle_list
+    current.last_toggle_list()
 
-    expect(current.first_exhibition_name).to eq(Fixture::Exhibitions::OTHER_NAME)
-    expect(current.content?(Fixture::Item::ARTWORK)).to be true
+    expect(current.exhibition_name(Fixture::XExhibitions::OTHER_NAME)).to eq(Fixture::XExhibitions::OTHER_NAME)
+    expect(current.content?('room')).to be true
   end
 end

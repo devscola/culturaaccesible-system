@@ -114,10 +114,10 @@ module Fixture
 
   class XExhibitions
 
-    SECOND_EXHIBITION = 'second exhibition'
+    SECOND_EXHIBITION = 'second name'
     NAME_FIELD = 'name'
     LOCATION_FIELD = 'location'
-    NAME = 'exhibition'
+    NAME = 'first'
     OTHER_NAME = 'some other exhibition'
     LOCATION = 'some location'
     REDIRECTED_PAGE_TITLE = 'Item'

@@ -19,7 +19,7 @@ module Page
       fill_in(field, with: content, wait: 2)
     end
 
-    def first_exhibition_name
+    def exhibition_name
       has_css?('.list-item', wait: 4)
       first('.exhibition-name').text
     end

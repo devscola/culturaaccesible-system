@@ -25,7 +25,7 @@ module Page
       has_css?('.add-exhibition-button', wait: 4)
       first('.add-exhibition-button', wait: 4).click
     end
-    
+
     def create_one
       fill_mandatory_fields
       select_museum(Fixture::XMuseum::FIRST_MUSEUM)
@@ -62,13 +62,17 @@ module Page
       first('.toggle-exhibition-list', wait: 4).click
     end
 
+    def last_toggle_list
+      has_css?('.toggle-exhibition-list', wait: 4)
+      all('.toggle-exhibition-list', wait: 4).last.click
+    end
+
     def has_toggle?
       has_css?('.toggle-exhibition-list', wait: 2)
     end
 
-    def first_exhibition_name
-      has_css?('.list-item', wait: 4)
-      first('.exhibition-name').text
+    def exhibition_name(exhibition)
+      find('.exhibition-name', wait: 2, text: exhibition).text
     end
 
     def save
@@ -105,8 +109,8 @@ module Page
       find('.delete-button').click
     end
 
-    def delete_first_exhibition
-      go_to_exhibition_info
+    def delete_exhibition(exhibition)
+      go_to_exhibition_info(exhibition)
       click_delete
       accept_alert
     end
@@ -199,9 +203,9 @@ module Page
       first('.museum-name', wait: 4).click
     end
 
-    def go_to_exhibition_info
-      has_css?('.exhibition-name', wait: 4)
-      first('.exhibition-name', wait: 4).click
+    def go_to_exhibition_info(exhibition)
+      has_css?('.exhibition-name', wait: 6, text: exhibition)
+      find('.exhibition-name', text: exhibition, visible: true).click
     end
 
     def go_to_room_info
@@ -273,8 +277,8 @@ module Page
     end
 
     def select_museum(name)
-      find('#museums').click
-      find('#museums option', text: name).click
+      first('#museums').click
+      first('#museums option', text: name).click
     end
 
     private
