@@ -56,7 +56,9 @@
             },
 
             removeInputData: function(input) {
-                this.priceData[input.type].splice([input.index],1)
+                if (this.priceData != undefined){
+                    this.priceData[input.type].splice([input.index],1)
+                }
             }
 
         });

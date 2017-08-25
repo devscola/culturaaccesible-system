@@ -57,10 +57,9 @@
             },
 
             removeInputData: function(input) {
-                if (this.contactData == undefined){
-                    this.contactData = '';
+                if (this.contactData != undefined){
+                    this.contactData[input.type].splice([input.index],1)
                 }
-                this.contactData[input.type].splice([input.index],1)
             }
         });
     </script>
