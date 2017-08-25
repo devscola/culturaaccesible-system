@@ -20,8 +20,19 @@ Class('Museum.Form', {
         this.priceForm = document.getElementById('price');
         this.scheduleForm = document.getElementById('schedule');
 
+        if (null == this.contactForm){
+            this.contactForm = {};
+        }
         this.contactForm.contactData = this.contactFields;
+
+        if (null == this.priceForm){
+            this.priceForm = {};
+        }
         this.priceForm.priceData = this.priceFields;
+
+        if (null == this.scheduleForm){
+            this.scheduleForm = {};
+        }
         this.scheduleForm.scheduleData = this.storage;
 
         this.addListeners();
