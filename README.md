@@ -46,7 +46,7 @@ If you want test the app, in other console run the tests:
 
 All test:
 ~~~
-docker-compose run system rake test
+docker-compose exec system bundle exec rake test
 ~~~
 
 If you want view app, open navigator (firefox, chrome, ...) and visit localhost:4567
