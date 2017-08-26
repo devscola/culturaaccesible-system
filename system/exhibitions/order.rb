@@ -5,7 +5,7 @@ class Order
     @separator = '-'
   end
 
-  def next_child (parent)
+  def next_child(parent)
     return :error unless parent_exists?(parent)
 
     m = self.method('next_child_for_' + level(parent).to_s)

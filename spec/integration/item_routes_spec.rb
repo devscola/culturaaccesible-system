@@ -303,12 +303,12 @@ describe 'Item controller' do
 
   def retrieve_room(room_id, exhibition_id)
     payload = { id: room_id, exhibition_id: exhibition_id }.to_json
-    post 'api/room/retrieve', payload
+    post 'api/item/retrieve', payload
   end
 
   def retrieve_scene(id, exhibition_id)
     payload = { id: id, exhibition_id: exhibition_id }.to_json
-    post 'api/scene/retrieve', payload
+    post 'api/item/retrieve', payload
   end
 
   def update_room(id, exhibition_id, room_number, check_room = true)
