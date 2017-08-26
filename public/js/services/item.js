@@ -7,37 +7,37 @@ Class('Services.Items', {
     },
 
     retrieveItem: function(payload) {
-        this.doRequest('/scene/retrieve', payload, function(item){
+        this.doRequest('/item/retrieve', payload, function(item){
             Bus.publish('item.retrieved', item);
         });
     },
 
     retrieveItemFromSubscene: function(payload) {
-        this.doRequest('/scene/retrieve', payload, function(item){
+        this.doRequest('/item/retrieve', payload, function(item){
             Bus.publish('subscene.scene.retrieved', item);
         });
     },
 
     retrieveScene: function(payload) {
-        this.doRequest('/scene/retrieve', payload, function(item){
+        this.doRequest('/item/retrieve', payload, function(item){
             Bus.publish('subscene.retrieved', item);
         });
     },
 
     retrieveEditableScene: function(payload) {
-        this.doRequest('/scene/retrieve', payload, function(item){
+        this.doRequest('/item/retrieve', payload, function(item){
             Bus.publish('scene.retrieved.editable', item);
         });
     },
 
     retrieveRoom: function(payload) {
-        this.doRequest('/room/retrieve', payload, function(room){
+        this.doRequest('/item/retrieve', payload, function(room){
             Bus.publish('room.retrieved', room);
         });
     },
 
     retrieveEditableRoom: function(payload) {
-        this.doRequest('/room/retrieve', payload, function(room){
+        this.doRequest('/item/retrieve', payload, function(room){
             Bus.publish('room.retrieved.editable', room);
         });
     },

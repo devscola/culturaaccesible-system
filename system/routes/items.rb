@@ -11,7 +11,6 @@ class App < Sinatra::Base
       item_id = result[:id]
       number = data['number']
       Exhibitions::Service.register_order(data['exhibition_id'], item_id, number)
-      exhibition = Exhibitions::Service.retrieve(data['exhibition_id'])
     else
       result = manage_exception do
         result = Items::Service.store_room(data)
@@ -68,26 +67,10 @@ class App < Sinatra::Base
     { message: 'item has been deleted' }.to_json
   end
 
-  post '/api/scene/retrieve' do
-    scene = JSON.parse(request.body.read)
-    exhibition_id = scene['exhibition_id']
-    item_id = scene['id']
-
-    result = Items::Service.retrieve(item_id)
-    begin
-      ordinal = Exhibitions::Service.retrieve_ordinal(exhibition_id, item_id)
-      result['number'] = ordinal
-    rescue => ArgumentError
-      status 400
-      result = ArgumentError
-    end
-    result.to_json
-  end
-
-  post '/api/room/retrieve' do
-    room = JSON.parse(request.body.read)
-    exhibition_id = room['exhibition_id']
-    item_id = room['id']
+  post '/api/item/retrieve' do
+    item = JSON.parse(request.body.read)
+    exhibition_id = item['exhibition_id']
+    item_id = item['id']
 
     result = Items::Service.retrieve(item_id)
     begin
