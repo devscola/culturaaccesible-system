@@ -13,11 +13,12 @@ Class('Exhibitions.Panel', {
     render: function(exhibition) {
         this.element.exhibition = exhibition;
         this.element.museum = exhibition.museum.name;
-        this.show();
+        this.show(exhibition);
     },
 
-    show: function() {
-        this.element.visible = true;
+    show: function(exhibition) {
+        var exhibitionId = exhibition.id;
+        window.location = '/exhibition/' + exhibitionId + '/info';
     },
 
     hide: function(event) {
