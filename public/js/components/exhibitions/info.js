@@ -44,7 +44,7 @@ Class('Exhibition.Info', {
 
     loadShortUrlData: function(index) {
         var urlString = window.location.href;
-        var regexp = /\/(exhibition)(\/)(.*)(\/)(exhibition)(\/)(.*)(|\/)(|.*)/;
+        var regexp = /\/(exhibition)(\/)(.*)(\/)(info)/;
         var data = regexp.exec(urlString)[index];
         return data;
     },

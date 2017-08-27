@@ -1,0 +1,49 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Exhibition</title>
+        <link rel="stylesheet" href="/vendor/bootstrap/bootstrap.min.css">
+        <link rel="stylesheet" href="/vendor/bootstrap/bootstrap-theme.min.css">
+        <link rel="import" href="/web-components/exhibitions/cuac-exhibition-button-create.html">
+        <link rel="import" href="/web-components/exhibitions/cuac-exhibition-list.html">
+        <link rel="import" href="/web-components/commons/cuac-sidebar-plus-button.html">
+        <link rel="import" href="/web-components/commons/cuac-delete-button.html">
+        <link rel="import" href="/web-components/exhibitions/cuac-item-list.html">
+        <link rel="import" href="/web-components/exhibitions/cuac-exhibition-form.html">
+        <link rel="import" href="/web-components/exhibitions/cuac-exhibition-view.html">
+        <link rel="import" href="/web-components/exhibitions/cuac-exhibition-edit-button.html">
+        <link rel="import" href="/web-components/exhibitions/cuac-exhibition-detail.html">
+        <link rel="import" href="/web-components/exhibitions/cuac-exhibition-delete-alert.html">
+    </head>
+    <body>
+        <div class="container">
+            <div class="col-md-4">
+                <cuac-exhibition-list id="listing"></cuac-exhibition-list>
+            </div>
+            <div class="col-md-8">
+                <div id="exhibition-form">
+                    <cuac-exhibition-form id="formulary"></cuac-exhibition-form>
+                </div>
+                <cuac-exhibition-view id="result"></cuac-exhibition-view>
+            </div>
+        </div>
+
+        <script src="/vendor/polymer/webcomponents-lite.min.js"></script>
+        <script src="/js/infrastructure/bus.js"></script>
+        <script src="/vendor/classjs/class.min.js"></script>
+        <script src="/js/infrastructure/component.js"></script>
+        <script src="/js/infrastructure/service.js"></script>
+
+        <script src="/js/services/exhibitions.js"></script>
+        <script src="/js/services/museums.js"></script>
+
+        <script src="/js/components/exhibitions/form.js"></script>
+        <script src="/js/components/exhibitions/list.js"></script>
+        <script src="/js/components/exhibitions/panel.js"></script>
+
+        <script src="/js/pages/exhibitions.js"></script>
+
+        <script src="/js/exhibitions.js"></script>
+    </body>
+</html>
