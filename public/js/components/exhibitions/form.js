@@ -33,12 +33,23 @@ Class('Exhibitions.Form', {
 
     save: function(exhibition) {
         Bus.publish('exhibition.save', exhibition.detail);
-        this.goToInfoForm();
+        this.goToForm();
     },
 
-    goToInfoForm: function() {
-        var exhibitionId = this.loadShortUrlData(3);
-        window.location = '/exhibition/' + exhibitionId + '/info';
+    goToForm: function() {
+        urlLocation = window.location.pathname;
+        isInRoot = ( urlLocation == '/' );
+        isInHome = ( urlLocation == '/home' );
+        if (!isInHome){
+            if (!isInRoot){
+                this.goToExhibitionId();
+            }
+        }
+    },
+
+    goToExhibitionId: function() {
+            var exhibitionId = this.loadShortUrlData(3);
+            window.location = '/exhibition/' + exhibitionId + '/info';
     },
 
     showForm: function() {
@@ -66,6 +77,17 @@ Class('Exhibitions.Form', {
     },
 
     loadEditInfo: function() {
+        urlLocation = window.location.pathname;
+        isInRoot = ( urlLocation == '/' );
+        isInHome = ( urlLocation == '/home' );
+        if (!isInHome){
+            if (!isInRoot){
+                this.retrieveIfIsEditable();
+            }
+        }
+    },
+
+    retrieveIfIsEditable: function() {
         if (this.isEditable()) {
             var exhibitionId = this.getExhibitionId();
             this.retrieveExhibition(exhibitionId);
