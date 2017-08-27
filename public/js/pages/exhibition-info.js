@@ -4,7 +4,7 @@ Class('Page.ExhibitionInfo', {
         new Services.Exhibitions();
         new Services.Museums();
         new Exhibitions.List();
-        new Exhibition.Info();
+        new Exhibitions.Info();
     }
 
 });

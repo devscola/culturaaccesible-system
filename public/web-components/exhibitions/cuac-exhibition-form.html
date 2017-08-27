@@ -86,6 +86,15 @@
         Polymer({
             is: 'cuac-exhibition-form',
 
+            ready: function() {
+                urlLocation = window.location.pathname;
+                if ('/' == urlLocation){
+                    this.formVisibility = 'hide';
+                }else{
+                    this.formVisibility = 'show';
+                }
+            },
+
             properties: {
                 visible: {type: Boolean, observer: 'showForm'},
 

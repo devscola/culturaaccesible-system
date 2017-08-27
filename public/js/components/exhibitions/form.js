@@ -14,8 +14,17 @@ Class('Exhibitions.Form', {
     },
 
     show: function(event) {
-        this.exhibitionForm.exhibition = event.detail;
-        this.exhibitionForm.visible = true;
+        urlLocation = window.location.pathname;
+        if ('/' == urlLocation){
+            this.exhibitionForm.exhibition = event.detail;
+            this.exhibitionForm.visible = true;
+        }else{
+            this.goToNewExhibition();
+        }
+    },
+
+    goToNewExhibition: function() {
+        window.location = '/home';
     },
 
     hide: function() {

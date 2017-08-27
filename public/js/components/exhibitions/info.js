@@ -1,14 +1,20 @@
-Class('Exhibition.Info', {
+Class('Exhibitions.Info', {
 
     Extends: Component,
 
     initialize: function() {
-        Exhibition.Info.Super.call(this, 'info');
+        Exhibitions.Info.Super.call(this, 'info');
         this.loadExhibition();
+        this.exhibitionButton = document.getElementById('action');
         this.alert = document.getElementById('alert');
+        this.exhibitionButton.addEventListener('started', this.goToNewExhibition.bind(this));
         this.element.addEventListener('edit', this.goToEditForm.bind(this));
         this.element.addEventListener('delete', this.showDeleteAlert.bind(this));
         this.element.addEventListener('delete.confirmation', this.delete.bind(this));
+    },
+
+    goToNewExhibition: function() {
+        window.location = '/home';
     },
 
     render: function(exhibition) {
