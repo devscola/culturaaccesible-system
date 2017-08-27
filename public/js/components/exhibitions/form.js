@@ -24,7 +24,12 @@ Class('Exhibitions.Form', {
 
     save: function(exhibition) {
         Bus.publish('exhibition.save', exhibition.detail);
-        this.hide();
+        this.goToInfoForm();
+    },
+
+    goToInfoForm: function() {
+        var exhibitionId = this.loadShortUrlData(3);
+        window.location = '/exhibition/' + exhibitionId + '/info';
     },
 
     showForm: function() {
@@ -70,7 +75,7 @@ Class('Exhibitions.Form', {
 
     loadShortUrlData: function(index) {
         var urlString = window.location.href;
-        var regexp = /\/(exhibition)(\/)(.*)(\/)/;
+        var regexp = /\/(exhibition)(\/)(.*)(\/)(edit)/;
         var data = regexp.exec(urlString)[index];
         return data;
     },

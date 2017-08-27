@@ -36,8 +36,8 @@
                 </select>
             </div>
             <div class="form-group">
-                <label for="shortDescription">General description</label>
-                <input class="form-control" name="shortDescription" value="{{shortDescription::input}}">
+                <label for="short_description">General description</label>
+                <textarea class="form-control" name="short_description" value="{{short_description::input}}"></textarea>
             </div>
             <div class="form-group">
                 <label for="type">Type</label>
@@ -112,7 +112,7 @@
 
                 museums: {type: Array},
 
-                shortDescription: {},
+                short_description: {},
 
                 typeValue: {},
 
@@ -182,7 +182,7 @@
                     name: this.name,
                     location: this.location,
                     museum_id: this.museumValue,
-                    short_description: this.shortDescription,
+                    short_description: this.short_description,
                     type: this.typeValue,
                     date_start: this.formatDate(this.dateStart),
                     date_finish: this.formatDate(this.dateFinish),
