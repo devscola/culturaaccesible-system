@@ -4,9 +4,15 @@ Class('Scene.Info', {
 
     initialize: function() {
         Scene.Info.Super.call(this, 'sceneInfo');
+        this.exhibitionButton = document.getElementById('action');
+        this.exhibitionButton.addEventListener('started', this.goToNewExhibition.bind(this));
         this.element.addEventListener('edit', this.goToEditForm.bind(this));
         this.element.addEventListener('delete', this.delete.bind(this));
         this.loadScene();
+    },
+
+    goToNewExhibition: function() {
+        window.location = '/home';
     },
 
     render: function(scene) {
@@ -45,13 +51,9 @@ Class('Scene.Info', {
         return data;
     },
 
-    goToExhibitionPage: function() {
-        window.location = '/'
-    },
-
     subscribe: function() {
         Bus.subscribe('item.retrieved', this.render.bind(this));
-        Bus.subscribe('item.deleted', this.goToExhibitionPage.bind(this))
+        Bus.subscribe('item.deleted', this.goToNewExhibition.bind(this))
     }
 
 });

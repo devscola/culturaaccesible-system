@@ -5,8 +5,14 @@ Class('Room.Info', {
     initialize: function() {
         Room.Info.Super.call(this, 'roomInfo');
         this.loadRoom();
+        this.exhibitionButton = document.getElementById('action');
+        this.exhibitionButton.addEventListener('started', this.goToNewExhibition.bind(this));
         this.element.addEventListener('edit', this.goToEditForm.bind(this));
         this.element.addEventListener('delete', this.delete.bind(this))
+    },
+
+    goToNewExhibition: function() {
+        window.location = '/home';
     },
 
     render: function(room) {
@@ -46,13 +52,9 @@ Class('Room.Info', {
         return data;
     },
 
-    goToExhibitionPage: function() {
-        window.location = '/'
-    },
-
     subscribe: function() {
         Bus.subscribe('room.retrieved', this.render.bind(this));
-        Bus.subscribe('item.deleted', this.goToExhibitionPage.bind(this))
+        Bus.subscribe('item.deleted', this.goToNewExhibition.bind(this))
     }
 
 });

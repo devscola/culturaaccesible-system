@@ -4,10 +4,16 @@ Class('Item.View', {
 
     initialize: function() {
         Item.View.Super.call(this, 'result');
+        this.exhibitionButton = document.getElementById('action');
+        this.exhibitionButton.addEventListener('started', this.goToNewExhibition.bind(this));
         this.element.addEventListener('edit', this.hide.bind(this));
         this.element.addEventListener('submitted', this.show.bind(this));
         this.element.addEventListener('delete', this.delete.bind(this));
         this.retrieveAnExhibition();
+    },
+
+    goToNewExhibition: function() {
+        window.location = '/home';
     },
 
     render: function(item) {
@@ -51,14 +57,10 @@ Class('Item.View', {
         this.element.exhibition = exhibition;
     },
 
-    goToExhibitionPage: function() {
-        window.location = '/'
-    },
-
     subscribe: function() {
         Bus.subscribe('item.saved', this.render.bind(this));
         Bus.subscribe('exhibition.retrieved', this.renderExhibition.bind(this));
-        Bus.subscribe('item.deleted', this.goToExhibitionPage.bind(this))
+        Bus.subscribe('item.deleted', this.goToNewExhibition.bind(this))
     }
 
 });

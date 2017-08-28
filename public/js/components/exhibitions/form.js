@@ -15,7 +15,9 @@ Class('Exhibitions.Form', {
 
     show: function(event) {
         urlLocation = window.location.pathname;
-        if ('/' == urlLocation){
+        isInRoot = ( urlLocation == '/' );
+        isInHome = ( urlLocation == '/home' );
+        if (!isInHome && !isInRoot){
             this.exhibitionForm.exhibition = event.detail;
             this.exhibitionForm.visible = true;
         }else{
@@ -40,10 +42,8 @@ Class('Exhibitions.Form', {
         urlLocation = window.location.pathname;
         isInRoot = ( urlLocation == '/' );
         isInHome = ( urlLocation == '/home' );
-        if (!isInHome){
-            if (!isInRoot){
-                this.goToExhibitionId();
-            }
+        if (!isInHome && !isInRoot){
+            this.goToExhibitionId();
         }
     },
 
