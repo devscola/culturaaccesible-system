@@ -158,7 +158,6 @@ module Page
     private
 
     def validate!
-      assert_selector('#newMuseum')
       assert_selector('#formulary', visible: false)
       assert_selector('#result', visible: false)
       assert_selector("input[name='name']", visible: false)

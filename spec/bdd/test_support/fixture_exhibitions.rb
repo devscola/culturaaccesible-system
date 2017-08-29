@@ -142,7 +142,7 @@ module Fixture
       end
 
       def add_exhibition(name, museum_id)
-        exhibition = { name: name, museum_id: museum_id}.to_json
+        exhibition = { name: name, museum_id: museum_id, image: LINK }.to_json
         response = HTTParty.post('http://localhost:4567/api/exhibition/add', { body: exhibition })
         JSON.parse(response.body)['id']
       end

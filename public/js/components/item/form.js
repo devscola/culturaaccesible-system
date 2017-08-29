@@ -5,6 +5,9 @@ Class('Item.Form', {
     initialize: function() {
         Item.Form.Super.call(this, 'formulary');
         this.alert = document.getElementById('alert');
+        this.museumButton = document.getElementById('newMuseum');
+
+        this.museumButton.addEventListener('createMuseum', this.goToNewMuseum.bind(this));
         this.alert.addEventListener('disableFields', this.disableFields.bind(this));
         this.alert.addEventListener('uncheckRoom', this.uncheckRoom.bind(this));
         this.element.addEventListener('submitted', this.save.bind(this));
@@ -12,6 +15,10 @@ Class('Item.Form', {
         this.element.disableSaveButton = true;
         this.itemForm = document.getElementById('formulary');
         this.loadFormInfo();
+    },
+
+    goToNewMuseum: function() {
+        window.location = '/museum';
     },
 
     save: function(item) {

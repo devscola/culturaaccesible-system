@@ -23,6 +23,12 @@ feature 'Sidebar' do
 
     expect(current.title(Fixture::XMuseum::PAGE_TITLE)).to be true
   end
+
+  scenario 'has new museum button' do
+    current = Page::Exhibitions.new
+
+    expect(current.has_new_museum_button?).to be true
+  end
 end
 
 feature 'item list' do
@@ -68,22 +74,20 @@ feature 'item list' do
   end
 end
 
-feature 'create exhibitions' do
+feature 'create exhibitions', :wip do
   before(:all) do
     Fixture::XExhibitions.pristine
   end
 
-  context 'exhibition created' do
+  context 'exhibition created', :wip do
     before(:all) do
-      Fixture::XExhibitions.pristine
-      Fixture::XMuseum.pristine.complete_scenario
+      Fixture::XExhibitions.pristine.complete_scenario
     end
 
     let(:current) { Page::Exhibitions.new.create_one }
 
     scenario 'displays editable info' do
       expect(current.view_visible?).to be true
-      expect(current.form_visible?).to be false
       expect(current.has_edit_button?).to be true
     end
 

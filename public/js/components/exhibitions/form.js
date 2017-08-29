@@ -6,7 +6,9 @@ Class('Exhibitions.Form', {
         Exhibitions.Form.Super.call(this, 'exhibition-form');
         this.exhibitionForm = document.getElementById('formulary');
         this.exhibitionButton = document.getElementById('action');
+        this.museumButton = document.getElementById('newMuseum');
 
+        this.museumButton.addEventListener('createMuseum', this.goToNewMuseum.bind(this));
         this.exhibitionForm.addEventListener('submitted', this.save.bind(this));
         this.exhibitionButton.addEventListener('started', this.show.bind(this));
         this.loadEditInfo();
@@ -23,6 +25,10 @@ Class('Exhibitions.Form', {
         }else{
             this.goToNewExhibition();
         }
+    },
+
+    goToNewMuseum: function() {
+        window.location = '/museum';
     },
 
     goToNewExhibition: function() {

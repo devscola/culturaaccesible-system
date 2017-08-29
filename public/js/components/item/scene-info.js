@@ -5,10 +5,17 @@ Class('Scene.Info', {
     initialize: function() {
         Scene.Info.Super.call(this, 'sceneInfo');
         this.exhibitionButton = document.getElementById('action');
+        this.museumButton = document.getElementById('newMuseum');
+
+        this.museumButton.addEventListener('createMuseum', this.goToNewMuseum.bind(this));
         this.exhibitionButton.addEventListener('started', this.goToNewExhibition.bind(this));
         this.element.addEventListener('edit', this.goToEditForm.bind(this));
         this.element.addEventListener('delete', this.delete.bind(this));
         this.loadScene();
+    },
+
+    goToNewMuseum: function() {
+        window.location = '/museum';
     },
 
     goToNewExhibition: function() {
