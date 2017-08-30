@@ -48,7 +48,7 @@ Class('Scene.Info', {
 
     delete: function(item) {
       var payload = {'id': item.detail.id, 'exhibition_id': this.loadShortUrlData(3)}
-      Bus.publish('item.delete', payload)
+      Bus.publish('item.delete', payload);
     },
 
     loadShortUrlData: function(index) {
@@ -60,7 +60,7 @@ Class('Scene.Info', {
 
     subscribe: function() {
         Bus.subscribe('item.retrieved', this.render.bind(this));
-        Bus.subscribe('item.deleted', this.goToNewExhibition.bind(this))
+        Bus.subscribe('item.deleted', this.goToNewExhibition.bind(this));
     }
 
 });

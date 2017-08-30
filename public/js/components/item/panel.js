@@ -23,8 +23,8 @@ Class('Item.View', {
     },
 
     delete: function(item) {
-      var payload = { 'id': item.detail.id, 'exhibition_id': this.loadShortUrlData(3) }
-      Bus.publish('item.delete', payload)
+      var payload = { 'id': item.detail.id, 'exhibition_id': this.loadShortUrlData(3) };
+      Bus.publish('item.delete', payload);
     },
 
     show: function() {
@@ -60,7 +60,7 @@ Class('Item.View', {
     subscribe: function() {
         Bus.subscribe('item.saved', this.render.bind(this));
         Bus.subscribe('exhibition.retrieved', this.renderExhibition.bind(this));
-        Bus.subscribe('item.deleted', this.goToNewExhibition.bind(this))
+        Bus.subscribe('item.deleted', this.goToNewExhibition.bind(this));
     }
 
 });

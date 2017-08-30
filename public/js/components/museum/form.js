@@ -11,7 +11,8 @@ Class('Museum.Form', {
     initialize: function() {
         Museum.Form.Super.call(this, 'formulary');
         this.newButton = document.getElementById('newMuseum');
-        this.saveButton = document.getElementById('action');
+        this.exhibitionButton = document.getElementById('action');
+        this.saveButton = document.getElementById('saveMuseum');
         this.result = document.getElementById('result');
 
         this.infoForm = document.getElementById('info');
@@ -47,6 +48,8 @@ Class('Museum.Form', {
     },
 
     addListeners: function() {
+        this.exhibitionButton.addEventListener('started', this.goToNewExhibition.bind(this));
+        this.newButton.addEventListener('createMuseum', this.goToNewMuseum.bind(this));
         this.element.addEventListener('submitted', this.saveMuseum.bind(this));
         this.result.addEventListener('edit', this.showEditableData.bind(this));
 
@@ -54,6 +57,14 @@ Class('Museum.Form', {
         this.element.addEventListener('notEnoughLocation', this.revokeLocation.bind(this));
         this.element.addEventListener('enoughInfo', this.storeInfo.bind(this));
         this.element.addEventListener('enoughLocation', this.storeLocation.bind(this));
+    },
+
+    goToNewMuseum: function() {
+        window.location = '/museum';
+    },
+
+    goToNewExhibition: function() {
+        window.location = '/home';
     },
 
     saveMuseum: function() {

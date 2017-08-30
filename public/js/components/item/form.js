@@ -155,10 +155,10 @@ Class('Item.Form', {
     },
 
     retrieveSubsceneParentId: function() {
-        var id = this.loadUrlData(7)
-        var exhibitionId = this.getExhibitionId()
+        var id = this.loadUrlData(7);
+        var exhibitionId = this.getExhibitionId();
         var payload = { 'id': id, 'exhibition_id': exhibitionId};
-        Bus.publish('subscene.scene.retrieve', payload)
+        Bus.publish('subscene.scene.retrieve', payload);
     },
 
     setSubsceneParentId: function(scene) {

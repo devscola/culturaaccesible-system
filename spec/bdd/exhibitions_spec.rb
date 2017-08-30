@@ -29,6 +29,12 @@ feature 'Sidebar' do
 
     expect(current.has_new_museum_button?).to be true
   end
+
+  scenario 'is in museum page' do
+    current = Page::Museum.new
+
+    expect(current.has_sidebar?).to be true
+  end
 end
 
 feature 'item list' do
@@ -74,12 +80,12 @@ feature 'item list' do
   end
 end
 
-feature 'create exhibitions', :wip do
+feature 'create exhibitions' do
   before(:all) do
     Fixture::XExhibitions.pristine
   end
 
-  context 'exhibition created', :wip do
+  context 'exhibition created' do
     before(:all) do
       Fixture::XExhibitions.pristine.complete_scenario
     end

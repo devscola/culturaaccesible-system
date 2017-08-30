@@ -4,7 +4,19 @@ Class('Museum.Info', {
 
     initialize: function() {
         Museum.Info.Super.call(this, 'museum-info');
-        this.getMuseum()
+        this.newButton = document.getElementById('newMuseum');
+        this.exhibitionButton = document.getElementById('action');
+        this.exhibitionButton.addEventListener('started', this.goToNewExhibition.bind(this));
+        this.newButton.addEventListener('createMuseum', this.goToNewMuseum.bind(this));
+        this.getMuseum();
+    },
+
+    goToNewMuseum: function() {
+        window.location = '/museum';
+    },
+
+    goToNewExhibition: function() {
+        window.location = '/home';
     },
 
     render: function(museum) {
@@ -14,8 +26,8 @@ Class('Museum.Info', {
 
     getMuseum: function() {
       let id = this.loadShortUrlData(3);
-      let payload = {'id': id}
-      Bus.publish('museum.retrieve', payload)
+      let payload = {'id': id};
+      Bus.publish('museum.retrieve', payload);
     },
 
     loadShortUrlData: function(index) {

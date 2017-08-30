@@ -48,8 +48,8 @@ Class('Room.Info', {
     },
 
     delete: function(item) {
-      var payload = {'id': item.detail.id, 'exhibition_id': this.loadShortUrlData(3)}
-      Bus.publish('item.delete', payload)
+      var payload = {'id': item.detail.id, 'exhibition_id': this.loadShortUrlData(3)};
+      Bus.publish('item.delete', payload);
     },
 
     loadShortUrlData: function(index) {
@@ -61,7 +61,7 @@ Class('Room.Info', {
 
     subscribe: function() {
         Bus.subscribe('room.retrieved', this.render.bind(this));
-        Bus.subscribe('item.deleted', this.goToNewExhibition.bind(this))
+        Bus.subscribe('item.deleted', this.goToNewExhibition.bind(this));
     }
 
 });

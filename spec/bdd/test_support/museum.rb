@@ -14,6 +14,10 @@ module Page
       find('#newMuseum').click
     end
 
+    def has_sidebar?
+      has_css?('#listing')
+    end
+
     def has_form?
       has_css?('#formulary')
     end
@@ -31,7 +35,7 @@ module Page
     end
 
     def submit
-      find('#action').click
+      find('#saveMuseum').click
     end
 
     def click_edit_button

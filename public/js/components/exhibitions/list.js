@@ -18,7 +18,7 @@ Class('Exhibitions.List', {
     },
 
     renderMuseums: function(museums) {
-      this.element.museumList = museums
+      this.element.museumList = museums;
     },
 
     addExhibitionChildren: function(exhibition){
@@ -38,7 +38,7 @@ Class('Exhibitions.List', {
 
     retrieve: function() {
         Bus.publish('exhibitions.list.retrieve');
-        Bus.publish('museum.list.retrieve')
+        Bus.publish('museum.list.retrieve');
     },
 
     subscribe: function() {
