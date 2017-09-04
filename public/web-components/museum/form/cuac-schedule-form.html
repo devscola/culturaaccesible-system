@@ -4,7 +4,7 @@
 
 <dom-module id="cuac-schedule-form">
     <template>
-        <cuac-schedule-days class="col-md-12" checked="{{marked}}" selection="{{selectedDays}}"></cuac-schedule-days>
+        <cuac-schedule-days id="days" class="col-md-12" checked="{{marked}}" selection="{{selectedDays}}"></cuac-schedule-days>
         <cuac-schedule-hours id="hours" class="col-md-12" days="{{selectedDays}}" selection="{{selectedHours}}"></cuac-schedule-hours>
         <div class="panel col-md-12">
             <template is="dom-repeat" items="{{renderedSchedule}}">
@@ -38,12 +38,19 @@
 
                 scheduleData: {type: Object},
 
-                renderedSchedule: {type: Array}
+                renderedSchedule: {type: Array},
+
+                schedule: {type: Object}
 
             },
 
             getSchedule: function() {
                 return this.scheduleData;
+            },
+
+            setEditData: function() {
+                this.scheduleData = this.schedule;
+                this.generateRenderedSchedule();
             },
 
             arrangeSchedule: function() {

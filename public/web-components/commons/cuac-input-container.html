@@ -17,7 +17,7 @@
                 </div>
             </template>
             <div class="col-md-2">
-                <cuac-add-button activate="{{activeAddButton}}" buttontype="{{inputtype}}"></cuac-add-button>
+                <cuac-add-button  activate="{{activeAddButton}}" buttontype="{{inputtype}}"></cuac-add-button>
             </div>
         </div>
     </template>
@@ -40,7 +40,9 @@
 
                 fieldValue: {type: String, observer: 'toggleSave'},
 
-                activeAddButton: {type: Boolean}
+                activeAddButton: {type: Boolean},
+
+                inputcontent: {type: Array}
 
             },
 
@@ -56,6 +58,16 @@
                 }
 
                 this.activeAddButton = false;
+            },
+
+            setEditData: function(){
+                if(this.areAnyData()){
+                    this.emptyInputFields();
+                    for(var index = 1 ; index <= this.inputcontent.length ; index++){
+                        this.addNewInput();
+                        this.addFieldContent(index);
+                    }
+                }
             },
 
             polymerWorkaround: function(inputsAdded) {
@@ -79,6 +91,15 @@
                 this.fire('blured', data);
             },
 
+            setData: function(type, value, index) {
+                var data = {
+                    type: type,
+                    content: value,
+                    index: index
+                };
+                this.fire('blured', data);
+            },
+
             toggleSave: function() {
                 var name = this.inputtype + this.inputsAdded.length;
                 var element = document.getElementsByName(name)[0];
@@ -96,7 +117,30 @@
 
             inputIndex: function(index) {
                 return index + 1;
+            },
+
+            areAnyData: function() {
+                return (this.inputcontent.length > 0)
+            },
+
+            emptyInputFields: function() {
+                this.inputsAdded = [];
+            },
+
+            addNewInput: function() {
+                this.inputsAdded.push('element');
+            },
+
+            addFieldContent: function(valueIndex) {
+                (function(index) {
+                    setTimeout(function(){
+                        var arrayIndex = index - 1;
+                        document.getElementsByName(this.inputtype+index)[0].value = this.inputcontent[index-1];
+                        this.setData(this.inputtype, this.inputcontent[arrayIndex], arrayIndex);
+                    }.bind(this), 100);
+                }.bind(this))(valueIndex);
             }
+
         });
     </script>
 </dom-module>

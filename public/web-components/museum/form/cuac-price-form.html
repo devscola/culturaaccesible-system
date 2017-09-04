@@ -4,15 +4,15 @@
     <template>
         <div class="form-group">
             <label>Free entrance</label>
-            <cuac-input-container inputtype="freeEntrance"></cuac-input-container>
+            <cuac-input-container class="price-fields" inputtype="freeEntrance" inputcontent="[[price.freeEntrance]]"></cuac-input-container>
         </div>
         <div class="form-group">
             <label>General</label>
-            <cuac-input-container inputtype="general"></cuac-input-container>
+            <cuac-input-container class="price-fields" inputtype="general" inputcontent="[[price.general]]"></cuac-input-container>
         </div>
         <div class="form-group">
             <label>Reduced</label>
-            <cuac-input-container inputtype="reduced"></cuac-input-container>
+            <cuac-input-container class="price-fields" inputtype="reduced" inputcontent="[[price.reduced]]"></cuac-input-container>
         </div>
     </template>
 
@@ -25,7 +25,8 @@
             },
 
             properties: {
-                priceData: {type: Object}
+                priceData: {type: Object},
+                price: {type: Object}
             },
 
             validatePriceData: function(event) {

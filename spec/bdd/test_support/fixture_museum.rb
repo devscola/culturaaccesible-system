@@ -6,10 +6,11 @@ module Fixture
     extend Capybara::DSL
 
     NAME = 'Some name'
+    STREET = 'Some street'
 
     MANDATORY_DATA = {
       'name' => NAME,
-      'street' => 'Some street'
+      'street' => STREET
     }
 
     OTHER_NAME = 'Other museum'
@@ -32,6 +33,13 @@ module Fixture
     TUESDAY = 'TUE'
     NOT_DUPLICATED_SCHEDULE_HOUR = 'MON 08:00-14:00'
     DUPLICATED_SCHEDULE_HOUR = 'MON 08:00-14:00 08:00-14:00'
+    MAP_LINK = "https://www.google.es/maps/place/Institut+Valenci%C3%A0+d'Art+Modern/@39.4723137,-0.3909856,15z"
+
+    STREET_FIELD = 'street'
+    NAME_FIELD = 'name'
+    MAP_LINK_FIELD = 'link'
+    PHONE_FIELD = 'phone1'
+    PRICE_FIELD = 'freeEntrance1'
 
     class << self
 
@@ -62,7 +70,9 @@ module Fixture
 
       def fill_with_extra_content
         current = Fixture::Museum.fill_mandatory_content
-        current.fill_input('phone1', PHONE)
+        current.fill_input(PHONE_FIELD, PHONE)
+        current.fill_input(PRICE_FIELD, PRICE)
+        current.fill_input(MAP_LINK_FIELD, MAP_LINK)
         current.click_checkbox(MONDAY)
         current.introduce_hours(HOUR)
         current.click_add_hour

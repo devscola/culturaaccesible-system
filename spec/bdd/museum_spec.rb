@@ -235,5 +235,19 @@ feature 'Museum' do
       expect(current.has_content?(Fixture::Museum::PHONE)).to be false
       expect(current.has_content?(Fixture::Museum::PRICE)).to be false
     end
+
+    scenario 'edit museums from museum info' do
+      Fixture::Museum.pristine.fill_with_extra_content
+      current = Page::Museum.new
+      current.go_to_museum_info(Fixture::Museum::NAME)
+      current.click_edit_button
+
+      expect(current.has_field_value?(Fixture::Museum::NAME_FIELD, Fixture::Museum::NAME)).to be true
+      expect(current.has_field_value?(Fixture::Museum::STREET_FIELD, Fixture::Museum::STREET)).to be true
+      expect(current.has_field_value?(Fixture::Museum::PHONE_FIELD, Fixture::Museum::PHONE)).to be true
+      expect(current.has_field_value?(Fixture::Museum::PRICE_FIELD, Fixture::Museum::PRICE)).to be true
+      expect(current.has_field_value?(Fixture::Museum::MAP_LINK_FIELD, Fixture::Museum::MAP_LINK)).to be true
+      expect(current.has_content?(Fixture::Museum::HOUR)).to be true
+    end
   end
 end

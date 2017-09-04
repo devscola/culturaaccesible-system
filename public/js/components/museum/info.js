@@ -8,6 +8,7 @@ Class('Museum.Info', {
         this.exhibitionButton = document.getElementById('action');
         this.exhibitionButton.addEventListener('started', this.goToNewExhibition.bind(this));
         this.newButton.addEventListener('createMuseum', this.goToNewMuseum.bind(this));
+        this.element.addEventListener('edit', this.goToEditForm.bind(this));
         this.getMuseum();
     },
 
@@ -25,9 +26,14 @@ Class('Museum.Info', {
     },
 
     getMuseum: function() {
-      let id = this.loadShortUrlData(3);
-      let payload = {'id': id};
-      Bus.publish('museum.retrieve', payload);
+        var id = this.loadShortUrlData(3);
+        var payload = {'id': id};
+        Bus.publish('museum.retrieve', payload);
+    },
+
+    goToEditForm: function() {
+        var museumId = this.loadShortUrlData(3);
+        window.location = '/museum/' + museumId + '/edit';
     },
 
     loadShortUrlData: function(index) {

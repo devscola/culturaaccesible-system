@@ -18,7 +18,7 @@
             <label for="region">Region</label>
             <input class="form-control" name="region" on-blur="updateData" value="{{region::input}}">
         </div>
-        <cuac-location-link></cuac-location-link>
+        <cuac-location-link id="locationLink" link="{{location.link}}"></cuac-location-link>
     </template>
 
     <script>
@@ -30,15 +30,33 @@
                 postal: {type: String, value: '', observer: 'validateInfo'},
                 city: {type: String, value: '', observer: 'validateInfo'},
                 region: {type: String, value: '', observer: 'validateInfo'},
-                locationData: {type: Object, value: {}}
+                link: {type: String},
+                locationData: {type: Object, value: {}},
+                location: {type: Object}
             },
+
+            ready: function() {
+                this.addEventListener('linked', this.setValidLink.bind(this));
+            },
+
 
             updateData: function() {
                 this.locationData.street = this.street;
                 this.locationData.postal = this.postal;
                 this.locationData.city = this.city;
                 this.locationData.region = this.region;
-                this.locationData.link = this.link;
+            },
+
+            setEditData: function(){
+                this.street = this.location.street;
+                this.postal = this.location.postal;
+                this.city = this.location.city;
+                this.region = this.location.region;
+                this.updateData();
+            },
+
+            setValidLink: function(event) {
+                this.locationData.link = event.detail.content;
             },
 
             validateInfo: function() {
@@ -49,6 +67,8 @@
                     this.fire('notEnoughLocation');
                 }
             }
+
+
         });
     </script>
 </dom-module>

@@ -18,14 +18,20 @@
             is: 'cuac-info-form',
 
             properties: {
-                nameValue: {type: String, value: '', observer: 'validateInfo'},
-                descriptionValue: {type: String, value: ''},
-                infoData: {type: Object, value:{}}
+                nameValue: {type: String, observer: 'validateInfo'},
+                descriptionValue: {type: String},
+                infoData: { type: Object, value:{} },
+                info: { type: Object }
             },
 
             updateData: function() {
                 this.infoData.name = this.nameValue;
                 this.infoData.description = this.descriptionValue;
+            },
+
+            setEditData: function(){
+                this.nameValue = this.info.name;
+                this.descriptionValue = this.info.description;
             },
 
             validateInfo: function() {

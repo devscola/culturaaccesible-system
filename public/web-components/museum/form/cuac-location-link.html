@@ -4,7 +4,7 @@
     <template>
         <div class="form-group">
             <label for="link">Link to Google Maps</label>
-            <input class="form-control" name="link" on-blur="validate" value="{{link::input}}">
+            <input class="form-control" name="link" value="{{link::input}}" on-blur="validate">
         </div>
     </template>
 
@@ -13,15 +13,23 @@
             is: 'cuac-location-link',
 
             properties: {
-                link: {type: String, value: ''}
+                link: {type: String, observer: 'validate'},
             },
 
             validate: function() {
                 if(this.isValid()){
-                    this.quitError()
+                    this.quitError();
+                    this.setLink();
                 }else {
                     this.showError()
                 }
+            },
+
+            setLink: function() {
+                var data = {
+                    content: this.link
+                };
+                this.fire('linked', data);
             },
 
             isValid: function() {

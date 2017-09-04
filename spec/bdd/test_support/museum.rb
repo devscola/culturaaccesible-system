@@ -47,6 +47,10 @@ module Page
       has_content?(content)
     end
 
+    def has_field_value?(field, value)
+      (find_field(field).value == value)
+    end
+
     def has_edit_button?
       has_css?('.edit-button')
     end
@@ -159,6 +163,10 @@ module Page
       find('[name=region]').click
     end
 
+    def go_to_museum_info(museum_name)
+      has_css?('.museum-name', wait: 6, text: museum_name)
+      find('.museum-name', text: museum_name, visible: true).click
+    end
     private
 
     def validate!

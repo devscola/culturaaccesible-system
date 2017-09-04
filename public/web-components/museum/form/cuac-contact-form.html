@@ -4,15 +4,15 @@
     <template>
         <div class="form-group">
             <label>Phone Number</label>
-            <cuac-input-container inputtype="phone"></cuac-input-container>
+            <cuac-input-container class="contact-fields" inputtype="phone" inputcontent="[[contact.phone]]"></cuac-input-container>
         </div>
         <div class="form-group">
             <label>Email</label>
-            <cuac-input-container inputtype="email"></cuac-input-container>
+            <cuac-input-container class="contact-fields" inputtype="email" inputcontent="[[contact.email]]"></cuac-input-container>
         </div>
         <div class="form-group">
             <label>Website</label>
-            <cuac-input-container inputtype="web"></cuac-input-container>
+            <cuac-input-container class="contact-fields" inputtype="web" inputcontent="[[contact.web]]"></cuac-input-container>
         </div>
     </template>
 
@@ -27,6 +27,7 @@
             properties: {
 
                 contactData: {type: Object},
+                contact: {type: Object}
 
             },
 
@@ -35,7 +36,7 @@
                 if (input.content !== '') {
                     this.updateContactData(input);
                 } else {
-                  this.removeInputData(input);
+                    this.removeInputData(input);
                 }
             },
 
