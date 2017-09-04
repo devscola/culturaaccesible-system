@@ -11,18 +11,14 @@ module Museums
           Database::Connection.get_connection
       end
 
-      def store(museum_data)
-        museum = Museums::Museum.new(museum_data)
-        connection.museums.insert_one(museum.serialize)
-        connection.close
+      def choose_action(museum_data)
+        id = museum_data['id']
+        if (id)
+          museum = update(museum_data)
+        else
+          museum = store(museum_data)
+        end
         museum
-      end
-
-      def update(museum_data)
-        museum = Museums::Museum.new(museum_data, museum_data['id'])
-        document = museum.serialize
-        updated_museum_data = connection.museums.find_one_and_update({ id: document[:id] }, document, {:return_document => :after })
-        Museums::Museum.from_bson(updated_museum_data, updated_museum_data['id'])
       end
 
       def retrieve(id)
@@ -40,6 +36,23 @@ module Museums
       def flush
         connection.museums.delete_many
       end
+
+      private
+
+      def store(museum_data)
+        museum = Museums::Museum.new(museum_data)
+        connection.museums.insert_one(museum.serialize)
+        connection.close
+        museum
+      end
+
+      def update(museum_data)
+        museum = Museums::Museum.new(museum_data, museum_data['id'])
+        document = museum.serialize
+        updated_museum_data = connection.museums.find_one_and_update({ id: document[:id] }, document, {:return_document => :after })
+        Museums::Museum.from_bson(updated_museum_data, updated_museum_data['id'])
+      end
+
     end
   end
 end

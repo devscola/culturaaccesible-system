@@ -126,6 +126,7 @@ end
 
 feature 'updates' do
   scenario 'exhibition info' do
+    Fixture::XMuseum.pristine.complete_scenario
     current = Page::Exhibitions.new
     current.create_one
     current.edit_exhibition

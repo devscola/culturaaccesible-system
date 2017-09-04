@@ -76,7 +76,7 @@ end
         contact: {phone: ['123456789', '987654321']},
         price: {general: ['25', '30']}
       }.to_json
-    post 'api/museum/update', museum
+    post 'api/museum/add', museum
   end
 
   def parse_response

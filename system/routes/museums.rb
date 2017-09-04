@@ -21,12 +21,6 @@ class App < Sinatra::Base
     result.to_json
   end
 
-  post '/api/museum/update' do
-    museum_data = JSON.parse(request.body.read)
-    result = Museums::Service.update(museum_data)
-    result.to_json
-  end
-
   get '/api/museum/flush' do
     Museums::Service.flush
     {}

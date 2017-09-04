@@ -12,7 +12,7 @@ module Museums
   class Service
     class << self
       def store(museum_data)
-        museum = Museums::Repository.store(museum_data)
+        museum = Museums::Repository.choose_action(museum_data)
         museum.serialize
       end
 

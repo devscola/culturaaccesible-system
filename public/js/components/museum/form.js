@@ -14,6 +14,7 @@ Class('Museum.Form', {
         this.exhibitionButton = document.getElementById('action');
         this.saveButton = document.getElementById('saveMuseum');
         this.result = document.getElementById('result');
+        this.museumData = {};
 
         this.infoForm = document.getElementById('info');
         this.locationForm = document.getElementById('location');
@@ -88,6 +89,7 @@ Class('Museum.Form', {
     },
 
     editMuseum: function(museum) {
+        this.museumData.id = museum.id;
         this.element.museum = museum;
         this.infoForm.setEditData();
         this.locationForm.setEditData();
@@ -117,15 +119,8 @@ Class('Museum.Form', {
     },
 
     saveMuseum: function() {
-        if(this.element.editable){
-            this.museumData = {id: this.result.museumData.id};
-            this.collectData();
-            Bus.publish('museum.update', this.museumData);
-        }else{
-            this.museumData = {};
-            this.collectData();
-            Bus.publish('museum.save', this.museumData);
-        }
+        this.collectData();
+        Bus.publish('museum.save', this.museumData);
         this.hide();
     },
 

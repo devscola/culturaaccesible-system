@@ -12,12 +12,6 @@ Class('Services.Museums', {
         });
     },
 
-    update: function(museum_data) {
-        this.doRequest('/museum/update', museum_data, function(result) {
-            Bus.publish('museum.saved', result);
-        });
-    },
-
     retrieveList: function(result) {
         this.doRequest('/museum/list', '', function(result) {
             Bus.publish('museum.list.retrieved', result);
@@ -32,7 +26,6 @@ Class('Services.Museums', {
 
     subscribe: function() {
         Bus.subscribe('museum.save', this.save.bind(this));
-        Bus.subscribe('museum.update', this.update.bind(this));
         Bus.subscribe('museum.retrieve', this.retrieve.bind(this));
         Bus.subscribe('museum.list.retrieve', this.retrieveList.bind(this));
     }
