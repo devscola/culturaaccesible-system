@@ -22,9 +22,10 @@ describe Museums::Service do
 
   it 'updates a museum' do
     museum = add_museum('some name', 'some description')
-    updated_museum = update_museum(museum[:id])
+    updated_museum = add_museum(museum[:id], 'some other name', 'some other description')
 
     expect(museum[:id]).to eq updated_museum[:id]
+    expect(updated_museum[:info][:name]).to eq('some other name')
   end
 
   it 'defense of nullable parameters' do
@@ -43,14 +44,9 @@ describe Museums::Service do
     Museums::Service.list
   end
 
-  def add_museum(name, description)
-    museum_data = { 'info' => { 'name' => name, 'description' => description } }
+  def add_museum(id = false, name, description)
+    museum_data = { 'id' => id, 'info' => { 'name' => name, 'description' => description } }
     Museums::Service.store(museum_data)
-  end
-
-  def update_museum(id)
-    museum_data = { 'id' => id, 'info' => { 'name' => 'updated name', 'description' => 'updated description' } }
-    Museums::Service.update(museum_data)
   end
 
   def add_nil_museum_content(name, phone, description)
