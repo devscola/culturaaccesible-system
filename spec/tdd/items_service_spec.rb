@@ -12,7 +12,7 @@ describe Items::Service do
 
   it 'retrieve an scene by id' do
 		name = 'Item'
-		number = '1.2'
+		number = '1-2'
 		result = add_scene(name, number, exhibition[:id], exhibition[:id])
 		item = Items::Service.retrieve(result[:id])
 
@@ -21,15 +21,28 @@ describe Items::Service do
 
   it 'retrieve all item children by parent id' do
     item_name = 'Item'
-    item_number = '1.2'
+    item_number = '1-2'
     sub_item_name = 'Sub Item'
-    sub_item_number = '1.2.2'
+    sub_item_number = '1-2-2'
 
     item = add_scene(item_name, item_number, exhibition[:id], exhibition[:id])
     add_scene(sub_item_name, sub_item_number, item[:id], exhibition[:id])
     children = Items::Service.retrieve_by_parent(item[:id])
 
     expect(children.first[:name]).to eq sub_item_name
+  end
+
+  it 'retrieve an item by id and iso code', :wip do
+    name = 'scene name'
+    number = '1-0-0'
+    exhibition_id = exhibition[:id]
+
+    scene = add_scene(name, number, exhibition_id, exhibition_id)
+    scene_id = scene[:id]
+
+    translated_scene = Items::Service.merge_translation(scene_id)
+    p translated_scene
+    expect(translated_scene[:id]).to eq scene_id
   end
 
 	def add_scene(name, number, parent_id, exhibition_id)

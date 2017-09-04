@@ -142,7 +142,7 @@ feature 'updates' do
 end
 
 feature 'deletes' do
-  scenario 'doesnt show exhibition name in sidebar when is deleted',:wip do
+  scenario 'doesnt show exhibition name in sidebar when is deleted' do
     Fixture::XExhibitions.pristine.complete_scenario
     current = Page::Exhibitions.new
 

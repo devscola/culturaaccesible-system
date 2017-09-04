@@ -29,6 +29,10 @@ module Database
         @connection[:items]
       end
 
+      def item_translations
+        @connection[:item_translations]
+      end
+
       private
 
       def host

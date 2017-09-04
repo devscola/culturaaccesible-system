@@ -1,6 +1,7 @@
 require_relative 'repository'
 require_relative 'scene'
 require_relative 'room'
+require_relative 'translation'
 require_relative '../exhibitions/service'
 
 module Items
@@ -27,6 +28,10 @@ module Items
       def retrieve(id)
         result = Items::Repository.retrieve(id)
         result.serialize
+      end
+
+      def merge_translation(id, iso_code='en')
+        Items::Repository.merge_translation(id, iso_code)
       end
 
       def retrieve_by_parent(id)

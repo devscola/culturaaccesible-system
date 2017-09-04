@@ -1,5 +1,6 @@
 require 'mongo'
 require_relative '../commons/connection'
+
 module Items
   class Repository
 
@@ -22,6 +23,18 @@ module Items
         data = connection.items.find({ id: id }).first
         connection.close
         item = (data[:type] == 'scene') ? Items::Scene.from_bson(data, data['id']) : Items::Room.from_bson(data, data['id'])
+        item
+      end
+
+      def merge_translation(id, iso_code='en')
+        connection.item_translations.insert_one({id: id, description: 'en castellano', video: 'k', iso_code: 'es'})
+        connection.item_translations.insert_one({id: id, description: 'in English', video: 'k', iso_code: 'es'})
+
+        item = connection.items.find({id: id}, {:return_document => :after })
+        item_translation = connection.item_translations.find({id: id}, {:return_document => :after })
+        item.each do |key, value|
+          item[key] = item_translation[key] if item_translation[key]
+        end
         item
       end
 
