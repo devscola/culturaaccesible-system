@@ -36,6 +36,7 @@ module Items
             id: item[:id],
             name: item[:name],
             type: item[:type],
+            beacon: item[:beacon],
             author: item[:author] || '',
             date: item[:date] || '',
             image: item[:image] || '',
