@@ -25,7 +25,8 @@ module Items
         parent_id: @parent_id,
         parent_class: @parent_class,
         id: @id,
-        type: @type
+        type: @type,
+        translation: @translation
       }
     end
 
@@ -39,6 +40,10 @@ module Items
 
     def date
       nil
+    end
+
+    def add_translation(translation)
+      @translation = translation.serialize
     end
 
     private

@@ -27,13 +27,14 @@ module Items
       end
 
       def merge_translation(id, iso_code='en')
-        connection.item_translations.insert_one({id: id, description: 'en castellano', video: 'k', iso_code: 'es'})
-        connection.item_translations.insert_one({id: id, description: 'in English', video: 'k', iso_code: 'es'})
+        connection.item_translations.insert_one({item_id: id, description: 'en castellano', video: 'k', iso_code: 'es'})
 
-        item = connection.items.find({id: id}, {:return_document => :after })
-        item_translation = connection.item_translations.find({id: id}, {:return_document => :after })
+        data = connection.items.find({id: id}).first
+        item = (data['type'] == 'scene') ? Items::Scene.from_bson(data, data['id']).serialize : Items::Room.from_bson(data, data['id']).serialize
+        item_translation = connection.item_translations.find({item_id: id, iso_code: iso_code}).first
+        translated_item = Items::Translation.from_bson(item_translation, id).serialize
         item.each do |key, value|
-          item[key] = item_translation[key] if item_translation[key]
+          item[key] = translated_item[key] if translated_item[key]
         end
         item
       end
@@ -47,6 +48,12 @@ module Items
           retrieved << item
         end
         retrieved
+      end
+
+      def store_translation(data, item_id)
+        translate_item = Items::Translation.new(data, item_id)
+        connection.item_translations.insert_one(translate_item.serialize)
+        translate_item
       end
 
       def flush

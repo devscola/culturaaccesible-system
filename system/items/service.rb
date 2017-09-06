@@ -25,6 +25,13 @@ module Items
         end
       end
 
+      def store_translations(data_translations, item_id)
+        items_language = Array.new
+        data_translations.each { |item| items_language << Items::Repository.store_translation(item, item_id) }
+        items_language.map! { |item| item.serialize}
+        items_language
+      end
+
       def retrieve(id)
         result = Items::Repository.retrieve(id)
         result.serialize

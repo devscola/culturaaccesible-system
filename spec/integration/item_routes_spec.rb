@@ -245,7 +245,23 @@ describe 'Item controller' do
     expect(retrieved_id).to eq nil
   end
 
+  it 'saved scene is received with translations' do
+    add_exhibition
+    exhibition_id = parse_response['id']
+
+    add_scene(FIRST_NAME, exhibition_id)
+
+    translations = parse_response['translations']
+
+    expect(translations[0]['name']).to eq 'name'
+    expect(translations[1]['name']).to eq 'nombre'
+  end
+
   def add_scene(unique_name, exhibition_id, number=ITEM_NUMBER_VALID, parent_id=exhibition_id)
+    languages = [
+      {'name' => 'name', 'description' => 'description', 'video' => 'video', 'iso_code' => 'en'},
+      {'name' => 'nombre', 'description' => 'descripción', 'video' => 'video', 'iso_code' => 'es'}
+    ]
 
     scene = {
       id: '',
@@ -259,7 +275,8 @@ describe 'Item controller' do
       parent_class: "exhibition",
       type: 'scene',
       author: AUTHOR,
-      date: DATE
+      date: DATE,
+      translations: languages
     }.to_json
 
     post '/api/item/add', scene

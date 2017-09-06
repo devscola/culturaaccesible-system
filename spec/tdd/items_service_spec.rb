@@ -3,9 +3,10 @@ require_relative '../../system/items/service'
 require_relative '../../system/exhibitions/service'
 
 describe Items::Service do
+  LOCALE = 'es'
+
   before(:each) do
     Items::Repository.flush
-		exhibition = add_exhibition
   end
 
 	let(:exhibition) { add_exhibition }
@@ -32,7 +33,7 @@ describe Items::Service do
     expect(children.first[:name]).to eq sub_item_name
   end
 
-  it 'retrieve an item by id and iso code', :wip do
+  it 'retrieves an item by id and iso code' do
     name = 'scene name'
     number = '1-0-0'
     exhibition_id = exhibition[:id]
@@ -40,17 +41,42 @@ describe Items::Service do
     scene = add_scene(name, number, exhibition_id, exhibition_id)
     scene_id = scene[:id]
 
-    translated_scene = Items::Service.merge_translation(scene_id)
-    p translated_scene
+    translated_scene = Items::Service.merge_translation(scene_id, LOCALE)
+
     expect(translated_scene[:id]).to eq scene_id
+    expect(translated_scene[:description] != scene[:description]).to be true
   end
 
-	def add_scene(name, number, parent_id, exhibition_id)
+  it 'stores all languages received' do
+    name = 'scene name'
+    number = '1-0-0'
+    exhibition_id = exhibition[:id]
+
+    scene = add_scene(name, number, exhibition_id, exhibition_id)
+    scene_id = scene[:id]
+
+    languages = add_scene_languages(scene_id)
+
+    expect(languages[0][:name]).to eq 'nombre'
+    expect(languages[1][:name]).to eq 'name'
+    expect(languages[0][:iso_code]).to eq 'es'
+    expect(languages[1][:iso_code]).to eq 'en'
+  end
+
+  def add_scene(name, number, parent_id, exhibition_id)
     scene = { 'id'=> '', 'name' => name, 'number' => number, 'parent_id' => parent_id, 'exhibition_id' => exhibition_id, 'type' => 'scene' }
     Items::Service.store_scene(scene)
   end
 
-	def add_exhibition
+  def add_scene_languages(item_id)
+    languages = [
+        {'name' => 'nombre', 'description' => 'descripción', 'video' => 'video', 'iso_code' => 'es'},
+        {'name' => 'name', 'description' => 'description', 'video' => 'video', 'iso_code' => 'en'}
+    ]
+    Items::Service.store_translations(languages, item_id)
+  end
+
+  def add_exhibition
     exhibition = { 'name' => 'name', 'location' => 'location' }
     Exhibitions::Service.store(exhibition)
   end

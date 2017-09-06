@@ -11,6 +11,9 @@ class App < Sinatra::Base
       item_id = result[:id]
       number = data['number']
       Exhibitions::Service.register_order(data['exhibition_id'], item_id, number)
+      translations = Items::Service.store_translations(data['translations'], item_id) if data['translations']
+      result['translations'] = translations
+      Exhibitions::Service.retrieve(data['exhibition_id'])
     else
       message_exception = 'Store or update item error'
       result = manage_exception(message_exception) do
@@ -18,6 +21,8 @@ class App < Sinatra::Base
         item_id = result[:id]
         number = data['number']
         Exhibitions::Service.register_order(data['exhibition_id'], item_id, number)
+        translations = Items::Service.store_translations(data['translations'], item_id) if data['translations']
+        result['translations'] = translations
         result
       end
     end
@@ -76,4 +81,5 @@ class App < Sinatra::Base
       error
     end
   end
+
 end

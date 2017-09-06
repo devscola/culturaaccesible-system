@@ -1,18 +1,20 @@
 module Items
   class Translation
-    def initialize(data, id=nil)
+    def initialize(data, item_id=nil)
+      @name = null_defense(data['name'])
       @description = null_defense(data['description'])
-      @iso_code = null_defense(data['iso_code'])
       @video = null_defense(data['video'])
-      @id = id
+      @iso_code = null_defense(data['iso_code'])
+      @item_id = item_id
     end
 
     def serialize
       {
-        id: @id,
+        name: @name,
         description: @description,
         video: @video,
-        iso_code: @iso_code
+        iso_code: @iso_code,
+        item_id: @item_id
       }
     end
 
