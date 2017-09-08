@@ -18,15 +18,15 @@
             <h2>{{language}}</h2>
             <div class="form-group">
                 <label for="name"><strong>Name*</strong></label>
-                <input class="form-control" name="language-name" value="{{name::input}}" autofocus></input>
+                <input class="form-control" name="language-name-{{itemLang}}" value="{{name::input}}" autofocus></input>
             </div>
             <div class="form-group">
                 <label for="description">Description</label>
-                <textarea class="form-control" name="description" value="{{description::input}}"></textarea>
+                <textarea class="form-control" name="description-{{itemLang}}" value="{{description::input}}"></textarea>
             </div>
             <div class="form-group">
                 <label for="video">Video link</label>
-                <input class="form-control" name="video" value="{{video::input}}">
+                <input class="form-control" name="video-{{itemLang}}" value="{{video::input}}">
             </div>
             <div class="video">
                 <video class="img-responsive img-thumbnail" src="{{videoSource}}" alt="video"></video>
@@ -51,7 +51,14 @@
                 videoSource: { type: String },
                 language: {
                     type: String
+                },
+                itemLang: {
+                    type: String
                 }
+            },
+
+            ready: function() {
+                this.setItemLanguage();
             },
 
             previewVideo: function() {
@@ -80,6 +87,10 @@
                     case 'Valencià':
                         return 'cat';
                 }
+            },
+
+            setItemLanguage: function() {
+                this.itemLang = this.getIsoCode();
             }
 
         });

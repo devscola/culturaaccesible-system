@@ -32,6 +32,10 @@ module Items
         items_language
       end
 
+      def retrieve_translations(item_id)
+        Items::Repository.retrieve_translations(item_id)
+      end
+
       def retrieve(id)
         result = Items::Repository.retrieve(id)
         result.serialize

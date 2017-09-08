@@ -9,20 +9,17 @@
                   <h3 class="panel-title">Scene detail</h3>
               </div>
               <div class="panel-body">
-                <div>Name: {{scene.name}}</div>
                 <div>Author: {{scene.author}}</div>
                 <div>Date: {{scene.date}}</div>
                 <div>Number: {{scene.number}}</div>
                 <div>Beacon number: {{scene.beacon}}</div>
-                <div>Description: {{scene.description}}</div>
                 <div>Image: {{scene.image}}</div>
                 <div class="image">
                     <img class="img-responsive img-thumbnail" width="50%" src="{{scene.image}}" alt="image">
                 </div>
-                <div>Video: {{scene.video}}</div>
-                <div class="video">
-                    <video class="img-responsive img-thumbnail" width="50%" src="{{scene.video}}" alt="video"></video>
-                </div>
+                <template is="dom-repeat" items="{{scene.translations}}">
+                    <cuac-item-language-view translation={{item}}></cuac-item-language-view>
+                </template>
               </div>
           </div>
           <cuac-item-edit-button item="{{scene}}"></cuac-item-edit-button>

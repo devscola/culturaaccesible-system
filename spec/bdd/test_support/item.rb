@@ -94,6 +94,18 @@ module Page
       submit
     end
 
+    def fill_form_with_languages
+      check_room
+      fill('name', 'some room name')
+      fill('language-name-es', 'nombre de room')
+      fill('description-es', 'descripcion de room')
+      fill('video-es', 'enlace de room')
+      fill('language-name-cat', 'nom de room')
+      fill('description-cat', 'descripció de room')
+      fill('video-cat', 'enllaç de room')
+      submit
+    end
+
     def find_suggested_number
       find('[name=number]').value
     end

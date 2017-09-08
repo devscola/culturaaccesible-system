@@ -63,6 +63,9 @@ class App < Sinatra::Base
     item_id = item['id']
 
     result = Items::Service.retrieve(item_id)
+    item_id = result[:id]
+    translations = Items::Service.retrieve_translations(item_id)
+    result['translations'] = translations
     message_exception = 'Item not found'
     result = manage_exception(message_exception) do
       ordinal = Exhibitions::Service.retrieve_ordinal(exhibition_id, item_id)

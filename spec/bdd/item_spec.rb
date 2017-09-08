@@ -408,7 +408,7 @@ feature 'Item' do
     expect(current.room_info?(Fixture::Item::OTHER_ARTWORK)).to be true
   end
 
-  scenario 'scene info is editable when edit button is clicked',:wip do
+  scenario 'scene info is editable when edit button is clicked' do
     Fixture::Item.from_exhibition_to_new_item
     Fixture::Item.item_saved
 
@@ -448,7 +448,7 @@ feature 'Item' do
     current.click_edit
     current = Page::Item.new
 
-    expect(current.content?(Fixture::Item::OTHER_ARTWORK)).to be true
+    expect(current.input_value?('name')).to eq Fixture::Item::OTHER_ARTWORK
     expect(current.content?(Fixture::Item::SAVE_BUTTON)).to be true
 
     current.fill('name',Fixture::Item::ARTWORK)
@@ -605,14 +605,19 @@ feature 'Item' do
     expect(current.content?('room')).to be true
   end
 
-  scenario 'displays exhibition languages subform sections in item form' do
+  scenario 'displays exhibition languages info in edit view info' do
     Fixture::XExhibitions.pristine.complete_scenario
     Page::Exhibitions.new
 
     Fixture::Item.from_exhibition_to_new_item
     current = Page::Item.new
+    current.fill_form_with_languages
+    current = Page::Exhibitions.new
+    current.toggle_list
+    current.go_to_room_info
 
-    expect(current.content?('Castellano')).to be true
-    expect(current.content?('English')).to be true
+    expect(current.content?('nombre de room')).to be true
+    expect(current.content?('descripció de room')).to be true
+    expect(current.content?('enllaç de room')).to be true
   end
 end

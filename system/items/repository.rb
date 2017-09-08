@@ -39,6 +39,11 @@ module Items
         item
       end
 
+      def retrieve_translations(item_id)
+        item_translations = connection.item_translations.find({item_id: item_id})
+        item_translations.map { |data| Items::Translation.from_bson(data, data['id']).serialize }
+      end
+
       def retrieve_by_parent(parent_id)
         retrieved = []
         items_data = connection.items.find({ parent_id: parent_id })
