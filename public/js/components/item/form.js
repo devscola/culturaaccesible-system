@@ -140,6 +140,12 @@ Class('Item.Form', {
     renderExhibition: function(exhibition) {
         this.element.exhibition = exhibition;
         this.setInitialParentAttributes(exhibition);
+        this.setExhibitionLanguages(exhibition);
+    },
+
+    setExhibitionLanguages: function(exhibition) {
+        exhibition_languages = ['Castellano', 'English', 'Valencià'];
+        this.element.languages = exhibition_languages;
     },
 
     setInitialParentAttributes: function(exhibition) {

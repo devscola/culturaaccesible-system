@@ -351,7 +351,7 @@ feature 'Item' do
     expect(has_content?(breadcrumb)).to be true
   end
 
-  scenario 'click edit button' do
+  xscenario 'click edit button with breadcrumb' do
     current = Fixture::Exhibitions.pristine.exhibition_saved
     exhibition_name = current.exhibition_name(Fixture::Exhibitions::NAME)
     breadcrumb =  exhibition_name + ' > ' + Fixture::Item::ARTWORK
@@ -366,7 +366,7 @@ feature 'Item' do
     expect(current.form_visible?).to be true
   end
 
-  scenario 'show breadcrumb in edit' do
+  xscenario 'show breadcrumb in edit' do
     current = Fixture::Exhibitions.pristine.exhibition_saved
     exhibition_name = current.exhibition_name(Fixture::Exhibitions::NAME)
     breadcrumb =  exhibition_name + ' > ' + Fixture::Item::ARTWORK
@@ -394,7 +394,7 @@ feature 'Item' do
 
     current = Page::Item.new
 
-    expect(current.content?(Fixture::Item::ARTWORK)).to be true
+    expect(current.input_value?('name')).to eq Fixture::Item::ARTWORK
     expect(current.content?(Fixture::Item::SAVE_BUTTON)).to be true
 
     current.fill('name',Fixture::Item::OTHER_ARTWORK)
@@ -408,7 +408,7 @@ feature 'Item' do
     expect(current.room_info?(Fixture::Item::OTHER_ARTWORK)).to be true
   end
 
-  scenario 'scene info is editable when edit button is clicked' do
+  scenario 'scene info is editable when edit button is clicked',:wip do
     Fixture::Item.from_exhibition_to_new_item
     Fixture::Item.item_saved
 
@@ -420,7 +420,7 @@ feature 'Item' do
     current.click_edit
     current = Page::Item.new
 
-    expect(current.content?(Fixture::Item::ARTWORK)).to be true
+    expect(current.input_value?('name')).to eq Fixture::Item::ARTWORK
     expect(current.input_value?('author')).to eq Fixture::Item::AUTHOR
     expect(current.input_value?('date')).to eq Fixture::Item::DATE
     expect(current.content?(Fixture::Item::SAVE_BUTTON)).to be true
@@ -474,7 +474,7 @@ feature 'Item' do
     current.click_edit
     current = Page::Item.new
 
-    expect(current.content?(Fixture::Item::OTHER_ARTWORK)).to be true
+    expect(current.input_value?('name')).to eq Fixture::Item::OTHER_ARTWORK
     expect(current.content?(Fixture::Item::SAVE_BUTTON)).to be true
 
     current.fill('name',Fixture::Item::ARTWORK)
@@ -603,5 +603,16 @@ feature 'Item' do
 
     expect(current.exhibition_name(Fixture::XExhibitions::OTHER_NAME)).to eq(Fixture::XExhibitions::OTHER_NAME)
     expect(current.content?('room')).to be true
+  end
+
+  scenario 'displays exhibition languages subform sections in item form' do
+    Fixture::XExhibitions.pristine.complete_scenario
+    Page::Exhibitions.new
+
+    Fixture::Item.from_exhibition_to_new_item
+    current = Page::Item.new
+
+    expect(current.content?('Castellano')).to be true
+    expect(current.content?('English')).to be true
   end
 end
