@@ -57,7 +57,6 @@ describe 'Item controller' do
     exhibition_id = parse_response['id']
 
     add_room(FIRST_NAME, exhibition_id)
-    room = parse_response
     room_id = parse_response['id']
 
     add_room_inside_a_room(SECOND_NAME, exhibition_id, room_id)
@@ -72,7 +71,6 @@ describe 'Item controller' do
     exhibition_id = parse_response['id']
 
     add_room(FIRST_NAME, exhibition_id)
-    room = parse_response
     room_id = parse_response['id']
     room_number = parse_response['number']
     check_room = false
@@ -101,7 +99,6 @@ describe 'Item controller' do
     exhibition_id = parse_response['id']
 
     add_room(FIRST_NAME, exhibition_id)
-    room = parse_response
     room_id = parse_response['id']
     retrieve_room(room_id, exhibition_id)
     retrieved_room_id = parse_response['id']
@@ -126,7 +123,6 @@ describe 'Item controller' do
   it 'creates a scene with author and date' do
     add_exhibition
 
-    exhibition = parse_response
     exhibition_id = parse_response['id']
 
     add_scene(FIRST_NAME, exhibition_id, NUMBER)
@@ -150,7 +146,6 @@ describe 'Item controller' do
     updated_room_id = parse_response['id']
 
     retrieve_exhibition(exhibition)
-    exhibition_numbers = parse_response['numbers']
 
     expect(room_id == updated_room_id).to be true
   end
@@ -169,7 +164,6 @@ describe 'Item controller' do
     updated_scene_id = parse_response['id']
 
     retrieve_exhibition(exhibition)
-    exhibition_numbers = parse_response['numbers']
 
     expect(scene_id == updated_scene_id).to be true
   end
