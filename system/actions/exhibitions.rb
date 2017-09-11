@@ -19,7 +19,7 @@ module Actions
         end
         children.reject!{ |child| child == nil }
         sorted_children = Exhibitions::Service.sort_list(children)
-        { id: exhibition[:id], name: exhibition[:name], :children => sorted_children }
+        { id: exhibition[:id], name: exhibition[:name], creation_date: exhibition[:creation_date], :children => sorted_children }
       end
 
       def retrieve_subitems_by_parent(exhibition_id, item_id)

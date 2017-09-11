@@ -4,7 +4,7 @@ module Exhibitions
     attr_writer :deleted
 
     def initialize(data, id=nil, order=nil)
-      @creation_date = Time.now.utc
+      @creation_date = data['creation_date'] || Time.now.utc
       @show = Defense.string_null_defense(data['show'])
       @name = Defense.string_null_defense(data['name'])
       @museum_id = Defense.string_null_defense(data['museum_id'])

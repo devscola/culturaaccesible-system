@@ -10,7 +10,6 @@ Class('Exhibitions.List', {
     },
 
     render: function(exhibitions) {
-        this.element.exhibitionsList = [];
         exhibitions.forEach(exhibition => {
             var payload = {"id": exhibition.id};
             Bus.publish('exhibition.for.list.retrieve', payload);
@@ -23,6 +22,11 @@ Class('Exhibitions.List', {
 
     addExhibitionChildren: function(exhibition){
         this.element.exhibitionsList.push(exhibition);
+        this.element.exhibitionsList.sort( function(a,b) {
+                var time_a = new Date(a.creation_date).getTime();
+                var time_b = new Date(b.creation_date).getTime();
+            return ( time_a > time_b );
+        })
         this.polymerWorkAround();
     },
 
