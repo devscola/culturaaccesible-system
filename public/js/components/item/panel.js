@@ -37,13 +37,9 @@ Class('Item.View', {
     },
 
     retrieveAnExhibition: function() {
-        var exhibitionId = this.loadExhibitionId();
+        var exhibitionId = this.loadShortUrlData(3);
         var payload = { 'id': exhibitionId };
         Bus.publish('exhibition.retrieve', payload);
-    },
-
-    loadExhibitionId: function() {
-        return window.location.href.split('/item/')[1];
     },
 
     loadShortUrlData: function(index) {
