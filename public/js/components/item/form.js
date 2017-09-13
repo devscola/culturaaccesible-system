@@ -144,7 +144,7 @@ Class('Item.Form', {
     },
 
     setExhibitionLanguages: function(exhibition) {
-        exhibition_languages = ['Castellano', 'English', 'Valencià'];
+        exhibition_languages = ['es', 'en', 'cat'];
         this.element.languages = exhibition_languages;
     },
 
