@@ -10,6 +10,7 @@ Class('Exhibitions.List', {
     },
 
     render: function(exhibitions) {
+        this.element.exhibitionsList = [];
         exhibitions.forEach(exhibition => {
             var payload = {"id": exhibition.id};
             Bus.publish('exhibition.for.list.retrieve', payload);
