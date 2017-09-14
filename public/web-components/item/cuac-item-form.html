@@ -58,7 +58,7 @@
                     </div>
                     <template is="dom-repeat" items={{languages}}>
                         <div class="col-md-12">
-                            <cuac-item-languages language={{item}} class="translations"></cuac-item-languages>
+                            <cuac-item-languages language={{item}} translations="{{translations}}" class="translations"></cuac-item-languages>
                         </div>
                     </template>
                 </div>
@@ -115,7 +115,9 @@
 
                 editId: { type: String },
 
-                type: { type: String, value: 'scene'}
+                type: { type: String, value: 'scene'},
+
+                translations: { type: Array }
             },
 
             roomToggle: function(event) {

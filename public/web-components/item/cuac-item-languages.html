@@ -55,6 +55,13 @@
                 itemLang: {
                     type: String,
                     observer: 'setItemLanguage'
+                },
+                translations: {
+                    type: Array,
+                    observer: 'setActualLanguage'
+                },
+                id: {
+                    type: String
                 }
             },
 
@@ -72,7 +79,8 @@
                         name: this.name,
                         description: this.description,
                         video: this.video,
-                        iso_code: this.language
+                        iso_code: this.language,
+                        id: this.id
                     };
                     return data;
                 }
@@ -91,6 +99,21 @@
 
             setItemLanguage: function() {
                 this.itemLang = this.getLanguage();
+            },
+
+            setActualLanguage: function() {
+                for(var i = 0 ; i < this.translations.length ; i++){
+                    if(this.language == this.translations[i]['iso_code']){
+                        this.setLanguage(this.translations[i]);
+                    }
+                }
+            },
+
+            setLanguage: function(language) {
+                this.name = language.name;
+                this.description = language.description;
+                this.video = language.video;
+                this.id = language.id;
             }
 
         });

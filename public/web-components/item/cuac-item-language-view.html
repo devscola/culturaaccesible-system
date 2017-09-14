@@ -3,9 +3,9 @@
 <dom-module id="cuac-item-language-view">
     <template>
       <h3 on-change="getLanguage">{{language}}</h3>
-      <div>Name: {{translation.name}}</div>
-      <div>Description: {{translation.description}}</div>
-      <div>Video: {{translation.video}}</div>
+      <div class$="name-{{translation.iso_code}}">Name: {{translation.name}}</div>
+      <div class$="description-{{translation.iso_code}}">Description: {{translation.description}}</div>
+      <div class$="video-{{translation.iso_code}}">Video: {{translation.video}}</div>
       <div class="video">
           <video class="img-responsive img-thumbnail" width="50%" src="{{item.video}}" alt="video"></video>
       </div>

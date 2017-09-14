@@ -10,6 +10,11 @@ module Page
       has_content?(name)
     end
 
+    def find_content(selector)
+      all(selector).last.text
+    end
+
+
     def click_edit
       has_css?('.edit-button', wait: 2, exact_text: 'Edit')
       find('.edit-button', wait: 2, exact_text: 'Edit').click

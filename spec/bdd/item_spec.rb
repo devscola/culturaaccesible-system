@@ -488,7 +488,7 @@ feature 'Item' do
     expect(current.subscene_info?(Fixture::Item::ARTWORK)).to be true
   end
 
-  scenario 'returns right ordinal number in each level' do
+  scenario 'returns right ordinal number in each level', :wip do
     Fixture::Item.from_exhibition_to_new_item
     Fixture::Item.room_saved_with_automatic_number
     current = Page::Exhibitions.new
@@ -618,6 +618,31 @@ feature 'Item' do
 
     expect(current.content?('nombre de room')).to be true
     expect(current.content?('descripció de room')).to be true
-    expect(current.content?('enllaç de room')).to be true
+    expect(current.content?('https://s3.amazonaws.com/pruebas-cova/more3minutes.mp4')).to be true
+  end
+
+  scenario 'displays exhibition languages info in edited item view info' do
+    Fixture::XExhibitions.pristine.complete_scenario
+    Page::Exhibitions.new
+
+    Fixture::Item.from_exhibition_to_new_item
+    current = Page::Item.new
+    current.fill_form_with_languages
+    current = Page::Exhibitions.new
+    current.toggle_list
+    current.go_to_room_info
+    current = Page::RoomInfo.new
+    current.click_edit
+    current = Page::Item.new
+    current.fill('video-cat', 'https://s3.amazonaws.com/pruebas-cova/3minutes.mp4')
+    current.submit
+    current = Page::Exhibitions.new
+    current.toggle_list
+    current.go_to_room_info
+    current = Page::RoomInfo.new
+
+    expect(current.find_content('.name-es')).to eq 'Name: nombre de room'
+    expect(current.find_content('.description-cat')).to eq 'Description: descripció de room'
+    expect(current.find_content('.video-cat')).to eq 'Video: https://s3.amazonaws.com/pruebas-cova/3minutes.mp4'
   end
 end

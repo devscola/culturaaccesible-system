@@ -44,6 +44,7 @@ Class('Item.Form', {
             this.element.editId = room.id;
             this.element.disableCheckBox = true;
             this.element.type = room.type;
+            this.element.translations = room.translations;
             this.disableFields();
         }
     },
@@ -65,6 +66,7 @@ Class('Item.Form', {
             this.element.editId = scene.id ;
             this.element.disableCheckBox = true;
             this.element.type = scene.type;
+            this.element.translations = scene.translations;
         }
     },
 

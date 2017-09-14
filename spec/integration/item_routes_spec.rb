@@ -251,12 +251,28 @@ describe 'Item controller' do
     expect(translations[1]['name']).to eq 'nombre'
   end
 
-  def add_scene(unique_name, exhibition_id, number=ITEM_NUMBER_VALID, parent_id=exhibition_id)
-    languages = [
-      {'name' => 'name', 'description' => 'description', 'video' => 'video', 'iso_code' => 'en'},
-      {'name' => 'nombre', 'description' => 'descripción', 'video' => 'video', 'iso_code' => 'es'}
-    ]
+  it 'updated scene is received with translations' do
+    add_exhibition
+    exhibition_id = parse_response['id']
 
+    add_scene(FIRST_NAME, exhibition_id)
+
+    translations = parse_response['translations']
+    translation_id = translations[0]['id']
+    scene_id = parse_response['id']
+    scene_number = parse_response['number']
+
+    translations[0]['name'] = 'updated name'
+
+    update_scene(scene_id, exhibition_id, scene_number, false, translations)
+    translations = parse_response['translations']
+
+    expect(translations[0]['name']).to eq 'updated name'
+    expect(translations[1]['name']).to eq 'nombre'
+    expect(translation_id).to eq translations[0]['id']
+  end
+
+  def add_scene(unique_name, exhibition_id, number=ITEM_NUMBER_VALID, parent_id=exhibition_id)
     scene = {
       id: '',
       name: unique_name,
@@ -270,7 +286,7 @@ describe 'Item controller' do
       type: 'scene',
       author: AUTHOR,
       date: DATE,
-      translations: languages
+      translations: get_languages
     }.to_json
 
     post '/api/item/add', scene
@@ -287,7 +303,7 @@ describe 'Item controller' do
       parent_id: exhibition_id,
       parent_class: 'exhibition',
       number: number,
-      type: 'room'
+      type: 'room',
     }.to_json
 
     post '/api/item/add', room
@@ -327,14 +343,21 @@ describe 'Item controller' do
     post '/api/item/update', room
   end
 
-  def update_scene(id, exhibition_id, scene_number, check_room = false)
-    scene = { id: id, name: FIRST_NAME, room: check_room, exhibition_id: exhibition_id, parent_id: exhibition_id, parent_class: 'exhibition', number: ANOTHER_NUMBER, last_number: scene_number, type: 'scene' }.to_json
+  def update_scene(id, exhibition_id, scene_number, check_room = false, languages = [])
+    scene = { id: id, name: FIRST_NAME, room: check_room, exhibition_id: exhibition_id, parent_id: exhibition_id, parent_class: 'exhibition', number: ANOTHER_NUMBER, last_number: scene_number, type: 'scene', translations: languages }.to_json
     post '/api/item/update', scene
   end
 
   def delete_item(id, exhibition_id)
     payload = { id: id, exhibition_id: exhibition_id }.to_json
     post '/api/item/delete', payload
+  end
+
+  def get_languages
+    [
+      {'name' => 'name', 'description' => 'description', 'video' => 'video', 'iso_code' => 'en'},
+      {'name' => 'nombre', 'description' => 'descripción', 'video' => 'video', 'iso_code' => 'es'}
+    ]
   end
 
 end

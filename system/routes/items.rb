@@ -36,12 +36,18 @@ class App < Sinatra::Base
       message_exception = 'Updating room not allows changing it to scene'
       result = manage_exception(message_exception) do
         result = Items::Service.store_scene(data)
+        item_id = result[:id]
+        translations = Items::Service.update_translations(data['translations'], item_id) if data['translations']
+        result['translations'] = translations
         result
       end
     else
       message_exception = 'Updating scene not allows changing it to room'
       result = manage_exception(message_exception) do
         result = Items::Service.store_room(data)
+        item_id = result[:id]
+        translations = Items::Service.update_translations(data['translations'], item_id) if data['translations']
+        result['translations'] = translations
         result
       end
     end
@@ -73,6 +79,11 @@ class App < Sinatra::Base
       result
     end
     result.to_json
+  end
+
+  get '/api/item/flush' do
+    Items::Service.flush
+    {}
   end
 
   def manage_exception(message)

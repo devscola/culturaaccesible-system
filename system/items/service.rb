@@ -26,10 +26,7 @@ module Items
       end
 
       def store_translations(data_translations, item_id)
-        items_language = Array.new
-        data_translations.each { |item| items_language << Items::Repository.store_translation(item, item_id) }
-        items_language.map! { |item| item.serialize}
-        items_language
+        data_translations.map! { |item| Items::Repository.store_translation(item, item_id).serialize }
       end
 
       def retrieve_translations(item_id)
@@ -67,6 +64,14 @@ module Items
 
       def sorted_list(children)
       children.sort_by { |child| child[:number] }
+      end
+
+      def update_translations(translations, item_id)
+        translations.map! { |item| Items::Repository.update_translation(item, item_id).serialize }
+      end
+
+      def flush
+        Items::Repository.flush
       end
 
     end

@@ -32,7 +32,7 @@ module Items
         data = connection.items.find({id: id}).first
         item = (data['type'] == 'scene') ? Items::Scene.from_bson(data, data['id']).serialize : Items::Room.from_bson(data, data['id']).serialize
         item_translation = connection.item_translations.find({item_id: id, iso_code: iso_code}).first
-        translated_item = Items::Translation.from_bson(item_translation, id).serialize
+        translated_item = Items::Translation.from_bson(item_translation, id , item_translation['item_id']).serialize
         item.each do |key, value|
           item[key] = translated_item[key] if translated_item[key]
         end
@@ -41,7 +41,7 @@ module Items
 
       def retrieve_translations(item_id)
         item_translations = connection.item_translations.find({item_id: item_id})
-        item_translations.map { |data| Items::Translation.from_bson(data, data['id']).serialize }
+        item_translations.map { |data| Items::Translation.from_bson(data, item_id, data['id']).serialize }
       end
 
       def retrieve_by_parent(parent_id)
@@ -56,13 +56,20 @@ module Items
       end
 
       def store_translation(data, item_id)
-        translate_item = Items::Translation.new(data, item_id)
-        connection.item_translations.insert_one(translate_item.serialize)
-        translate_item
+        translation_item = Items::Translation.new(data, item_id)
+        connection.item_translations.insert_one(translation_item.serialize)
+        translation_item
+      end
+
+      def update_translation(data, item_id)
+        translation_item = Items::Translation.new(data, item_id, data['id'])
+        translation_item = connection.item_translations.find_one_and_update({ id: data['id'] }, { "$set" => translation_item.serialize }, {:return_document => :after })
+        Items::Translation.from_bson(translation_item, item_id, translation_item['id'])
       end
 
       def flush
         connection.items.delete_many
+        connection.item_translations.delete_many
         connection.close
       end
 
@@ -70,7 +77,6 @@ module Items
 
       def update(item_data, type)
         updated_item = connection.items.find_one_and_update({ id: item_data['id'] }, item_data, {:return_document => :after })
-        connection.close
         item = type == 'scene' ? Items::Scene.new(updated_item, updated_item['id']) : Items::Room.new(updated_item, updated_item['id'])
         item
       end
