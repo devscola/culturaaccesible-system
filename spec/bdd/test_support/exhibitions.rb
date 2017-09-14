@@ -72,7 +72,7 @@ module Page
     end
 
     def has_toggle?
-      has_css?('.toggle-exhibition-list', wait: 2)
+      has_css?('.toggle-exhibition-list', wait: 5, visible: false)
     end
 
     def exhibition_name(exhibition)

@@ -81,17 +81,6 @@ feature 'Item' do
     expect(current.input_disabled?('date')).to be true
   end
 
-  scenario 'check if an exhibition name is in breadcrumb' do
-    current = Fixture::Exhibitions.pristine.exhibition_saved
-    exhibition_name = current.exhibition_name(Fixture::Exhibitions::NAME)
-
-    current.click_plus_button
-
-    current = Page::Item.new
-
-    expect(current.content?(exhibition_name)).to be true
-  end
-
   scenario 'valid for submit if item number is validated' do
     current = Fixture::Item.from_exhibition_to_new_item
 
@@ -335,49 +324,6 @@ feature 'Item' do
     current.toggle_list
 
     expect(current.scene_has_children?).to be true
-  end
-
-  xscenario 'check if item name is in breadcrumb when it is saved' do
-    current = Fixture::Exhibitions.pristine.exhibition_saved
-    exhibition_name = current.exhibition_name(Fixture::Exhibitions::NAME)
-    breadcrumb =  exhibition_name + ' > ' + Fixture::Item::ARTWORK
-
-    current.click_plus_button
-    current_item = Fixture::Item.initial_state
-
-    current_item.fill('name',Fixture::Item::ARTWORK)
-    current_item.submit
-
-    expect(has_content?(breadcrumb)).to be true
-  end
-
-  xscenario 'click edit button with breadcrumb' do
-    current = Fixture::Exhibitions.pristine.exhibition_saved
-    exhibition_name = current.exhibition_name(Fixture::Exhibitions::NAME)
-    breadcrumb =  exhibition_name + ' > ' + Fixture::Item::ARTWORK
-    current = Fixture::Item.from_exhibition_to_new_item
-    current.fill('name',Fixture::Item::ARTWORK)
-    current.fill('number',Fixture::Item::FIRST_NUMBER)
-    current.submit
-
-    current.click_edit
-
-    expect(has_content?(breadcrumb)).to be true
-    expect(current.form_visible?).to be true
-  end
-
-  xscenario 'show breadcrumb in edit' do
-    current = Fixture::Exhibitions.pristine.exhibition_saved
-    exhibition_name = current.exhibition_name(Fixture::Exhibitions::NAME)
-    breadcrumb =  exhibition_name + ' > ' + Fixture::Item::ARTWORK
-    current = Fixture::Item.from_exhibition_to_new_item
-    current.fill('name',Fixture::Item::ARTWORK)
-    current.fill('number',Fixture::Item::FIRST_NUMBER)
-    current.submit
-
-    current.click_edit
-
-    expect(has_content?(breadcrumb)).to be true
   end
 
   scenario 'room info is editable when edit button is clicked' do

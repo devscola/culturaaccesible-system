@@ -9,6 +9,7 @@ Class('Museum.View', {
     render: function(museumData) {
         this.element.museumData = museumData;
         this.element.visibility = 'show';
+        Bus.publish('museum.list.retrieve');
     },
 
     subscribe: function() {

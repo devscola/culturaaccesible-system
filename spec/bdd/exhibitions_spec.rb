@@ -5,38 +5,6 @@ require_relative 'test_support/fixture_exhibitions'
 require_relative 'test_support/fixture_museum'
 require_relative 'test_support/exhibition_info'
 
-feature 'Sidebar' do
-  before(:all) do
-    Fixture::XMuseum.complete_scenario
-  end
-
-  scenario 'shows a list of museums' do
-    current = Page::Exhibitions.new
-
-    expect(current.sidebar_has_museums?).to be true
-  end
-
-  scenario 'museum name links to museum detail' do
-    current = Page::Exhibitions.new
-
-    current.go_to_museum_info
-
-    expect(current.title(Fixture::XMuseum::PAGE_TITLE)).to be true
-  end
-
-  scenario 'has new museum button' do
-    current = Page::Exhibitions.new
-
-    expect(current.has_new_museum_button?).to be true
-  end
-
-  scenario 'is in museum page' do
-    current = Page::Museum.new
-
-    expect(current.has_sidebar?).to be true
-  end
-end
-
 feature 'item list' do
   before(:all) do
     Fixture::XExhibitions.pristine.complete_scenario
@@ -75,6 +43,38 @@ feature 'item list' do
     expect(current.has_sidebar?).to be true
 
     current.go_to_exhibition_info(Fixture::XExhibitions::NAME)
+
+    expect(current.has_sidebar?).to be true
+  end
+end
+
+feature 'Sidebar' do
+  before(:all) do
+    Fixture::XMuseum.complete_scenario
+  end
+
+  scenario 'shows a list of museums' do
+    current = Page::Exhibitions.new
+
+    expect(current.sidebar_has_museums?).to be true
+  end
+
+  scenario 'museum name links to museum detail' do
+    current = Page::Exhibitions.new
+
+    current.go_to_museum_info
+
+    expect(current.title(Fixture::XMuseum::PAGE_TITLE)).to be true
+  end
+
+  scenario 'has new museum button' do
+    current = Page::Exhibitions.new
+
+    expect(current.has_new_museum_button?).to be true
+  end
+
+  scenario 'is in museum page' do
+    current = Page::Museum.new
 
     expect(current.has_sidebar?).to be true
   end

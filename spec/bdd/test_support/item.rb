@@ -15,7 +15,7 @@ module Page
     end
 
     def input_value?(field)
-      find("[name=#{field}]").value
+      find("[name=#{field}]", visible: false ).value
     end
 
     def submit
@@ -107,7 +107,7 @@ module Page
     end
 
     def find_suggested_number
-      find('[name=number]').value
+      find('[name=number]', visible: false ).value
     end
 
     private
