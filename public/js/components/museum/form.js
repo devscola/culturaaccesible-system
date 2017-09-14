@@ -63,6 +63,7 @@ Class('Museum.Form', {
         if (this.isEditable()) {
             var museumId = this.getMuseumId();
             this.retrieveMuseum(museumId);
+            this.showEditableData();
         }
     },
 
