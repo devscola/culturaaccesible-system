@@ -10,8 +10,8 @@
             <template is="dom-repeat" items="{{renderedSchedule}}">
                 <div>
                     <label>{{item.day}}</label>
-                    <template is="dom-repeat" items="{{item.hours}}" as="hour">
-                        <cuac-editable-hour editable$="{{editable}}" day="{{item.day}}" hour={{hour}}></cuac-editable-hour>
+                    <template is="dom-repeat" items$="{{item.hours}}" as="hour">
+                        <cuac-editable-hour editable$="{{editable}}" day="{{item.day}}" hour="{{hour}}"></cuac-editable-hour>
                     </template>
                 </div>
             </template>
