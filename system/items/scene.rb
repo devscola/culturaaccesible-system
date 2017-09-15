@@ -29,7 +29,7 @@ module Items
         parent_id: @parent_id,
         parent_class: @parent_class,
         id: @id,
-        type: @type
+        type: @type,
       }
     end
 
