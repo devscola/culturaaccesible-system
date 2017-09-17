@@ -70,6 +70,7 @@
             },
 
             removeDuplicateHours: function (day) {
+                this.popNullHours(day);
                 var duplicateHoursRemoved = this.scheduleData[day].filter(function(hours, index, self) {
                     return index == self.indexOf(hours);
                 });
@@ -103,6 +104,13 @@
             refreshChecksPolymerWorkaround: function() {
                 this.marked = true;
                 this.marked = false;
+            },
+
+            popNullHours: function(day){
+                var schedule = [];
+                if (this.scheduleData[day].join('') == "") {
+                    this.scheduleData[day] = [];
+                }
             },
 
             initializeSchedule: function() {

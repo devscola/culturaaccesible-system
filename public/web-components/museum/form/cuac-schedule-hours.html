@@ -77,27 +77,33 @@
 
             isValidTimeLength: function(input = this.openingHours) {
                 var acceptedLength = 11;
-                return (input.length === acceptedLength);
+                var validationEmpty = (input === "");
+                var validationLength = (input.length === acceptedLength);
+                return (validationEmpty || validationLength);
             },
 
             isValidTimeFormat: function(input = this.openingHours) {
                 var timeRegexp = /^([01]?[0-9]|2[0-3]):[0-5][0-9]/;
                 this.openingTime = input.split('-')[0];
                 this.closingTime = input.split('-')[1] || '';
-                return (timeRegexp.test(this.openingTime) && timeRegexp.test(this.closingTime));
+                var validationEmpty = (input === "");
+                var validationFormat = (timeRegexp.test(this.openingTime) && timeRegexp.test(this.closingTime));
+                return (validationEmpty || validationFormat);
             },
 
             isValidHourRange: function() {
                 var openingTime = Number(this.openingTime.replace(':', ''));
                 var closingTime = Number(this.closingTime.replace(':', ''));
-                return (openingTime < closingTime);
+                var validationEmpty = ( (this.openingTime+this.closingTime) === "");
+                var validationRange = (openingTime < closingTime);
+                return (validationEmpty || validationRange);
             },
 
             isValid: function(input) {
                 var validLength = this.isValidTimeLength(input);
                 var validFormat = this.isValidTimeFormat(input);
                 var validRange = this.isValidHourRange();
-
+                
                 return (validLength && validFormat && validRange);
             },
 
