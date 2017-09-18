@@ -11,7 +11,7 @@ require_relative 'test_support/scene_info'
 feature 'Item' do
   feature 'creating an item' do
     before :all do
-      Fixture::Exhibitions.up
+      Fixture::Exhibitions.pristine.complete_scenario
     end
 
     scenario 'date must be four characters long' do
@@ -533,13 +533,13 @@ feature 'Item' do
   end
 
   scenario 'fix exhibitions edition when it has items' do
-    Fixture::XExhibitions.pristine.complete_scenario
+    Fixture::Exhibitions.pristine.complete_scenario
 
     current = Page::Exhibitions.new
-    current.go_to_exhibition_info(Fixture::XExhibitions::NAME)
+    current.go_to_exhibition_info(Fixture::Exhibitions::NAME)
     current.click_edit
-    current.fill('name', Fixture::XExhibitions::OTHER_NAME)
-    current.select_museum(Fixture::XMuseum::FIRST_MUSEUM)
+    current.fill('name', Fixture::Exhibitions::OTHER_NAME)
+    current.select_museum(Fixture::Museum::FIRST_MUSEUM)
     current.save
     current = Page::Exhibitions.new
 
@@ -547,12 +547,12 @@ feature 'Item' do
 
     current.last_toggle_list()
 
-    expect(current.exhibition_name(Fixture::XExhibitions::OTHER_NAME)).to eq(Fixture::XExhibitions::OTHER_NAME)
+    expect(current.exhibition_name(Fixture::Exhibitions::OTHER_NAME)).to eq(Fixture::Exhibitions::OTHER_NAME)
     expect(current.content?('room')).to be true
   end
 
   scenario 'displays exhibition languages info in edit view info' do
-    Fixture::XExhibitions.pristine.complete_scenario
+    Fixture::Exhibitions.pristine.complete_scenario
     Page::Exhibitions.new
 
     Fixture::Item.from_exhibition_to_new_item
@@ -568,7 +568,7 @@ feature 'Item' do
   end
 
   scenario 'displays exhibition languages info in edited item view info' do
-    Fixture::XExhibitions.pristine.complete_scenario
+    Fixture::Exhibitions.pristine.complete_scenario
     Page::Exhibitions.new
 
     Fixture::Item.from_exhibition_to_new_item

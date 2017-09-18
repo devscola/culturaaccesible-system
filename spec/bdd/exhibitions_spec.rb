@@ -5,161 +5,155 @@ require_relative 'test_support/fixture_exhibitions'
 require_relative 'test_support/fixture_museum'
 require_relative 'test_support/exhibition_info'
 
-feature 'item list' do
+feature 'Exhibitions' do
   before(:all) do
-    Fixture::XExhibitions.pristine.complete_scenario
+    Fixture::Exhibitions.pristine
+    Fixture::Museum.pristine
   end
 
-  xscenario 'shows each room with + button' do
-    current = Page::Exhibitions.new
-    current.toggle_list
-
-    expect(current.room_have_plus_button?).to be true
-  end
-
-  scenario 'shows each sub-scene without + button' do
-    current = Page::Exhibitions.new
-    current.toggle_list
-
-    expect(current.subscene_has_plus_button?).to be false
-  end
-
-  scenario 'shows list sorted by creation date'  do
-    current = Page::Exhibitions.new
-
-    expect(current.second_exhibition_shown?).to be true
-  end
-
-  scenario 'links to create item page' do
-    current = Page::Exhibitions.new
-
-    current.click_plus_button
-
-    expect(current.title(Fixture::XExhibitions::REDIRECTED_PAGE_TITLE)).to be true
-  end
-
-  scenario 'shows sidebar in all exhibitions pages' do
-    current = Page::Exhibitions.new
-    expect(current.has_sidebar?).to be true
-
-    current.go_to_exhibition_info(Fixture::XExhibitions::NAME)
-
-    expect(current.has_sidebar?).to be true
-  end
-end
-
-feature 'Sidebar' do
-  before(:all) do
-    Fixture::XMuseum.complete_scenario
-  end
-
-  scenario 'shows a list of museums' do
-    current = Page::Exhibitions.new
-
-    expect(current.sidebar_has_museums?).to be true
-  end
-
-  scenario 'museum name links to museum detail' do
-    current = Page::Exhibitions.new
-
-    current.go_to_museum_info
-
-    expect(current.title(Fixture::XMuseum::PAGE_TITLE)).to be true
-  end
-
-  scenario 'has new museum button' do
-    current = Page::Exhibitions.new
-
-    expect(current.has_new_museum_button?).to be true
-  end
-
-  scenario 'is in museum page' do
-    current = Page::Museum.new
-
-    expect(current.has_sidebar?).to be true
-  end
-end
-
-feature 'create exhibitions' do
-  before(:all) do
-    Fixture::XExhibitions.pristine
-  end
-
-  context 'exhibition created' do
+  context 'created' do
     before(:all) do
-      Fixture::XExhibitions.pristine.complete_scenario
+      Fixture::Exhibitions.pristine.complete_scenario
     end
 
-    let(:current) { Page::Exhibitions.new.create_one }
-
-    scenario 'displays editable info' do
-      expect(current.view_visible?).to be true
-      expect(current.has_edit_button?).to be true
-    end
+    let(:current) { Page::Exhibitions.new }
 
     scenario 'displays form when edit' do
+      exhibition = Fixture::Exhibitions::NAME
+      current.click_exhibition(exhibition)
       current.click_edit
+
       expect(current.view_visible?).to be false
       expect(current.form_visible?).to be true
     end
 
-    scenario 'added link shows an image' do
-      current.go_to_exhibition_info(Fixture::XExhibitions::SECOND_EXHIBITION)
-      Page::ExhibitionInfo.new
+    scenario 'displays editable info' do
+      exhibition = Fixture::Exhibitions::NAME
+      current.click_exhibition(exhibition)
+
+      expect(current.view_visible?).to be true
+      expect(current.has_edit_button?).to be true
+    end
+
+    scenario 'shows an image from added link' do
+      exhibition = Fixture::Exhibitions::SECOND_EXHIBITION
+      current = Page::Exhibitions.new
+      current.click_exhibition(exhibition)
 
       expect(page).to have_xpath("//img[contains(@src,'https://s3.amazonaws.com/pruebas-cova/girasoles.jpg')]" )
     end
-  end
-end
 
-feature 'Click plus button from sidebar to' do
-  before(:all) do
-    Fixture::XExhibitions.pristine
-  end
+    context 'item list' do
+      scenario 'shows each room with plus button' do
+        current = Page::Exhibitions.new
+        current.toggle_list
 
-  scenario 'new exhibition' do
-    current = Page::Exhibitions.new
-    current.click_add_exhibition
-    expect(current.has_css?('.cuac-exhibition-form', wait: 2)).to be true
-  end
-end
+        expect(current.room_have_plus_button?).to be true
+      end
 
-feature 'updates' do
-  scenario 'exhibition info' do
-    Fixture::XMuseum.pristine.complete_scenario
-    current = Page::Exhibitions.new
-    current.create_one
-    current.edit_exhibition
+      scenario 'shows each sub-scene without plus button' do
+        current = Page::Exhibitions.new
+        current.toggle_list
 
-    current.save
+        expect(current.subscene_has_plus_button?).to be false
+      end
 
-    expect(current.other_name?).to be true
-  end
+      scenario 'shows list sorted by creation date'  do
+        current = Page::Exhibitions.new
 
-  scenario 'shows museum name saved in view' do
-    current = Fixture::Exhibitions.pristine.exhibition_saved
+        expect(current.second_exhibition_shown?).to be true
+      end
 
-    expect(current.view_has_museum?(Fixture::Museum::OTHER_NAME)).to be true
-  end
+      scenario 'links to create item page' do
+        current = Page::Exhibitions.new
+        current.has_css?('.exhibition-name', wait: 4, visible: true)
+        current.click_plus_button
 
-  scenario 'shows museum name saved in edit view' do
-    Fixture::XExhibitions.pristine.complete_scenario
+        expect(current.title(Fixture::Exhibitions::REDIRECTED_PAGE_TITLE)).to be true
+      end
+    end
 
-    current = Page::Exhibitions.new
-    current.go_to_exhibition_info(Fixture::XExhibitions::NAME)
+    context 'sidebar' do
+      scenario 'shows sidebar in all exhibitions pages' do
+        current = Page::Exhibitions.new
+        current.has_css?('.exhibition-name', wait: 4, visible: true)
 
-    expect(current.view_has_museum?(Fixture::XMuseum::FIRST_MUSEUM)).to be true
-  end
-end
+        expect(current.has_sidebar?).to be true
 
-feature 'deletes' do
-  scenario 'doesnt show exhibition name in sidebar when is deleted' do
-    Fixture::XExhibitions.pristine.complete_scenario
-    current = Page::Exhibitions.new
+        current.go_to_exhibition_info(Fixture::Exhibitions::NAME)
+        current.has_css?('.exhibition-name', wait: 4, visible: true)
 
-    current.delete_exhibition(Fixture::XExhibitions::SECOND_EXHIBITION)
+        expect(current.has_sidebar?).to be true
+      end
 
-    expect(current.content?(Fixture::XExhibitions::NAME)).to be true
-    expect(current.content?(Fixture::XExhibitions::SECOND_EXHIBITION)).to be false
+      scenario 'shows a list of museums' do
+        current = Page::Exhibitions.new
+
+        expect(current.sidebar_has_museums?).to be true
+      end
+
+      scenario 'museum name links to museum detail' do
+        current = Page::Exhibitions.new
+
+        current.go_to_museum_info
+
+        expect(current.title(Fixture::Museum::PAGE_TITLE)).to be true
+      end
+
+      scenario 'has new exhibition button' do
+        current = Page::Exhibitions.new
+
+        expect(current.has_new_exhibition_button?).to be true
+      end
+
+      scenario 'has new museum button' do
+        current = Page::Exhibitions.new
+
+        expect(current.has_new_museum_button?).to be true
+      end
+
+      scenario 'is in museum page' do
+        current = Page::Museum.new
+
+        expect(current.has_sidebar?).to be true
+      end
+    end
+
+    context 'updates' do
+      scenario 'exhibition info with edit' do
+        exhibition_field = Fixture::Exhibitions::NAME_FIELD
+        other_exhibition_name = Fixture::Exhibitions::OTHER_NAME
+        current = Page::Exhibitions.new
+        current.click_exhibition_field(exhibition_field)
+        current.click_edit
+        current.fill(exhibition_field, other_exhibition_name)
+        current.save
+
+        expect(current.other_name?(other_exhibition_name)).to be true
+      end
+
+      scenario 'shows museum name saved in edit view' do
+        exhibition = Fixture::Exhibitions::NAME
+        museum = Fixture::Exhibitions::MUSEUM
+        current = Page::Exhibitions.new
+        current.go_to_exhibition_info(exhibition)
+
+        expect(current.view_has_museum?(museum)).to be true
+      end
+    end
+
+    context 'deletes' do
+      scenario 'doesnt show exhibition name in sidebar when is deleted' do
+        first_exhibition = Fixture::Exhibitions::NAME
+        second_exhibition = Fixture::Exhibitions::OTHER_NAME
+        current = Page::Exhibitions.new
+        current.click_exhibition(second_exhibition)
+        current.click_delete_button
+        current.accept_alert
+
+        expect(current.content?(first_exhibition)).to be true
+        expect(current.content?(second_exhibition)).to be false
+      end
+    end
   end
 end
