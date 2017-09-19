@@ -30,7 +30,7 @@ module Fixture
       end
 
       def from_exhibition_to_new_item
-        current = Fixture::Exhibitions.pristine.exhibition_saved
+        current = Fixture::Exhibitions.pristine.complete_exhibition
         current.click_plus_button
         initial_state
       end
