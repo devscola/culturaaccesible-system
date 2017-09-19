@@ -191,6 +191,32 @@ describe 'Exhibition controller' do
     expect(retrieved_museum['name']).to eq 'some name'
   end
 
+  it 'retrieve downloadable exhibition with translated item' do
+    exhibition_iso_code = 'es'
+    add_exhibition
+    exhibition = parse_response
+    add_room('1-0-0', exhibition['id'])
+    room = parse_response
+    add_scene('2-0-0', exhibition['id'])
+    scene = parse_response
+    add_subitem('1-1-0', exhibition['id'], 'room', room['id'])
+    scene_inside_room = parse_response
+    add_subitem('1-1-1', exhibition['id'], 'scene', scene_inside_room['id'])
+    subscene = parse_response
+
+    retrieve_for_download(exhibition['id'], exhibition_iso_code )
+    exhibition = parse_response
+    
+    expect(exhibition['items'][0]['id']).to eq room['id']
+    expect(exhibition['items'][1]['id']).to eq scene['id']
+    expect(exhibition['items'][0]['children'][0]['id']).to eq scene_inside_room['id']
+    expect(exhibition['items'][0]['children'][0]['children'][0]['id']).to eq subscene['id']
+    expect(exhibition['items'][0]['name']).to eq room['translations'][1]['name']
+    expect(exhibition['items'][1]['name']).to eq scene['translations'][1]['name']
+    expect(exhibition['items'][0]['children'][0]['name']).to eq scene_inside_room['translations'][1]['name']
+    expect(exhibition['items'][0]['children'][0]['children'][0]['name']).to eq subscene['translations'][1]['name']
+  end
+
   def retrieve_for_list(exhibition_id)
     payload = { id: exhibition_id }.to_json
     post 'api/exhibition/retrieve-for-list', payload
@@ -214,18 +240,23 @@ describe 'Exhibition controller' do
     post '/api/exhibition/delete', payload
   end
 
+  def retrieve_for_download( exhibition_id, iso_code )
+    payload = { id: exhibition_id, iso_code: iso_code }.to_json
+    post '/api/exhibition/download', payload
+  end
+
   def add_room(number='', exhibition_id)
-    room = { id: '', name: 'name', number: number, room: true, parent_id: exhibition_id, exhibition_id: exhibition_id, parent_class: "exhibition", type: 'room' }.to_json
+    room = { id: '', name: 'name', number: number, room: true, parent_id: exhibition_id, exhibition_id: exhibition_id, parent_class: "exhibition", type: 'room', translations: get_languages }.to_json
     post '/api/item/add', room
   end
 
   def add_scene(number='', exhibition_id)
-    scene = { id: '', name: 'name', number: number, room: false, parent_id: exhibition_id, exhibition_id: exhibition_id, parent_class: "exhibition", type: 'scene' }.to_json
+    scene = { id: '', name: 'name', number: number, room: false, parent_id: exhibition_id, exhibition_id: exhibition_id, parent_class: "exhibition", type: 'scene', translations: get_languages }.to_json
     post '/api/item/add', scene
   end
 
   def add_subitem(number='', exhibition_id, parent_class, parent_id)
-    scene = { id: '', name: 'name', number: number, room: false, parent_id: parent_id, exhibition_id: exhibition_id, parent_class: parent_class, type: 'scene' }.to_json
+    scene = { id: '', name: 'name', number: number, room: false, parent_id: parent_id, exhibition_id: exhibition_id, parent_class: parent_class, type: 'scene', translations: get_languages }.to_json
     post '/api/item/add', scene
   end
 
@@ -239,5 +270,12 @@ describe 'Exhibition controller' do
 
   def parse_response
     JSON.parse(last_response.body)
+  end
+
+  def get_languages
+    [
+      {'name' => 'name', 'description' => 'description', 'video' => 'video', 'iso_code' => 'en'},
+      {'name' => 'nombre', 'description' => 'descripción', 'video' => 'video', 'iso_code' => 'es'}
+    ]
   end
 end

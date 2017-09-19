@@ -42,7 +42,26 @@ module Items
         Items::Repository.merge_translation(id, iso_code)
       end
 
-      def retrieve_by_parent(id)
+      def retrieve_all_translated_items( parent_id, iso_code )
+        children = Items::Repository.retrieve_all_translated_items_by_parent( parent_id, iso_code )
+        children.map! do |item|
+          {
+            id: item[:id],
+            name: item[:name],
+            type: item[:type],
+            beacon: item[:beacon],
+            author: item[:author] || '',
+            date: item[:date] || '',
+            image: item[:image] || '',
+            video: item[:video] || '',
+            description: item[:description],
+            children: Items::Service.retrieve_all_translated_items( item[:id], iso_code )
+          }
+        end
+        sorted_list( children )
+      end
+
+      def retrieve_by_parent(id, order)        
         children = Items::Repository.retrieve_by_parent(id)
         children.map! do |item|
           {
@@ -55,7 +74,8 @@ module Items
             image: item[:image] || '',
             video: item[:video] || '',
             description: item[:description],
-            children: Items::Service.retrieve_by_parent(item[:id])
+            number: order.retrieve_ordinal(item[:id]),
+            children: Items::Service.retrieve_by_parent(item[:id], order)
           }
         end
         children_list = sorted_list(children)
@@ -63,7 +83,7 @@ module Items
       end
 
       def sorted_list(children)
-      children.sort_by { |child| child[:number] }
+        children.sort_by { |child| child[:number] }
       end
 
       def update_translations(translations, item_id)

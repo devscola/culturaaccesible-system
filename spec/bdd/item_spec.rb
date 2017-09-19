@@ -434,7 +434,7 @@ feature 'Item' do
     expect(current.subscene_info?(Fixture::Item::ARTWORK)).to be true
   end
 
-  scenario 'returns right ordinal number in each level', :wip do
+  scenario 'returns right ordinal number in each level' do
     Fixture::Item.from_exhibition_to_new_item
     Fixture::Item.room_saved_with_automatic_number
     current = Page::Exhibitions.new

@@ -3,15 +3,15 @@ module Actions
     class << self
       def retrieve_for_list(exhibition)
         order = Exhibitions::Repository.retrieve(exhibition[:id]).order
-        children = Items::Service.retrieve_by_parent(exhibition[:id])
+        children = Items::Service.retrieve_by_parent(exhibition[:id], order)
         children.map! do |item|
           begin
             {
               id: item[:id],
               name: item[:name],
-              number: order.retrieve_ordinal(item[:id]),
+              number: item[:number],
               type: item[:type],
-              children: retrieve_subitems_by_parent(exhibition[:id], item[:id])
+              children: item[:children]
             }
           rescue
             next
@@ -22,25 +22,31 @@ module Actions
         { id: exhibition[:id], name: exhibition[:name], creation_date: exhibition[:creation_date], :children => sorted_children }
       end
 
-      def retrieve_subitems_by_parent(exhibition_id, item_id)
-        order = Exhibitions::Repository.retrieve(exhibition_id).order
-        children = Items::Repository.retrieve_by_parent(item_id)
-        children.map! do |item|
+      def retrieve_all_items( exhibition, iso_code )
+        order = Exhibitions::Repository.retrieve( exhibition[:id] ).order
+        children = Items::Service.retrieve_all_translated_items( exhibition[:id], iso_code )
+        children.map! do | item |
           begin
-          {
-            id: item[:id],
-            name: item[:name],
-            type: item[:type],
-            number: order.retrieve_ordinal(item[:id]),
-            children: sorted_subitems(order, item[:id])
-          }
+            {
+              id: item[:id],
+              name: item[:name] || '',
+              author: item[:author] || '',
+              date: item[:date] || '',
+              beacon: item[:beacon] || '',
+              description: item[:description] || '',
+              image: item[:image] || '',
+              video: item[:video] || '',
+              parent_id: item[:parent_id] || '',
+              parent_class: item[:parent_class] || '',
+              type: item[:type] || '',
+              children: item[:children]
+            }
           rescue
             next
           end
         end
         children.reject!{ |child| child == nil }
-        sorted_children = Exhibitions::Service.sort_list(children)
-        sorted_children
+        Exhibitions::Service.sort_list(children)
       end
 
       def delete_item(item_id, exhibition_id)
@@ -61,19 +67,6 @@ module Actions
         end
 
         Exhibitions::Repository.update_exhibition(exhibition)
-      end
-
-      def sorted_subitems(order, item_id)
-        subitems = Items::Repository.retrieve_by_parent(item_id)
-        subitems.map! do |subitem|
-          {
-            id: subitem[:id],
-            name: subitem[:name],
-            type: subitem[:type],
-            number: order.retrieve_ordinal(subitem[:id])
-          }
-        end
-        Exhibitions::Service.sort_list(subitems)
       end
 
       def add_museum_info(exhibition)
