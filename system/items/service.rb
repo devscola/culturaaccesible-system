@@ -61,7 +61,7 @@ module Items
         sorted_list( children )
       end
 
-      def retrieve_by_parent(id)
+      def retrieve_by_parent(id, order)        
         children = Items::Repository.retrieve_by_parent(id)
         children.map! do |item|
           {
@@ -74,7 +74,8 @@ module Items
             image: item[:image] || '',
             video: item[:video] || '',
             description: item[:description],
-            children: Items::Service.retrieve_by_parent(item[:id])
+            number: order.retrieve_ordinal(item[:id]),
+            children: Items::Service.retrieve_by_parent(item[:id], order)
           }
         end
         children_list = sorted_list(children)
