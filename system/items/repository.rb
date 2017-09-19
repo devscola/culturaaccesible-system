@@ -21,8 +21,7 @@ module Items
 
       def retrieve(id)
         data = connection.items.find({ id: id }).first
-        connection.close
-        item = (data[:type] == 'scene') ? Items::Scene.from_bson(data, data['id']) : Items::Room.from_bson(data, data['id'])
+        item = create_item( data )
         item
       end
 
@@ -30,13 +29,28 @@ module Items
         connection.item_translations.insert_one({item_id: id, description: 'en castellano', video: 'k', iso_code: 'es'})
 
         data = connection.items.find({id: id}).first
-        item = (data['type'] == 'scene') ? Items::Scene.from_bson(data, data['id']).serialize : Items::Room.from_bson(data, data['id']).serialize
+        item = create_item( data ).serialize
         item_translation = connection.item_translations.find({item_id: id, iso_code: iso_code}).first
         translated_item = Items::Translation.from_bson(item_translation, id , item_translation['item_id']).serialize
         item.each do |key, value|
           item[key] = translated_item[key] if translated_item[key]
         end
         item
+      end
+
+      def retrieve_all_translated_items_by_parent( parent_id, iso_code = 'en' )
+        items = []
+        items_data = connection.items.find({ parent_id: parent_id })
+        items_data.each do |data|         
+          item = create_item( data ).serialize
+          item_translation = connection.item_translations.find({item_id: item[:id], iso_code: iso_code}).first
+          translated_item = Items::Translation.from_bson(item_translation, item_translation['id'], item[:id]).serialize
+          item.each do |key, value|
+            item[key] = translated_item[key] if (translated_item[key] && key != 'id')
+          end
+          items.push(item)
+        end
+        items
       end
 
       def retrieve_translations(item_id)
@@ -49,7 +63,7 @@ module Items
         items_data = connection.items.find({ parent_id: parent_id })
         connection.close
         items_data.each do |data|
-          item = data['type'] == 'scene' ? Items::Scene.from_bson(data, data['id']).serialize : Items::Room.from_bson(data, data['id']).serialize
+          item = create_item( data ).serialize
           retrieved << item
         end
         retrieved
@@ -86,6 +100,10 @@ module Items
         connection.items.insert_one(item.serialize)
         connection.close
         item
+      end
+
+      def create_item(data)
+        data['type'] == 'scene' ? Items::Scene.from_bson(data, data['id']) : Items::Room.from_bson(data, data['id'])
       end
 
     end

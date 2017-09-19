@@ -66,6 +66,16 @@ class App < Sinatra::Base
     result.to_json
   end
 
+  post '/api/exhibition/download' do
+    body = JSON.parse(request.body.read)
+    exhibition_id = body['id']
+    iso_code = body['iso_code']
+    exhibition = Exhibitions::Service.retrieve( exhibition_id )
+    result = Actions::Exhibition.retrieve_all_items( exhibition, iso_code )
+    exhibition['items'] = result
+    exhibition.to_json
+  end
+
   get '/api/exhibition/flush' do
     Exhibitions::Service.flush
     {}

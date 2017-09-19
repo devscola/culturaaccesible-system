@@ -22,6 +22,33 @@ module Actions
         { id: exhibition[:id], name: exhibition[:name], creation_date: exhibition[:creation_date], :children => sorted_children }
       end
 
+      def retrieve_all_items( exhibition, iso_code )
+        order = Exhibitions::Repository.retrieve( exhibition[:id] ).order
+        children = Items::Service.retrieve_all_translated_items( exhibition[:id], iso_code )
+        children.map! do | item |
+          begin
+            {
+              id: item[:id],
+              name: item[:name] || '',
+              author: item[:author] || '',
+              date: item[:date] || '',
+              beacon: item[:beacon] || '',
+              description: item[:description] || '',
+              image: item[:image] || '',
+              video: item[:video] || '',
+              parent_id: item[:parent_id] || '',
+              parent_class: item[:parent_class] || '',
+              type: item[:type] || '',
+              children: item[:children]
+            }
+          rescue
+            next
+          end
+        end
+        children.reject!{ |child| child == nil }
+        Exhibitions::Service.sort_list(children)
+      end
+
       def retrieve_subitems_by_parent(exhibition_id, item_id)
         order = Exhibitions::Repository.retrieve(exhibition_id).order
         children = Items::Repository.retrieve_by_parent(item_id)
@@ -29,8 +56,16 @@ module Actions
           begin
           {
             id: item[:id],
-            name: item[:name],
             type: item[:type],
+            name: item[:name],
+            author: item[:author] || '',
+            date: item[:date] || '',
+            beacon: item[:beacon] || '',
+            description: item[:description] || '',
+            image: item[:image] || '',
+            video: item[:video] || '',
+            parent_id: item[:parent_id] || '',
+            parent_class: item[:parent_class] || '',
             number: order.retrieve_ordinal(item[:id]),
             children: sorted_subitems(order, item[:id])
           }
@@ -68,9 +103,17 @@ module Actions
         subitems.map! do |subitem|
           {
             id: subitem[:id],
-            name: subitem[:name],
             type: subitem[:type],
-            number: order.retrieve_ordinal(subitem[:id])
+            name: subitem[:name],
+            author: subitem[:author] || '',
+            date: subitem[:date] || '',
+            beacon: subitem[:beacon] || '',
+            description: subitem[:description] || '',
+            image: subitem[:image] || '',
+            video: subitem[:video] || '',
+            parent_id: subitem[:parent_id] || '',
+            parent_class: subitem[:parent_class] || '',
+            number: order.retrieve_ordinal(subitem[:id]),
           }
         end
         Exhibitions::Service.sort_list(subitems)

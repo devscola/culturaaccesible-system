@@ -31,7 +31,7 @@ module Items
     end
 
     def generate_id
-      Digest::MD5.hexdigest(@name + @description + Time.now.utc.nsec.to_s)
+      Digest::MD5.hexdigest('translation' + @name + @description + Time.now.utc.nsec.to_s)
     end
   end
 end
