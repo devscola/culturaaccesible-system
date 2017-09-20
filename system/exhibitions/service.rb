@@ -1,6 +1,7 @@
 require 'digest/md5'
 require_relative 'repository'
 require_relative 'exhibition'
+require_relative 'traslation'
 require_relative 'order'
 require_relative '../helpers/defense'
 
@@ -20,6 +21,10 @@ module Exhibitions
       def retrieve(id)
         exhibition = Exhibitions::Repository.retrieve(id)
         exhibition.serialize
+      end
+
+      def merge_translation(id, iso_code)
+        Exhibitions::Repository.merge_translation(id, iso_code)
       end
 
       def sort_list(children)
