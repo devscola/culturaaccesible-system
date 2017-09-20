@@ -26,7 +26,7 @@ module Exhibitions
         exhibition
       end
 
-      def merge_translation(id, iso_code)
+      def retrieve_translated(id, iso_code)
         connection.exhibition_translations.insert_one({exhibition_id: id, general_description: 'en castellano', name: 'nombre en castellano', iso_code: 'es'})
 
         data = connection.exhibitions.find({id: id}).first

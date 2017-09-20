@@ -21,7 +21,7 @@ describe Exhibitions::Service do
     exhibition = add_exhibition(name)
 
     iso_code = 'es'
-    translated_exhibition = Exhibitions::Service.merge_translation(exhibition[:id], iso_code)
+    translated_exhibition = Exhibitions::Service.retrieve_translated(exhibition[:id], iso_code)
 
     expect(translated_exhibition[:id]).to eq exhibition[:id]
     expect(translated_exhibition[:name] != exhibition[:name]).to be true

@@ -23,8 +23,8 @@ module Exhibitions
         exhibition.serialize
       end
 
-      def merge_translation(id, iso_code)
-        Exhibitions::Repository.merge_translation(id, iso_code)
+      def retrieve_translated(id, iso_code)
+        Exhibitions::Repository.retrieve_translated(id, iso_code)
       end
 
       def sort_list(children)
