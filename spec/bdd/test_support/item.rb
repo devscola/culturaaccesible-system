@@ -22,6 +22,34 @@ module Page
       find('.submit').click
     end
 
+    def toggle_list
+      has_sidebar?
+      first('.toggle-exhibition-list', text: ' ', wait: 4).click
+    end
+
+    def has_sidebar?
+      has_css?('.toggle-exhibition-list', wait: 4, text: ' ', visible: true)
+    end
+
+    def find_suggested_number
+      find('[name=number]', wait: 4, visible: false ).value
+    end
+
+    def click_room_plus_button
+      within('.exhibition-room', wait: 4) do
+        within('.room-name', wait: 4) do
+          within('.cuac-item-list', wait: 4) do
+            click_on('.plus-button', wait: 4)
+          end
+        end
+      end
+    end
+
+    def click_in_exhibition_plus_button
+      has_edit_button?
+      find('.cuac-sidebar-plus-button').click
+    end
+
     def has_edit_button?
       has_css?('.edit-button', wait: 4)
     end
@@ -53,11 +81,6 @@ module Page
       has_checked_field?(name: 'room')
     end
 
-    def room_check_disabled?
-      has_css?('.room', wait: 2)
-      input_disabled?('room')
-    end
-
     def accept_alert
       find('.accept-alert').click
     end
@@ -68,6 +91,11 @@ module Page
 
     def alert_displayed?
       has_css?('.room-alert')
+    end
+
+    def room_check_disabled?
+      has_css?('.room', wait: 4, exact_text: 'room')
+      input_disabled?('room')
     end
 
     def input_disabled?(field)
@@ -104,10 +132,6 @@ module Page
       fill('description-cat', 'descripció de room')
       fill('video-cat', 'https://s3.amazonaws.com/pruebas-cova/more3minutes.mp4')
       submit
-    end
-
-    def find_suggested_number
-      find('[name=number]', visible: false ).value
     end
 
     private

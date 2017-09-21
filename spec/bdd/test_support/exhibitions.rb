@@ -25,22 +25,26 @@ module Page
 
     def toggle_list
       has_sidebar?
-      first('.toggle-exhibition-list', wait: 4).click
-    end
-
-    def click_plus_button
-      if(!has_css?('.plus-button', wait: 4, exact_text: '+').nil?)
-        first('.plus-button', wait: 4, exact_text: '+').click
-      end
+      first('.toggle-exhibition-list', wait: 4, visible: true).click
     end
 
     def has_sidebar?
       has_css?('.toggle-exhibition-list', wait: 4, visible: true)
     end
 
+    def click_plus_button
+      has_css?('.plus-button', wait: 10, text: '+', visible: true)
+      first('.plus-button', wait: 4, text: '+', visible: true).click
+    end
+
+    def click_in_exhibition_plus_button
+      has_css?('.edit-button', wait: 4, visible: true)
+      first('.cuac-sidebar-plus-button', wait: 4, visible: true).click
+    end
+
     def go_to_exhibition_info(exhibition)
-      has_css?('.exhibition-name', wait: 10, text: exhibition)
-      find('.exhibition-name', text: exhibition, wait: 4, visible: true).click
+      has_css?('.exhibition-name', wait: 10, visible: true, text: exhibition)
+      first('.exhibition-name', text: exhibition, wait: 4, visible: true).click
     end
 
     def sidebar_has_museums?
@@ -62,8 +66,20 @@ module Page
 
     def save
       has_css?('.submit.cuac-exhibition-form', exact_text: 'Save', wait: 4, visible: true)
-      find('.submit.cuac-exhibition-form', wait: 4).click
+      first('.submit.cuac-exhibition-form', exact_text: 'Save', wait: 4, visible: true).click
       self
+    end
+
+    def submit
+      find('.submit').click
+    end
+
+    def go_to_last_room_info
+      all('.room-name', wait: 4, visible: true).last.click
+    end
+    
+    def find_content(selector)
+      all(selector).last.text
     end
 
     def other_name?(name)
@@ -83,8 +99,6 @@ module Page
       has_css?('.accept-alert', wait: 4)
       find('.accept-alert', text: 'OK').click
     end
-
-
 
     def fill(field, content)
       fill_in(field, with: content, wait: 2)

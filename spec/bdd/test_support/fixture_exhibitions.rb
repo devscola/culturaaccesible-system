@@ -56,6 +56,12 @@ module Fixture
         HTTParty.post('http://localhost:4567/api/item/add', { body: scene })
       end
 
+      def add_item(exhibition_id, parent_class, parent_id, number, item_name, type='scene', room=false)
+        item = { id: '', name: item_name, number: number, room: room, parent_id: parent_id, exhibition_id: exhibition_id, parent_class: parent_class, type: type }.to_json
+        response = HTTParty.post('http://localhost:4567/api/item/add', { body: item })
+        JSON.parse(response.body)['id']
+      end
+
       def add_museum(name, street)
         museum = { info: { name: name }, location: { street: street } }.to_json
         response = HTTParty.post('http://localhost:4567/api/museum/add', { body: museum })
@@ -63,119 +69,4 @@ module Fixture
       end
     end
   end
-
-
-  class XExhibitions
-    extend Capybara::DSL
-
-    NAME_FIELD = 'name'
-    LOCATION_FIELD = 'location'
-    MUSEUM_FIELD = 'museums'
-    NAME = 'some name'
-    OTHER_NAME = 'some other name'
-    LOCATION = 'some location'
-    EXHIBITION_NAME = 'Name: some name'
-    IMAGE = 'https://s3.amazonaws.com/pruebas-cova/girasoles.jpg'
-    REDIRECTED_PAGE_TITLE = 'Item'
-    LINK = 'https://s3.amazonaws.com/pruebas-cova/girasoles.jpg'
-
-    class << self
-
-      def pristine
-        visit('/api/exhibition/flush')
-        self
-      end
-
-      # def up
-      #   visit('/api/exhibition/flush')
-      #   visit('/api/fixtures/exhibition')
-      # end
-
-      # API/FIXTURES/EXHIBITION not yet needed !!!!
-
-
-      def show_exhibition_form
-        current = Page::Exhibitions.new
-        current.show
-        current
-      end
-
-      def fill_form
-        current = Page::Exhibitions.new
-        current.show
-
-        current.fill(NAME_FIELD, NAME)
-        current.select_museum(Fixture::Museum::OTHER_NAME)
-        current
-      end
-
-      def exhibition_saved
-        create_museums
-        current = fill_form
-        current.save
-        current
-      end
-
-      def exhibition_edited
-        current = exhibition_saved
-        current.click_edit
-        current.fill(NAME_FIELD, OTHER_NAME)
-        current
-      end
-
-      def exhibition_saved_with_room
-        current = exhibition_saved
-        current.add_room
-        current = Page::Exhibitions.new
-        current
-      end
-
-      def exhibition_saved_with_item
-        current = exhibition_saved
-        current.add_item
-        Page::Exhibitions.new
-      end
-
-      def exhibition_saved_with_subscenes
-        Fixture::Item.from_exhibition_to_new_item
-
-        Fixture::Item.item_saved
-        Fixture::Item.item_saved_in_item
-
-        Page::Exhibitions.new
-      end
-
-      def complete_exhibition
-        current = exhibition_saved
-        current.add_room
-        current = Page::Exhibitions.new
-        current.click_plus_button
-        Page::Item.new
-
-        Fixture::Item.item_saved
-        Fixture::Item.item_saved_in_item
-      end
-
-      def two_exhibitions_introduced
-        create_museums
-        current = show_exhibition_form
-        current.fill(NAME_FIELD, NAME)
-        current.select_museum(Fixture::Museum::NAME)
-        current.save
-
-        current.show
-        current.fill(NAME_FIELD, OTHER_NAME)
-        current.select_museum(Fixture::Museum::OTHER_NAME)
-        current.save
-        current
-      end
-
-      def create_museums
-        Fixture::Museum.pristine.fill_with_extra_content
-        Fixture::Museum.fill_other_museum
-      end
-    end
-  end
-
-
 end

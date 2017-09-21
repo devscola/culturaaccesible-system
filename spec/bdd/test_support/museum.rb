@@ -179,43 +179,6 @@ module Page
       has_content?(content)
     end
 
-
-
-
-
-
-
-    # def initial_state
-    #   Page::Museum.new
-    # end
-
-    # def showing_form
-    #   current = initial_state
-    #   current.click_new_museum
-    #   current
-    # end
-
-    # def has_sidebar?
-    #   has_css?('#listing')
-    # end
-
-    # def has_form?
-    #   has_css?('#formulary')
-    # end
-
-    # def has_edit_button?
-    #   has_css?('.edit-button')
-    # end
-
-    # def remove_field_content
-    #   fill_in('link', with: '')
-    # end
-
-    # def fill_with_good_link
-    #   good_link = "https://www.google.es/maps/place/Institut+Valenci%C3%A0+d'Art+Modern/@39.4723137,-0.3909856,15z"
-    #   fill_in('link', with: good_link)
-    # end
-
     private
 
     def validate!
