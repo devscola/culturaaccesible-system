@@ -186,7 +186,7 @@ feature 'Item' do
       Fixture::Item.complete_scenario
     end
 
-    scenario 'when room is edited', :wip do
+    scenario 'when room is edited' do
       current = Page::RoomInfo.new
       current.toggle_list
       current.go_to_room_info

@@ -112,7 +112,7 @@ feature 'Exhibitions' do
         expect(current.has_new_museum_button?).to be true
       end
 
-      scenario 'is in museum page' do
+      scenario 'is in museum page', :wip do
         current = Page::Museum.new
 
         expect(current.has_sidebar?).to be true
