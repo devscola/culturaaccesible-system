@@ -86,7 +86,7 @@ feature 'Item' do
     current = Page::RoomInfo.new
     current.toggle_list
 
-    current.go_to_last_room_info
+    current.go_to_last_room_name('2-0-0 | some room name')
 
     expect(current.content?('nombre de room')).to be true
     expect(current.content?('descripció de room')).to be true

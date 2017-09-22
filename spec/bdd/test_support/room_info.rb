@@ -30,6 +30,10 @@ module Page
       all('.room-name', wait: 4, visible: true).last.click
     end
 
+    def go_to_last_room_name(room_name)
+      all('.room-name', text: room_name, wait: 4, visible: true).last.click
+    end
+
     def room_has_children?
       has_css?('.exhibition-room .exhibition-scene', wait: 2)
     end
