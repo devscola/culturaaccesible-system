@@ -5,7 +5,7 @@ require_relative 'test_support/fixture_exhibitions'
 require_relative 'test_support/fixture_museum'
 require_relative 'test_support/exhibition_info'
 
-feature 'Exhibitions', :wop do
+feature 'Exhibitions' do
   before(:all) do
     Fixture::Exhibitions.pristine
     Fixture::Museum.pristine
@@ -121,7 +121,7 @@ feature 'Exhibitions', :wop do
     end
 
     context 'updates' do
-      scenario 'shows museum name saved in edit view', :wip do
+      scenario 'shows museum name saved in edit view' do
         exhibition = Fixture::Exhibitions::NAME
         museum = Fixture::Exhibitions::MUSEUM
         current = Page::Exhibitions.new
@@ -150,7 +150,7 @@ feature 'Exhibitions', :wop do
         Fixture::Exhibitions.pristine.complete_scenario
       end
 
-      scenario 'doesnt show exhibition name in sidebar when is deleted', :wep do
+      scenario 'doesnt show exhibition name in sidebar when is deleted' do
         first_exhibition = Fixture::Exhibitions::NAME
         second_exhibition = Fixture::Exhibitions::SECOND_EXHIBITION
         current = Page::Exhibitions.new

@@ -8,7 +8,7 @@ require_relative 'test_support/room_info'
 require_relative 'test_support/scene_info'
 require_relative 'test_support/item'
 
-feature 'Item', :wup do
+feature 'Item' do
   before(:all) do
     Fixture::Item.complete_scenario
   end
@@ -78,8 +78,7 @@ feature 'Item', :wup do
     expect(current.room_check_disabled?).to be true
   end
 
-
-  scenario 'displays exhibition languages info in edited item view info', :wip do
+  scenario 'displays exhibition languages info in edited item view info' do
     current = Page::Exhibitions.new
     current.click_in_exhibition_plus_button
     current = Page::Item.new

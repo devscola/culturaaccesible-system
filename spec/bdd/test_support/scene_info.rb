@@ -19,7 +19,7 @@ module Page
 
     def toggle_list
       has_css?('.toggle-exhibition-list', wait: 4, visible: true)
-      first('.toggle-exhibition-list', wait: 4, visible: true).click
+      first('.toggle-exhibition-list', wait: 10, visible: true).click
     end
 
     def last_toggle_list
