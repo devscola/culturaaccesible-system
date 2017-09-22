@@ -291,6 +291,7 @@ module Page
     end
 
     def accept_alert
+      has_css?('.accept-alert', wait: 4)
       find('.accept-alert').click
     end
 
