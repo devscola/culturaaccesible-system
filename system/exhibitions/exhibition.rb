@@ -3,6 +3,8 @@ module Exhibitions
     attr_reader :id, :name, :order, :show, :museum_id
     attr_writer :deleted
 
+    DEFAULT_ISO_CODE = ['es']
+
     def initialize(data, id=nil, order=nil)
       @creation_date = data['creation_date'] || Time.now.utc
       @show = Defense.string_null_defense(data['show'])
@@ -18,6 +20,7 @@ module Exhibitions
       @id = id || generate_id
       @order = order || Order.new
       @deleted = data['deleted'] || false
+      @iso_codes = data['iso_codes'] || DEFAULT_ISO_CODE
     end
 
     def serialize
@@ -35,7 +38,8 @@ module Exhibitions
         description: @description,
         image: @image,
         order: @order.serialize,
-        deleted: @deleted
+        deleted: @deleted,
+        iso_codes: @iso_codes
       }
     end
 

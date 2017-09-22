@@ -75,6 +75,10 @@ module Page
       has_css?('.toggle-exhibition-list', wait: 5, visible: false)
     end
 
+    def has_language_toggle_button?(language)
+      has_css?(".toggle-language-#{language}", wait: 5)
+    end
+
     def exhibition_name(exhibition)
       find('.exhibition-name', wait: 2, text: exhibition).text
     end

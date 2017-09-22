@@ -36,10 +36,6 @@
                 </select>
             </div>
             <div class="form-group">
-                <label for="short_description">General description</label>
-                <textarea class="form-control" name="short_description" value="{{short_description::input}}"></textarea>
-            </div>
-            <div class="form-group">
                 <label for="type">Type</label>
                 <select class="form-control" id="type" name="type" value="{{typeValue::change}}">
                     <option selected disabled>Select an option</option>
@@ -64,10 +60,6 @@
                 <label for="beacon">Beacon number</label>
                 <input class="form-control" name="beacon" value="{{beacon::input}}">
             </div>
-            <div class="form-group">
-                <label for="description">Extended description</label>
-                <textarea class="form-control" name="description" value="{{description::input}}"></textarea>
-            </div>
             <div class$="form-group">
                 <label for="image">Image link</label>
                 <input class="form-control" name="image" value="{{image::input}}">
@@ -76,6 +68,7 @@
                   <img class="img-responsive img-thumbnail" src="{{imageSource}}" alt="image">
                 </div>
             </div>
+            <cuac-exhibition-languages id="languages"></cuac-exhibition-languages>
             <div>
                 <button class="btn btn-primary submit" on-click="submitClicked" disabled$="{{submitDisabled}}">Save</button>
             </div>
@@ -197,7 +190,8 @@
                     date_finish: this.formatDate(this.dateFinish),
                     beacon: this.beacon,
                     description: this.description,
-                    image: this.image
+                    image: this.image,
+                    iso_codes: this.$.languages.collectLocaleData()
                 };
                 return data;
             },

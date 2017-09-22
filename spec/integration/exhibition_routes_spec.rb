@@ -206,7 +206,7 @@ describe 'Exhibition controller' do
 
     retrieve_for_download(exhibition['id'], exhibition_iso_code )
     exhibition = parse_response
-    
+
     expect(exhibition['items'][0]['id']).to eq room['id']
     expect(exhibition['items'][1]['id']).to eq scene['id']
     expect(exhibition['items'][0]['children'][0]['id']).to eq scene_inside_room['id']
@@ -215,6 +215,21 @@ describe 'Exhibition controller' do
     expect(exhibition['items'][1]['name']).to eq scene['translations'][1]['name']
     expect(exhibition['items'][0]['children'][0]['name']).to eq scene_inside_room['translations'][1]['name']
     expect(exhibition['items'][0]['children'][0]['children'][0]['name']).to eq subscene['translations'][1]['name']
+  end
+
+  it 'saves exhibition with locales', :wip do
+    iso_codes = ['es', 'en']
+    add_museum
+    museum_id = parse_response['id']
+    add_exhibition(museum_id, iso_codes)
+    exhibition = parse_response
+
+    payload = { id: exhibition['id'] }.to_json
+    post '/api/exhibition/retrieve', payload
+    retrieved_exhibition = parse_response
+
+    expect(retrieved_exhibition['iso_codes'][0]).to eq 'es'
+    expect(retrieved_exhibition['iso_codes'][1]).to eq 'en'
   end
 
   def retrieve_for_list(exhibition_id)
@@ -226,11 +241,12 @@ describe 'Exhibition controller' do
     post 'api/exhibition/list'
   end
 
-  def add_exhibition(museum_id = '')
+  def add_exhibition(museum_id = '', iso_codes=[])
     exhibition = {
       name: 'some name',
       image: IMAGE,
-      museum_id: museum_id
+      museum_id: museum_id,
+      iso_codes: iso_codes
     }.to_json
     post '/api/exhibition/add', exhibition
   end

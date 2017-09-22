@@ -85,6 +85,13 @@ feature 'create exhibitions' do
     Fixture::XExhibitions.pristine
   end
 
+  scenario 'displays languages toggle buttons' do
+    current = Page::Exhibitions.new
+
+    expect(current.has_language_toggle_button?('en')).to be true
+    expect(current.has_language_toggle_button?('cat')).to be true
+  end
+
   context 'exhibition created' do
     before(:all) do
       Fixture::XExhibitions.pristine.complete_scenario

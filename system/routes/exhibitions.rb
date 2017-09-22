@@ -39,10 +39,10 @@ class App < Sinatra::Base
   post '/api/exhibition/items' do
     response.headers['Access-Control-Allow-Origin'] = '*'
     body = JSON.parse(request.body.read)
+    exhibition_id = body['exhibition_id']
 
-    exhibition = Exhibitions::Repository.retrieve(body['exhibition_id'])
-
-    result = Items::Service.retrieve_by_parent(exhibition.id)
+    order = Exhibitions::Repository.retrieve(exhibition_id).order
+    result = Items::Service.retrieve_by_parent(exhibition_id, order)
 
     result.to_json
   end
