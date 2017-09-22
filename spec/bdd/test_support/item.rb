@@ -24,7 +24,7 @@ module Page
 
     def toggle_list
       has_sidebar?
-      first('.toggle-exhibition-list', text: ' ', wait: 4).click
+      first('.toggle-exhibition-list', wait: 4).click
     end
 
     def has_sidebar?

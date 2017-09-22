@@ -8,7 +8,7 @@ require_relative 'test_support/room_info'
 require_relative 'test_support/scene_info'
 require_relative 'test_support/item'
 
-feature 'Item' do
+feature 'Item', :wip do
   before(:all) do
     Fixture::Item.complete_scenario
   end
