@@ -78,29 +78,35 @@ feature 'Item' do
     expect(current.room_check_disabled?).to be true
   end
 
-  scenario 'displays exhibition languages info in edited item view info' do
-    current = Page::Exhibitions.new
-    current.click_in_exhibition_plus_button
-    current = Page::Item.new
-    current.fill_form_with_languages
-    current = Page::RoomInfo.new
-    current.toggle_list
+  context '-' do
+    before :all do
+      Fixture::Item.minimum_scenario
+    end
 
-    current.go_to_last_room_name('2-0-0 | some room name')
+    scenario 'displays exhibition languages info in edited item view info' do
+      current = Page::RoomInfo.new
+      current.toggle_list
+      current.go_to_room_info
+      current.click_edit
+      current.fill_form_with_languages
+      current.submit
+      current.toggle_list
+      current.go_to_room_info
 
-    expect(current.content?('nombre de room')).to be true
-    expect(current.content?('descripció de room')).to be true
-    expect(current.content?('https://s3.amazonaws.com/pruebas-cova/more3minutes.mp4')).to be true
+      expect(current.content?('nombre de room')).to be true
+      expect(current.content?('descripció de room')).to be true
+      expect(current.content?('https://s3.amazonaws.com/pruebas-cova/more3minutes.mp4')).to be true
 
-    current.click_edit
-    current.fill('video-cat', 'https://s3.amazonaws.com/pruebas-cova/3minutes.mp4')
-    current.submit
-    current.toggle_list
-    current.go_to_last_room_info
+      current.click_edit
+      current.fill('video-cat', 'https://s3.amazonaws.com/pruebas-cova/3minutes.mp4')
+      current.submit
+      current.toggle_list
+      current.go_to_room_info
 
-    expect(current.find_content('.name-es')).to eq 'Name: nombre de room'
-    expect(current.find_content('.description-cat')).to eq 'Description: descripció de room'
-    expect(current.find_content('.video-cat')).to eq 'Video: https://s3.amazonaws.com/pruebas-cova/3minutes.mp4'
+      expect(current.find_content('.name-es')).to eq 'Name: nombre de room'
+      expect(current.find_content('.description-cat')).to eq 'Description: descripció de room'
+      expect(current.find_content('.video-cat')).to eq 'Video: https://s3.amazonaws.com/pruebas-cova/3minutes.mp4'
+    end
   end
 
   context 'pages is' do

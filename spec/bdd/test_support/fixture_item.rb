@@ -37,6 +37,11 @@ module Fixture
         create_complete_exhibition(Fixture::Exhibitions::NAME, '1')
       end
 
+      def minimum_scenario
+        pristine
+        create_minimum_exhibition(Fixture::Exhibitions::NAME, '1')
+      end
+
       def create_a_room_with_alert
         current = Page::Item.new
         current.fill('name',Fixture::Item::ARTWORK)
@@ -44,6 +49,12 @@ module Fixture
         current.fill('date', Fixture::Item::DATE)
         current.check_room
         current
+      end
+
+      def create_minimum_exhibition(exhibition_name,exhibition_order)
+        museum_id = Fixture::Exhibitions.add_museum(Fixture::Exhibitions::MUSEUM, Fixture::Exhibitions::MUSEUM_STREET)
+        exhibition_id = Fixture::Exhibitions.add_exhibition(exhibition_name, museum_id)
+        room_id = Fixture::Exhibitions.add_item(exhibition_id, 'exhibition', exhibition_id, exhibition_order + '-0-0', 'room', 'room', true)
       end
 
       def create_complete_exhibition(exhibition_name,exhibition_order)

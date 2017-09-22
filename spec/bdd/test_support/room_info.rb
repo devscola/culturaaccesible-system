@@ -30,8 +30,8 @@ module Page
       all('.room-name', wait: 4, visible: true).last.click
     end
 
-    def go_to_last_room_name(room_name)
-      all('.room-name', text: room_name, wait: 4, visible: true).last.click
+    def go_to_second_room
+      all('.room-name', wait: 4, visible: true)[1].click
     end
 
     def room_has_children?
@@ -64,6 +64,16 @@ module Page
     def click_edit
       has_css?('.edit-button', wait: 5, exact_text: 'Edit', visible: true)
       find('.edit-button', wait: 5, exact_text: 'Edit', visible: true).click
+    end
+
+    def fill_form_with_languages
+      fill('name', 'some room name')
+      fill('language-name-es', 'nombre de room')
+      fill('description-es', 'descripcion de room')
+      fill('video-es', 'https://s3.amazonaws.com/pruebas-cova/more3minutes.mp4')
+      fill('language-name-cat', 'nom de room')
+      fill('description-cat', 'descripció de room')
+      fill('video-cat', 'https://s3.amazonaws.com/pruebas-cova/more3minutes.mp4')
     end
 
     private
