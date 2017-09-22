@@ -5,7 +5,7 @@ require_relative 'test_support/fixture_exhibitions'
 require_relative 'test_support/fixture_museum'
 require_relative 'test_support/exhibition_info'
 
-feature 'Exhibitions' do
+feature 'Exhibitions', :wop do
   before(:all) do
     Fixture::Exhibitions.pristine
     Fixture::Museum.pristine
@@ -121,6 +121,15 @@ feature 'Exhibitions' do
     end
 
     context 'updates' do
+      scenario 'shows museum name saved in edit view', :wip do
+        exhibition = Fixture::Exhibitions::NAME
+        museum = Fixture::Exhibitions::MUSEUM
+        current = Page::Exhibitions.new
+        current.go_to_exhibition_info(exhibition)
+
+        expect(current.view_has_museum?(museum)).to be true
+      end
+
       scenario 'exhibition info with edit' do
         exhibition_name = Fixture::Exhibitions::NAME
         other_exhibition_name = Fixture::Exhibitions::OTHER_NAME
@@ -133,25 +142,22 @@ feature 'Exhibitions' do
         expect(current.name?(other_exhibition_name)).to be true
       end
 
-      scenario 'shows museum name saved in edit view' do
-        exhibition = Fixture::Exhibitions::NAME
-        museum = Fixture::Exhibitions::MUSEUM
-        current = Page::Exhibitions.new
-        current.go_to_exhibition_info(exhibition)
-
-        expect(current.view_has_museum?(museum)).to be true
-      end
     end
 
     context 'deletes' do
-      scenario 'doesnt show exhibition name in sidebar when is deleted' do
+
+      before(:all) do
+        Fixture::Exhibitions.pristine.complete_scenario
+      end
+
+      scenario 'doesnt show exhibition name in sidebar when is deleted', :wep do
         first_exhibition = Fixture::Exhibitions::NAME
         second_exhibition = Fixture::Exhibitions::SECOND_EXHIBITION
         current = Page::Exhibitions.new
+
         current.click_exhibition_name(second_exhibition)
         current.click_delete_button
         current.accept_alert
-
 
         expect(current.content?(first_exhibition)).to be true
         expect(current.content?(second_exhibition)).to be false
