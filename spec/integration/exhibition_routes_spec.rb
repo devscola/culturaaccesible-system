@@ -217,7 +217,7 @@ describe 'Exhibition controller' do
     expect(exhibition['items'][0]['children'][0]['children'][0]['name']).to eq subscene['translations'][1]['name']
   end
 
-  it 'saves exhibition with locales', :wip do
+  it 'saves exhibition with locales' do
     iso_codes = ['es', 'en']
     add_museum
     museum_id = parse_response['id']

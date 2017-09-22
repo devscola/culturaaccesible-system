@@ -8,21 +8,109 @@ module Page
       validate!
     end
 
+    def click_exhibition(exhibition)
+      has_css?('.exhibition-name', exact_text: exhibition, wait: 4, visible: true)
+      first('.exhibition-name', exact_text: exhibition, wait: 4).click
+    end
+
+    def click_exhibition_name(exhibition_name)
+      has_css?('.exhibition-name', wait: 4)
+      first('.exhibition-name', text: exhibition_name, wait: 4).click
+    end
+
+    def click_edit
+      has_css?('.edit-button', exact_text: 'Edit', wait: 4, visible: true)
+      first('.edit-button', exact_text: 'Edit', wait: 4).click
+    end
+
+    def toggle_list
+      has_sidebar?
+      first('.toggle-exhibition-list', wait: 4, visible: true).click
+    end
+
+    def has_sidebar?
+      has_css?('.toggle-exhibition-list', wait: 4, visible: true)
+    end
+
+    def click_plus_button
+      has_css?('.plus-button', wait: 10, text: '+', visible: true)
+      first('.plus-button', wait: 4, text: '+', visible: true).click
+    end
+
+    def click_in_exhibition_plus_button
+      has_css?('.edit-button', wait: 4, visible: true)
+      first('.cuac-sidebar-plus-button', wait: 4, visible: true).click
+    end
+
+    def go_to_exhibition_info(exhibition)
+      has_css?('.exhibition-name', wait: 10, visible: true, text: exhibition)
+      first('.exhibition-name', text: exhibition, wait: 4, visible: true).click
+    end
+
+    def sidebar_has_museums?
+      has_css?('.museum-name', wait: 4, visible: true)
+    end
+
+    def go_to_museum_info
+      has_css?('.museum-name', wait: 4, visible: true)
+      first('.museum-name', wait: 4).click
+    end
+
+    def has_new_exhibition_button?
+      has_css?('.add-exhibition-button', wait: 4, visible: true)
+    end
+
+    def has_new_museum_button?
+      has_css?('#newMuseum', wait: 4, visible: true)
+    end
+
+    def save
+      has_css?('.submit.cuac-exhibition-form', exact_text: 'Save', wait: 4, visible: true)
+      first('.submit.cuac-exhibition-form', exact_text: 'Save', wait: 4, visible: true).click
+      self
+    end
+
+    def submit
+      find('.submit').click
+    end
+
+    def go_to_last_room_info
+      all('.room-name', wait: 4, visible: true).last.click
+    end
+
+    def find_content(selector)
+      all(selector).last.text
+    end
+
+    def name?(name)
+      has_css?('.exhibition-name', exact_text: name, wait: 4)
+    end
+
+    def view_has_museum?(museum)
+      has_css?('.museum', wait: 4, text: museum, visible: true)
+    end
+
+    def click_delete_button
+      has_css?('.delete-button', wait: 4)
+      find('.delete-button', text: 'Delete', wait: 4).click
+    end
+
+    def accept_alert
+      has_css?('.accept-alert', wait: 4)
+      find('.accept-alert', text: 'OK').click
+    end
+
     def fill(field, content)
       fill_in(field, with: content, wait: 2)
     end
 
     def fill_mandatory_fields
       show
-      fill(Fixture::XExhibitions::NAME_FIELD, Fixture::XExhibitions::NAME)
+      fill(Fixture::Exhibitions::NAME_FIELD, Fixture::Exhibitions::NAME)
     end
 
     def fill_media
-      fill('image', Fixture::XExhibitions::LINK)
-    end
-
-    def has_new_museum_button?
-      has_css?('#newMuseum')
+      fill('image', Fixture::Exhibitions::LINK)
     end
 
     def click_add_exhibition
@@ -32,7 +120,7 @@ module Page
 
     def create_one
       fill_mandatory_fields
-      select_museum(Fixture::XMuseum::FIRST_MUSEUM)
+      select_museum(Fixture::Museum::FIRST_MUSEUM)
       fill_media
       save
       self
@@ -40,11 +128,7 @@ module Page
 
     def edit_exhibition
       click_edit
-      fill(Fixture::XExhibitions::NAME_FIELD, Fixture::XExhibitions::OTHER_NAME)
-    end
-
-    def has_sidebar?
-      has_css?('.toggle-exhibition-list', wait: 2)
+      fill(Fixture::Exhibitions::NAME_FIELD, Fixture::Exhibitions::OTHER_NAME)
     end
 
     def form_submit_deactivated?
@@ -61,13 +145,8 @@ module Page
       has_content?(content, wait: 1)
     end
 
-    def toggle_list
-      has_css?('.toggle-exhibition-list', wait: 4)
-      first('.toggle-exhibition-list', wait: 4).click
-    end
-
     def last_toggle_list
-      has_css?('.toggle-exhibition-list', wait: 4)
+      has_css?('.toggle-exhibition-list', wait: 4, visible: false)
       all('.toggle-exhibition-list', wait: 4).last.click
     end
 
@@ -81,12 +160,6 @@ module Page
 
     def exhibition_name(exhibition)
       find('.exhibition-name', wait: 2, text: exhibition).text
-    end
-
-    def save
-      has_css?('.submit.cuac-exhibition-form', wait: 4)
-      find('.submit.cuac-exhibition-form').click
-      self
     end
 
     def add_room
@@ -105,11 +178,6 @@ module Page
       click_plus_button
       item_page = Page::Item.new
       item_page.add_item
-    end
-
-    def click_edit
-      has_css?('.edit-button',  exact_text: 'Edit', wait: 4)
-      find('.edit-button').click
     end
 
     def click_delete
@@ -138,10 +206,6 @@ module Page
       has_css?('.list-item.cuac-exhibition-detail', wait: 2)
     end
 
-    def sidebar_has_museums?
-      has_css?('.museum-name', wait: 4)
-    end
-
     def list_has_rooms?
       has_css?('.exhibition-room', wait: 2)
     end
@@ -163,7 +227,7 @@ module Page
     end
 
     def room_have_plus_button?
-      has_css?('.exhibition-room .plus-button', wait: 4, exact_text: '+')
+      has_css?('.exhibition-room .plus-button', wait: 4, exact_text: '+', visible: false)
     end
 
     def subscene_has_plus_button?
@@ -174,18 +238,8 @@ module Page
       has_css?('.submit[disabled].cuac-exhibition-form')
     end
 
-    def other_name?
-      has_css?('.exhibition-name', exact_text: Fixture::XExhibitions::OTHER_NAME, wait: 2)
-    end
-
     def second_exhibition_shown?
-      has_css?('.exhibition-name', exact_text: Fixture::XExhibitions::SECOND_EXHIBITION, wait: 2)
-    end
-
-    def click_plus_button
-      if(!has_css?('.plus-button', wait: 4, exact_text: '+').nil?)
-        first('.plus-button', wait: 4, exact_text: '+').click
-      end
+      has_css?('.exhibition-name', exact_text: Fixture::Exhibitions::SECOND_EXHIBITION, wait: 2)
     end
 
     def click_room_plus_button
@@ -204,16 +258,6 @@ module Page
       if(!has_css?('.plus-button', wait: 4, exact_text: '+').nil?)
         all('.plus-button', wait: 4, exact_text: '+').last.click
       end
-    end
-
-    def go_to_museum_info
-      has_css?('.museum-name', wait: 4)
-      first('.museum-name', wait: 4).click
-    end
-
-    def go_to_exhibition_info(exhibition)
-      has_css?('.exhibition-name', wait: 6, text: exhibition)
-      find('.exhibition-name', text: exhibition, visible: true).click
     end
 
     def go_to_room_info
@@ -278,10 +322,6 @@ module Page
       fill(Fixture::Exhibitions::NAME_FIELD, Fixture::Exhibitions::NAME)
       select_museum(museum)
       save
-    end
-
-    def view_has_museum?(museum)
-      has_css?('.museum', wait: 4, text: museum, visible: true)
     end
 
     def select_museum(name)

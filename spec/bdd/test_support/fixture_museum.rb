@@ -5,16 +5,18 @@ module Fixture
   class Museum
     extend Capybara::DSL
 
-    NAME = 'Some name'
-    STREET = 'Some street'
+    WEEK = ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN']
+
+    FIRST_MUSEUM = 'Muvim'
+    SECOND_MUSEUM = 'El Prado'
+    FIRST_STREET = 'Valencia'
+    SECOND_STREET = 'Madrid'
+    PAGE_TITLE = 'Museum'
 
     MANDATORY_DATA = {
-      'name' => NAME,
-      'street' => STREET
+      'name' => FIRST_MUSEUM,
+      'street' => FIRST_STREET
     }
-
-    OTHER_NAME = 'Other museum'
-    OTHER_STREET = 'Other street'
 
     EXTRA_PHONE = '99999999'
     PHONE = '000000000'
@@ -42,92 +44,21 @@ module Fixture
     PRICE_FIELD = 'freeEntrance1'
 
     class << self
-
-      def pristine
-        visit('/api/museum/flush')
-        self
-      end
-
-      def initial_state
-        Page::Museum.new
-      end
-
-      def showing_form
-        current = initial_state
-        current.click_new_museum
-        current
-      end
-
-      def fill_mandatory_content
-        current = showing_form
-
-        MANDATORY_DATA.each do |field, content|
-          current.fill_input(field, content)
-        end
-
-        current
-      end
-
-      def fill_with_extra_content
-        current = Fixture::Museum.fill_mandatory_content
-        current.fill_input(PHONE_FIELD, PHONE)
-        current.fill_input(PRICE_FIELD, PRICE)
-        current.fill_input(MAP_LINK_FIELD, MAP_LINK)
-        current.click_checkbox(MONDAY)
-        current.introduce_hours(HOUR)
-        current.click_add_hour
-        current.submit
-        current
-      end
-
-      def fill_other_museum
-        current = showing_form
-        current.fill_input('name', OTHER_NAME)
-        current.fill_input('street', OTHER_STREET)
-        current.submit
-      end
-
-      def contact_section_with_an_extra_input
-        current = fill_mandatory_content
-        current.fill_input('phone1', PHONE)
-        current.add_input('.phone')
-        current
-      end
-
-      def add_content_with_extra_phones_and_prices
-        current = fill_mandatory_content
-        current.fill_input('phone1', PHONE)
-        current.add_input('.phone')
-        current.fill_input('phone2', OTHER_PHONE)
-        current.fill_input('general1', PRICE)
-        current.add_input('.general')
-        current.fill_input('general2', OTHER_PRICE)
-        current
-      end
-    end
-  end
-
-  class XMuseum
-    FIRST_MUSEUM = 'Muvim'
-    SECOND_MUSEUM = 'El Prado'
-    FIRST_STREET = 'Valencia'
-    SECOND_STREET = 'Madrid'
-    PAGE_TITLE = 'Museum'
-
-    class << self
-
       def pristine
         HTTParty.get('http://localhost:4567/api/museum/flush')
         self
       end
 
       def complete_scenario
-        add_museum(FIRST_MUSEUM, FIRST_STREET)
-        add_museum(SECOND_MUSEUM, SECOND_STREET)
+        add_museum(FIRST_MUSEUM, FIRST_STREET, MAP_LINK)
+        add_museum(SECOND_MUSEUM, SECOND_STREET, MAP_LINK)
       end
 
-      def add_museum(name, street)
-        museum = { info: { name: name }, location: { street: street } }.to_json
+      def add_museum(name, street, map_link )
+        museum = {
+          info: { name: name },
+          location: { street: street, link: map_link }
+          }.to_json
         HTTParty.post('http://localhost:4567/api/museum/add', { body: museum })
       end
     end

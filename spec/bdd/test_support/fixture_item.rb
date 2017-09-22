@@ -1,8 +1,15 @@
+require 'httparty'
+require 'json'
+require_relative 'fixture_museum'
+require_relative 'fixture_exhibitions'
+require_relative 'item'
+
 module Fixture
   class Item
     extend Capybara::DSL
 
     ERROR_LENGTH_DATE = '19865'
+    ROOM_NAME = 'Room artworks'
     DATE = '1937'
     AUTHOR = 'Picasso'
     ARTWORK = 'Guernica'
@@ -10,9 +17,9 @@ module Fixture
     VISIBLE_ARTWORK = 'Name: Guernica'
     VISIBLE_OTHER_ARTWORK = 'Name: La costellazione'
     VISIBLE_AUTHOR = 'Author: Picasso'
-    FIRST_NUMBER = 1
-    SECOND_NUMBER = 2
-    THIRD_NUMBER = 3
+    FIRST_NUMBER = '1-0-0'
+    SECOND_NUMBER = '2-0-0'
+    THIRD_NUMBER = '3-0-0'
     INFO_FIRST_NUMBER = 'Number: 1'
     INFO_SECOND_NUMBER = 'Number: 2'
     INFO_THIRD_NUMBER = 'Number: 3'
@@ -20,141 +27,36 @@ module Fixture
     SAVE_BUTTON = 'Save'
 
     class << self
-      def initial_state
-        Page::Item.new
+      def pristine
+        Fixture::Exhibitions.pristine
+        Fixture::Museum.pristine
       end
 
-      def get_an_item_form
-        Page::Exhibitions.new.click_plus_button
-        Page::Item.new
+      def complete_scenario
+        pristine
+        create_complete_exhibition(Fixture::Exhibitions::NAME, '1')
       end
 
-      def from_exhibition_to_new_item
-        current = Fixture::Exhibitions.pristine.exhibition_saved
-        current.click_plus_button
-        initial_state
-      end
-
-      def from_exhibition_to_second_item
-        current = Fixture::Exhibitions.exhibition_saved
-        current.click_plus_button
-        initial_state
-      end
-
-      def shows_room_alert
-        current = from_exhibition_to_new_item
-
-        current.fill('date', Fixture::Item::DATE)
+      def create_a_room_with_alert
+        current = Page::Item.new
+        current.fill('name',Fixture::Item::ARTWORK)
         current.fill('author', Fixture::Item::AUTHOR)
-
+        current.fill('date', Fixture::Item::DATE)
         current.check_room
-
         current
       end
 
-      def room_saved(number = FIRST_NUMBER)
-        current = initial_state
-
-        current.check_room
-        current.fill('name', ARTWORK)
-        current.fill('number', number)
-
-        current.submit
+      def create_complete_exhibition(exhibition_name,exhibition_order)
+        museum_id = Fixture::Exhibitions.add_museum(Fixture::Exhibitions::MUSEUM, Fixture::Exhibitions::MUSEUM_STREET)
+        exhibition_id = Fixture::Exhibitions.add_exhibition(exhibition_name, museum_id)
+        room_id = Fixture::Exhibitions.add_item(exhibition_id, 'exhibition', exhibition_id, exhibition_order + '-0-0', 'room', 'room', true)
+        scene_id = Fixture::Exhibitions.add_item(exhibition_id, 'room', room_id, exhibition_order + '-1-0', 'scene', 'scene', false)
+        subscene_id = Fixture::Exhibitions.add_item(exhibition_id, 'scene', scene_id, exhibition_order + '-1-1', 'subscene', 'scene', false)
       end
 
-      def item_saved
-        current = initial_state
-
-        current.fill('name',Fixture::Item::ARTWORK)
-        current.fill('number',Fixture::Item::SECOND_NUMBER)
-        current.fill('author', Fixture::Item::AUTHOR)
-        current.fill('date', Fixture::Item::DATE)
-
-        current.submit
-      end
-
-      def item_filled
-        current = initial_state
-
-        current.fill('name',Fixture::Item::ARTWORK)
-        current.fill('number',Fixture::Item::SECOND_NUMBER)
-        current.fill('author',Fixture::Item::AUTHOR)
-
-        current
-
-      end
-
-      def item_saved_in_room(number = SECOND_NUMBER)
-        current = Page::Exhibitions.new
-        current.toggle_list
-        current.click_room_plus_button
-
-        current = Page::Item.new
-        current.fill('name',Fixture::Item::OTHER_ARTWORK)
-        current.fill('number', number)
-
-        current.submit
-      end
-
-      def item_saved_in_item(number = THIRD_NUMBER)
-        current = Page::Exhibitions.new
-        current.toggle_list
-        current.click_item_plus_button
-
-        current = Page::Item.new
-        current.fill('name',Fixture::Item::OTHER_ARTWORK)
-        current.fill('number', number)
-
-        current.submit
-      end
-
-      def scene_saved_with_automatic_number
-        current = initial_state
-
-        current.fill('name',Fixture::Item::ARTWORK)
-        current.submit
-      end
-
-      def room_saved_with_automatic_number
-        current = initial_state
-
-        current.check_room
-        current.fill('name', ARTWORK)
-
-        current.submit
-      end
-
-      def scene_saved_in_room_with_automatic_number
-        current = Page::Exhibitions.new
-        current.toggle_list
-        current.click_room_plus_button
-
-        current = Page::Item.new
-        current.fill('name',Fixture::Item::OTHER_ARTWORK)
-
-        current.submit
-      end
-
-      def subscene_saved_in_scene_with_automatic_number
-        current = Page::Exhibitions.new
-        current.toggle_list
-        current.click_item_plus_button
-
-        current = Page::Item.new
-        current.fill('name',Fixture::Item::OTHER_ARTWORK)
-
-        current.submit
-      end
-
-      def subscene_saved_in_second_scene_with_automatic_number
-        current = Page::Exhibitions.new
-        current.toggle_list
-        current.click_last_item_plus_button
-
-        current = Page::Item.new
-        current.fill('name',Fixture::Item::OTHER_ARTWORK)
-
-        current.submit
+      def go_to_room_info
+        has_css?('.room-name', wait: 4)
+        first('.room-name', wait: 4).click
       end
     end
   end

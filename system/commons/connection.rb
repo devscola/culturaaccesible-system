@@ -33,6 +33,10 @@ module Database
         @connection[:item_translations]
       end
 
+      def exhibition_translations
+        @connection[:exhibition_translations]
+      end
+
       private
 
       def host

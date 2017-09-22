@@ -26,6 +26,19 @@ module Exhibitions
         exhibition
       end
 
+      def retrieve_translated(id, iso_code)
+        connection.exhibition_translations.insert_one({exhibition_id: id, general_description: 'en castellano', name: 'nombre en castellano', iso_code: 'es'})
+
+        data = connection.exhibitions.find({id: id}).first
+        exhibition = Exhibition.from_bson(data, data['id'], data['order']).serialize
+        exhibition_translation = connection.exhibition_translations.find({exhibition_id: id, iso_code: iso_code}).first
+        translated_exhibition = Exhibitions::Translation.from_bson(exhibition_translation, exhibition_translation['exhibition_id'], id).serialize
+        exhibition.each do |key, value|
+          exhibition[key] = translated_exhibition[key] if translated_exhibition[key]
+        end
+        exhibition
+      end
+
       def delete(id)
         exhibition = retrieve(id)
         exhibition.deleted = true
