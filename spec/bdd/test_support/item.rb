@@ -122,6 +122,17 @@ module Page
       submit
     end
 
+    def fill_room_form_with_languages
+      check_room
+      fill('name', 'some room name')
+      fill('language-name-es', 'nombre de room')
+      fill('description-es', 'descripcion de room')
+      fill('video-es', 'https://s3.amazonaws.com/pruebas-cova/more3minutes.mp4')
+      fill('language-name-cat', 'nom de room')
+      fill('description-cat', 'descripció de room')
+      fill('video-cat', 'https://s3.amazonaws.com/pruebas-cova/more3minutes.mp4')
+    end
+
     private
 
     def validate!
