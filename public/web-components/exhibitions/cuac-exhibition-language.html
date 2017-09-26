@@ -15,7 +15,7 @@
               font-weight: normal;
             }
         </style>
-        <div class="panel panel-primary">
+        <div class$="panel panel-primary {{visibility}}">
             <div class="panel-heading">
                 <h3 class="panel-title">{{language}}</h3>
             </div>
@@ -44,12 +44,12 @@
             is: 'cuac-exhibition-language',
 
             ready: function() {
-
+              this.toggleVisibility()
             },
 
             properties: {
 
-                visibility: {type: String, value: 'hide'},
+                visibility: {type: String},
 
                 name: {},
 
@@ -59,7 +59,9 @@
 
                 language: {type: String},
 
-                locale: {type: String}
+                locale: {type: String},
+
+                visiblelang: {type: String}
             },
 
             nameHasValue: function() {
@@ -76,6 +78,10 @@
                 };
                 return data;
             },
+
+            toggleVisibility: function() {
+              this.visibility = this.visiblelang === 'true' ? 'show' : 'hide'
+            }
 
         });
     </script>

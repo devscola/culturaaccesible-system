@@ -68,23 +68,23 @@
         </style>
 
         <div class="language-switch">
-          <p>English</p>
+          <p>ENG</p>
           <label class="switch toggle-language-en">
-            <input type="checkbox" on-change="toggleEnglish">
+            <input type="checkbox" class="english" on-change="toggleEnglish" name="english" >
             <span class="slider round"></span>
           </label>
         </div>
         <div class="language-switch">
-          <p>Valencià</p>
+          <p>VAL</p>
           <label class="switch toggle-language-cat">
-            <input type="checkbox" on-change="toggleCatala">
+            <input type="checkbox" class="catala" on-change="toggleCatala" name="catala">
             <span class="slider round"></span>
           </label>
         </div>
 
-        <cuac-exhibition-language locale="es" visible="true" language="Castellano" locale="es"></cuac-exhibition-language>
-        <cuac-exhibition-language locale="en" visible="false" language="English" locale="en"></cuac-exhibition-language>
-        <cuac-exhibition-language locale="cat" visible="false" language="Valencià" locale="cat"></cuac-exhibition-language>
+        <cuac-exhibition-language locale="es" visiblelang="true" language="Castellano" locale="es"></cuac-exhibition-language>
+        <cuac-exhibition-language id="english" locale="en" visiblelang="false" language="English" locale="en"></cuac-exhibition-language>
+        <cuac-exhibition-language id="catala" locale="cat" visiblelang="false" language="Valencià" locale="cat"></cuac-exhibition-language>
     </template>
 
     <script>
@@ -99,10 +99,14 @@
 
             toggleEnglish: function(event) {
               this.english = event.target.checked;
+              this.$.english.visiblelang = event.target.checked + '';
+              this.$.english.toggleVisibility();
             },
 
             toggleCatala: function(event) {
               this.catala = event.target.checked;
+              this.$.catala.visiblelang = event.target.checked + '';
+              this.$.catala.toggleVisibility();
             },
 
             collectLocaleData: function() {

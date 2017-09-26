@@ -330,6 +330,10 @@ module Page
       first('#museums option', text: name).click
     end
 
+    def active_language(element)
+      execute_script("document.getElementsByClassName('"+element+"')[0].click()")
+    end
+
     private
 
     def validate!

@@ -172,5 +172,15 @@ feature 'Exhibitions' do
       expect(current.has_language_toggle_button?('en')).to be true
       expect(current.has_language_toggle_button?('cat')).to be true
     end
+
+    scenario 'displays translation when toggle button is switched', :wip do
+      current = Page::Exhibitions.new
+      current.active_language('english')
+
+      expect(current.content?('Castellano')).to be true
+      expect(current.content?('English')).to be true
+      expect(current.content?('Valencià')).to be false
+    end
+
   end
 end
