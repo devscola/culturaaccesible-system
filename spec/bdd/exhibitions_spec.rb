@@ -173,13 +173,27 @@ feature 'Exhibitions' do
       expect(current.has_language_toggle_button?('cat')).to be true
     end
 
-    scenario 'displays translation when toggle button is switched', :wip do
+    scenario 'displays translation when toggle button is switched' do
       current = Page::Exhibitions.new
       current.active_language('english')
+        save_screenshot('1.png')
 
       expect(current.content?('Castellano')).to be true
       expect(current.content?('English')).to be true
       expect(current.content?('Valencià')).to be false
+    end
+
+    xscenario 'displays all translation saved in view' do
+      Fixture::Museum.complete_scenario
+      current = Page::Exhibitions.new
+      current.active_language('catala')
+
+      current.fill_exhibition_with_translations
+
+      expect(current.content?('Nombre Exhibición')).to be true
+      expect(current.content?('Nom Exhibicio')).to be true
+      expect(current.content?('Descripció exhibició')).to be true
+      expect(current.content?('Descripció curta exhibició')).to be true
     end
 
   end

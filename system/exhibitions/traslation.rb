@@ -3,7 +3,7 @@ module Exhibitions
     def initialize(data, exhibition_id, id = nil)
       @name = null_defense(data['name'])
       @general_description = null_defense(data['description'])
-      @extended_description = null_defense(data['description'])
+      @extended_description = null_defense(data['short_description'])
       @iso_code = null_defense(data['iso_code'])
       @exhibition_id = exhibition_id
       @id = id || generate_id

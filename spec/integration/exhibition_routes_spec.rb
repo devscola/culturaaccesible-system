@@ -232,6 +232,18 @@ describe 'Exhibition controller' do
     expect(retrieved_exhibition['iso_codes'][1]).to eq 'en'
   end
 
+  it 'saves exhibition with translations' do
+    iso_codes = ['es', 'en']
+    add_museum
+    museum_id = parse_response['id']
+    translations = exhibition_languages
+    add_exhibition(museum_id, iso_codes, translations)
+    exhibition = parse_response
+
+    expect(exhibition['translations'][0]['iso_code']).to eq 'es'
+    expect(exhibition['translations'][1]['iso_code']).to eq 'en'
+  end
+
   def retrieve_for_list(exhibition_id)
     payload = { id: exhibition_id }.to_json
     post 'api/exhibition/retrieve-for-list', payload
@@ -241,12 +253,13 @@ describe 'Exhibition controller' do
     post 'api/exhibition/list'
   end
 
-  def add_exhibition(museum_id = '', iso_codes=[])
+  def add_exhibition(museum_id = '', iso_codes=[], translations = [])
     exhibition = {
       name: 'some name',
       image: IMAGE,
       museum_id: museum_id,
-      iso_codes: iso_codes
+      iso_codes: iso_codes,
+      translations: translations
     }.to_json
     post '/api/exhibition/add', exhibition
   end
@@ -292,6 +305,13 @@ describe 'Exhibition controller' do
     [
       {'name' => 'name', 'description' => 'description', 'video' => 'video', 'iso_code' => 'en'},
       {'name' => 'nombre', 'description' => 'descripción', 'video' => 'video', 'iso_code' => 'es'}
+    ]
+  end
+
+  def exhibition_languages
+    [
+      {'name' => 'nombre', 'description' => 'descripción', 'short_description' => 'descripcion corta', 'iso_code' => 'es'},
+      {'name' => 'name', 'description' => 'description', 'short_description' => 'short description', 'iso_code' => 'en'}
     ]
   end
 end

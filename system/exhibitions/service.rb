@@ -49,8 +49,12 @@ module Exhibitions
         order.retrieve_ordinal(item_id)
       end
 
+      def store_translations(data_translations, exhibition_id)
+        data_translations.map! { |item| Items::Repository.store_translation(item, exhibition_id).serialize }
+      end
+
       def list
-        list = Exhibitions::Repository.all
+        Exhibitions::Repository.all
       end
 
       def flush

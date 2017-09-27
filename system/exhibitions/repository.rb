@@ -71,6 +71,12 @@ module Exhibitions
         end
       end
 
+      def store_translation(data, exhibition_id)
+        translation_exhibition = Exhibitions::Translation.new(data, exhibition_id)
+        connection.exhibition_translations.insert_one(translation_exhibition.serialize)
+        translation_exhibition
+      end
+
       private
 
       def update(exhibition_data)

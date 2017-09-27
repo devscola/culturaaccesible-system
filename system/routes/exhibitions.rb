@@ -11,6 +11,9 @@ class App < Sinatra::Base
   post '/api/exhibition/add' do
     exhibition_data = JSON.parse(request.body.read)
     result = Exhibitions::Service.store(exhibition_data)
+    exhibition_id = result[:id]
+    translations = Exhibitions::Service.store_translations(exhibition_data['translations'], exhibition_id) if exhibition_data['translations']
+    result[:translations] = translations
     result = Actions::Exhibition.add_museum_info(result) if result[:museum_id].size > 0
     result.to_json
   end

@@ -109,6 +109,20 @@ module Page
       fill(Fixture::Exhibitions::NAME_FIELD, Fixture::Exhibitions::NAME)
     end
 
+    def fill_exhibition_mandatory_data
+      show
+      fill(Fixture::Exhibitions::NAME_FIELD, Fixture::Exhibitions::NAME)
+      select_museum(Fixture::Museum::FIRST_MUSEUM)
+    end
+
+    def fill_exhibition_with_translations
+      fill_exhibition_mandatory_data
+      execute_script("document.getElementsByName('"+Fixture::Exhibitions::NAME_FIELD+"-es')[0].value='"+Fixture::Exhibitions::ES_NAME+"'")
+      execute_script("document.getElementsByName('"+Fixture::Exhibitions::NAME_FIELD+"-cat')[0].value='"+Fixture::Exhibitions::CAT_NAME+"'")
+      execute_script("document.getElementsByName('"+Fixture::Exhibitions::DESCRIPTION_FIELD+"-cat')[0].value='"+Fixture::Exhibitions::CAT_DESCRIPTION+"'")
+      execute_script("document.getElementsByName('"+Fixture::Exhibitions::SHORT_DESCRIPTION_FIELD+"-cat')[0].value='"+Fixture::Exhibitions::CAT_SHORT_DESCRIPTION+"'")
+    end
+
     def fill_media
       fill('image', Fixture::Exhibitions::LINK)
     end
@@ -119,8 +133,7 @@ module Page
     end
 
     def create_one
-      fill_mandatory_fields
-      select_museum(Fixture::Museum::FIRST_MUSEUM)
+      fill_exhibition_mandatory_data
       fill_media
       save
       self
@@ -317,12 +330,6 @@ module Page
 
     def has_edit_button?
       has_css?('.edit-button', wait: 4, exact_text: 'Edit')
-    end
-
-    def save_exhibition_with_museum(museum)
-      fill(Fixture::Exhibitions::NAME_FIELD, Fixture::Exhibitions::NAME)
-      select_museum(museum)
-      save
     end
 
     def select_museum(name)

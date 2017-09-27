@@ -191,7 +191,8 @@
                     beacon: this.beacon,
                     description: this.description,
                     image: this.image,
-                    iso_codes: this.$.languages.collectLocaleData()
+                    iso_codes: this.$.languages.collectLocaleData(),
+                    translations: this.getTranslations()
                 };
                 return data;
             },
@@ -214,6 +215,14 @@
 
                 formattedDate = day + '/' + month + '/' + year;
                 return formattedDate;
+            },
+
+            getTranslations: function() {
+                var translations = [];
+                translations.push(this.$.languages.$.spanish.collectData());
+                if(this.$.languages.$.english.visiblelang === "true") translations.push(this.$.languages.$.english.collectData());
+                if(this.$.languages.$.catala.visiblelang === "true") translations.push(this.$.languages.$.catala.collectData());
+                return translations;
             }
 
 

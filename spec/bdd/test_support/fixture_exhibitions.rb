@@ -9,12 +9,19 @@ module Fixture
 
     SECOND_EXHIBITION = 'second name'
     NAME_FIELD = 'name'
+    DESCRIPTION_FIELD = 'description'
+    SHORT_DESCRIPTION_FIELD = 'short_description'
     LOCATION_FIELD = 'location'
     NAME = 'first'
     OTHER_NAME = 'some other exhibition'
     LOCATION = 'some location'
     REDIRECTED_PAGE_TITLE = 'Item'
     LINK = 'https://s3.amazonaws.com/pruebas-cova/girasoles.jpg'
+
+    ES_NAME = 'Nombre Exhibición'
+    CAT_NAME = 'Nom Exhibicio'
+    CAT_DESCRIPTION = 'Descripció exhibició'
+    CAT_SHORT_DESCRIPTION = 'Descripció curta exhibició'
 
     MUSEUM = 'Muvim'
     MUSEUM_STREET = 'Valencia'
