@@ -244,6 +244,24 @@ describe 'Exhibition controller' do
     expect(exhibition['translations'][1]['iso_code']).to eq 'en'
   end
 
+  it 'retrieves saved exhibition with translations' do
+    iso_codes = ['es', 'en']
+    add_museum
+    museum_id = parse_response['id']
+    translations = exhibition_languages
+    add_exhibition(museum_id, iso_codes, translations)
+    exhibition = parse_response
+
+    payload = { id: exhibition['id'] }.to_json
+    post '/api/exhibition/retrieve-translations', payload
+    retrieved_exhibition = parse_response
+
+    expect(retrieved_exhibition['translations'][0]['iso_code']).to eq 'es'
+    expect(retrieved_exhibition['translations'][0]['name']).to eq 'nombre'
+    expect(retrieved_exhibition['translations'][1]['iso_code']).to eq 'en'
+    expect(retrieved_exhibition['translations'][1]['name']).to eq 'name'
+  end
+
   def retrieve_for_list(exhibition_id)
     payload = { id: exhibition_id }.to_json
     post 'api/exhibition/retrieve-for-list', payload

@@ -27,6 +27,10 @@ module Exhibitions
         Exhibitions::Repository.retrieve_translated(id, iso_code)
       end
 
+      def retrieve_translations(id)
+        Exhibitions::Repository.retrieve_translations(id)
+      end
+
       def sort_list(children)
         children.sort_by { |child| child[:number] }
       end
@@ -50,7 +54,7 @@ module Exhibitions
       end
 
       def store_translations(data_translations, exhibition_id)
-        data_translations.map! { |item| Items::Repository.store_translation(item, exhibition_id).serialize }
+        data_translations.map! { |exhibition| Exhibitions::Repository.store_translation(exhibition, exhibition_id).serialize }
       end
 
       def list

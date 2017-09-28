@@ -39,6 +39,16 @@ module Exhibitions
         exhibition
       end
 
+      def retrieve_translations(id)
+        exhibition_translations = connection.exhibition_translations.find({exhibition_id: id})
+
+        translations =  []
+        exhibition_translations.map do |translation|
+          translations.push(Exhibitions::Translation.from_bson(translation, translation['exhibition_id'], id).serialize)
+        end
+        translations
+      end
+
       def delete(id)
         exhibition = retrieve(id)
         exhibition.deleted = true

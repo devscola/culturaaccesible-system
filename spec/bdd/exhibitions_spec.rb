@@ -176,7 +176,6 @@ feature 'Exhibitions' do
     scenario 'displays translation when toggle button is switched' do
       current = Page::Exhibitions.new
       current.active_language('english')
-        save_screenshot('1.png')
 
       expect(current.content?('Castellano')).to be true
       expect(current.content?('English')).to be true

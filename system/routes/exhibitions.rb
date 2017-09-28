@@ -32,6 +32,16 @@ class App < Sinatra::Base
     result.to_json
   end
 
+  post '/api/exhibition/retrieve-translations' do
+    exhibition = JSON.parse(request.body.read)
+    result = Exhibitions::Service.retrieve(exhibition['id'])
+    exhibition_id = result[:id]
+    exhibition_translations =  Exhibitions::Service.retrieve_translations(exhibition_id)
+    result['translations'] = exhibition_translations
+
+    result.to_json
+  end
+
   post '/api/exhibition/retrieve-for-list' do
     body = JSON.parse(request.body.read)
     exhibition = Exhibitions::Service.retrieve(body['id'])
