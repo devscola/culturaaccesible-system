@@ -19,6 +19,7 @@ describe Exhibitions::Service do
   it 'retrieves an exhibition by id and iso code' do
     name = 'english name'
     exhibition = add_exhibition(name)
+    add_translations(exhibition[:id])
 
     iso_code = 'es'
     translated_exhibition = Exhibitions::Service.retrieve_translated(exhibition[:id], iso_code)
@@ -61,6 +62,11 @@ describe Exhibitions::Service do
     Exhibitions::Service.store(exhibition)
   end
 
+  def add_translations(exhibition_id)
+    translations = exhibition_languages
+    Exhibitions::Service.store_translations(translations, exhibition_id)
+  end
+
   def add_scene(name, number='', parent_id)
     scene = {'id' => '', 'name' => name, 'number' => number, 'parent_id' => parent_id, 'exhibition_id' => parent_id, 'parent_class' => 'exhibition',  'type' => 'scene' }
     Items::Service.store_scene(scene)
@@ -74,5 +80,12 @@ describe Exhibitions::Service do
   def add_room(name, number, exhibition_id)
     room = {'id' => '', 'name' => name, 'number' => number, 'parent_id' => exhibition_id, 'exhibition_id' => exhibition_id, 'parent_class' => 'exhibition', 'room' => true,  'type' => 'room' }
     Items::Service.store_room(room)
+  end
+
+  def exhibition_languages
+    [
+      {'name' => 'nombre', 'description' => 'descripción', 'short_description' => 'descripcion corta', 'iso_code' => 'es'},
+      {'name' => 'name', 'description' => 'description', 'short_description' => 'short description', 'iso_code' => 'en'}
+    ]
   end
 end

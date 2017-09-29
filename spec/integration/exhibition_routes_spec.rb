@@ -207,6 +207,7 @@ describe 'Exhibition controller' do
     retrieve_for_download(exhibition['id'], exhibition_iso_code )
     exhibition = parse_response
 
+
     expect(exhibition['items'][0]['id']).to eq room['id']
     expect(exhibition['items'][1]['id']).to eq scene['id']
     expect(exhibition['items'][0]['children'][0]['id']).to eq scene_inside_room['id']
@@ -277,7 +278,7 @@ describe 'Exhibition controller' do
       image: IMAGE,
       museum_id: museum_id,
       iso_codes: iso_codes,
-      translations: translations
+      translations: exhibition_languages
     }.to_json
     post '/api/exhibition/add', exhibition
   end
