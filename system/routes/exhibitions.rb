@@ -28,17 +28,10 @@ class App < Sinatra::Base
     exhibition = JSON.parse(request.body.read)
     result = Exhibitions::Service.retrieve(exhibition['id'])
     result = Actions::Exhibition.add_museum_info(result) if result[:museum_id].size > 0
-    result['numbers'] = result[:order][:index].keys()
-    result.to_json
-  end
-
-  post '/api/exhibition/retrieve-translations' do
-    exhibition = JSON.parse(request.body.read)
-    result = Exhibitions::Service.retrieve(exhibition['id'])
     exhibition_id = result[:id]
     exhibition_translations =  Exhibitions::Service.retrieve_translations(exhibition_id)
-    result['translations'] = exhibition_translations
-
+    result['translations'] = exhibition_translations if exhibition_translations.size > 0
+    result['numbers'] = result[:order][:index].keys()
     result.to_json
   end
 

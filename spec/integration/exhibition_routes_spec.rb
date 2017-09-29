@@ -253,7 +253,7 @@ describe 'Exhibition controller' do
     exhibition = parse_response
 
     payload = { id: exhibition['id'] }.to_json
-    post '/api/exhibition/retrieve-translations', payload
+    post '/api/exhibition/retrieve', payload
     retrieved_exhibition = parse_response
 
     expect(retrieved_exhibition['translations'][0]['iso_code']).to eq 'es'
