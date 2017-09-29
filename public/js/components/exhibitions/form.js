@@ -70,7 +70,7 @@ Class('Exhibitions.Form', {
         this.exhibitionForm.beacon = exhibition.beacon;
         document.getElementsByClassName("show")[0].checked = exhibition.show;
         this.exhibitionForm.museumValue = exhibition.museum.id;
-        this.exhibitionForm.short_description = exhibition.short_description;
+        this.exhibitionForm.general_description = exhibition.general_description;
         this.exhibitionForm.typeValue = exhibition.type;
         this.exhibitionForm.date_start = exhibition.date_start;
         this.exhibitionForm.date_finish = exhibition.date_finish;

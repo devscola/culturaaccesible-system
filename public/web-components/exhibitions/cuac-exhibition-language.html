@@ -25,13 +25,13 @@
                   <input class="form-control" name="name-{{locale}}" value="{{name::input}}">
               </div>
               <div class="form-group">
-                  <label for="short_description">General description</label>
-                  <textarea class="form-control" name="short_description-{{locale}}" value="{{short_description::input}}"></textarea>
+                  <label for="general_description">General description</label>
+                  <textarea class="form-control" name="general_description-{{locale}}" value="{{general_description::input}}"></textarea>
               </div>
 
               <div class="form-group">
                   <label for="description">Extended description</label>
-                  <textarea class="form-control" name="description-{{locale}}" value="{{description::input}}"></textarea>
+                  <textarea class="form-control" name="extended_description-{{locale}}" value="{{extended_description::input}}"></textarea>
               </div>
             </div>
         </div>
@@ -53,9 +53,9 @@
 
                 name: {},
 
-                short_description: {},
+                general_description: {},
 
-                description: {},
+                extended_description: {},
 
                 language: {type: String},
 
@@ -72,8 +72,8 @@
                 data = {
                     id: this.exhibitionId,
                     name: this.name,
-                    short_description: this.short_description,
-                    description: this.description,
+                    general_description: this.general_description,
+                    extended_description: this.extended_description,
                     iso_code: this.locale
                 };
                 return data;

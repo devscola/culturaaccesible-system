@@ -115,12 +115,12 @@ module Page
       select_museum(Fixture::Museum::FIRST_MUSEUM)
     end
 
-    def fill_exhibition_with_translations
-      fill_exhibition_mandatory_data
-      execute_script("document.getElementsByName('"+Fixture::Exhibitions::NAME_FIELD+"-es')[0].value='"+Fixture::Exhibitions::ES_NAME+"'")
-      execute_script("document.getElementsByName('"+Fixture::Exhibitions::NAME_FIELD+"-cat')[0].value='"+Fixture::Exhibitions::CAT_NAME+"'")
-      execute_script("document.getElementsByName('"+Fixture::Exhibitions::DESCRIPTION_FIELD+"-cat')[0].value='"+Fixture::Exhibitions::CAT_DESCRIPTION+"'")
-      execute_script("document.getElementsByName('"+Fixture::Exhibitions::SHORT_DESCRIPTION_FIELD+"-cat')[0].value='"+Fixture::Exhibitions::CAT_SHORT_DESCRIPTION+"'")
+    def fill_exhibition_translations
+      active_language('catala')
+      fill(Fixture::Exhibitions::ES_NAME_FIELD, Fixture::Exhibitions::ES_NAME)
+      fill(Fixture::Exhibitions::CAT_NAME_FIELD, Fixture::Exhibitions::CAT_NAME)
+      fill(Fixture::Exhibitions::CAT_SHORT_DESCRIPTION_FIELD, Fixture::Exhibitions::CAT_SHORT_DESCRIPTION)
+      fill(Fixture::Exhibitions::CAT_DESCRIPTION_FIELD, Fixture::Exhibitions::CAT_DESCRIPTION)
     end
 
     def fill_media

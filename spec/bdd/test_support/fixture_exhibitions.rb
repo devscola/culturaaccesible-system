@@ -9,8 +9,8 @@ module Fixture
 
     SECOND_EXHIBITION = 'second name'
     NAME_FIELD = 'name'
-    DESCRIPTION_FIELD = 'description'
-    SHORT_DESCRIPTION_FIELD = 'short_description'
+    DESCRIPTION_FIELD = 'extended_description'
+    SHORT_DESCRIPTION_FIELD = 'general_description'
     LOCATION_FIELD = 'location'
     NAME = 'first'
     OTHER_NAME = 'some other exhibition'
@@ -18,6 +18,10 @@ module Fixture
     REDIRECTED_PAGE_TITLE = 'Item'
     LINK = 'https://s3.amazonaws.com/pruebas-cova/girasoles.jpg'
 
+    ES_NAME_FIELD = 'name-es'
+    CAT_NAME_FIELD = 'name-cat'
+    CAT_DESCRIPTION_FIELD = 'extended_description-cat'
+    CAT_SHORT_DESCRIPTION_FIELD = 'general_description-cat'
     ES_NAME = 'Nombre Exhibición'
     CAT_NAME = 'Nom Exhibicio'
     CAT_DESCRIPTION = 'Descripció exhibició'

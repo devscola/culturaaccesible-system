@@ -259,8 +259,13 @@ describe 'Exhibition controller' do
 
     expect(retrieved_exhibition['translations'][0]['iso_code']).to eq 'es'
     expect(retrieved_exhibition['translations'][0]['name']).to eq 'nombre'
+    expect(retrieved_exhibition['translations'][0]['general_description']).to eq 'descripción corta'
+    expect(retrieved_exhibition['translations'][0]['extended_description']).to eq 'descripción extendida'
     expect(retrieved_exhibition['translations'][1]['iso_code']).to eq 'en'
     expect(retrieved_exhibition['translations'][1]['name']).to eq 'name'
+    expect(retrieved_exhibition['translations'][1]['general_description']).to eq 'short description'
+    expect(retrieved_exhibition['translations'][1]['extended_description']).to eq 'extended description'
+
   end
 
   def retrieve_for_list(exhibition_id)
@@ -329,8 +334,8 @@ describe 'Exhibition controller' do
 
   def exhibition_languages
     [
-      {'name' => 'nombre', 'description' => 'descripción', 'short_description' => 'descripcion corta', 'iso_code' => 'es'},
-      {'name' => 'name', 'description' => 'description', 'short_description' => 'short description', 'iso_code' => 'en'}
+      {'name' => 'nombre', 'extended_description' => 'descripción extendida', 'general_description' => 'descripción corta', 'iso_code' => 'es'},
+      {'name' => 'name', 'extended_description' => 'extended description', 'general_description' => 'short description', 'iso_code' => 'en'}
     ]
   end
 end

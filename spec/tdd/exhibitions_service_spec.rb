@@ -84,8 +84,8 @@ describe Exhibitions::Service do
 
   def exhibition_languages
     [
-      {'name' => 'nombre', 'description' => 'descripción', 'short_description' => 'descripcion corta', 'iso_code' => 'es'},
-      {'name' => 'name', 'description' => 'description', 'short_description' => 'short description', 'iso_code' => 'en'}
+      {'name' => 'nombre', 'description' => 'descripción', 'general_description' => 'descripcion corta', 'iso_code' => 'es'},
+      {'name' => 'name', 'description' => 'description', 'general_description' => 'short description', 'iso_code' => 'en'}
     ]
   end
 end

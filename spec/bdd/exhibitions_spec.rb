@@ -182,12 +182,13 @@ feature 'Exhibitions' do
       expect(current.content?('Valencià')).to be false
     end
 
-    xscenario 'displays all translation saved in view' do
+    scenario 'displays all translation saved in view' do
       Fixture::Museum.complete_scenario
       current = Page::Exhibitions.new
-      current.active_language('catala')
-
-      current.fill_exhibition_with_translations
+      current.click_add_exhibition
+      current.fill_exhibition_mandatory_data
+      current.fill_exhibition_translations
+      current.save
 
       expect(current.content?('Nombre Exhibición')).to be true
       expect(current.content?('Nom Exhibicio')).to be true

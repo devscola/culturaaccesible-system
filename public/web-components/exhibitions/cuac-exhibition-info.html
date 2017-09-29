@@ -12,7 +12,7 @@
                     <div>Show: {{exhibition.show}}</div>
                     <div>Name: {{exhibition.name}}</div>
                     <div class="museum">Museum: {{museum}}</div>
-                    <div>General description: {{exhibition.short_description}}</div>
+                    <div>General description: {{exhibition.general_description}}</div>
                     <div>Type: {{exhibition.type}}</div>
                     <div>
                         <span>Open</span>
@@ -25,6 +25,9 @@
                     <div class="image">
                       <img class="img-responsive img-thumbnail" width="50%" src="{{exhibition.image}}" alt="image">
                     </div>
+                    <template is="dom-repeat" items="{{exhibition.translations}}">
+                        <cuac-exhibition-language-view translation={{item}}></cuac-exhibition-language-view>
+                    </template>
                 </div>
             </div>
             <cuac-exhibition-edit-button exhibition="{{exhibition}}"></cuac-exhibition-edit-button>
