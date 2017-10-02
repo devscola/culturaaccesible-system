@@ -78,23 +78,43 @@ describe 'Exhibition controller' do
     expect(result['children'].any?).to be true
   end
 
-  it 'updates existing exhibition' do
+  it 'updates existing exhibition with translations' do
+    iso_codes = ['es', 'en']
     add_museum
     museum_id = parse_response['id']
-    add_exhibition(museum_id)
-    exhibition_id = parse_response['id']
-
+    translations = exhibition_languages
+    add_exhibition(museum_id, iso_codes, translations)
+    exhibition = parse_response
+    
     exhibition_updated = {
-      id: exhibition_id,
-      name: 'some other name',
-      museum_id: museum_id
+      id: exhibition['id'],
+      name: 'Updated english translation',
+      museum_id: museum_id,
+      translations: [{
+        name: 'Updated name',
+        general_description: 'Short description updated',
+        extended_description: 'Extended description updated',
+        iso_code: 'en',
+        exhibition_id: exhibition['id'],
+        id: exhibition['translations'][1]['id']
+      }]
     }.to_json
-    post '/api/exhibition/add', exhibition_updated
-    payload = { id: exhibition_id }.to_json
-    post '/api/exhibition/retrieve', payload
 
-    result = parse_response['name']
-    expect(result).to eq 'some other name'
+    post '/api/exhibition/add', exhibition_updated
+
+    payload = { id: exhibition['id'] }.to_json
+    post '/api/exhibition/retrieve', payload
+    retrieved_exhibition = parse_response
+
+    expect(retrieved_exhibition['name']).to eq 'Updated english translation'
+    expect(retrieved_exhibition['translations'][0]['iso_code']).to eq 'es'
+    expect(retrieved_exhibition['translations'][0]['name']).to eq 'nombre'
+    expect(retrieved_exhibition['translations'][0]['general_description']).to eq 'descripción corta'
+    expect(retrieved_exhibition['translations'][0]['extended_description']).to eq 'descripción extendida'
+    expect(retrieved_exhibition['translations'][1]['iso_code']).to eq 'en'
+    expect(retrieved_exhibition['translations'][1]['name']).to eq 'Updated name'
+    expect(retrieved_exhibition['translations'][1]['general_description']).to eq 'Short description updated'
+    expect(retrieved_exhibition['translations'][1]['extended_description']).to eq 'Extended description updated'
   end
 
   it 'retrieve ordered major level list of an exhibition' do
@@ -265,7 +285,6 @@ describe 'Exhibition controller' do
     expect(retrieved_exhibition['translations'][1]['name']).to eq 'name'
     expect(retrieved_exhibition['translations'][1]['general_description']).to eq 'short description'
     expect(retrieved_exhibition['translations'][1]['extended_description']).to eq 'extended description'
-
   end
 
   def retrieve_for_list(exhibition_id)

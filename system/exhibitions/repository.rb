@@ -19,6 +19,17 @@ module Exhibitions
         end
       end
 
+      def translation_choose_action(data_translation, exhibition_id)
+        data_translation.map! do |data| 
+          id = data['id']
+          if (id)
+            result = update_translation(data)
+          else
+            result = store_translation(data, exhibition_id)
+          end
+        end
+      end
+
       def retrieve(id)
         data = connection.exhibitions.find({ id: id }).first
         exhibition = Exhibitions::Exhibition.from_bson(data, data['id'], data['order'])
@@ -82,7 +93,7 @@ module Exhibitions
       def store_translation(data, exhibition_id)
         translation_exhibition = Exhibitions::Translation.new(data, exhibition_id)
         connection.exhibition_translations.insert_one(translation_exhibition.serialize)
-        translation_exhibition
+        translation_exhibition.serialize
       end
 
       private
@@ -92,6 +103,11 @@ module Exhibitions
         exhibition = retrieve(id)
         updated_exhibition = Exhibitions::Exhibition.new(exhibition_data, id, exhibition.order)
         update_exhibition(updated_exhibition)
+      end
+
+      def update_translation(translation)
+        updated_translation = connection.exhibition_translations.find_one_and_update({ id: translation['id'] }, { "$set" => translation }, {:return_document => :after })
+        Exhibitions::Translation.from_bson(updated_translation, updated_translation['exhibition_id'], updated_translation['id'])
       end
 
       def store(exhibition_data)

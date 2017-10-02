@@ -54,7 +54,7 @@ module Exhibitions
       end
 
       def store_translations(data_translations, exhibition_id)
-        data_translations.map! { |exhibition| Exhibitions::Repository.store_translation(exhibition, exhibition_id).serialize }
+        Exhibitions::Repository.translation_choose_action(data_translations, exhibition_id)
       end
 
       def list
