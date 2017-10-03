@@ -26,6 +26,9 @@ module Fixture
     CAT_NAME = 'Nom Exhibicio'
     CAT_DESCRIPTION = 'Descripció exhibició'
     CAT_SHORT_DESCRIPTION = 'Descripció curta exhibició'
+    CAT_OTHER_NAME = 'Nom actualitzat'
+    CAT_OTHER_DESCRIPTION = 'Descripció actualitzada'
+    CAT_OTHER_SHORT_DESCRIPTION = 'Descripció curta actualitzada'
 
     MUSEUM = 'Muvim'
     MUSEUM_STREET = 'Valencia'

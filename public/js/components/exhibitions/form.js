@@ -74,7 +74,49 @@ Class('Exhibitions.Form', {
         this.exhibitionForm.typeValue = exhibition.type;
         this.exhibitionForm.date_start = exhibition.date_start;
         this.exhibitionForm.date_finish = exhibition.date_finish;
+        if ( typeof (exhibition.translations) != "undefined" ) {
+            this.fillLanguages(exhibition.translations);
+        }
         this.showForm();
+    },
+
+    fillLanguages: function(translations) {
+        for (var i=0; i<translations.length; i++) {
+            switch (translations[i].iso_code) {
+                case 'es':
+                    this.fillSpanish(translations[i]);
+                    break;
+                case 'en':
+                    this.fillEnglish(translations[i]);
+                    break;
+                case 'cat':
+                    this.fillCatala(translations[i]);
+                    break;
+            }
+        }
+    },
+
+    fillSpanish: function(language) {
+        var spanish = document.getElementById('spanish');
+        spanish.translation = language;
+    },
+
+    fillEnglish: function(language) {
+        document.getElementById('languages').english = true;
+        document.getElementsByClassName('english')[0].checked = true;
+        var english = document.getElementById('english');
+        english.visiblelang = 'true';
+        english.toggleVisibility();
+        english.translation = language;
+    },
+
+    fillCatala: function(language) {
+        document.getElementById('languages').catala = true;
+        document.getElementsByClassName('catala')[0].checked = true;
+        var catala = document.getElementById('catala');
+        catala.visiblelang = 'true';
+        catala.toggleVisibility();
+        catala.translation = language;
     },
 
     isEditable: function() {

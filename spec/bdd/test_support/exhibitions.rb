@@ -123,6 +123,13 @@ module Page
       fill(Fixture::Exhibitions::CAT_DESCRIPTION_FIELD, Fixture::Exhibitions::CAT_DESCRIPTION)
     end
 
+    def update_translations
+      active_language('catala')
+      fill(Fixture::Exhibitions::CAT_NAME_FIELD, Fixture::Exhibitions::CAT_OTHER_NAME)
+      fill(Fixture::Exhibitions::CAT_SHORT_DESCRIPTION_FIELD, Fixture::Exhibitions::CAT_OTHER_SHORT_DESCRIPTION)
+      fill(Fixture::Exhibitions::CAT_DESCRIPTION_FIELD, Fixture::Exhibitions::CAT_OTHER_DESCRIPTION)
+    end
+
     def fill_media
       fill('image', Fixture::Exhibitions::LINK)
     end

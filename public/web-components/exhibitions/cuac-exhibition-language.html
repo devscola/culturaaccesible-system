@@ -51,6 +51,8 @@
 
                 visibility: {type: String},
 
+                translationId: {},
+
                 name: {},
 
                 general_description: {},
@@ -59,9 +61,21 @@
 
                 language: {type: String},
 
+                translation: {type: Object, observer: 'fillLanguage'},
+
+                exhibitionId: {},
+
                 locale: {type: String},
 
                 visiblelang: {type: String}
+            },
+
+            fillLanguage: function() {
+                this.translationId = this.translation.id;
+                this.exhibitionId = this.translation.exhibitionId;
+                this.name = this.translation.name;
+                this.general_description = this.translation.general_description;
+                this.extended_description = this.translation.extended_description;
             },
 
             nameHasValue: function() {
@@ -70,11 +84,12 @@
 
             collectData: function() {
                 data = {
-                    id: this.exhibitionId,
+                    id: this.translationId,
                     name: this.name,
                     general_description: this.general_description,
                     extended_description: this.extended_description,
-                    iso_code: this.locale
+                    iso_code: this.locale,
+                    exhibition_id: this.exhibitionId
                 };
                 return data;
             },

@@ -121,6 +121,10 @@ feature 'Exhibitions' do
     end
 
     context 'updates' do
+      before(:all) do
+        Fixture::Exhibitions.pristine.complete_scenario
+      end
+
       scenario 'shows museum name saved in edit view' do
         exhibition = Fixture::Exhibitions::NAME
         museum = Fixture::Exhibitions::MUSEUM
@@ -130,22 +134,32 @@ feature 'Exhibitions' do
         expect(current.view_has_museum?(museum)).to be true
       end
 
-      scenario 'exhibition info with edit' do
+      scenario 'exhibition info with edit and translations' do
         exhibition_name = Fixture::Exhibitions::NAME
         other_exhibition_name = Fixture::Exhibitions::OTHER_NAME
         current = Page::Exhibitions.new
+        current.click_add_exhibition
+        current.fill_exhibition_mandatory_data
+        current.fill_exhibition_translations
+        current.save
+
         current.click_exhibition_name(exhibition_name)
         current.click_edit
         current.fill(Fixture::Exhibitions::NAME_FIELD, other_exhibition_name)
+        current.update_translations
         current.save
 
+        expect(current.content?('Nom Exhibicio')).to be false
+        expect(current.content?('Descripció exhibició')).to be false
+        expect(current.content?('Descripció curta exhibició')).to be false
         expect(current.name?(other_exhibition_name)).to be true
+        expect(current.content?('Nom actualitzat')).to be true
+        expect(current.content?('Descripció actualitzada')).to be true
+        expect(current.content?('Descripció curta actualitzada')).to be true
       end
-
     end
 
     context 'deletes' do
-
       before(:all) do
         Fixture::Exhibitions.pristine.complete_scenario
       end
