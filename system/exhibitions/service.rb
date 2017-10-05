@@ -27,8 +27,8 @@ module Exhibitions
         Exhibitions::Repository.retrieve_translated(id, iso_code)
       end
 
-      def retrieve_translations(id)
-        Exhibitions::Repository.retrieve_translations(id)
+      def retrieve_translations(exhibition_id)
+        Exhibitions::Repository.retrieve_translations(exhibition_id)
       end
 
       def sort_list(children)

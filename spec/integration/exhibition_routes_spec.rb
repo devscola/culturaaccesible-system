@@ -78,14 +78,14 @@ describe 'Exhibition controller' do
     expect(result['children'].any?).to be true
   end
 
-  it 'updates existing exhibition with translations' do
+  it 'updates existing exhibition with translations', :wip do
     iso_codes = ['es', 'en']
     add_museum
     museum_id = parse_response['id']
     translations = exhibition_languages
     add_exhibition(museum_id, iso_codes, translations)
     exhibition = parse_response
-    
+
     exhibition_updated = {
       id: exhibition['id'],
       name: 'Updated english translation',
@@ -107,6 +107,10 @@ describe 'Exhibition controller' do
     retrieved_exhibition = parse_response
 
     expect(retrieved_exhibition['name']).to eq 'Updated english translation'
+    expect(retrieved_exhibition['id'] == retrieved_exhibition['translations'][0]['exhibition_id']).to be true
+    expect(retrieved_exhibition['id'] == retrieved_exhibition['translations'][1]['exhibition_id']).to be true
+    expect(retrieved_exhibition['id'] == retrieved_exhibition['translations'][0]['id']).to be false
+    expect(retrieved_exhibition['id'] == retrieved_exhibition['translations'][1]['id']).to be false
     expect(retrieved_exhibition['translations'][0]['iso_code']).to eq 'es'
     expect(retrieved_exhibition['translations'][0]['name']).to eq 'nombre'
     expect(retrieved_exhibition['translations'][0]['general_description']).to eq 'descripción corta'
