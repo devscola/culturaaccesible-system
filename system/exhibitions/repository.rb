@@ -41,7 +41,7 @@ module Exhibitions
       def retrieve_translated(id, iso_code)
         data = connection.exhibitions.find({id: id}).first
         exhibition = Exhibition.from_bson(data, data['id'], data['order']).serialize
-        exhibition_translation = connection.exhibition_translations.find({exhibition_id: id, iso_code: iso_code}).first
+        exhibition_translation = find_traslation(id, iso_code)
         translated_exhibition = Exhibitions::Translation.from_bson(exhibition_translation, exhibition_translation['exhibition_id'], id).serialize
         exhibition.each do |key, value|
           exhibition[key] = translated_exhibition[key] if translated_exhibition[key]
@@ -66,9 +66,22 @@ module Exhibitions
       end
 
       def all
+       exhibitions_data = connection.exhibitions.find({}, :fields => ['id', 'name', 'show'])
+       exhibitions_data.map { |data| Exhibitions::Exhibition.from_bson(data, data['id'], data['order']).serialize}
+       exhibitions_data.select { |exhibition| exhibition[:deleted] == false }
+      end
+
+      def all_list_translated(iso_code = 'en')
         exhibitions_data = connection.exhibitions.find({}, :fields => ['id', 'name', 'show'])
         exhibitions_data.map { |data| Exhibitions::Exhibition.from_bson(data, data['id'], data['order']).serialize}
-        exhibitions_data.select { |exhibition| exhibition[:deleted] == false }
+        selected_exhibitions = exhibitions_data.select { |exhibition| exhibition[:deleted] == false }
+        selected_exhibitions.map! do |exhibition|
+          if !exhibition[:iso_codes].include?(iso_code)
+            iso_code = 'en'
+          end
+          exhibition[:translation] = retrieve_translated_exhibition(exhibition[:id], iso_code)
+          exhibition
+        end
       end
 
       def retrieve_next_ordinal(exhibition_id, ordinal)
@@ -116,6 +129,15 @@ module Exhibitions
         connection.exhibitions.insert_one(exhibition.serialize)
         connection.close
         exhibition
+      end
+
+      def find_traslation(id, iso_code)
+        exhibition_translation = connection.exhibition_translations.find({exhibition_id: id, iso_code: iso_code}).first
+        if exhibition_translation == nil
+          iso_code = 'en'
+          exhibition_translation = connection.exhibition_translations.find({exhibition_id: id, iso_code: iso_code}).first
+        end
+        exhibition_translation
       end
     end
   end

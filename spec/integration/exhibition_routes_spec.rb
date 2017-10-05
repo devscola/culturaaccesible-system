@@ -40,15 +40,6 @@ describe 'Exhibition controller' do
     expect(exhibition_image).to eq(IMAGE)
   end
 
-  it 'retrieves all exhibitions' do
-    add_exhibition
-
-    post '/api/exhibition/list'
-
-    result = parse_response
-    expect(result.any?).to be true
-  end
-
   it 'retrieves all items in exhibitions' do
     add_exhibition
     exhibition_id = parse_response['id']
@@ -78,7 +69,7 @@ describe 'Exhibition controller' do
     expect(result['children'].any?).to be true
   end
 
-  it 'updates existing exhibition with translations', :wip do
+  it 'updates existing exhibition with translations' do
     iso_codes = ['es', 'en']
     add_museum
     museum_id = parse_response['id']
@@ -231,7 +222,6 @@ describe 'Exhibition controller' do
     retrieve_for_download(exhibition['id'], exhibition_iso_code )
     exhibition = parse_response
 
-
     expect(exhibition['items'][0]['id']).to eq room['id']
     expect(exhibition['items'][1]['id']).to eq scene['id']
     expect(exhibition['items'][0]['children'][0]['id']).to eq scene_inside_room['id']
@@ -270,12 +260,7 @@ describe 'Exhibition controller' do
   end
 
   it 'retrieves saved exhibition with translations' do
-    iso_codes = ['es', 'en']
-    add_museum
-    museum_id = parse_response['id']
-    translations = exhibition_languages
-    add_exhibition(museum_id, iso_codes, translations)
-    exhibition = parse_response
+    exhibition = add_translated_exhibition(exhibition_languages)
 
     payload = { id: exhibition['id'] }.to_json
     post '/api/exhibition/retrieve', payload
@@ -291,6 +276,25 @@ describe 'Exhibition controller' do
     expect(retrieved_exhibition['translations'][1]['extended_description']).to eq 'extended description'
   end
 
+  it 'lists all exhibitions translated by an iso code' do
+    iso_codes = ['es', 'en']
+    add_museum
+    museum_id = parse_response['id']
+    add_exhibition(museum_id, iso_codes, exhibition_languages)
+
+    iso_code = 'es'
+    spanish_name = 'nombre'
+    retrieve_translated_list(iso_code)
+    translated_list = parse_response
+    expect(translated_list[0]['name']).to eq spanish_name
+
+    iso_code = 'cat'
+    english_name = 'name'
+    retrieve_translated_list(iso_code)
+    translated_list = parse_response
+    expect(translated_list[0]['name']).to eq english_name
+  end
+
   def retrieve_for_list(exhibition_id)
     payload = { id: exhibition_id }.to_json
     post 'api/exhibition/retrieve-for-list', payload
@@ -300,13 +304,26 @@ describe 'Exhibition controller' do
     post 'api/exhibition/list'
   end
 
-  def add_exhibition(museum_id = '', iso_codes=[], translations = [])
+  def add_translated_exhibition(translated_languages)
+    iso_codes = ['es', 'en']
+    add_museum
+    museum_id = parse_response['id']
+    add_exhibition(museum_id, iso_codes, translated_languages)
+    parse_response
+  end
+
+  def retrieve_translated_list(iso_code)
+    payload = {iso_code: iso_code}.to_json
+    post 'api/exhibition/translated-list', payload
+  end
+
+  def add_exhibition(museum_id = '', iso_codes=[], translations = exhibition_languages)
     exhibition = {
       name: 'some name',
       image: IMAGE,
       museum_id: museum_id,
       iso_codes: iso_codes,
-      translations: exhibition_languages
+      translations: translations
     }.to_json
     post '/api/exhibition/add', exhibition
   end
@@ -359,6 +376,12 @@ describe 'Exhibition controller' do
     [
       {'name' => 'nombre', 'extended_description' => 'descripción extendida', 'general_description' => 'descripción corta', 'iso_code' => 'es'},
       {'name' => 'name', 'extended_description' => 'extended description', 'general_description' => 'short description', 'iso_code' => 'en'}
+    ]
+  end
+  def second_exhibition_languages
+    [
+      {'name' => 'nombre 2', 'extended_description' => 'descripción extendida 2', 'general_description' => 'descripción corta 2', 'iso_code' => 'es'},
+      {'name' => 'name 2', 'extended_description' => 'extended description 2', 'general_description' => 'short description 2', 'iso_code' => 'en'}
     ]
   end
 end

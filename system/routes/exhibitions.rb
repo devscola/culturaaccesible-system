@@ -59,6 +59,14 @@ class App < Sinatra::Base
     result.to_json
   end
 
+  post '/api/exhibition/translated-list' do
+    response.headers['Access-Control-Allow-Origin'] = '*'
+    body = JSON.parse(request.body.read)
+    iso_code = body['iso_code']
+    result = Exhibitions::Service.translated_list(iso_code)
+    result.to_json
+  end
+
   post '/api/exhibition/retrieve-next-ordinal' do
     data = JSON.parse(request.body.read)
     number = '0-0-0'

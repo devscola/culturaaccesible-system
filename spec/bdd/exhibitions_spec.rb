@@ -134,7 +134,7 @@ feature 'Exhibitions' do
         expect(current.view_has_museum?(museum)).to be true
       end
 
-      context 'translations', :wip do
+      context 'translations' do
 
         scenario 'create one' do
           current = Page::Exhibitions.new

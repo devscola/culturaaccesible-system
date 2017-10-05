@@ -61,6 +61,12 @@ module Exhibitions
         Exhibitions::Repository.all
       end
 
+      def translated_list(iso_code)
+        Exhibitions::Repository.all.map do |exhibition|
+          retrieve_translated(exhibition['id'], iso_code)
+        end
+      end
+
       def flush
         Exhibitions::Repository.flush
       end
