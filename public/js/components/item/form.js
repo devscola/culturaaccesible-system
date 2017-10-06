@@ -146,8 +146,7 @@ Class('Item.Form', {
     },
 
     setExhibitionLanguages: function(exhibition) {
-        exhibition_languages = ['es', 'en', 'cat'];
-        this.element.languages = exhibition_languages;
+        this.element.languages = exhibition.iso_codes;
     },
 
     setInitialParentAttributes: function(exhibition) {
