@@ -19,7 +19,7 @@ module Page
     end
 
     def click_edit
-      has_css?('.edit-button', exact_text: 'Edit', wait: 4, visible: true)
+      has_css?('.edit-button', wait: 4)
       first('.edit-button', exact_text: 'Edit', wait: 4).click
     end
 
@@ -65,8 +65,8 @@ module Page
     end
 
     def save
-      has_css?('.submit.cuac-exhibition-form', exact_text: 'Save', wait: 4, visible: true)
-      first('.submit.cuac-exhibition-form', exact_text: 'Save', wait: 4, visible: true).click
+      has_css?('.submit', exact_text: 'Save', wait: 4, visible: true)
+      first('.submit', exact_text: 'Save', wait: 4, visible: true).click
       self
     end
 

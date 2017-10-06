@@ -135,8 +135,12 @@ feature 'Exhibitions' do
       end
 
       context 'translations' do
+      before(:all) do
+        Fixture::Exhibitions.pristine
+        Fixture::Museum.pristine.complete_scenario
+      end
 
-        scenario 'create one' do
+        scenario 'when create one' do
           current = Page::Exhibitions.new
           current.click_add_exhibition
           current.fill_exhibition_mandatory_data
@@ -148,11 +152,12 @@ feature 'Exhibitions' do
           expect(current.content?('Descripció curta exhibició')).to be true
         end
 
-        scenario 'edit one' do
+        scenario 'when edit one' do
           exhibition_name = Fixture::Exhibitions::NAME
           other_exhibition_name = Fixture::Exhibitions::OTHER_NAME
           current.click_exhibition_name(exhibition_name)
           current.click_edit
+          current.active_language('catala')
           current.fill(Fixture::Exhibitions::NAME_FIELD, other_exhibition_name)
           current.update_translations
           current.save

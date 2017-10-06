@@ -48,8 +48,8 @@ module Fixture
         add_subitem(exhibition_id, 'scene', scene_id)
       end
 
-      def add_exhibition(name, museum_id)
-        exhibition = { name: name, museum_id: museum_id, image: LINK }.to_json
+      def add_exhibition(name, museum_id, iso_codes = ['es', 'cat'])
+        exhibition = { name: name, museum_id: museum_id, image: LINK, iso_codes: iso_codes }.to_json
         response = HTTParty.post('http://localhost:4567/api/exhibition/add', { body: exhibition })
         JSON.parse(response.body)['id']
       end
