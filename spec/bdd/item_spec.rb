@@ -13,7 +13,7 @@ feature 'Item' do
     Fixture::Item.complete_scenario
   end
   
-  scenario 'displays exhibition languages info in edited item view info',:wip do
+  scenario 'displays exhibition languages info in edited item view info' do
   
     current = Page::Exhibitions.new
     current.click_in_exhibition_plus_button
