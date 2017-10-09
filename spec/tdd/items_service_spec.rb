@@ -1,6 +1,7 @@
 require 'spec_helper_tdd'
 require_relative '../../system/items/service'
 require_relative '../../system/exhibitions/service'
+require_relative '../../system/exhibitions/repository'
 
 describe Items::Service do
   LOCALE = 'es'
@@ -22,15 +23,17 @@ describe Items::Service do
 
   it 'retrieve all item children by parent id' do
     item_name = 'Item'
-    item_number = '1-2'
+    item_number = '1-2-0'
     sub_item_name = 'Sub Item'
     sub_item_number = '1-2-2'
 
     item = add_scene(item_name, item_number, exhibition[:id], exhibition[:id])
-    add_scene(sub_item_name, sub_item_number, item[:id], exhibition[:id])
-    children = Items::Service.retrieve_by_parent(item[:id])
-
-    expect(children.first[:name]).to eq sub_item_name
+    Exhibitions::Service.register_order(exhibition[:id], item[:id], item_number)
+    subscene = add_scene(sub_item_name, sub_item_number, item[:id], exhibition[:id])
+    Exhibitions::Service.register_order(exhibition[:id], subscene[:id], sub_item_number)
+    order = Exhibitions::Repository.retrieve(exhibition[:id]).order
+    children = Items::Service.retrieve_by_parent(exhibition[:id], order)
+    expect(children.first[:children][0][:name]).to eq sub_item_name
   end
 
   it 'retrieves an item by id and iso code' do
