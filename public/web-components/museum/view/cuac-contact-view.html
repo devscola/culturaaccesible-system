@@ -2,24 +2,30 @@
 
 <dom-module id="cuac-contact-view">
     <template>
-        <div>
-            <label>Phone number:</label>
-            <template is="dom-repeat" items="{{contact.phone}}">
-                <div>{{item}}</div>
-            </template>
-        </div>
-        <div>
-            <label>Email:</label>
-            <template is="dom-repeat" items="{{contact.email}}">
-                <div>{{item}}</div>
-            </template>
-        </div>
-        <div>
-            <label>Website:</label>
-            <template is="dom-repeat" items="{{contact.web}}">
-                <div>{{item}}</div>
-            </template>
-        </div>
+        <template is="dom-if" if="{{_isEqualTo(contact.phone,'')}}"> 
+            <div>
+                <label>Phone number:</label>
+                <template is="dom-repeat" items="{{contact.phone}}">
+                    <div>{{item}}</div>
+                </template>
+            </div>
+        </template>
+        <template is="dom-if" if="{{_isEqualTo(contact.email,'')}}"> 
+            <div>
+                <label>Email:</label>
+                <template is="dom-repeat" items="{{contact.email}}">
+                    <div>{{item}}</div>
+                </template>
+            </div>
+        </template>
+        <template is="dom-if" if="{{_isEqualTo(contact.web,'')}}"> 
+            <div>
+                <label>Website:</label>
+                <template is="dom-repeat" items="{{contact.web}}">
+                    <div>{{item}}</div>
+                </template>
+            </div>
+        </template>
     </template>
 
     <script>
@@ -28,6 +34,10 @@
 
             properties: {
                 contact: {type: Object}
+            },
+
+            _isEqualTo: function(title,string) {
+                return title != string;
             }
 
         });

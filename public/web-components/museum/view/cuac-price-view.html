@@ -2,24 +2,30 @@
 
 <dom-module id="cuac-price-view">
     <template>
-        <div>
-            <label>Free entrance:</label>
-            <template is="dom-repeat" items="{{price.freeEntrance}}">
-                <div>{{item}}</div>
-            </template>
-        </div>
-        <div>
-            <label>General:</label>
-            <template is="dom-repeat" items="{{price.general}}">
-                <div>{{item}}</div>
-            </template>
-        </div>
-        <div>
-            <label>Reduced:</label>
-            <template is="dom-repeat" items="{{price.reduced}}">
-                <div>{{item}}</div>
-            </template>
-        </div>
+        <template is="dom-if" if="{{_isEqualTo(price.freeEntrance,'')}}"> 
+            <div>
+                <label>Free entrance:</label>
+                <template is="dom-repeat" items="{{price.freeEntrance}}">
+                    <div>{{item}}</div>
+                </template>
+            </div>
+        </template>
+        <template is="dom-if" if="{{_isEqualTo(price.general,'')}}"> 
+            <div>
+                <label>General:</label>
+                <template is="dom-repeat" items="{{price.general}}">
+                    <div>{{item}}</div>
+                </template>
+            </div>
+        </template>
+        <template is="dom-if" if="{{_isEqualTo(price.reduced,'')}}"> 
+            <div>
+                <label>Reduced:</label>
+                <template is="dom-repeat" items="{{price.reduced}}">
+                    <div>{{item}}</div>
+                </template>
+            </div>
+        </template>
     </template>
 
     <script>
@@ -28,7 +34,12 @@
 
             properties: {
                 price: {type: Object}
+            },
+
+            _isEqualTo: function(title,string) {
+                return title != string;
             }
+
         });
     </script>
 </dom-module>

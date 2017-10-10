@@ -6,10 +6,12 @@
             <label>Name:</label>
             <span>{{info.name}}</span>
         </div>
-        <div>
-            <label>Extra text:</label>
-            <span>{{info.description}}</span>
-        </div>
+        <template is="dom-if" if="{{_isEqualTo(info.description,'')}}"> 
+            <div>
+                <label>Extra text:</label>
+                <span>{{info.description}}</span>
+            </div>
+        </template>
     </template>
 
     <script>
@@ -18,7 +20,12 @@
 
             properties: {
                 info: {type: Object}
+            },
+
+            _isEqualTo: function(title,string) {
+                return title != string;
             }
+
         });
     </script>
 </dom-module>

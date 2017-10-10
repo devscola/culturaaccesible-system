@@ -2,26 +2,36 @@
 
 <dom-module id="cuac-location-view">
     <template>
-        <div>
-            <label>Street:</label>
-            <span>{{location.street}}</span>
-        </div>
-        <div>
-            <label>Postal Code:</label>
-            <span>{{location.postal}}</span>
-        </div>
-        <div>
-            <label>City:</label>
-            <span>{{location.city}}</span>
-        </div>
-        <div>
-            <label>Region:</label>
-            <span>{{location.region}}</span>
-        </div>
-        <div>
-            <label>Link to Google Maps:</label>
-            <span>{{location.link}}</span>
-        </div>
+        <template is="dom-if" if="{{_isEqualTo(location.street,'')}}"> 
+            <div>
+                <label>Street:</label>
+                <span>{{location.street}}</span>
+            </div>
+        </template>
+        <template is="dom-if" if="{{_isEqualTo(location.postal,'')}}"> 
+            <div>
+                <label>Postal Code:</label>
+                <span>{{location.postal}}</span>
+            </div>
+        </template>
+        <template is="dom-if" if="{{_isEqualTo(location.city,'')}}"> 
+            <div>
+                <label>City:</label>
+                <span>{{location.city}}</span>
+            </div>
+        </template>
+        <template is="dom-if" if="{{_isEqualTo(location.region,'')}}"> 
+            <div>
+                <label>Region:</label>
+                <span>{{location.region}}</span>
+            </div>
+        </template>
+        <template is="dom-if" if="{{_isEqualTo(location.link,'')}}"> 
+            <div>
+                <label>Link to Google Maps:</label>
+                <span>{{location.link}}</span>
+            </div>
+        </template>
     </template>
 
     <script>
@@ -30,7 +40,12 @@
 
             properties: {
                 location: {type: Object}
+            },
+
+            _isEqualTo: function(title,string) {
+                return title != string;
             }
+
         });
     </script>
 </dom-module>
