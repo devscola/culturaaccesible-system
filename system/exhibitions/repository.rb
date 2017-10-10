@@ -71,13 +71,13 @@ module Exhibitions
        exhibitions_data.select { |exhibition| exhibition[:deleted] == false }
       end
 
-      def all_list_translated(iso_code = 'en')
+      def all_list_translated(iso_code = 'es')
         exhibitions_data = connection.exhibitions.find({}, :fields => ['id', 'name', 'show'])
         exhibitions_data.map { |data| Exhibitions::Exhibition.from_bson(data, data['id'], data['order']).serialize}
         selected_exhibitions = exhibitions_data.select { |exhibition| exhibition[:deleted] == false }
         selected_exhibitions.map! do |exhibition|
           if !exhibition[:iso_codes].include?(iso_code)
-            iso_code = 'en'
+            iso_code = 'es'
           end
           exhibition[:translation] = retrieve_translated_exhibition(exhibition[:id], iso_code)
           exhibition

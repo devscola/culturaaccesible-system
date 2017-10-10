@@ -38,7 +38,7 @@ module Items
         result.serialize
       end
 
-      def merge_translation(id, iso_code='en')
+      def merge_translation(id, iso_code='es')
         Items::Repository.merge_translation(id, iso_code)
       end
 

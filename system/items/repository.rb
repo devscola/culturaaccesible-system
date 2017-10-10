@@ -25,7 +25,7 @@ module Items
         item
       end
 
-      def merge_translation(id, iso_code='en')
+      def merge_translation(id, iso_code='es')
         connection.item_translations.insert_one({item_id: id, description: 'en castellano', video: 'k', iso_code: 'es'})
 
         data = connection.items.find({id: id}).first
