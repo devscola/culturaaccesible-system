@@ -100,7 +100,7 @@ describe 'Exhibition controller' do
       second_translated_list = parse_response
 
       expect(first_translated_list[0]['name']).to eq spanish_name
-      expect(second_translated_list[0]['name']).to eq english_name
+      expect(second_translated_list[0]['name']).to eq spanish_name
     end
 
     it 'retrieves saved with translations' do
