@@ -38,7 +38,7 @@ module Items
         item
       end
 
-      def retrieve_all_translated_items_by_parent( parent_id, iso_code = 'en' )
+      def retrieve_all_translated_items_by_parent( parent_id, iso_code = 'es' )
         items = []
         items_data = connection.items.find({ parent_id: parent_id })
         items_data.each do |data|         

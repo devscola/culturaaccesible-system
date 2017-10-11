@@ -134,7 +134,7 @@ module Exhibitions
       def find_traslation(id, iso_code)
         exhibition_translation = connection.exhibition_translations.find({exhibition_id: id, iso_code: iso_code}).first
         if exhibition_translation == nil
-          iso_code = 'en'
+          iso_code = 'es'
           exhibition_translation = connection.exhibition_translations.find({exhibition_id: id, iso_code: iso_code}).first
         end
         exhibition_translation
