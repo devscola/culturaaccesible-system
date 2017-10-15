@@ -99,6 +99,8 @@
 
                 exhibition: {type: Object, observer: 'storeId'},
 
+                edited: {type: Object, observer: 'fillForm'},
+
                 exhibitionId: {type: String},
 
                 image: {
@@ -200,6 +202,66 @@
             submitClicked: function(event) {
                 event.preventDefault();
                 this.fire('submitted', this.collectData());
+            },
+
+            fillForm: function() {
+              this.exhibitionId = this.edited.id;
+              this.name = this.edited.name;
+              this.description = this.edited.description;
+              this.image = this.edited.image;
+              this.beacon = this.edited.beacon;
+              document.getElementsByClassName("show")[0].checked = this.edited.show;
+              this.museumValue = this.edited.museum.id;
+              this.general_description = this.edited.general_description;
+              this.typeValue = this.edited.type;
+              this.dateStart = this.translateEditedDate(this.edited.date_start);
+              this.dateFinish = this.translateEditedDate(this.edited.date_finish);
+              if ( typeof (this.edited.translations) != "undefined" ) {
+                  this.fillLanguages(this.edited.translations);
+              }
+            },
+
+            translateEditedDate: function( date ) {
+              return "20" + date.substr(6,2) + "-" + date.substr(3,2) + "-" + date.substr(0,2);
+            },
+
+            fillLanguages: function(translations) {
+                for (var i=0; i<translations.length; i++) {
+                    switch (translations[i].iso_code) {
+                        case 'es':
+                            this.fillSpanish(translations[i]);
+                            break;
+                        case 'en':
+                            this.fillEnglish(translations[i]);
+                            break;
+                        case 'cat':
+                            this.fillCatala(translations[i]);
+                            break;
+                    }
+                }
+            },
+
+            fillSpanish: function(language) {
+                var spanish = this.$.languages.$.spanish;
+                spanish.translation = language;
+            },
+
+            fillEnglish: function(language) {
+              var english = this.$.languages.$.english;
+                english.english = true;
+                document.getElementsByClassName('english')[0].checked = true;
+                english.visiblelang = 'true';
+                english.toggleVisibility();
+                english.translation = language;
+            },
+
+            fillCatala: function(language) {
+                var catala = this.$.languages.$.catala;
+                catala.catala = true;
+                document.getElementsByClassName('catala')[0].checked = true;
+                catala.visiblelang = 'true';
+                catala.toggleVisibility();
+                catala.translation = language;
             },
 
             formatDate: function(dateString) {
