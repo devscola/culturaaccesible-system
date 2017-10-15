@@ -31,42 +31,20 @@ Class('Item.Form', {
 
     editRoom: function(room) {
         if (this.isEditable() && room.type == 'room') {
-            this.element.name = room.name;
-            this.element.number = room.number;
-            this.element.description = room.description;
-            this.element.image = room.image;
-            this.element.video = room.video;
-            this.element.beacon = room.beacon;
+            this.element.edited = room;
             document.getElementsByClassName("room")[0].checked = true;
             this.element.room = true;
-            this.element.lastNumber = room.number;
-            this.element.disableSaveButton = false;
-            this.element.editId = room.id;
-            this.element.disableCheckBox = true;
             this.element.type = room.type;
-            this.element.translations = room.translations;
             this.disableFields();
         }
     },
 
     editScene: function(scene) {
         if (this.isEditable() && scene.type == 'scene') {
-            this.element.name = scene.name;
-            this.element.number = scene.number;
-            this.element.author = scene.author;
-            this.element.date = scene.date;
-            this.element.description = scene.description;
-            this.element.image = scene.image;
-            this.element.video = scene.video;
-            this.element.beacon = scene.beacon;
+            this.element.edited = scene
             document.getElementsByClassName("room")[0].checked = false;
             this.element.room = false;
-            this.element.lastNumber = scene.number;
-            this.element.disableSaveButton = false;
-            this.element.editId = scene.id ;
-            this.element.disableCheckBox = true;
             this.element.type = scene.type;
-            this.element.translations = scene.translations;
         }
     },
 
