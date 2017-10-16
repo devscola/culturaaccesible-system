@@ -161,6 +161,10 @@ module Page
       find('#action').click
     end
 
+    def be_checked?( element )
+      find('input.show[type=checkbox]').selected?
+    end
+
     def content?(content)
       has_content?(content, wait: 1)
     end

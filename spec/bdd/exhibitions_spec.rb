@@ -27,6 +27,14 @@ feature 'Exhibitions' do
       expect(current.form_visible?).to be true
     end
 
+    scenario 'check showed if is required when edit' do
+      exhibition = Fixture::Exhibitions::NAME
+      current.click_exhibition(exhibition)
+      current.click_edit
+
+      expect(current.be_checked?('.show')).to be true
+    end
+
     scenario 'displays editable info' do
       exhibition = Fixture::Exhibitions::NAME
       current.click_exhibition(exhibition)

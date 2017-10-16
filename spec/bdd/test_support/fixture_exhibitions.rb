@@ -9,6 +9,7 @@ module Fixture
 
     SECOND_EXHIBITION = 'second name'
     NAME_FIELD = 'name'
+    CHECKED = true
     DESCRIPTION_FIELD = 'extended_description'
     SHORT_DESCRIPTION_FIELD = 'general_description'
     LOCATION_FIELD = 'location'
@@ -49,7 +50,7 @@ module Fixture
       end
 
       def add_exhibition(name, museum_id, iso_codes = ['es', 'cat'])
-        exhibition = { name: name, museum_id: museum_id, image: LINK, iso_codes: iso_codes }.to_json
+        exhibition = { name: name, show: CHECKED, museum_id: museum_id, image: LINK, iso_codes: iso_codes }.to_json
         response = HTTParty.post('http://localhost:4567/api/exhibition/add', { body: exhibition })
         JSON.parse(response.body)['id']
       end
