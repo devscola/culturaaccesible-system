@@ -25,6 +25,13 @@
                     <div class="image">
                       <img class="img-responsive img-thumbnail" width="50%" src="{{exhibition.image}}" alt="image">
                     </div>
+                    <div>
+                      Isocodes:[
+                      <template is="dom-repeat" items="{{exhibition.iso_codes}}">
+                          <span> {{item}} </span>
+                      </template>
+                      ]
+                    </div>
                     <template is="dom-repeat" items="{{exhibition.translations}}">
                         <cuac-exhibition-language-view translation={{item}}></cuac-exhibition-language-view>
                     </template>

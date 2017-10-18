@@ -243,12 +243,13 @@
 
             fillSpanish: function(language) {
                 var spanish = this.$.languages.$.spanish;
+                this.$.languages.spanish = true;
                 spanish.translation = language;
             },
 
             fillEnglish: function(language) {
-              var english = this.$.languages.$.english;
-                english.english = true;
+                this.$.languages.english = true;
+                var english = this.$.languages.$.english;
                 document.getElementsByClassName('english')[0].checked = true;
                 english.visiblelang = 'true';
                 english.toggleVisibility();
@@ -256,8 +257,8 @@
             },
 
             fillCatala: function(language) {
+                this.$.languages.catala = true;
                 var catala = this.$.languages.$.catala;
-                catala.catala = true;
                 document.getElementsByClassName('catala')[0].checked = true;
                 catala.visiblelang = 'true';
                 catala.toggleVisibility();
