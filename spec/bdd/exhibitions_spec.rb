@@ -192,7 +192,7 @@ feature 'Exhibitions' do
         current.click_delete_button
         current.accept_alert
 
-        current = Page::Exhibitions.new
+        Page::Exhibitions.new
 
         expect(current.content?(first_exhibition)).to be true
         expect(current.content?(second_exhibition)).to be false

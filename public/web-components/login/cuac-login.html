@@ -1,12 +1,74 @@
 <link rel="import" href="/vendor/polymer/polymer.html">
 
 <dom-module id="cuac-login">
+    <style>
+      .container{
+        position: relative;
+        height: 100vh;
+      }
+      #login-form {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        margin-right: -50%;
+        transform: translate(-50%, -50%);
+
+      }
+      .form > img {
+        max-width: 80%;
+        margin-left: 10%;
+        margin-top: 10%;
+      }
+      .form{
+        background-color: #4B6A88;
+        width: 280px;
+        height: 400px;
+      }
+      .form input {
+        width: 80%;
+        margin: 1em 10%;
+        padding: 5px;
+        border: none;
+        background-color: transparent;
+        color: #fff;
+        text-align: center;
+        border-bottom: 2px solid #ccc;
+      }
+      .submit{
+        border: none;
+        width: 80%;
+        margin: 10%;
+        padding: .7em;
+        font-weight: bolder;
+        background-color: #fff;
+        color: #1a8018;
+      }
+      ::-webkit-input-placeholder {
+         text-align: center;
+         color: #fff;
+      }
+      :-moz-placeholder {
+         text-align: center;
+         color: #fff;
+      }
+      ::-moz-placeholder {
+         text-align: center;
+         color: #fff;
+      }
+      :-ms-input-placeholder {
+         text-align: center;
+         color: #fff;
+      }
+    </style>
     <template>
         <div class="container">
-            <div id="login-form" class="panel-body">
-                <input id="username" name="username" type="text" placeholder="Insert username here">
-                <input id="password" name="password" type="password" placeholder="Insert password here">
-                <button class="submit" on-click="loginAttempt" class="btn btn-default">Sign in</button>
+            <div id="login-form">
+              <div class="form">
+                <img src="../../images/logo.png" alt="Logo cultura accesible">
+                <input id="username" name="username" type="text" placeholder="User">
+                <input id="password" name="password" type="password" placeholder="Password">
+                <button class="submit" on-click="loginAttempt" class="btn btn-default">LOG IN</button>
+              </div>
             </div>
         </div>
     </template>
