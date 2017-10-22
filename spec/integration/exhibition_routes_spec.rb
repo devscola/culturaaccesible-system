@@ -6,48 +6,48 @@ require_relative '../../system/exhibitions/repository'
 
 describe 'Exhibition controller' do
   include Rack::Test::Methods
-  
+
   IMAGE = 'https://s3.amazonaws.com/pruebas-cova/girasoles.jpg'
   SPANISH = 'es'
   ENGLISH = 'en'
   CATALA = 'cat'
-  
+
   def app
     App.new
   end
-  
+
   before(:each) do
     Exhibitions::Repository.flush
   end
-  
+
   context 'create' do
     it 'saves exhibition with selected museum' do
       add_museum
       museum_id = parse_response['id']
-      
+
       add_exhibition(museum_id)
       exhibition_id = parse_response['id']
       retrieve_exhibition(exhibition_id)
       retrieved_museum = parse_response['museum']
-      
+
       expect(retrieved_museum['id']).to eq museum_id
       expect(retrieved_museum['name']).to eq 'some name'
     end
-    
+
     it 'saves exhibition with locales' do
       iso_codes = [SPANISH, ENGLISH]
       add_museum
       museum_id = parse_response['id']
       add_exhibition(museum_id, iso_codes)
       exhibition = parse_response
-  
+
       retrieve_exhibition(exhibition['id'])
       retrieved_exhibition = parse_response
-  
+
       expect(retrieved_exhibition['iso_codes'][0]).to eq SPANISH
       expect(retrieved_exhibition['iso_codes'][1]).to eq ENGLISH
     end
-    
+
     it 'saves exhibition with translations' do
       iso_codes = [SPANISH, ENGLISH]
       add_museum
@@ -56,18 +56,18 @@ describe 'Exhibition controller' do
 
       add_exhibition(museum_id, iso_codes, translations)
       exhibition = parse_response
-  
+
       expect(exhibition['translations'][0]['iso_code']).to eq SPANISH
       expect(exhibition['translations'][1]['iso_code']).to eq ENGLISH
     end
-    
+
     it 'diferent exhibitions' do
       add_exhibition
       first_exhibition_id = parse_response['id']
-      
+
       add_exhibition
       second_exhibition_id = parse_response['id']
-      
+
       expect(first_exhibition_id == second_exhibition_id).to be false
     end
   end
@@ -79,11 +79,11 @@ describe 'Exhibition controller' do
       retrieve_exhibition(exhibition_id)
       retrieved_exhibition_id = parse_response['id']
       exhibition_image = parse_response['image']
-      
+
       expect(retrieved_exhibition_id).to eq(exhibition_id)
       expect(exhibition_image).to eq(IMAGE)
     end
-    
+
     it 'lists all exhibitions translated by an iso code' do
       iso_codes = [SPANISH, ENGLISH]
       spanish_name = 'nombre'
@@ -109,7 +109,7 @@ describe 'Exhibition controller' do
 
       retrieve_exhibition(exhibition_id)
       retrieved_exhibition = parse_response
-  
+
       expect(retrieved_exhibition['translations'][0]['iso_code']).to eq SPANISH
       expect(retrieved_exhibition['translations'][0]['name']).to eq 'nombre'
       expect(retrieved_exhibition['translations'][0]['general_description']).to eq 'descripción corta'
@@ -119,32 +119,32 @@ describe 'Exhibition controller' do
       expect(retrieved_exhibition['translations'][1]['general_description']).to eq 'short description'
       expect(retrieved_exhibition['translations'][1]['extended_description']).to eq 'extended description'
     end
-    
+
     context 'items' do
       it 'of exhibition' do
         add_exhibition
         exhibition_id = parse_response['id']
         add_scene(exhibition_id)
-        
+
         payload = { exhibition_id: exhibition_id }.to_json
         post '/api/exhibition/items', payload
         items = parse_response
-        
+
         expect(items.any?).to be true
       end
-      
+
       it 'gets an exhibition with items for sidebar' do
         add_exhibition
         exhibition_id = parse_response['id']
         add_scene(exhibition_id)
-        
+
         retrieve_for_list(exhibition_id)
         result = parse_response
-        
+
         expect(result['id']).to eq exhibition_id
         expect(result['children'].any?).to be true
       end
-      
+
       it 'download exhibition with translated items' do
         add_exhibition
         exhibition = parse_response
@@ -156,10 +156,10 @@ describe 'Exhibition controller' do
         scene_inside_room = parse_response
         add_subitem('1-1-1', exhibition['id'], 'scene', scene_inside_room['id'])
         subscene = parse_response
-        
+
         retrieve_for_download(exhibition['id'], SPANISH )
         exhibition = parse_response
-        
+
         expect(exhibition['items'][0]['id']).to eq room['id']
         expect(exhibition['items'][1]['id']).to eq scene['id']
         expect(exhibition['items'][0]['children'][0]['id']).to eq scene_inside_room['id']
@@ -176,13 +176,13 @@ describe 'Exhibition controller' do
           exhibition = parse_response
           add_scene('2-0-0', exhibition['id'])
           add_scene('1-0-0', exhibition['id'])
-          
+
           retrieve_for_list(exhibition['id'])
           first_children = parse_response['children'].first
-          
+
           expect(first_children).to include({'number' => '1-0-0'})
         end
-        
+
         it 'minor level list of an exhibition' do
           add_exhibition
           exhibition_id = parse_response['id']
@@ -190,13 +190,13 @@ describe 'Exhibition controller' do
           scene = parse_response
           add_subitem('1-2-0', exhibition_id, 'scene', scene['id'])
           add_subitem('1-1-0', exhibition_id, 'scene', scene['id'])
-      
+
           retrieve_for_list(exhibition_id)
           first_item_children = parse_response['children'].first['children'].first
-      
+
           expect(first_item_children).to include({'number' => '1-1-0'})
         end
-      
+
         it 'detail level list of an exhibition' do
           add_exhibition
           exhibition_id = parse_response['id']
@@ -206,11 +206,11 @@ describe 'Exhibition controller' do
           scene_id = parse_response['id']
           add_subitem('1-1-2', exhibition_id, 'scene', scene_id)
           add_subitem('1-1-1', exhibition_id, 'scene', scene_id)
-          
+
           retrieve_for_list(exhibition_id)
-          
+
           first_subitem_children = parse_response['children'].first['children'].first['children'].first
-      
+
           expect(first_subitem_children).to include({'number' => '1-1-1'})
         end
       end
@@ -245,7 +245,7 @@ describe 'Exhibition controller' do
       expect(retrieved_exhibition['translations'][1]['general_description']).to eq 'Short description updated'
       expect(retrieved_exhibition['translations'][1]['extended_description']).to eq 'Extended description updated'
     end
-  
+
     it 'retrieve the exhibition with its items' do
       iso_codes = [SPANISH, 'en']
       add_museum
@@ -260,7 +260,7 @@ describe 'Exhibition controller' do
       updated_exhibition_id = parse_response['id']
       retrieve_for_list(exhibition_id)
       first_children = parse_response['children'].first
-  
+
       expect(exhibition_id == updated_exhibition_id).to be true
       expect(first_children).to include({'number' => '1-0-0'})
     end
@@ -270,12 +270,12 @@ describe 'Exhibition controller' do
     it 'deletes an exhibition' do
       add_exhibition
       exhibition_id = parse_response['id']
-  
+
       delete_exhibition(exhibition_id)
       retrieve_list
       result = parse_response
       exhibition_deleted = result.select { |exhibition| exhibition['id'] == exhibition_id }.length == 0
-  
+
       expect(exhibition_deleted).to eq true
     end
   end
@@ -299,7 +299,7 @@ describe 'Exhibition controller' do
     add_exhibition(museum_id, iso_codes, translated_languages)
     parse_response
   end
-  
+
   def update_exhibition(exhibition_id, museum_id, updated_translation_id)
     exhibition_updated = {
       id: exhibition_id,
@@ -369,7 +369,7 @@ describe 'Exhibition controller' do
       }.to_json
     post '/api/museum/add', museum
   end
- 
+
   def get_languages
     [
       {'name' => 'name', 'description' => 'description', 'video' => 'video', 'iso_code' => ENGLISH},

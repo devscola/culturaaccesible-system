@@ -1,0 +1,23 @@
+<link rel="import" href="/vendor/polymer/polymer.html">
+
+<dom-module id="cuac-login">
+    <template>
+        <div class="container">
+            <div id="login-form" class="panel-body">
+                <input id="username" name="username" type="text" placeholder="Insert username here">
+                <input id="password" name="password" type="password" placeholder="Insert password here">
+                <button class="submit" on-click="loginAttempt" class="btn btn-default">Sign in</button>
+            </div>
+        </div>
+    </template>
+
+    <script>
+        Polymer({
+            is: 'cuac-login',
+
+            loginAttempt: function() {
+                this.fire('submit', {username: this.$.username.value, password: this.$.password.value});
+            }
+        });
+    </script>
+</dom-module>
