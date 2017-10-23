@@ -1,15 +1,10 @@
 require 'sinatra/base'
-require_relative 'system/routes/exhibitions'
-require_relative 'system/routes/museums'
-require_relative 'system/routes/items'
-require_relative 'system/routes/login'
-require_relative 'system/routes/fixtures'
-require_relative 'system/authorization/service'
 require_relative 'environment_configuration'
+require_relative 'system/authorization/service'
 
 class App < Sinatra::Base
+  enable :static, :sessions
   set :public_folder, 'public/'
-  enable :static
 
   GO_TO_LOGIN =  File.read(File.join('public', 'login.html'))
 
@@ -99,8 +94,12 @@ class App < Sinatra::Base
   end
 
   def login?
-    return true if (retrieve_mode == 'development')
-    return true if (Authorization::Service.is_registered?)
+    return true if (retrieve_mode == 'development' && session[:registered].nil?) || session[:registered]
     false
   end
 end
+require_relative 'system/routes/exhibitions'
+require_relative 'system/routes/museums'
+require_relative 'system/routes/items'
+require_relative 'system/routes/login'
+require_relative 'system/routes/fixtures'
