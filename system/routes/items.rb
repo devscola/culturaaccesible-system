@@ -37,6 +37,9 @@ class App < Sinatra::Base
       result = manage_exception(message_exception) do
         result = Items::Service.store_scene(data)
         item_id = result[:id]
+        number = data['number']
+        last_number = data['last_number']
+        Exhibitions::Service.update_order(data['exhibition_id'], item_id, number, last_number)
         translations = Items::Service.update_translations(data['translations'], item_id) if data['translations']
         result['translations'] = translations
         result
@@ -46,6 +49,9 @@ class App < Sinatra::Base
       result = manage_exception(message_exception) do
         result = Items::Service.store_room(data)
         item_id = result[:id]
+        number = data['number']
+        last_number = data['last_number']
+        Exhibitions::Service.update_order(data['exhibition_id'], item_id, number, last_number)
         translations = Items::Service.update_translations(data['translations'], item_id) if data['translations']
         result['translations'] = translations
         result

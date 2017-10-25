@@ -273,10 +273,10 @@ describe 'Exhibition controller' do
 
       delete_exhibition(exhibition_id)
       retrieve_list
-      result = parse_response
-      exhibition_deleted = result.select { |exhibition| exhibition['id'] == exhibition_id }.length == 0
+      retrieved_list = parse_response
+      exhibition_deleted = retrieved_list.include? exhibition_id
 
-      expect(exhibition_deleted).to eq true
+      expect(exhibition_deleted).to eq false
     end
   end
 

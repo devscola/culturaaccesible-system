@@ -3,7 +3,7 @@ require_relative 'test_support/login'
 require_relative 'test_support/exhibitions'
 
 feature 'Login' do
-  scenario 'login succeded goes to home page',:wip do
+  scenario 'login succeded goes to home page' do
     current = Page::Login.new
 
     current.fill('username', 'fer')

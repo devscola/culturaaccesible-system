@@ -47,6 +47,13 @@ module Exhibitions
         Exhibitions::Repository.update_exhibition(exhibition)
       end
 
+      def update_order(exhibition_id, item_id, ordinal, last_number)
+        exhibition = Exhibitions::Repository.retrieve(exhibition_id)
+        order = exhibition.order
+        order.update(ordinal, item_id, last_number)
+        Exhibitions::Repository.update_exhibition(exhibition)
+      end
+
       def retrieve_ordinal(exhibition_id, item_id)
         exhibition = Exhibitions::Repository.retrieve(exhibition_id)
         order = exhibition.order
