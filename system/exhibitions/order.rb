@@ -18,6 +18,11 @@ class Order
     @index[ordinal] = item_id
   end
 
+  def update(ordinal, item_id, last_number)
+    @index.delete(last_number)
+    @index[ordinal] = item_id
+  end
+
   def delete(item_id)
     @index.delete_if { |key, value| value == item_id }
   end
