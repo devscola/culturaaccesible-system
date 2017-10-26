@@ -63,8 +63,11 @@ class App < Sinatra::Base
     response.headers['Access-Control-Allow-Origin'] = '*'
     body = JSON.parse(request.body.read)
     iso_code = body['iso_code']
-    result = Exhibitions::Service.translated_list(iso_code)
-    result.to_json
+    list = Exhibitions::Service.translated_list(iso_code)
+    list.map! do |exhibition|
+      Actions::Exhibition.add_museum_info(exhibition)
+    end
+    list.to_json
   end
 
   post '/api/exhibition/retrieve-next-ordinal' do
