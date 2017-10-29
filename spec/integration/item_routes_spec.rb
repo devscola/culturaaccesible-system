@@ -1,5 +1,6 @@
 require 'rack/test'
 require 'json'
+require 'httparty'
 require_relative '../../system/routes/exhibitions'
 require_relative '../../system/routes/items'
 
@@ -9,6 +10,8 @@ describe 'Item controller'  do
   def app
     App.new
   end
+
+  let(:exhibition) { add_exhibition }
 
   FIRST_NAME = 'first item name'
   SECOND_NAME = 'second item name'
@@ -24,11 +27,9 @@ describe 'Item controller'  do
   DATE = '2017'
 
   context 'creating' do
-    it 'stores scenes' do
-      add_exhibition
-      exhibition_id = parse_response['id']
 
-      add_scene(FIRST_NAME, exhibition_id)
+    it 'stores scenes' do
+      add_scene(FIRST_NAME, exhibition['id'])
       scene = parse_response
 
       expect(scene['parent_class'] == "exhibition").to be true
@@ -37,10 +38,7 @@ describe 'Item controller'  do
     end
 
     it 'stores a scene with author and date' do
-      add_exhibition
-      exhibition_id = parse_response['id']
-
-      add_scene(FIRST_NAME, exhibition_id, NUMBER)
+      add_scene(FIRST_NAME, exhibition['id'], NUMBER)
       scene_author = parse_response['author']
       scene_date = parse_response['date']
 
@@ -49,13 +47,10 @@ describe 'Item controller'  do
     end
 
     it 'stores scenes with same exhibition id with unique scene name' do
-      add_exhibition
-      exhibition_id = parse_response['id']
-
-      add_scene(FIRST_NAME, exhibition_id, '1-0-0')
+      add_scene(FIRST_NAME, exhibition['id'], '1-0-0')
       first_scene_name = parse_response['name']
       first_scene_exhibition_id = parse_response['parent_id']
-      add_scene(SECOND_NAME, exhibition_id, '2-0-0')
+      add_scene(SECOND_NAME, exhibition['id'], '2-0-0')
       second_scene_name = parse_response['name']
       second_scene_exhibition_id = parse_response['parent_id']
 
@@ -64,21 +59,15 @@ describe 'Item controller'  do
     end
 
     it 'stores scenes with same number raises a exception' do
-      add_exhibition
-      exhibition_id = parse_response['id']
-
-      add_scene(FIRST_NAME, exhibition_id, '1-0-0')
-      add_scene(SECOND_NAME, exhibition_id, '1-0-0')
+      add_scene(FIRST_NAME, exhibition['id'], '1-0-0')
+      add_scene(SECOND_NAME, exhibition['id'], '1-0-0')
 
       expect(parse_response['json_class']).to eq('RuntimeError')
       expect(parse_response['m']).to eq('Store or update item number error, number allready exist')
     end
 
     it 'stores rooms' do
-      add_exhibition
-      exhibition_id = parse_response['id']
-
-      add_room(FIRST_NAME, exhibition_id)
+      add_room(FIRST_NAME, exhibition['id'])
       room = parse_response
 
       expect(room['name'] == FIRST_NAME).to be true
@@ -87,12 +76,9 @@ describe 'Item controller'  do
     end
 
     it 'cant store a room inside another room' do
-      add_exhibition
-      exhibition_id = parse_response['id']
-
-      add_room(FIRST_NAME, exhibition_id)
+      add_room(FIRST_NAME, exhibition['id'])
       room_id = parse_response['id']
-      add_room_inside_a_room(SECOND_NAME, exhibition_id, room_id)
+      add_room_inside_a_room(SECOND_NAME, exhibition['id'], room_id)
 
       expect(parse_response['json_class']).to eq('ArgumentError')
       expect(parse_response['m']).to eq('Store or update item error')
@@ -101,22 +87,17 @@ describe 'Item controller'  do
 
   context 'retrieving' do
     it 'room' do
-      add_exhibition
-      exhibition_id = parse_response['id']
-      add_room(FIRST_NAME, exhibition_id)
+      add_room(FIRST_NAME, exhibition['id'])
       room_id = parse_response['id']
 
-      retrieve_item(room_id, exhibition_id)
+      retrieve_item(room_id, exhibition['id'])
       retrieved_room_id = parse_response['id']
 
       expect(room_id == retrieved_room_id).to be true
     end
 
     it 'with translations' do
-      add_exhibition
-      exhibition_id = parse_response['id']
-
-      add_scene(FIRST_NAME, exhibition_id)
+      add_scene(FIRST_NAME, exhibition['id'])
       translations = parse_response['translations']
 
       expect(translations[0]['name']).to eq 'name'
@@ -125,23 +106,17 @@ describe 'Item controller'  do
 
     context 'ordering' do
       it 'retrieve next order number for first level item' do
-        add_exhibition
-        exhibition_id = parse_response['id']
-
-        retrieve_next_ordinal(exhibition_id, exhibition_id)
+        retrieve_next_ordinal(exhibition['id'], exhibition['id'])
         order = parse_response['next_child']
 
         expect(order).to eq('1-0-0')
       end
       it 'retrieve next order number for second level item' do
-        add_exhibition
-        exhibition_id = parse_response['id']
+        retrieve_next_ordinal(exhibition['id'], exhibition['id'])
 
-        retrieve_next_ordinal(exhibition_id, exhibition_id)
-
-        add_room(FIRST_NAME, exhibition_id, '1-0-0')
+        add_room(FIRST_NAME, exhibition['id'], '1-0-0')
         room_id = parse_response['id']
-        retrieve_next_ordinal(exhibition_id, room_id, 'room')
+        retrieve_next_ordinal(exhibition['id'], room_id, 'room')
         order = parse_response['next_child']
 
         expect(order).to eq('1-1-0')
@@ -151,33 +126,27 @@ describe 'Item controller'  do
 
   context 'updating' do
     it 'rooms' do
-      add_exhibition
-      exhibition_id = parse_response['id']
-      add_room(FIRST_NAME, exhibition_id)
+      add_room(FIRST_NAME, exhibition['id'])
       room_id = parse_response['id']
       room_number = parse_response['number']
 
-      update_room(room_id, exhibition_id, room_number)
+      update_room(room_id, exhibition['id'], room_number)
       updated_room_id = parse_response['id']
 
       expect(room_id == updated_room_id).to be true
     end
 
     it 'scenes' do
-      add_exhibition
-      exhibition_id = parse_response['id']
-      add_scene(FIRST_NAME, exhibition_id, NUMBER)
+      add_scene(FIRST_NAME, exhibition['id'], NUMBER)
       scene_id = parse_response['id']
       scene_number = parse_response['number']
 
-      update_scene(scene_id, exhibition_id, scene_number)
+      update_scene(scene_id, exhibition['id'], scene_number)
       updated_scene_id = parse_response['id']
       expect(scene_id == updated_scene_id).to be true
     end
 
     it 'scene updates order too' do
-      add_exhibition
-      exhibition = parse_response
       add_scene(FIRST_NAME, exhibition['id'], NUMBER)
       scene_id = parse_response['id']
 
@@ -190,16 +159,14 @@ describe 'Item controller'  do
     end
 
     it 'scene is received with translations' do
-      add_exhibition
-      exhibition_id = parse_response['id']
-      add_scene(FIRST_NAME, exhibition_id)
+      add_scene(FIRST_NAME, exhibition['id'])
       translations = parse_response['translations']
       translation_id = translations[0]['id']
       scene_id = parse_response['id']
       scene_number = parse_response['number']
       translations[0]['name'] = UPDATED_NAME
 
-      update_scene(scene_id, exhibition_id, scene_number, false, translations)
+      update_scene(scene_id, exhibition['id'], scene_number, false, translations)
       translations = parse_response['translations']
 
       expect(translations[0]['name']).to eq UPDATED_NAME
@@ -208,28 +175,24 @@ describe 'Item controller'  do
     end
 
       it 'cant updates a room into a scene' do
-        add_exhibition
-        exhibition_id = parse_response['id']
-        add_room(FIRST_NAME, exhibition_id)
+        add_room(FIRST_NAME, exhibition['id'])
         room_id = parse_response['id']
         room_number = parse_response['number']
         check_room = false
 
-        update_room(room_id, exhibition_id, room_number, check_room)
+        update_room(room_id, exhibition['id'], room_number, check_room)
 
         expect(parse_response['json_class']).to eq('ArgumentError')
         expect(parse_response['m']).to eq('Updating room not allows changing it to scene')
       end
 
       it 'cant updates a scene into a room' do
-        add_exhibition
-        exhibition_id = parse_response['id']
-        add_scene(FIRST_NAME, exhibition_id, NUMBER)
+        add_scene(FIRST_NAME, exhibition['id'], NUMBER)
         scene_id = parse_response['id']
         scene_number = parse_response['number']
         check_room = true
 
-        update_scene(scene_id, exhibition_id, scene_number, check_room)
+        update_scene(scene_id, exhibition['id'], scene_number, check_room)
 
         expect(parse_response['json_class']).to eq('ArgumentError')
         expect(parse_response['m']).to eq('Store or update item error')
@@ -238,21 +201,19 @@ describe 'Item controller'  do
 
   context 'deleting' do
     it 'deletes a room and its children' do
-      add_exhibition
-      exhibition_id = parse_response['id']
-      add_room(FIRST_NAME, exhibition_id, '1-0-0')
+      add_room(FIRST_NAME, exhibition['id'], '1-0-0')
       room_id = parse_response['id']
-      add_scene(SECOND_NAME, exhibition_id, '1-1-0', room_id)
+      add_scene(SECOND_NAME, exhibition['id'], '1-1-0', room_id)
       scene_id = parse_response['id']
-      add_scene(SECOND_NAME, exhibition_id, '1-1-1', scene_id)
+      add_scene(SECOND_NAME, exhibition['id'], '1-1-1', scene_id)
       subscene_id = parse_response['id']
 
-      delete_item(room_id, exhibition_id)
-      retrieve_item(room_id, exhibition_id)
+      delete_item(room_id, exhibition['id'])
+      retrieve_item(room_id, exhibition['id'])
       retrieved_room_id = parse_response['id']
-      retrieve_item(scene_id, exhibition_id)
+      retrieve_item(scene_id, exhibition['id'])
       first_scene_id = parse_response['id']
-      retrieve_item(subscene_id, exhibition_id)
+      retrieve_item(subscene_id, exhibition['id'])
       second_scene_id = parse_response['id']
 
       expect(retrieved_room_id).to eq nil
@@ -263,8 +224,6 @@ describe 'Item controller'  do
 
   context 'sidebar' do
     it 'not retrieve delete item' do
-      add_exhibition
-      exhibition = parse_response
       add_room(FIRST_NAME, exhibition['id'], '1-0-0')
       room_id = parse_response['id']
       add_scene(SECOND_NAME, exhibition['id'], '1-1-0', room_id)
@@ -283,8 +242,10 @@ describe 'Item controller'  do
   end
 
   def add_exhibition
+    HTTParty.get('http://localhost:4567/api/exhibition/flush')
     exhibition = { name: 'some name', location: 'some location' }.to_json
     post '/api/exhibition/add', exhibition
+    parse_response
   end
 
   def retrive_by_exhibition exhibition
