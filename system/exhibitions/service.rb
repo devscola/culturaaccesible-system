@@ -23,6 +23,10 @@ module Exhibitions
         exhibition.serialize
       end
 
+      def retrieve_object(id)
+        Exhibitions::Repository.retrieve(id)
+      end
+
       def retrieve_translated(id, iso_code)
         Exhibitions::Repository.retrieve_translated(id, iso_code)
       end
@@ -44,13 +48,17 @@ module Exhibitions
         exhibition = Exhibitions::Repository.retrieve(exhibition_id)
         order = exhibition.order
         order.register(ordinal, item_id)
-        Exhibitions::Repository.update_exhibition(exhibition)
+        update_exhibition(exhibition)
       end
 
       def update_order(exhibition_id, item_id, ordinal, last_number)
         exhibition = Exhibitions::Repository.retrieve(exhibition_id)
         order = exhibition.order
         order.update(ordinal, item_id, last_number)
+        update_exhibition(exhibition)
+      end
+
+      def update_exhibition( exhibition )
         Exhibitions::Repository.update_exhibition(exhibition)
       end
 

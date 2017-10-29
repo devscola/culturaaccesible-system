@@ -2,7 +2,7 @@ module Actions
   class Exhibition
     class << self
       def retrieve_for_list(exhibition)
-        order = Exhibitions::Repository.retrieve(exhibition[:id]).order
+        order = Exhibitions::Service.retrieve_object(exhibition[:id]).order
         children = Items::Service.retrieve_by_parent(exhibition[:id], order)
         children.map! do |item|
           begin
@@ -49,27 +49,27 @@ module Actions
       end
 
       def delete_item(item_id, exhibition_id)
-        exhibition = Exhibitions::Repository.retrieve(exhibition_id)
+        exhibition = Exhibitions::Service.retrieve_object(exhibition_id)
 
         order = exhibition.order
         order.delete(item_id)
 
-        children = Items::Repository.retrieve_by_parent(item_id)
+        children = Items::Service.retrieve_childrens(item_id)
 
         children.each do |child|
           order.delete(child[:id])
 
-          subchildren = Items::Repository.retrieve_by_parent(child[:id])
+          subchildren = Items::Service.retrieve_childrens(child[:id])
           subchildren.each do |subchild|
             order.delete(subchild[:id])
           end
         end
 
-        Exhibitions::Repository.update_exhibition(exhibition)
+        Exhibitions::Service.update_exhibition(exhibition)
       end
 
       def add_museum_info(exhibition)
-        museum = Museums::Repository.retrieve(exhibition[:museum_id]).serialize
+        museum = Museums::Service.retrieve(exhibition[:museum_id])
         data = {
           id: museum[:id],
           name: museum[:info][:name]

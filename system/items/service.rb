@@ -89,6 +89,10 @@ module Items
         children.sort_by { |child| child[:number] }
       end
 
+      def retrieve_childrens(parent_id)
+        Items::Repository.retrieve_by_parent(parent_id)
+      end
+
       def update_translations(translations, item_id)
         translations.map! { |item| Items::Repository.update_translation(item, item_id).serialize }
       end
