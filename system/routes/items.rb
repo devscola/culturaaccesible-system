@@ -6,6 +6,16 @@ require_relative '../items/service'
 class App < Sinatra::Base
   post '/api/item/add' do
     data = JSON.parse(request.body.read)
+    message_exception = 'Store or update item number error, number allready exist'
+    begin
+      exhibition = Exhibitions::Service.retrieve(data['exhibition_id'])
+      numbers = exhibition[:order][:index].keys || []
+      raise message_exception if numbers.include? data['number']
+    rescue RuntimeError => error
+      status 503
+      body message_exception
+      return error.to_json
+    end
     if (data['room'] == false)
       result = Items::Service.store_scene(data)
       item_id = result[:id]

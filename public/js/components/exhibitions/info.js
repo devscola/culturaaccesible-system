@@ -63,7 +63,7 @@ Class('Exhibitions.Info', {
     },
 
     goToHome: function() {
-        window.location = '/';
+        window.location = '/home';
     },
 
     subscribe: function() {

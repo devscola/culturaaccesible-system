@@ -55,9 +55,13 @@ module Exhibitions
       end
 
       def retrieve_ordinal(exhibition_id, item_id)
-        exhibition = Exhibitions::Repository.retrieve(exhibition_id)
-        order = exhibition.order
+        order = retrieve_exhibition_numbers( exhibition_id )
         order.retrieve_ordinal(item_id)
+      end
+
+      def retrieve_exhibition_numbers( exhibition_id )
+        exhibition = Exhibitions::Repository.retrieve(exhibition_id)
+        exhibition.order
       end
 
       def store_translations(data_translations, exhibition_id)

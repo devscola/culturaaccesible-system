@@ -52,15 +52,26 @@ describe 'Item controller'  do
       add_exhibition
       exhibition_id = parse_response['id']
 
-      add_scene(FIRST_NAME, exhibition_id)
+      add_scene(FIRST_NAME, exhibition_id, '1-0-0')
       first_scene_name = parse_response['name']
       first_scene_exhibition_id = parse_response['parent_id']
-      add_scene(SECOND_NAME, exhibition_id)
+      add_scene(SECOND_NAME, exhibition_id, '2-0-0')
       second_scene_name = parse_response['name']
       second_scene_exhibition_id = parse_response['parent_id']
 
       expect(first_scene_name == second_scene_name).to be false
       expect(first_scene_exhibition_id == second_scene_exhibition_id).to be true
+    end
+
+    it 'stores scenes with same number raises a exception' do
+      add_exhibition
+      exhibition_id = parse_response['id']
+
+      add_scene(FIRST_NAME, exhibition_id, '1-0-0')
+      add_scene(SECOND_NAME, exhibition_id, '1-0-0')
+
+      expect(parse_response['json_class']).to eq('RuntimeError')
+      expect(parse_response['m']).to eq('Store or update item number error, number allready exist')
     end
 
     it 'stores rooms' do
@@ -255,7 +266,8 @@ describe 'Item controller'  do
     post '/api/exhibition/add', exhibition
   end
 
-  def add_scene(unique_name, exhibition_id, number=ITEM_NUMBER_VALID, parent_id=exhibition_id)
+  def add_scene(unique_name, exhibition_id, number=ITEM_NUMBER_VALID, parent_id = nil)
+    parent_id = exhibition_id if parent_id.nil?
     scene = {
       id: '',
       name: unique_name,

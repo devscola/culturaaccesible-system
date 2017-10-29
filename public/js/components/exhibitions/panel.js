@@ -37,7 +37,7 @@ Class('Exhibitions.Panel', {
     },
 
     goToHome: function() {
-        window.location = '/';
+        window.location = '/home';
     },
 
     subscribe: function() {
