@@ -63,8 +63,10 @@ module Items
 
       def retrieve_by_parent(id, order)
         children = Items::Repository.retrieve_by_parent(id)
-        children.map! do |item|
-          {
+        list = []
+        children.each do |item|
+          break unless order.serialize[:index].value?(item[:id])
+          item_list = {
             id: item[:id],
             name: item[:name],
             type: item[:type],
@@ -77,8 +79,9 @@ module Items
             number: order.retrieve_ordinal(item[:id]),
             children: Items::Service.retrieve_by_parent(item[:id], order)
           }
+          list << item_list
         end
-        children_list = sorted_list(children)
+        children_list = sorted_list(list)
         children_list
       end
 

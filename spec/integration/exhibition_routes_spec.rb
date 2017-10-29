@@ -87,7 +87,6 @@ describe 'Exhibition controller' do
     it 'lists all exhibitions translated by an iso code' do
       iso_codes = [SPANISH, ENGLISH]
       spanish_name = 'nombre'
-      english_name = 'name'
       first_iso_code = SPANISH
       second_iso_code = CATALA
       add_museum

@@ -261,9 +261,34 @@ describe 'Item controller'  do
     end
   end
 
+  context 'sidebar' do
+    it 'not retrieve delete item' do
+      add_exhibition
+      exhibition = parse_response
+      add_room(FIRST_NAME, exhibition['id'], '1-0-0')
+      room_id = parse_response['id']
+      add_scene(SECOND_NAME, exhibition['id'], '1-1-0', room_id)
+      scene_id = parse_response['id']
+      add_scene(SECOND_NAME, exhibition['id'], '1-1-1', scene_id)
+
+      delete_item(scene_id, exhibition['id'])
+
+      retrive_by_exhibition(exhibition)
+
+      exhibition_list = parse_response
+
+      expect(exhibition_list['children'][0]['id']).to eq room_id
+      expect(exhibition_list['children'][0]['children'].size).to eq 0
+    end
+  end
+
   def add_exhibition
     exhibition = { name: 'some name', location: 'some location' }.to_json
     post '/api/exhibition/add', exhibition
+  end
+
+  def retrive_by_exhibition exhibition
+    post '/api/exhibition/retrieve-for-list', exhibition.to_json
   end
 
   def add_scene(unique_name, exhibition_id, number=ITEM_NUMBER_VALID, parent_id = nil)
