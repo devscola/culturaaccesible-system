@@ -4,6 +4,7 @@ module Support
   class Configuration
     HOSTS = {
       'development' => 'mongo-cuac-container',
+      'production'  => 'mongo-cuac-container',
       nil => 'localhost'
     }
 
