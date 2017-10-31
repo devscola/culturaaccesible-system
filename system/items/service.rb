@@ -42,29 +42,11 @@ module Items
         Items::Repository.merge_translation(id, iso_code)
       end
 
-      def retrieve_all_translated_items( parent_id, iso_code )
-        children = Items::Repository.retrieve_all_translated_items_by_parent( parent_id, iso_code )
-        children.map! do |item|
-          {
-            id: item[:id],
-            name: item[:name],
-            type: item[:type],
-            beacon: item[:beacon],
-            author: item[:author] || '',
-            date: item[:date] || '',
-            image: item[:image] || '',
-            video: item[:video] || '',
-            description: item[:description],
-            children: Items::Service.retrieve_all_translated_items( item[:id], iso_code )
-          }
-        end
-        sorted_list( children )
-      end
-
-      def retrieve_by_parent(id, order)
+      def retrieve_by_parent(id, order, iso_code = nil)
         children = Items::Repository.retrieve_by_parent(id)
         list = []
         children.each do |item|
+          item = Items::Repository.merge_translation( item[:id], iso_code ) if iso_code
           break unless order.serialize[:index].value?(item[:id])
           item_list = {
             id: item[:id],
@@ -77,7 +59,7 @@ module Items
             video: item[:video] || '',
             description: item[:description],
             number: order.retrieve_ordinal(item[:id]),
-            children: Items::Service.retrieve_by_parent(item[:id], order)
+            children: Items::Service.retrieve_by_parent(item[:id], order, iso_code)
           }
           list << item_list
         end

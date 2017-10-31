@@ -23,7 +23,8 @@ module Actions
       end
 
       def retrieve_all_items( exhibition, iso_code )
-        children = Items::Service.retrieve_all_translated_items( exhibition[:id], iso_code )
+        order = Exhibitions::Service.retrieve_object(exhibition[:id]).order
+        children = Items::Service.retrieve_by_parent(exhibition[:id], order, iso_code)
         children.map! do | item |
           begin
             {

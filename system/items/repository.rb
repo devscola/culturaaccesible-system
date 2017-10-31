@@ -38,21 +38,6 @@ module Items
         item
       end
 
-      def retrieve_all_translated_items_by_parent( parent_id, iso_code = 'es' )
-        items = []
-        items_data = connection.items.find({ parent_id: parent_id })
-        items_data.each do |data|         
-          item = create_item( data ).serialize
-          item_translation = connection.item_translations.find({item_id: item[:id], iso_code: iso_code}).first
-          translated_item = Items::Translation.from_bson(item_translation, item_translation['id'], item[:id]).serialize
-          item.each do |key, value|
-            item[key] = translated_item[key] if (translated_item[key] && key != 'id')
-          end
-          items.push(item)
-        end
-        items
-      end
-
       def retrieve_translations(item_id)
         item_translations = connection.item_translations.find({item_id: item_id})
         item_translations.map { |data| Items::Translation.from_bson(data, item_id, data['id']).serialize }
