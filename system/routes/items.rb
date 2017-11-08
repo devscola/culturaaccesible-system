@@ -1,41 +1,13 @@
 require 'sinatra/base'
 require 'json'
 require 'json/add/exception'
+require_relative '../actions/items'
 require_relative '../items/service'
 
 class App < Sinatra::Base
   post '/api/item/add' do
     data = JSON.parse(request.body.read)
-    message_exception = 'Store or update item number error, number allready exist'
-    begin
-      exhibition = Exhibitions::Service.retrieve(data['exhibition_id'])
-      numbers = exhibition[:order][:index].keys || []
-      raise message_exception if numbers.include? data['number']
-    rescue RuntimeError => error
-      status 503
-      body message_exception
-      return error.to_json
-    end
-    if (data['room'] == false)
-      result = Items::Service.store_scene(data)
-      item_id = result[:id]
-      number = data['number']
-      Exhibitions::Service.register_order(data['exhibition_id'], item_id, number)
-      translations = Items::Service.store_translations(data['translations'], item_id) if data['translations']
-      result['translations'] = translations
-      Exhibitions::Service.retrieve(data['exhibition_id'])
-    else
-      message_exception = 'Store or update item error'
-      result = manage_exception(message_exception) do
-        result = Items::Service.store_room(data)
-        item_id = result[:id]
-        number = data['number']
-        Exhibitions::Service.register_order(data['exhibition_id'], item_id, number)
-        translations = Items::Service.store_translations(data['translations'], item_id) if data['translations']
-        result['translations'] = translations
-        result
-      end
-    end
+    result = Actions::Item.add(data)
     result.to_json
   end
 
