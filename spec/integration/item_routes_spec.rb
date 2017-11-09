@@ -239,6 +239,30 @@ describe 'Item controller'  do
       expect(exhibition_list['children'][0]['id']).to eq room_id
       expect(exhibition_list['children'][0]['children'].size).to eq 0
     end
+    it 'can add items after delete' do
+      add_room(FIRST_NAME, exhibition['id'], '1-0-0')
+      room_id = parse_response['id']
+      add_scene(SECOND_NAME, exhibition['id'], '1-1-0', room_id)
+      scene_id = parse_response['id']
+      add_scene(SECOND_NAME, exhibition['id'], '1-1-1', scene_id)
+
+      retrive_by_exhibition(exhibition)
+      exhibition_list = parse_response
+
+      expect(exhibition_list['children'][0]['children'][0]['children'].size).to eq 1
+
+      delete_item(scene_id, exhibition['id'])
+
+      add_scene(SECOND_NAME, exhibition['id'], '1-1-0', room_id)
+      scene_id = parse_response['id']
+
+      retrive_by_exhibition(exhibition)
+      exhibition_list = parse_response
+
+      expect(exhibition_list['children'][0]['id']).to eq room_id
+      expect(exhibition_list['children'][0]['children'].size).to eq 1
+      expect(exhibition_list['children'][0]['children'][0]['children'].size).to eq 0
+    end
   end
 
   def add_exhibition

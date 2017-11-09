@@ -47,7 +47,7 @@ module Items
         list = []
         children.each do |item|
           item = Items::Repository.merge_translation( item[:id], iso_code ) if iso_code
-          break unless order.serialize[:index].value?(item[:id])
+          next unless order.serialize[:index].value?(item[:id])
           item_list = {
             id: item[:id],
             name: item[:name],

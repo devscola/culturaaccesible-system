@@ -2,32 +2,32 @@ module Actions
   class Item
     class << self
       def add( data )
-        exist = ensure_new_item_number( data['exhibition_id'], data['number'] )
-        return exist if exist.class == RuntimeError
+        assigned_number = check_assigned_number( data['exhibition_id'], data['number'] )
+        return assigned_number if assigned_number.class == RuntimeError
         return add_scene( data ) if data['room'] == false
         return add_room( data ) if data['room'] == true
       end
 
       def update( data )
-        return update_scene( data ) if data['room'] == false
-        return update_room( data ) if data['room'] == true
+        return update_item( data, method( :store_scene )) if data['room'] == false
+        return update_item( data, method( :store_room )) if data['room'] == true
       end
 
       def retrieve( exhibition_id, item_id )
-        result = retrieve_item( item_id )
-        item_id = result[:id]
-        result['translations'] = retrieve_translations( item_id )
+        item = retrieve_item( item_id )
+        item_id = item[:id]
+        item['translations'] = retrieve_translations( item_id )
         message_exception = 'Item not found'
-        result = manage_exception(message_exception) do
+        item = manage_exception(message_exception) do
           ordinal = Exhibitions::Service.retrieve_ordinal(exhibition_id, item_id)
-          result['number'] = ordinal
-          result
+          item['number'] = ordinal
+          item
         end
       end
 
       private
 
-      def ensure_new_item_number( exhibition_id, number )
+      def check_assigned_number( exhibition_id, number )
         message_exception = 'Store or update item number error, number allready exist'
         result = manage_exception( message_exception ) do
           exhibition = Exhibitions::Service.retrieve( exhibition_id )
@@ -39,48 +39,35 @@ module Actions
 
       def add_scene( data )
         number = data['number']
-        result = store_scene( data )
-        item_id = result[:id]
+        scene = store_scene( data )
+        item_id = scene[:id]
         register_order( data['exhibition_id'], item_id, number )
-        result['translations'] = store_translations( data['translations'], item_id )
-        result
+        scene['translations'] = store_translations( data['translations'], item_id )
+        scene
       end
 
       def add_room( data )
         message_exception = 'Store or update item error'
-        result = manage_exception(message_exception) do
+        room = manage_exception(message_exception) do
           number = data['number']
-          result = store_room( data )
-          item_id = result[:id]
+          room = store_room( data )
+          item_id = room[:id]
           register_order( data['exhibition_id'], item_id, number )
-          result['translations'] = store_translations( data['translations'], item_id )
-          result
+          room['translations'] = store_translations( data['translations'], item_id )
+          room
         end
       end
 
-      def update_scene( data )
-        message_exception = 'Updating room not allows changing it to scene'
-        result = manage_exception( message_exception ) do
+      def update_item( data, action )
+        message_exception = "Room to scene or scene to room change not allowed"
+        item = manage_exception(message_exception) do
           number = data['number']
           last_number = data['last_number']
-          result = store_scene(data)
-          item_id = result[:id]
+          item = action.call( data )
+          item_id = item[:id]
           update_order( data['exhibition_id'], item_id, number, last_number )
-          result['translations'] = update_translations( data['translations'], item_id )
-          result
-        end
-      end
-
-      def update_room( data )
-        message_exception = 'Updating scene not allows changing it to room'
-        result = manage_exception(message_exception) do
-          number = data['number']
-          last_number = data['last_number']
-          result = store_room( data )
-          item_id = result[:id]
-          update_order( data['exhibition_id'], item_id, number, last_number )
-          result['translations'] = update_translations( data['translations'], item_id )
-          result
+          item['translations'] = update_translations( data['translations'], item_id )
+          item
         end
       end
 
