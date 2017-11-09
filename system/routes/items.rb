@@ -11,34 +11,9 @@ class App < Sinatra::Base
     result.to_json
   end
 
-
   post '/api/item/update' do
     data = JSON.parse(request.body.read)
-    if (data['room'] == false)
-      message_exception = 'Updating room not allows changing it to scene'
-      result = manage_exception(message_exception) do
-        result = Items::Service.store_scene(data)
-        item_id = result[:id]
-        number = data['number']
-        last_number = data['last_number']
-        Exhibitions::Service.update_order(data['exhibition_id'], item_id, number, last_number)
-        translations = Items::Service.update_translations(data['translations'], item_id) if data['translations']
-        result['translations'] = translations
-        result
-      end
-    else
-      message_exception = 'Updating scene not allows changing it to room'
-      result = manage_exception(message_exception) do
-        result = Items::Service.store_room(data)
-        item_id = result[:id]
-        number = data['number']
-        last_number = data['last_number']
-        Exhibitions::Service.update_order(data['exhibition_id'], item_id, number, last_number)
-        translations = Items::Service.update_translations(data['translations'], item_id) if data['translations']
-        result['translations'] = translations
-        result
-      end
-    end
+    result = Actions::Item.update(data)
     result.to_json
   end
 
