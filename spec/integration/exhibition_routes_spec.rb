@@ -156,8 +156,18 @@ describe 'Exhibition controller' do
         add_subitem('1-1-1', exhibition['id'], 'scene', scene_inside_room['id'])
         subscene = parse_response
 
+        retrieve_for_list(exhibition['id'])
+        exhibition = parse_response
+        retrieve_item(exhibition['children'][0]['id'], exhibition['id'])
+        item = parse_response
+        expected_translations = item['translations'].size
+
         retrieve_for_download(exhibition['id'], SPANISH )
         exhibition = parse_response
+
+        retrieve_item(exhibition['items'][0]['id'], exhibition['id'])
+        item = parse_response
+        translations_after_download = item['translations'].size
 
         expect(exhibition['items'][0]['id']).to eq room['id']
         expect(exhibition['items'][1]['id']).to eq scene['id']
@@ -167,6 +177,8 @@ describe 'Exhibition controller' do
         expect(exhibition['items'][1]['name']).to eq scene['translations'][1]['name']
         expect(exhibition['items'][0]['children'][0]['name']).to eq scene_inside_room['translations'][1]['name']
         expect(exhibition['items'][0]['children'][0]['children'][0]['name']).to eq subscene['translations'][1]['name']
+
+        expect(expected_translations).to eq translations_after_download
       end
 
       context 'oredered' do
@@ -279,6 +291,10 @@ describe 'Exhibition controller' do
     end
   end
 
+  def retrieve_item(id, exhibition_id)
+    payload = { id: id, exhibition_id: exhibition_id }.to_json
+    post 'api/item/retrieve', payload
+  end
 
   def add_exhibition(museum_id = '', iso_codes=[], translations = exhibition_languages)
     exhibition = {
