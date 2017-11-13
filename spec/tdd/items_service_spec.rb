@@ -43,6 +43,7 @@ describe Items::Service do
 
     scene = add_scene(name, number, exhibition_id, exhibition_id)
     scene_id = scene[:id]
+    add_scene_languages(scene_id)
 
     translated_scene = Items::Service.merge_translation(scene_id, LOCALE)
 
