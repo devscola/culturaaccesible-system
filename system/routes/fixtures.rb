@@ -15,10 +15,12 @@ class App < Sinatra::Base
   end
 
   get '/api/fill/admin' do
+    Exhibitions::Service.flush
+    Museums::Service.flush
     museum = store_museum
     exhibition = store_exhibition(museum[:id])
-    store_room( exhibition[:id] )
-    store_item( exhibition[:id] )
+    store_sculpture_room(exhibition[:id])
+    store_painting_room(exhibition[:id])
     {}.to_json
   end
 end
