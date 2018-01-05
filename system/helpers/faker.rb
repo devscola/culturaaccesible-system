@@ -3,34 +3,35 @@ module Admin
       museum_data = {
         'creation_date' => '16-10-2017',
         'info' => {
-          'name' => 'The museum',
-          'description' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'
+          'name' => 'Museo de geología',
+          'description' => '
+El Museo de Geología del Departamento de Geología de la Universitat de Valencia (MGUV), es el custodio de varias colecciones de materiales geológicos y paleontológicos (rocas ornamentales, estructuras sedimentarias, minerales, meteoritos, fósiles) además de otros objetos de carácter histórico -científico relacionado de manera directa o indirecta con la Geología (instrumental científico, bibliografía). Desde 1996, año en que fue reconocido como Museo por la Conselleria de Cultura de la Generalitat Valenciana el MGUV está desarrollando una importante labor de conservación, mantenimiento, investigación e inventario de los ejemplares que componen sus colecciones, poniendolas a disposición de los investigadores interesados y también organizará su exhibición pública, confiriéndole el carácter abierto de un centro de divulgación científica.'
         },
         'location' => {
-          'street' => 'Las 13 rosas',
-          'postal' => '36.000',
-          'city' => 'Madrid',
-          'region' => 'Madrid',
-          'link' => 'https://www.google.es/maps/place/MuVIM,+Museu+Valenci%C3%A0+de+la+Il%C2%B7lustraci%C3%B3+i+la+Modernitat/@39.4698131,-0.383297,17z/data=!3m1!4b1!4m5!3m4!1s0xd604f4f615718bb:0xccd4cfd7781d3a4f!8m2!3d39.4698131!4d-0.3811083'
+          'street' => 'Carrer Dr. Moliner, 50',
+          'postal' => '46.100',
+          'city' => 'Valencia',
+          'region' => 'Burjasot',
+          'link' => 'https://www.google.es/maps/place/Carrer+del+Dr.+Moliner,+50,+46100+Burjassot,+Valencia/@39.507831,-0.4214757,17z/data=!3m1!4b1!4m5!3m4!1s0xd60450d182e2083:0x4286f51f529bb0d!8m2!3d39.5078269!4d-0.419287'
         },
         'contact' => {
-          'phone' => ['11111111'],
-          'email' => ['nnnnnnnlorem@gmail.com'],
-          'web' => ['https://www.google.es']
+          'phone' => ['963 544 605'],
+          'email' => [],
+          'web' => ['http://www.uv.es/mguv']
         },
         'price' => {
-          'freeEntrance' => ['0'],
-          'general' => ['5'],
-          'reduced' => ['10']
+          'freeEntrance' => ['?'],
+          'general' => ['?'],
+          'reduced' => ['?']
         },
         'schedule' => {
-          'MON' => ['16:00-20:00'],
-          'TUE' => ['10:00-14:00', '16:00-20:00'],
-          'WED' => ['10:00-14:00', '16:00-20:00'],
-          'THU' => ['10:00-14:00', '16:00-20:00'],
-          'FRI' => ['10:00-14:00', '16:00-20:00'],
-          'SAT' => ['10:00-14:00', '16:00-20:00'],
-          'SUN' => ['10:00-14:00'],
+          'MON' => [],
+          'TUE' => ['09:00-13:30'],
+          'WED' => ['09:00-13:30'],
+          'THU' => ['09:00-13:30'],
+          'FRI' => ['09:00-13:30'],
+          'SAT' => [],
+          'SUN' => [],
         }
       }
       Museums::Service.store(museum_data)
@@ -39,7 +40,7 @@ module Admin
     def store_exhibition(museum_id)
       exhibition_data = {
         "show" => true,
-        "name" => "Demo Cultura Accesible",
+        "name" => "Cultura Accesible Geología",
         "museum_id" => museum_id,
         "general_description" => "Esta aplicación está creada y pensada para todos.",
         "date_start" => "23/10/17",
@@ -55,14 +56,14 @@ module Admin
       exhibition_id = exhibition[:id]
       translations = [
           {
-            'name' => 'Demo Feedback Cultural',
+            'name' => "Cultura Accesible Geología",
             'general_description' =>'Esta aplicación está creada y pensada para todos.',
             'extended_description' => 'Una manera de tener todas las audio-guías de los museos participantes en tu mano. Especialmente diseñada para su fácil utilización por las personas con discapacidad visual.',
             'iso_code' => 'es',
             'exhibition_id' => exhibition_id
           },
           {
-            'name' => 'Demo Feedback Cultural',
+            'name' => 'Cultura Accesible Geología',
             'general_description' =>'Aquesta aplicació està creada i pensada per a tots.',
             'extended_description' => 'Una manera de tenir totes les audioguies dels museus participants a la teva mà. Especialment dissenyada per a la seva fàcil utilització per les persones amb discapacitat visual.',
             'iso_code' => 'cat',

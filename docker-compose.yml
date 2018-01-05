@@ -27,7 +27,6 @@ services:
     image: mongo:latest
     ports:
         - "27017:27017"
-    command: --smallfiles
 
 volumes:
   bundle:
