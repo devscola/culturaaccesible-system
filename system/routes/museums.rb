@@ -6,6 +6,8 @@ class App < Sinatra::Base
   post '/api/museum/add' do
     museum_data = JSON.parse(request.body.read)
     result = Museums::Service.store(museum_data)
+    translations = Museums::Service.store_translations(museum_data['translations'], result[:id]) if museum_data['translations']
+    result[:translations] = translations
     result.to_json
   end
 

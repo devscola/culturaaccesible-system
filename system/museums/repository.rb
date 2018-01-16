@@ -21,6 +21,18 @@ module Museums
         museum
       end
 
+      def translation_choose_action(data_translation, museum_id)
+        data_translation.map! do |data|
+          id = data['id']
+          if (id)
+            update_translation(data)
+          else
+            store_translation(data, museum_id)
+          end
+        end
+        data_translation
+      end
+
       def retrieve(id)
           data = connection.museums.find({ id: id }).first
           museum = Museums::Museum.from_bson(data, data['id'])
@@ -44,6 +56,17 @@ module Museums
         connection.museums.insert_one(museum.serialize)
         connection.close
         museum
+      end
+
+      def store_translation(data, museum_id)
+        translation_museum = Museums::Translation.new(data, museum_id).serialize
+        connection.museum_translations.insert_one(translation_museum)
+        translation_museum
+      end
+
+      def update_translation(translation)
+        updated_translation = connection.museum_translations.find_one_and_update({ id: translation['id'] }, { "$set" => translation }, {:return_document => :after })
+        Museums::Translation.from_bson(updated_translation, updated_translation['museum_id'], updated_translation['id']).serialize
       end
 
       def update(museum_data)

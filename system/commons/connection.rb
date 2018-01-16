@@ -37,6 +37,10 @@ module Database
         @connection[:exhibition_translations]
       end
 
+      def museum_translations
+        @connection[:museum_translations]
+      end
+
       private
 
       def host

@@ -6,6 +6,7 @@ require_relative 'location'
 require_relative 'contact'
 require_relative 'price'
 require_relative 'schedule'
+require_relative 'traslation'
 require_relative '../helpers/defense'
 
 module Museums
@@ -14,6 +15,10 @@ module Museums
       def store(museum_data)
         museum = Museums::Repository.choose_action(museum_data)
         museum.serialize
+      end
+
+      def store_translations(data_translations, museum_id)
+        Museums::Repository.translation_choose_action(data_translations, museum_id)
       end
 
       def retrieve(id)
