@@ -40,6 +40,16 @@ module Museums
           museum
       end
 
+      def retrieve_translations(museum_id)
+        museum_translations = connection.museum_translations.find({museum_id: museum_id})
+
+        translations =  []
+        museum_translations.map do |translation|
+          translations.push(Museums::Translation.from_bson(translation, museum_id, translation['id']).serialize)
+        end
+        translations
+      end
+
       def all
         museums_data = connection.museums.find()
         museums_data.map { |data| Museums::Museum.from_bson(data, data['id']) }

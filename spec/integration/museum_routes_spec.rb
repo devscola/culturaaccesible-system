@@ -60,6 +60,20 @@ describe 'Museum controller' do
       expect(museum['info']['name']).to eq 'some name'
       expect(museum['id']).to eq museum_id
     end
+
+    it 'museum with translations' do
+      add_museum
+      museum_id = parse_response['id']
+      payload = { id: museum_id }.to_json
+
+      post '/api/museum/retrieve', payload
+      museum = parse_response
+
+      expect(museum['translations'][0]['iso_code']).to eq SPANISH
+      expect(museum['translations'][1]['iso_code']).to eq ENGLISH
+      expect(museum['translations'][0]['description']).to eq 'descripción'
+      expect(museum['translations'][1]['description']).to eq 'description'
+    end
   end
 
   context 'updating' do

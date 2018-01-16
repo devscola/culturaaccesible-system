@@ -15,6 +15,8 @@ class App < Sinatra::Base
     response.headers['Access-Control-Allow-Origin'] = '*'
     body = JSON.parse(request.body.read)
     result = Museums::Service.retrieve(body['id'])
+    museum_translations =  Museums::Service.retrieve_translations(result[:id])
+    result['translations'] = museum_translations if museum_translations.size > 0
     result.to_json
   end
 

@@ -26,6 +26,10 @@ module Museums
         museum.serialize
       end
 
+      def retrieve_translations(museum_id)
+        Museums::Repository.retrieve_translations(museum_id)
+      end
+
       def update(museum_data)
         museum = Museums::Repository.update(museum_data)
         museum.serialize
