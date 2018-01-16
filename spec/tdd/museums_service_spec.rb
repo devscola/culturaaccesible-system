@@ -13,6 +13,33 @@ describe Museums::Service do
     expect(museum[:info][:description]).to eq(description)
   end
 
+  it 'stores translated museum' do
+    name = 'some name'
+    description = 'some description'
+    museum = add_museum(name, description)
+    translations = add_translations(museum[:id])
+
+    expect(translations[0][:iso_code]).to eq 'es'
+    expect(translations[1][:iso_code]).to eq 'en'
+    expect(translations[0][:description]).to eq 'descripción'
+    expect(translations[1][:description]).to eq 'description'
+    expect(museum[:info][:name]).to eq 'some name'
+  end
+
+  it 'retrieve museum with translations' do
+    name = 'some name'
+    description = 'some description'
+    museum = add_museum(name, description)
+    translations = add_translations(museum[:id])
+
+    museum = Museums::Service.retrieve_translations(museum[:id])
+
+    expect(museum[0][:iso_code]).to eq 'es'
+    expect(museum[1][:iso_code]).to eq 'en'
+    expect(museum[0][:description]).to eq 'descripción'
+    expect(museum[1][:description]).to eq 'description'
+  end
+
   it 'retrieves all museums' do
     add_museum('some name', 'some description')
     result = retrieve_all_museums
@@ -49,8 +76,20 @@ describe Museums::Service do
     Museums::Service.store(museum_data)
   end
 
+  def add_translations(museum_id)
+    translations = museum_languages
+    Museums::Service.store_translations(translations, museum_id)
+  end
+
   def add_nil_museum_content(name, phone, description)
     museum_data = { 'info' => { 'name' => name, 'description' => description }, 'contact' => { 'phone' => phone } }
     Museums::Service.store(museum_data)
+  end
+
+  def museum_languages
+    [
+      {'description' => 'descripción', 'iso_code' => 'es'},
+      {'description' => 'description', 'iso_code' => 'en'}
+    ]
   end
 end
