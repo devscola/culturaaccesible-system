@@ -13,6 +13,18 @@ describe Museums::Service do
     expect(museum[:info][:description]).to eq(description)
   end
 
+  it 'retrieve translated museum' do
+    name = 'some name'
+    description = 'some description'
+    museum = add_museum(name, description)
+    Museums::Service.store_translations(museum_languages, museum[:id])
+
+    translated_museum = Museums::Service.retrieve_translated(museum[:id], 'es')
+
+    expect(translated_museum[:id]).to eq museum[:id]
+    expect(translated_museum[:info][:description]).to eq 'descripción'
+  end
+
   it 'stores translated museum' do
     name = 'some name'
     description = 'some description'

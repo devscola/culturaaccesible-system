@@ -26,6 +26,10 @@ module Museums
         museum.serialize
       end
 
+      def retrieve_translated(id, iso_code)
+        Museums::Repository.retrieve_translated(id, iso_code)
+      end
+
       def retrieve_translations(museum_id)
         Museums::Repository.retrieve_translations(museum_id)
       end

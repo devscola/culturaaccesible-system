@@ -40,6 +40,15 @@ module Museums
           museum
       end
 
+      def retrieve_translated(id, iso_code)
+        data = connection.museums.find({id: id}).first
+        museum = Museums::Museum.from_bson(data, data['id']).serialize
+        museum_translation = traslation(id, iso_code)
+        translated_museum = Museums::Translation.from_bson(museum_translation, museum_translation['museum_id'], museum_translation['id']).serialize
+        museum[:info][:description] = translated_museum[:description]
+        museum
+      end
+
       def retrieve_translations(museum_id)
         museum_translations = connection.museum_translations.find({museum_id: museum_id})
 
@@ -84,6 +93,15 @@ module Museums
         document = museum.serialize
         updated_museum_data = connection.museums.find_one_and_update({ id: document[:id] }, document, {:return_document => :after })
         Museums::Museum.from_bson(updated_museum_data, updated_museum_data['id'])
+      end
+
+      def traslation(id, iso_code)
+        museum = connection.museum_translations.find({museum_id: id, iso_code: iso_code}).first
+        if museum == nil
+          iso_code = 'es'
+          museum = connection.museum_translations.find({museum_id: id, iso_code: iso_code}).first
+        end
+        museum
       end
 
     end
