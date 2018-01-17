@@ -1,6 +1,9 @@
 module Museums
   class Museum
     attr_reader :name, :id
+
+    DEFAULT_ISO_CODE = ['es']
+
     def initialize(data, id=nil)
       @creation_date = Time.now.utc
       @info = Info.new(data['info'] || {})
@@ -8,6 +11,7 @@ module Museums
       @contact = Contact.new(data['contact'] || {})
       @price = Price.new(data['price'] || {})
       @schedule = Schedule.new(data['schedule'] || {})
+      @iso_codes = data['iso_codes'] || DEFAULT_ISO_CODE
       @id = id || generate_id
     end
 
@@ -19,7 +23,8 @@ module Museums
         location: location.serialize,
         contact: contact.serialize,
         price: price.serialize,
-        schedule: schedule.serialize
+        schedule: schedule.serialize,
+        iso_codes: @iso_codes
       }
     end
 

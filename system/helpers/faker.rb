@@ -32,9 +32,25 @@ El Museo de Geología del Departamento de Geología de la Universitat de Valenci
           'FRI' => ['09:00-13:30'],
           'SAT' => [],
           'SUN' => [],
-        }
+        },
+        'iso_codes' => ['es','cat'],
       }
-      Museums::Service.store(museum_data)
+      museum = Museums::Service.store(museum_data)
+      museum_id = museum[:id]
+      translations = [
+          {
+            'description' =>'El Museo de Geología del Departamento de Geología de la Universitat de Valencia (MGUV), es el custodio de varias colecciones de materiales geológicos y paleontológicos (rocas ornamentales, estructuras sedimentarias, minerales, meteoritos, fósiles) además de otros objetos de carácter histórico -científico relacionado de manera directa o indirecta con la Geología (instrumental científico, bibliografía). Desde 1996, año en que fue reconocido como Museo por la Conselleria de Cultura de la Generalitat Valenciana el MGUV está desarrollando una importante labor de conservación, mantenimiento, investigación e inventario de los ejemplares que componen sus colecciones, poniendolas a disposición de los investigadores interesados y también organizará su exhibición pública, confiriéndole el carácter abierto de un centro de divulgación científica.',
+            'iso_code' => 'es',
+            'museum_id' => museum_id
+          },
+          {
+            'description' =>"El Museu de Geologia del Departament de Geologia de la Universitat de València (MGUV), és el custodi de diverses col·leccions de materials geològics i paleontològics (roques ornamentals, estructures sedimentàries, minerals, meteorits, fòssils) a més d'altres objectes de caràcter històric-científic relacionat de manera directa o indirecta amb la Geologia (instrumental científic, bibliografia). Des de 1996, any en què va ser reconegut com Museu per la Conselleria de Cultura de la Generalitat Valenciana el MGUV està desenvolupant una important tasca de conservació, manteniment, investigació e inventari dels exemplars que componen les seues col·leccions, posant a disposició dels investigadors interessats i també organitzarà la seva exhibició pública, conferint-li el caràcter obert d'un centre de divulgació científica.",
+            'iso_code' => 'cat',
+            'museum_id' => museum_id
+          },
+      ]
+      Museums::Service.store_translations(translations, museum_id)
+      museum
     end
 
     def store_exhibition(museum_id)
