@@ -29,7 +29,8 @@ class App < Sinatra::Base
 
   post '/api/museum/list' do
     response.headers['Access-Control-Allow-Origin'] = '*'
-    result = Museums::Service.list
+    body = JSON.parse(request.body.read)
+    result = Museums::Service.list(body['iso_code'])
     result.to_json
   end
 

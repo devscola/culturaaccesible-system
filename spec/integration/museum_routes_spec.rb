@@ -43,10 +43,25 @@ describe 'Museum controller' do
     it 'all museums' do
       add_museum
 
-      post '/api/museum/list'
+      payload = { iso_code: SPANISH }.to_json
+      post '/api/museum/list', payload
       museums = parse_response
 
       expect(museums.any?).to be true
+    end
+
+    it 'all museums translated' do
+      spanish_description = 'descripción'
+      add_museum
+      add_museum
+
+      payload = { iso_code: SPANISH }.to_json
+      post '/api/museum/list', payload
+      museums = parse_response
+
+      expect(museums[0]['info']['description']).to eq spanish_description
+      expect(museums[1]['info']['description']).to eq spanish_description
+      expect(museums[0]['id'] != museums[1]['id']).to be true
     end
 
     it 'museum' do

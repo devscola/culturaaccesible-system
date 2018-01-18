@@ -2,6 +2,9 @@ require 'spec_helper_tdd'
 require_relative '../../system/museums/service'
 
 describe Museums::Service do
+
+  SPANISH = 'es'
+
   it 'retrieves a museum' do
     name = 'some name'
     description = 'some description'
@@ -54,7 +57,7 @@ describe Museums::Service do
 
   it 'retrieves all museums' do
     add_museum('some name', 'some description')
-    result = retrieve_all_museums
+    result = retrieve_all_museums(SPANISH)
 
     expect(result.any?).to be true
   end
@@ -79,8 +82,8 @@ describe Museums::Service do
     expect(museum[:contact][:phone]).to eq([])
   end
 
-  def retrieve_all_museums
-    Museums::Service.list
+  def retrieve_all_museums(iso_code)
+    Museums::Service.list(iso_code)
   end
 
   def add_museum(id = false, name, description)

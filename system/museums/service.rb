@@ -39,9 +39,8 @@ module Museums
         museum.serialize
       end
 
-      def list
-        list = Museums::Repository.all
-        list.map { |museum| museum.serialize }
+      def list(iso_code)
+        Museums::Repository.all(iso_code)
       end
 
       def flush

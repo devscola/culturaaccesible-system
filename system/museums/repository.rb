@@ -44,8 +44,7 @@ module Museums
         data = connection.museums.find({id: id}).first
         museum = Museums::Museum.from_bson(data, data['id']).serialize
         museum_translation = traslation(id, iso_code)
-        translated_museum = Museums::Translation.from_bson(museum_translation, museum_translation['museum_id'], museum_translation['id']).serialize
-        museum[:info][:description] = translated_museum[:description]
+        museum[:info][:description] = set_translation(museum_translation) unless museum_translation.nil?
         museum
       end
 
@@ -59,9 +58,14 @@ module Museums
         translations
       end
 
-      def all
+      def all(iso_code)
         museums_data = connection.museums.find()
-        museums_data.map { |data| Museums::Museum.from_bson(data, data['id']) }
+        museums_data.map { |data| Museums::Museum.from_bson(data, data['id']).serialize }
+        museums_data.map do |museum|
+          museum_translation = traslation(museum[:id], iso_code)
+          museum[:info][:description] = set_translation(museum_translation) unless museum_translation.nil?
+          museum
+        end
       end
 
       def flush
@@ -102,6 +106,11 @@ module Museums
           museum = connection.museum_translations.find({museum_id: id, iso_code: iso_code}).first
         end
         museum
+      end
+
+      def set_translation(museum_translation)
+        translated_museum = Museums::Translation.from_bson(museum_translation, museum_translation['museum_id'], museum_translation['id']).serialize
+        translated_museum[:description]
       end
 
     end
