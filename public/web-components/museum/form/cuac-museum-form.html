@@ -36,6 +36,7 @@
                 <cuac-price-form id="price" price="{{museum.price}}"></cuac-price-form>
             </div>
         </div>
+        <cuac-museum-languages id="languages"></cuac-museum-languages>
         <div class="col-md-12">
             <cuac-save-button id="saveMuseum"></cuac-save-button>
         </div>
@@ -50,6 +51,14 @@
                 museum: {
                     type: Object
                 }
+            },
+
+            getTranslations: function() {
+                var translations = [];
+                translations.push(this.$.languages.$.spanish.collectData());
+                if(this.$.languages.$.english.visiblelang === "true") translations.push(this.$.languages.$.english.collectData());
+                if(this.$.languages.$.catala.visiblelang === "true") translations.push(this.$.languages.$.catala.collectData());
+                return translations;
             }
         });
     </script>

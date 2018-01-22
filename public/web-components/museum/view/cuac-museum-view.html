@@ -41,6 +41,14 @@
                     <cuac-price-view price="{{museumData.price}}"></cuac-price-view>
                 </div>
             </div>
+            <div class="panel panel-primary">
+                <div class="panel-heading">Languages</div>
+                <div class="panel-body">
+                    <template is="dom-repeat" items="{{museumData.translations}}">
+                      <cuac-museum-language-view translation={{item}}></cuac-museum-language-view>
+                    </template>
+                </div>
+            </div>
 
             <cuac-edit-button></cuac-edit-button>
         </div>

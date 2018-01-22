@@ -12,6 +12,8 @@ module Fixture
     FIRST_STREET = 'Valencia'
     SECOND_STREET = 'Madrid'
     PAGE_TITLE = 'Museum'
+    CAT_DESCRIPTION_FIELD = 'description-cat'
+    CAT_DESCRIPTION = 'Descripció exhibició'
 
     MANDATORY_DATA = {
       'name' => FIRST_MUSEUM,

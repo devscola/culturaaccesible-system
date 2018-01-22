@@ -21,6 +21,7 @@ Class('Museum.Form', {
         this.contactForm = document.getElementById('contact');
         this.priceForm = document.getElementById('price');
         this.scheduleForm = document.getElementById('schedule');
+        this.languages = document.getElementById('languages');
         this.phone = document.getElementsByClassName('contact-fields')[0];
         this.email = document.getElementsByClassName('contact-fields')[1];
         this.web = document.getElementsByClassName('contact-fields')[2];
@@ -132,7 +133,9 @@ Class('Museum.Form', {
             {location: this.locationForm.locationData},
             {contact: this.contactForm.contactData},
             {price: this.priceForm.priceData},
-            {schedule: this.scheduleForm.scheduleData}
+            {schedule: this.scheduleForm.scheduleData},
+            {iso_codes: this.languages.collectLocaleData()},
+            {translations: this.element.getTranslations()}
         );
     },
 

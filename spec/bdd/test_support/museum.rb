@@ -26,6 +26,11 @@ module Page
       click_add_hour
     end
 
+    def fill_museum_translations
+      active_language('catala')
+      fill_input(Fixture::Museum::CAT_DESCRIPTION_FIELD, Fixture::Museum::CAT_DESCRIPTION)
+    end
+
     def fill_input(field, content)
       fill_in(field, with: content)
     end
@@ -121,6 +126,10 @@ module Page
 
     def shows_info?
       has_css?('.view')
+    end
+
+    def active_language(element)
+      execute_script("document.getElementsByClassName('"+element+"')[0].click()")
     end
 
     def lose_focus

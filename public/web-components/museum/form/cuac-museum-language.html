@@ -1,6 +1,6 @@
 <link rel="import" href="/vendor/polymer/polymer.html">
 
-<dom-module id="cuac-exhibition-language">
+<dom-module id="cuac-museum-language">
     <template>
         <style>
             .show {
@@ -21,17 +21,8 @@
             </div>
             <div class="panel-body">
               <div class="form-group">
-                  <label class="obligatory" for="name"><strong>Exhibition Name*</strong></label>
-                  <input class="form-control" name="name-{{locale}}" value="{{name::input}}">
-              </div>
-              <div class="form-group">
-                  <label for="general_description">General description</label>
-                  <textarea class="form-control" name="general_description-{{locale}}" value="{{general_description::input}}"></textarea>
-              </div>
-
-              <div class="form-group">
-                  <label for="description">Extended description</label>
-                  <textarea class="form-control" name="extended_description-{{locale}}" value="{{extended_description::input}}"></textarea>
+                  <label for="description">Description</label>
+                  <textarea class="form-control" name="description-{{locale}}" value="{{description::input}}"></textarea>
               </div>
             </div>
         </div>
@@ -41,7 +32,7 @@
 
     <script>
         Polymer({
-            is: 'cuac-exhibition-language',
+            is: 'cuac-museum-language',
 
             ready: function() {
               this.toggleVisibility()
@@ -53,17 +44,13 @@
 
                 translationId: {},
 
-                name: {},
-
-                general_description: {},
-
-                extended_description: {},
+                description: {type:String},
 
                 language: {type: String},
 
                 translation: {type: Object, observer: 'fillLanguage'},
 
-                exhibitionId: {},
+                museumId: {},
 
                 locale: {type: String},
 
@@ -72,20 +59,16 @@
 
             fillLanguage: function() {
                 this.translationId = this.translation.id;
-                this.exhibitionId = this.translation.exhibition_id;
-                this.name = this.translation.name;
-                this.general_description = this.translation.general_description;
-                this.extended_description = this.translation.extended_description;
+                this.museumId = this.translation.museum_id;
+                this.description = this.translation.description;
             },
-            
+
             collectData: function() {
                 data = {
                     id: this.translationId,
-                    name: this.name,
-                    general_description: this.general_description,
-                    extended_description: this.extended_description,
+                    description: this.description,
                     iso_code: this.locale,
-                    exhibition_id: this.exhibitionId
+                    museum_id: this.museumId
                 };
                 return data;
             },

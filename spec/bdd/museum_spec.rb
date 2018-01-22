@@ -17,7 +17,7 @@ feature 'Museum' do
     scenario 'allows submit when enough content' do
       current.click_new_museum
       current.fill_with_extra_content
-      
+
       expect(current.save_enabled?).to be true
     end
 
@@ -27,6 +27,7 @@ feature 'Museum' do
       expect(current.shows_info?).to be true
       expect(current.has_content?(Fixture::Museum::MANDATORY_DATA['name'])).to be true
     end
+
 
     context 'location section' do
       scenario 'validates that google maps link has coordinates' do
@@ -190,6 +191,16 @@ feature 'Museum' do
         current.submit
 
         expect(current.has_info?(Fixture::Museum::EXTRA_PHONE)).to be true
+      end
+    end
+    context 'languages' do
+      scenario 'create translated museums' do
+        current.click_new_museum
+        current.fill_mandatory_content
+        current.fill_museum_translations
+        current.submit
+
+        expect(current.has_info?(Fixture::Museum::CAT_DESCRIPTION)).to be true
       end
     end
 

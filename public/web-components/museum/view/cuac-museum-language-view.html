@@ -1,0 +1,36 @@
+<link rel="import" href="/vendor/polymer/polymer.html">
+
+<dom-module id="cuac-museum-language-view">
+    <template>
+      <h3 on-change="getLanguage">{{language}}</h3>
+      <div class$="description-{{translation.iso_code}}">Description: {{translation.description}}</div>
+    </template>
+
+    <script>
+        Polymer({
+            is: 'cuac-museum-language-view',
+
+            properties: {
+
+                translation: { type: Object, observer:'getLanguage' },
+                language: { type: String }
+
+            },
+
+            getLanguage: function(translation) {
+                switch (translation.iso_code) {
+                    case 'es':
+                        this.language = 'Castellano';
+                        break;
+                    case 'en':
+                        this.language = 'English';
+                        break;
+                    case 'cat':
+                        this.language = 'Valencià';
+                        break;
+                }
+            }
+
+        });
+    </script>
+</dom-module>
