@@ -102,6 +102,47 @@ Class('Museum.Form', {
         this.general.setEditData();
         this.reduced.setEditData();
         this.scheduleForm.setEditData();
+        this.fillLanguages(museum.translations);
+    },
+
+    fillLanguages: function(translations) {
+        for (var i=0; i<translations.length; i++) {
+            switch (translations[i].iso_code) {
+                case 'es':
+                    this.fillSpanish(translations[i]);
+                    break;
+                case 'en':
+                    this.fillEnglish(translations[i]);
+                    break;
+                case 'cat':
+                    this.fillCatala(translations[i]);
+                    break;
+            }
+        }
+    },
+
+    fillSpanish: function(language) {
+        var spanish = this.languages.$.spanish;
+        this.languages.spanish = true;
+        spanish.translation = language;
+    },
+
+    fillEnglish: function(language) {
+        var english = this.languages.$.english;
+        this.languages.english = true;
+        document.getElementsByClassName('english')[0].checked = true;
+        english.visiblelang = 'true';
+        english.toggleVisibility();
+        english.translation = language;
+    },
+
+    fillCatala: function(language) {
+        var catala = this.languages.$.catala;
+        this.languages.catala = true;
+        document.getElementsByClassName('catala')[0].checked = true;
+        catala.visiblelang = 'true';
+        catala.toggleVisibility();
+        catala.translation = language;
     },
 
     hide: function() {

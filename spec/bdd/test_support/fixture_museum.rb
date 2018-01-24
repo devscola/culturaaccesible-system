@@ -14,6 +14,7 @@ module Fixture
     PAGE_TITLE = 'Museum'
     CAT_DESCRIPTION_FIELD = 'description-cat'
     CAT_DESCRIPTION = 'Descripció exhibició'
+    CAT_DESCRIPTION_UPDATED = 'Descripció exhibició actualitzada'
 
     MANDATORY_DATA = {
       'name' => FIRST_MUSEUM,

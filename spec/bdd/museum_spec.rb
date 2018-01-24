@@ -195,9 +195,8 @@ feature 'Museum' do
     end
     context 'languages' do
       scenario 'create translated museums' do
-        current.click_new_museum
-        current.fill_mandatory_content
-        current.fill_museum_translations
+        fill_museum_with_translations(current)
+
         current.submit
 
         expect(current.has_info?(Fixture::Museum::CAT_DESCRIPTION)).to be true
@@ -271,6 +270,25 @@ feature 'Museum' do
         expect(current.has_content?(Fixture::Museum::PHONE)).to be false
         expect(current.has_content?(Fixture::Museum::PRICE)).to be false
       end
+      context 'languages' do
+        scenario 'can be edited' do
+          fill_museum_with_translations(current)
+          current.submit
+          current.go_to_museum_info(Fixture::Museum::FIRST_MUSEUM)
+
+          current.click_edit_button
+          current.active_language('catala')
+          current.fill_input(Fixture::Museum::CAT_DESCRIPTION_FIELD, Fixture::Museum::CAT_DESCRIPTION_UPDATED)
+          current.submit
+
+          expect(current.has_info?(Fixture::Museum::CAT_DESCRIPTION_UPDATED)).to be true
+        end
+      end
     end
+  end
+  def fill_museum_with_translations(current)
+    current.click_new_museum
+    current.fill_mandatory_content
+    current.fill_museum_translations
   end
 end
