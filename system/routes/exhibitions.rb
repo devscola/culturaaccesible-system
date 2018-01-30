@@ -65,7 +65,7 @@ class App < Sinatra::Base
     iso_code = body['iso_code']
     list = Exhibitions::Service.translated_list(iso_code)
     list.map! do |exhibition|
-      Actions::Exhibition.add_museum_info(exhibition)
+      Actions::Exhibition.add_museum_info(exhibition) if exhibition[:museum_id].size > 0
     end
     list.to_json
   end
