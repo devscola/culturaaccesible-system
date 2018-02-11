@@ -149,11 +149,7 @@ feature 'Exhibitions' do
       end
 
         scenario 'when create one' do
-          current = Page::Exhibitions.new
-          current.click_add_exhibition
-          current.fill_exhibition_mandatory_data
-          current.fill_exhibition_translations
-          current.save
+          current = add_translated_exhibition
 
           expect(current.content?('Nom Exhibicio')).to be true
           expect(current.content?('Descripció exhibició')).to be true
@@ -161,9 +157,11 @@ feature 'Exhibitions' do
         end
 
         scenario 'when edit one' do
+          current = add_translated_exhibition
           exhibition_name = Fixture::Exhibitions::NAME
           other_exhibition_name = Fixture::Exhibitions::OTHER_NAME
           current.click_exhibition_name(exhibition_name)
+
           current.click_edit
           current.active_language('catala')
           current.fill(Fixture::Exhibitions::NAME_FIELD, other_exhibition_name)
@@ -219,11 +217,7 @@ feature 'Exhibitions' do
 
     scenario 'displays all translation saved in view' do
       Fixture::Museum.complete_scenario
-      current = Page::Exhibitions.new
-      current.click_add_exhibition
-      current.fill_exhibition_mandatory_data
-      current.fill_exhibition_translations
-      current.save
+      current = add_translated_exhibition
 
       expect(current.content?('Nombre Exhibición')).to be true
       expect(current.content?('Nom Exhibicio')).to be true
@@ -231,5 +225,13 @@ feature 'Exhibitions' do
       expect(current.content?('Descripció curta exhibició')).to be true
     end
 
+  end
+  def add_translated_exhibition
+    current = Page::Exhibitions.new
+    current.click_add_exhibition
+    current.fill_exhibition_mandatory_data
+    current.fill_exhibition_translations
+    current.save
+    current
   end
 end
