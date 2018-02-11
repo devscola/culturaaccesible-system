@@ -4,6 +4,7 @@ require 'json/add/exception'
 require_relative '../actions/items'
 require_relative '../items/service'
 require_relative '../helpers/logged'
+require_relative '../../environment_configuration'
 
 class App < Sinatra::Base
   enable :sessions
@@ -34,7 +35,7 @@ class App < Sinatra::Base
   end
 
   get '/api/item/flush' do
-    return {valid: false}.to_json if !login?
+    return {valid: false}.to_json if !login? || retrieve_mode == 'production'
     Items::Service.flush
     {}
   end

@@ -7,6 +7,7 @@ require_relative '../museums/repository'
 require_relative '../items/scene'
 require_relative '../items/room'
 require_relative '../helpers/logged'
+require_relative '../../environment_configuration'
 
 class App < Sinatra::Base
   enable :sessions
@@ -98,7 +99,7 @@ class App < Sinatra::Base
   end
 
   get '/api/exhibition/flush' do
-    return {valid: false}.to_json if !login?
+    return {valid: false}.to_json if !login?  || retrieve_mode == 'production'
     Exhibitions::Service.flush
     {}
   end

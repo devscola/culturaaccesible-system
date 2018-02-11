@@ -5,6 +5,7 @@ require_relative '../exhibitions/service'
 require_relative '../actions/exhibitions'
 require_relative '../helpers/faker'
 require_relative '../helpers/logged'
+require_relative '../../environment_configuration'
 
 class App < Sinatra::Base
   enable :sessions
@@ -17,7 +18,7 @@ class App < Sinatra::Base
   end
 
   get '/api/fill/admin' do
-    return {valid: false}.to_json if !login?
+    return {valid: false}.to_json if !login?  || retrieve_mode == 'production'
     Exhibitions::Service.flush
     Museums::Service.flush
     museum = store_museum
