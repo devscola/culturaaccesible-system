@@ -3,8 +3,12 @@ require 'json'
 require 'json/add/exception'
 require_relative '../actions/items'
 require_relative '../items/service'
+require_relative '../helpers/logged'
 
 class App < Sinatra::Base
+  enable :sessions
+  include Logged
+
   post '/api/item/add' do
     data = JSON.parse( request.body.read )
     result = Actions::Item.add( data )
@@ -30,6 +34,7 @@ class App < Sinatra::Base
   end
 
   get '/api/item/flush' do
+    return {valid: false}.to_json if !login?
     Items::Service.flush
     {}
   end

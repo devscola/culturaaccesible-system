@@ -6,8 +6,12 @@ require_relative '../items/repository'
 require_relative '../museums/repository'
 require_relative '../items/scene'
 require_relative '../items/room'
+require_relative '../helpers/logged'
 
 class App < Sinatra::Base
+  enable :sessions
+  include Logged
+
   post '/api/exhibition/add' do
     exhibition_data = JSON.parse(request.body.read)
     result = Exhibitions::Service.store(exhibition_data)
@@ -94,6 +98,7 @@ class App < Sinatra::Base
   end
 
   get '/api/exhibition/flush' do
+    return {valid: false}.to_json if !login?
     Exhibitions::Service.flush
     {}
   end

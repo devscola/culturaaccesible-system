@@ -4,10 +4,12 @@ require_relative '../museums/service'
 require_relative '../exhibitions/service'
 require_relative '../actions/exhibitions'
 require_relative '../helpers/faker'
+require_relative '../helpers/logged'
 
 class App < Sinatra::Base
-
+  enable :sessions
   include Admin
+  include Logged
 
   get '/api/fixtures/exhibition' do
     exhibition_data = { 'name' => 'some name', 'location' => 'some location' }
@@ -15,6 +17,7 @@ class App < Sinatra::Base
   end
 
   get '/api/fill/admin' do
+    return {valid: false}.to_json if !login?
     Exhibitions::Service.flush
     Museums::Service.flush
     museum = store_museum

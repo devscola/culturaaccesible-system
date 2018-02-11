@@ -1,9 +1,11 @@
 require 'sinatra/base'
 require_relative 'environment_configuration'
 require_relative 'system/authorization/service'
+require_relative 'system/helpers/logged'
 
 class App < Sinatra::Base
   enable :static, :sessions
+  include Logged
   set :public_folder, 'public/'
 
   GO_TO_LOGIN =  File.read(File.join('public', 'login.html'))
@@ -91,11 +93,6 @@ class App < Sinatra::Base
   get '/exhibition/:id/scene/:scene_id/edit' do
     return GO_TO_LOGIN if !login?
     File.read(File.join('public', 'item.html'))
-  end
-
-  def login?
-    return true if (retrieve_mode == 'development' && session[:registered].nil?) || session[:registered]
-    false
   end
 end
 require_relative 'system/routes/exhibitions'
